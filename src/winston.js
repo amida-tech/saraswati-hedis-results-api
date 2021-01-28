@@ -5,16 +5,16 @@ const pjson = require('../package.json');
 const config = require('./config');
 
 const logger = createLogger({
-    level: config.logLevel,
-    transports: [
-        new transports.Console(),
-    ],
+  level: config.logLevel,
+  transports: [
+    new transports.Console(),
+  ],
 });
 
 const options = {
-    service: 'saraswati-hedis-results-api',
-    logger: 'application-logger',
-    version: pjson.version,
+  service: 'saraswati-hedis-results-api',
+  logger: 'application-logger',
+  version: pjson.version,
 };
 
 logger.format = configuredFormatter(options);
