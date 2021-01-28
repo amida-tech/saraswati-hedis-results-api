@@ -16,8 +16,7 @@ router.get(`${baseURL}/measures/`, (req, res) => res.send(dummyData));
 router.get(`${baseURL}/measures/:measure`, (req, res) => {
   const measureData = dummyData.find(measure => measure.id === req.params.measure);
   if (!measureData){
-    // add proper error handling
-    res.send("oops code isn't correct")
+    res.status(404).send("measure doesn't exist");
   } else {
     res.send(measureData)
   }
