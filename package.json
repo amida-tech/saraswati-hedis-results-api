@@ -1,0 +1,33 @@
+{
+  "name": "saraswati-hedis-results-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "cross-env node src/index.js",
+    "develop": "cross-env nodemon src/index.js",
+    "debug": "cross-env nodemon --inspect-brk=9999 src/index.js",
+    "lint": "eslint ./",
+    "lintfix": "eslint ./ --fix",
+    "test": "cross-env mocha",
+    "docker:build": "docker build -t saraswati-hedis-results-api .",
+    "docker:run": "docker run -p 3000:3000 saraswati-hedis-results-api"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "joi": "^17.3.0",
+    "swagger-stats": "^0.95.18",
+    "winston": "^3.3.3",
+    "winston-json-formatter": "^0.10.0"
+  },
+  "devDependencies": {
+    "eslint": "^7.18.0",
+    "nodemon": "^2.0.7",
+    "mocha": "^8.2.1",
+    "cross-env": "^7.0.3"
+  }
+}
