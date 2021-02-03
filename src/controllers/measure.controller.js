@@ -1,10 +1,13 @@
+const httpStatus = require('http-status');
 const { Measure } = require('../sequelize');
-const list = (async (req, res) => {
+const runAsyncWrapper = require('../util/asyncWrapper');
+
+const list = runAsyncWrapper(async (req, res) => {
   const measures = await Measure.findAll();
   return res.send(measures);
 });
 
-const create =(async (req, res) => {
+const create = runAsyncWrapper(async (req, res) => {
   const measure = await Measure.create({
     name: req.body.name,
     displayName: req.body.displayName,
@@ -18,12 +21,17 @@ const create =(async (req, res) => {
   return res.send(measure);
 });
 
-const get = (async (req, res) => {
-  const measure = await Measure.findByPk(req.params.id)
+const get = runAsyncWrapper(async (req, res, next) => {
+  const measure = await Measure.findByPk(req.params.id);
+  if (!measure) {
+    const e = new Error('Measure does not exist');
+    e.status = httpStatus.NOT_FOUND;
+    return next(e);
+  }
   return res.send(measure);
 });
 
-const update = (async (req, res) => {
+const update = runAsyncWrapper(async (req, res, next) => {
   let updatedRecord = {};
   let measureKeys = ['name', 'displayName', 'eligiblePopulation', 'included', 'rating', 'percentage'];
   Object.keys(req.body).forEach(key =>
@@ -33,23 +41,25 @@ const update = (async (req, res) => {
       }
     });
   console.log("updatedRecord", updatedRecord)
-  try{
-    const [rowUpdate, [updatedMeasure]] = await Measure.update(
-      updatedRecord,
-      {returning: true, where: { id: req.params.id } }
-    )
-    return res.json(updatedMeasure)
-  } catch {
-    throw new Error('Measure not found')
+
+  const [rowUpdate, [updatedMeasure]] = await Measure.update(
+    updatedRecord,
+    {returning: true, where: { id: req.params.id } }
+  )
+  if (!updatedMeasure) {
+    const e = new Error('Measure does not exist');
+    e.status = httpStatus.NOT_FOUND;
+    return next(e);
   }
+  return res.json(updatedMeasure)
 });
 
-const remove = (async (req, res) => {
+const remove = runAsyncWrapper(async (req, res) => {
   await Measure.destroy({
-    where: { name: req.params.measure },
+    where: { id: req.params.id },
   });
 
-  return res.send(true);
+  return res.send('Measure deleted');
 });
 
 module.exports = {
