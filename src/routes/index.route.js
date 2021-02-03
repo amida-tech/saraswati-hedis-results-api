@@ -1,29 +1,10 @@
 const express = require('express');
-const p = require('../../package.json');
-const dummyData = require('../dummyData.json');
+const measureRoutes = require('./measure.route');
 
-const router = express.Router(); // eslint-disable-line new-cap
-const version = p.version.split('.').shift();
-const baseURL = `/v${version}`;
+const router = express.Router(); // eslint-disable-line new-ca
 
-router.get('/health', (req, res) => {
-  res.send('OK');
-});
+router.get('/health-check', (req, res) => res.send('OK'));
 
-router.get(`${baseURL}/measures/`, (req, res) => res.send(dummyData));
-
-router.get(`${baseURL}/measures/:measure`, (req, res) => {
-  const measureData = dummyData.find((measure) => measure.id === req.params.measure);
-  if (!measureData) {
-    res.status(404).send("measure doesn't exist");
-  } else {
-    res.send(measureData);
-  }
-});
-
-router.post(`${baseURL}/measures/:measure`, (req, res) => {
-  console.log(req, res);
-  // save data to a database
-});
+router.use('/measures', measureRoutes);
 
 module.exports = router;

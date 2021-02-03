@@ -1,0 +1,42 @@
+[
+  {
+    "name": "cdc_hba1c-lessThanSeven",
+    "displayName": "HbA1C - Less than 7%",
+    "eligiblePopulation": 57955,
+    "included": 40569,
+    "rating": 3.5,
+    "percentage": 70
+  },
+  {
+    "name": "cdc_hba1c-lessThanEight",
+    "displayName": "HbA1C - Less than 8%",
+    "eligiblePopulation": 51257,
+    "included":  45518,
+    "rating": 4,
+    "percentage": 88
+  },
+  {
+    "name": "cdc_diabetes-bp",
+    "displayName": "Diabetes - Blood Pressure",
+    "eligiblePopulation": 45692,
+    "included": 16985,
+    "rating": 2,
+    "percentage": 37
+  },
+  {
+    "name": "cis",
+    "displayName": "Childhood Immunizations",
+    "eligiblePopulation": 94478,
+    "included": 90823,
+    "rating": 5,
+    "percentage": 96
+  },
+  {
+    "name": "composite",
+    "displayName": "Composite Score",
+    "eligiblePopulation": 152692,
+    "included": 138532,
+    "rating": 4.5,
+    "percentage": 91
+  }
+]

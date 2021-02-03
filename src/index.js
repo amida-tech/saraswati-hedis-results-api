@@ -5,6 +5,8 @@ const expressWinston = require('express-winston');
 const config = require('./config');
 const winstonInstance = require('./winston');
 const routes = require('./routes/index.route');
+/* eslint-disable no-unused-vars */
+const db = require('./sequelize');
 
 const app = express();
 
@@ -30,7 +32,8 @@ if (config.env === 'development' || config.env === 'production') {
   }));
 }
 
-app.use('/api', routes);
+const baseUrl = `/api/v${config.apiVersion}`;
+app.use(`${baseUrl}`, routes);
 
 app.listen(config.port, () => {
   winstonInstance.info(`server started on port ${config.port} (${config.env})`, {
