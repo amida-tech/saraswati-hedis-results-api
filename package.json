@@ -9,6 +9,8 @@
     "debug": "cross-env nodemon --inspect-brk=9999 src/index.js",
     "lint": "eslint ./",
     "lint:fix": "eslint ./ --fix",
+    "prettier": "prettier --check \"**/*.js\"",
+    "prettier:fix": "prettier --write \"**/*.js\"",
     "test": "cross-env mocha",
     "docker:build": "docker build -t saraswati-hedis-results-api .",
     "docker:run": "docker run -p 3000:3000 saraswati-hedis-results-api"
@@ -25,6 +27,7 @@
     "joi": "^17.3.0",
     "lodash": "^4.17.20",
     "pg": "^8.5.1",
+    "prettier": "^2.2.1",
     "sequelize": "^6.5.0",
     "swagger-stats": "^0.95.18",
     "winston": "^3.3.3",

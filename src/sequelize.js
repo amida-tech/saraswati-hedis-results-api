@@ -36,29 +36,27 @@ const sequelize = new Sequelize(
   sequelizeOptions,
 );
 
-
 const modelsDir = path.normalize(`${__dirname}/models`);
 
 // loop through all files in models directory ignoring hidden files and this file
 fs.readdirSync(modelsDir)
   .filter((file) => (file.indexOf('.') !== 0) && (file.indexOf('.map') === -1))
-// const model files and save model names
-    .forEach((file) => {
-    console.log('path.join(modelsDir, file)', path.join(modelsDir, file));
+  // const model files and save model names
+  .forEach((file) => {
     logger.info(`Loading model file ${file}`);
-    const model = require(path.join(modelsDir, file))(sequelize, Sequelize.DataTypes);
+    const model = require(path.join(modelsDir, file))(sequelize, Sequelize.DataTypes); // eslint-disable-line import/no-dynamic-require
     db[model.name] = model;
-    console.log("DB", db, "model.name", model.name)
   });
 
 const devEnv = config.env === 'development';
+
 // Synchronizing any model changes with database.
 sequelize
-  .sync({ force: devEnv })
+  .sync({ force: !!devEnv })
   .then(() => {
     logger.info('Database synchronized');
     if (devEnv) {
-      seedData.forEach(async(record) => await db.Measure.create(record));
+      seedData.forEach((record) => db.Measure.create(record));
     }
   })
   .catch((error) => {

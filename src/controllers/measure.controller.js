@@ -14,7 +14,7 @@ const create = runAsyncWrapper(async (req, res) => {
     eligblePopulation: req.body.eligblePopulation,
     included: req.body.included,
     rating: req.body.rating,
-    percentage: req.body.percentage
+    percentage: req.body.percentage,
     // TODO maybe just calculate percentage and rating ourselves here?
   });
 
@@ -32,26 +32,25 @@ const get = runAsyncWrapper(async (req, res, next) => {
 });
 
 const update = runAsyncWrapper(async (req, res, next) => {
-  let updatedRecord = {};
-  let measureKeys = ['name', 'displayName', 'eligiblePopulation', 'included', 'rating', 'percentage'];
-  Object.keys(req.body).forEach(key =>
-    {
-      if (measureKeys.includes(key)){
-        updatedRecord[key] = req.body[key];
-      }
-    });
-  console.log("updatedRecord", updatedRecord)
+  const potentialUpdates = {};
+  const measureKeys = ['name', 'displayName', 'eligiblePopulation', 'included', 'rating', 'percentage'];
+  Object.keys(req.body).forEach((key) => {
+    if (measureKeys.includes(key)) {
+      potentialUpdates[key] = req.body[key];
+    }
+  });
 
-  const [rowUpdate, [updatedMeasure]] = await Measure.update(
-    updatedRecord,
-    {returning: true, where: { id: req.params.id } }
-  )
+  const updatedRecord = await Measure.update(
+    potentialUpdates,
+    { returning: true, where: { id: req.params.id } },
+  );
+  const updatedMeasure = updatedRecord[1][0];
   if (!updatedMeasure) {
     const e = new Error('Measure does not exist');
     e.status = httpStatus.NOT_FOUND;
     return next(e);
   }
-  return res.json(updatedMeasure)
+  return res.json(updatedMeasure);
 });
 
 const remove = runAsyncWrapper(async (req, res) => {
@@ -67,5 +66,5 @@ module.exports = {
   create,
   get,
   remove,
-  update
+  update,
 };

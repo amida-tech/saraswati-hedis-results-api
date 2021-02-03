@@ -48,7 +48,6 @@ const measure = (sequelize, DataTypes) => {
       },
     },
   });
-  
 
   return Measure;
 };

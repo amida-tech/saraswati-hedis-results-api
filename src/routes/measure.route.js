@@ -7,12 +7,11 @@ const router = express.Router(); // eslint-disable-line new-cap
 
 router.route('/')
   .get(measureCtrl.list)
-  .post(validate(paramValidation.createMeasure), measureCtrl.create)
+  .post(validate(paramValidation.createMeasure), measureCtrl.create);
 
 router.route('/:id')
   .get(measureCtrl.get)
   .put(validate(paramValidation.updateMeasure), measureCtrl.update)
-  .delete(measureCtrl.remove)
-
+  .delete(measureCtrl.remove);
 
 module.exports = router;
