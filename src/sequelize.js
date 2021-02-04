@@ -44,7 +44,9 @@ fs.readdirSync(modelsDir)
   // const model files and save model names
   .forEach((file) => {
     logger.info(`Loading model file ${file}`);
-    const model = require(path.join(modelsDir, file))(sequelize, Sequelize.DataTypes); // eslint-disable-line import/no-dynamic-require
+    // eslint-disable-next-line import/no-dynamic-require
+    // eslint-disable-next-line
+    const model = require(path.join(modelsDir, file))(sequelize, Sequelize.DataTypes); 
     db[model.name] = model;
   });
 
