@@ -54,7 +54,7 @@ const devEnv = config.env === 'development';
 
 // Synchronizing any model changes with database.
 sequelize
-  .sync({ force: !!devEnv })
+  .sync({ force: devEnv })
   .then(() => {
     logger.info('Database synchronized');
     if (devEnv) {

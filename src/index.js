@@ -41,3 +41,5 @@ app.listen(config.port, () => {
     node_env: config.env,
   });
 });
+
+module.exports = app;
