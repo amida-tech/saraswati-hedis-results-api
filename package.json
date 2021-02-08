@@ -9,14 +9,13 @@
     "debug": "cross-env nodemon --inspect-brk=9999 src/index.js",
     "lint": "eslint ./",
     "lint:fix": "eslint ./ --fix",
-    "test": "cross-env mocha",
+    "test": "cross-env jest",
     "docker:build": "docker build -t saraswati-hedis-results-api .",
     "docker:run": "docker run -p 3000:3000 saraswati-hedis-results-api"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "chai": "^4.3.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
@@ -38,7 +37,8 @@
     "eslint": "^7.18.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.22.1",
-    "mocha": "^8.2.1",
+    "jest": "^26.6.3",
+    "jest-fetch-mock": "^3.0.3",
     "nodemon": "^2.0.7"
   }
 }
