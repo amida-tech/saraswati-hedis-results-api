@@ -18,18 +18,18 @@ describe('## User APIs', () => {
     db.sequelize.close(done);
   });
 
-  describe(`# GET ${apiVersionPath}/health-check`, () => {
-    test('should return OK', (done) => {
-      testApp
-        .get(`${apiVersionPath}/health-check`)
-        .expect(httpStatus.OK)
-        .then((res) => {
-          expect(res.text).toEqual('OK');
-          done();
-        })
-        .catch(done);
-    });
-  });
+  // describe(`# GET ${apiVersionPath}/health-check`, () => {
+  //   test('should return OK', (done) => {
+  //     testApp
+  //       .get(`${apiVersionPath}/health-check`)
+  //       .expect(httpStatus.OK)
+  //       .then((res) => {
+  //         expect(res.text).toEqual('OK');
+  //         done();
+  //       })
+  //       .catch(done);
+  //   });
+  // });
 
   const newMeasure = {
     name: "test_measure",
