@@ -56,8 +56,8 @@ const testEnv = config.env === 'test';
 // Synchronizing any model changes with database.
 sequelize
   //TODO: Change this
+  //.sync()
   .sync()
-  //.sync({ force: true })
   .then(() => {
     logger.info('Database synchronized');
     if (false) {

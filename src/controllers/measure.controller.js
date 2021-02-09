@@ -31,7 +31,7 @@ const get = runAsyncWrapper(async (req, res, next) => {
   return res.send(measure);
 });
 
-const update = runAsyncWrapper(async (req, res, next) => {
+const update = async (req, res, next) => {
   const potentialUpdates = {};
   const measureKeys = ['name', 'displayName', 'eligiblePopulation', 'included', 'rating', 'percentage'];
   Object.keys(req.body).forEach((key) => {
@@ -39,19 +39,23 @@ const update = runAsyncWrapper(async (req, res, next) => {
       potentialUpdates[key] = req.body[key];
     }
   });
+  try {
+    const updatedRecord = await Measure.update(
+      potentialUpdates,
+      { returning: true, where: { id: req.params.id } },
+    );
 
-  const updatedRecord = await Measure.update(
-    potentialUpdates,
-    { returning: true, where: { id: req.params.id } },
-  );
-  const updatedMeasure = updatedRecord[1][0];
-  if (!updatedMeasure) {
-    const e = new Error('Measure does not exist');
-    e.status = httpStatus.NOT_FOUND;
-    return next(e);
+    if (!updatedRecord) {
+      const e = new Error('Measure does not exist');
+      e.status = httpStatus.NOT_FOUND;
+      return next(e);
+    }
+
+    return res.send(updatedRecord);
+  } catch (error) {
+    return next(error)
   }
-  return res.json(updatedMeasure);
-});
+};
 
 const remove = runAsyncWrapper(async (req, res) => {
   await Measure.destroy({
