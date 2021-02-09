@@ -67,6 +67,4 @@ module.exports = {
   get,
   remove,
   update,
-  thing,
-  please
 };

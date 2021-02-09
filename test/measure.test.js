@@ -4,7 +4,6 @@ const httpStatus = require('http-status');
 const app = require('../src/express');
 const config = require('../src/config');
 const db = require('../src/sequelize');
-const measures = require('../src/seedData');
 
 const apiVersionPath = `/api/v${config.apiVersion}`;
 
@@ -33,7 +32,7 @@ describe('## User APIs', () => {
   });
 
   const newMeasure = {
-    name: "test_measureeee",
+    name: "test_measure",
     displayName: "Test Measure",
     eligiblePopulation: 12343,
     included: 56578,
@@ -61,6 +60,21 @@ describe('## User APIs', () => {
     });
   });
 
+  // describe(`# PUT ${apiVersionPath}/measures/:id`, () => {
+  //   test('should update measure details', (done) => {
+  //     newMeasure.displayName = 'Updated Test Measure';
+  //     testApp
+  //       .put(`${apiVersionPath}/measures/${newMeasure.id}`)
+  //       .send(newMeasure)
+  //       .expect(httpStatus.OK)
+  //       .then((res) => {
+  //         expect(res.body.displayName).toEqual('Updated Test Measure');
+  //         done();
+  //       })
+  //       .catch(done);
+  //   });
+  // });
+
   describe(`# GET ${apiVersionPath}/measures/:id`, () => {
     test('should get measure details', (done) => {
       testApp
@@ -79,52 +93,36 @@ describe('## User APIs', () => {
     });
   });
 
-  // describe(`# PUT ${apiVersionPath}/measures/:id`, () => {
-  //   test('should update measure details', (done) => {
-  //     newMeasure.displayName = 'Updated Test Measure';
-  //     testApp
-  //       .put(`${apiVersionPath}/measures/${newMeasure.id}`)
-  //       .send(newMeasure)
-  //       .expect(httpStatus.OK)
-  //       .then((res) => {
-  //         expect(res.body.displayName).toEqual('Updated Test Measure');
-  //         done();
-  //       })
-  //       .catch(done);
-  //   });
-  // });
+  describe(`# GET ${apiVersionPath}/measures/`, () => {
+    test('should get all measures', (done) => {
+      testApp
+        .get(`${apiVersionPath}/measures/`)
+        .expect(httpStatus.OK)
+        .then((res) => {
+          expect(res.body[0].name).toEqual(newMeasure.name);
+          expect(res.body[0].displayName).toEqual(newMeasure.displayName);
+          expect(res.body[0].eligiblePopulation).toEqual(newMeasure.eligiblePopulation);
+          expect(res.body[0].included).toEqual(newMeasure.included);
+          expect(res.body[0].percentage).toEqual(newMeasure.percentage);
+          expect(+res.body[0].rating).toEqual(newMeasure.rating);
+          done();
+        })
+        .catch(done);
+    });
+  });
 
-  // describe(`# GET ${apiVersionPath}/measures/`, () => {
-  //   test('should get all measures', (done) => {
-  //     testApp
-  //       .get(`${apiVersionPath}/measures/`)
-  //       .expect(httpStatus.OK)
-  //       .then((res) => {
-  //         expect(res.body[0].name).toEqual(newMeasure.name);
-  //         expect(res.body[0].displayName).toEqual(newMeasure.displayName);
-  //         expect(res.body[0].eligiblePopulation).toEqual(newMeasure.eligiblePopulation);
-  //         expect(res.body[0].included).toEqual(newMeasure.included);
-  //         expect(res.body[0].percentage).toEqual(newMeasure.percentage);
-  //         expect(+res.body[0].rating).toEqual(newMeasure.rating);
-  //         done();
-  //       })
-  //       .catch(done);
-  //   });
-  // });
-
-  // describe(`# DEL ${apiVersionPath}/measures/:id`, () => {
-  //   test('should delete measure details', (done) => {
-  //     testApp
-  //       .put(`${apiVersionPath}/measures/${newMeasure.id}`)
-  //       .send(newMeasure)
-  //       .expect(httpStatus.OK)
-  //       .then((res) => {
-  //         expect(res.text).toEqual('Measure deleted');
-  //         done();
-  //       })
-  //       .catch(done);
-  //   });
-  // });
+  describe(`# DELETE ${apiVersionPath}/measures/:id`, () => {
+    test('should delete measure details', (done) => {
+      testApp
+        .delete(`${apiVersionPath}/measures/${newMeasure.id}`)
+        .expect(httpStatus.OK)
+        .then((res) => {
+          expect(res.text).toEqual('Measure deleted');
+          done();
+        })
+        .catch(done);
+    });
+  });
 
   
 
