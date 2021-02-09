@@ -11,7 +11,7 @@ const create = runAsyncWrapper(async (req, res) => {
   const measure = await Measure.create({
     name: req.body.name,
     displayName: req.body.displayName,
-    eligblePopulation: req.body.eligblePopulation,
+    eligiblePopulation: req.body.eligiblePopulation,
     included: req.body.included,
     rating: req.body.rating,
     percentage: req.body.percentage,
@@ -67,4 +67,6 @@ module.exports = {
   get,
   remove,
   update,
+  thing,
+  please
 };

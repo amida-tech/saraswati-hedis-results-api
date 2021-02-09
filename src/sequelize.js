@@ -50,14 +50,18 @@ fs.readdirSync(modelsDir)
     db[model.name] = model;
   });
 
-const devEnv = config.env === 'development';
+const devEnv = config.env === 'development'
+const testEnv = config.env === 'test';
 
 // Synchronizing any model changes with database.
 sequelize
-  .sync({ force: devEnv })
+  //TODO: Change this
+  .sync()
+  //.sync({ force: true })
   .then(() => {
     logger.info('Database synchronized');
-    if (devEnv) {
+    if (false) {
+    //if (devEnv || testEnv) {
       seedData.forEach((record) => db.Measure.create(record));
     }
   })

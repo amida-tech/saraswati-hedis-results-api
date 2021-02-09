@@ -17,10 +17,10 @@ const envVarsSchema = Joi.object({
     .default(3000)
     .description('Port of mock API service, defaults to 3000'),
   UNIQUE_NAME_PG_DB: Joi.string()
-    .default('api')
+    .default('hedisdb')
     .description('Postgres database name'),
   UNIQUE_NAME_PG_TEST_DB: Joi.string()
-    .default('api-test')
+    .default('hedisdb')
     .description('Postgres database for tests'),
   UNIQUE_NAME_PG_PORT: Joi.number()
     .default(5432),
