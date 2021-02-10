@@ -28,94 +28,81 @@ describe('## User APIs', () => {
   };
 
   describe(`# POST ${apiVersionPath}/measures/`, () => {
-    test('should create a new measure', (done) => {
-      testApp
-        .post(`${apiVersionPath}/measures`)
-        .send(newMeasure)
-        .expect(httpStatus.OK)
-        .then((res) => {
-          expect(res.body.name).toEqual(newMeasure.name);
-          expect(res.body.displayName).toEqual(newMeasure.displayName);
-          expect(res.body.eligiblePopulation).toEqual(newMeasure.eligiblePopulation);
-          expect(res.body.included).toEqual(newMeasure.included);
-          expect(res.body.percentage).toEqual(newMeasure.percentage);
-          expect(res.body.rating).toEqual(newMeasure.rating);
-          newMeasure.id = res.body.id;
-          // newMeasure = res.body
-          done();
-        })
-        .catch(done);
+    test('should create a new measure', async (done) => {
+      try {
+        const res = await testApp
+          .post(`${apiVersionPath}/measures`)
+          .send(newMeasure)
+          .expect(httpStatus.OK)
+        expect(res.body.name).toEqual(newMeasure.name);
+        expect(res.body.displayName).toEqual(newMeasure.displayName);
+        expect(res.body.eligiblePopulation).toEqual(newMeasure.eligiblePopulation);
+        expect(res.body.included).toEqual(newMeasure.included);
+        expect(res.body.percentage).toEqual(newMeasure.percentage);
+        expect(res.body.rating).toEqual(newMeasure.rating);
+        newMeasure.id = res.body.id;
+      } finally {
+        done();
+      }
     });
   });
 
   describe(`# GET ${apiVersionPath}/measures/`, () => {
-    test('should get all measures', (done) => {
-      testApp
-        .get(`${apiVersionPath}/measures/`)
-        .expect(httpStatus.OK)
-        .then((res) => {
-          expect(Array.isArray(res.body));
-          done();
-        })
-        .catch(done);
+    test('should get all measures', async (done) => {
+      try {
+        const res = await testApp
+          .get(`${apiVersionPath}/measures/`)
+          .expect(httpStatus.OK)
+        expect(Array.isArray(res.body));
+      } finally {
+        done();
+      }
     });
   });
 
   describe(`# PUT ${apiVersionPath}/measures/:id`, () => {
-    test('should update measure details', (done) => {
+    test('should update measure details', async (done) => {
       newMeasure.displayName = 'Test Measure 2';
-      testApp
-        .put(`${apiVersionPath}/measures/${newMeasure.id}`)
-        .send(newMeasure)
-        .expect(httpStatus.OK)
-        .then((res) => {
-          expect(res.body[1][0].displayName).toEqual('Test Measure 2');
-          done();
-        })
-        .catch(done);
+      try {
+        const res = await testApp
+          .put(`${apiVersionPath}/measures/${newMeasure.id}`)
+          .send(newMeasure)
+          .expect(httpStatus.OK)
+        expect(res.body[1][0].displayName).toEqual('Test Measure 2');
+      } finally {
+        done();
+      }
     });
   });
 
   describe(`# GET ${apiVersionPath}/measures/:id`, () => {
-    test('should get measure details', (done) => {
-      testApp
-        .get(`${apiVersionPath}/measures/${newMeasure.id}`)
-        .expect(httpStatus.OK)
-        .then((res) => {
-          expect(res.body.name).toEqual(newMeasure.name);
-          expect(res.body.displayName).toEqual(newMeasure.displayName);
-          expect(res.body.eligiblePopulation).toEqual(newMeasure.eligiblePopulation);
-          expect(res.body.included).toEqual(newMeasure.included);
-          expect(res.body.percentage).toEqual(newMeasure.percentage);
-          expect(res.body.rating).toEqual(newMeasure.rating);
-          done();
-        })
-        .catch(done);
+    test('should get measure details', async (done) => {
+      try {
+        const res = await testApp
+          .get(`${apiVersionPath}/measures/${newMeasure.id}`)
+          .expect(httpStatus.OK)
+        expect(res.body.name).toEqual(newMeasure.name);
+        expect(res.body.displayName).toEqual(newMeasure.displayName);
+        expect(res.body.eligiblePopulation).toEqual(newMeasure.eligiblePopulation);
+        expect(res.body.included).toEqual(newMeasure.included);
+        expect(res.body.percentage).toEqual(newMeasure.percentage);
+        expect(res.body.rating).toEqual(newMeasure.rating);
+      } finally {
+        done();
+      }
     });
   });
 
   describe(`# DELETE ${apiVersionPath}/measures/:id`, () => {
-    test('should delete measure details', (done) => {
-      testApp
-        .delete(`${apiVersionPath}/measures/${newMeasure.id}`)
-        .expect(httpStatus.OK)
-        .then((res) => {
-          expect(res.text).toEqual('Measure deleted');
-          done();
-        })
-        .catch(done);
+    test('should delete measure details', async (done) => {
+      try {
+        const res = await testApp
+          .delete(`${apiVersionPath}/measures/${newMeasure.id}`)
+          .expect(httpStatus.OK)
+        expect(res.text).toEqual('Measure deleted');
+      } finally {
+        done();
+      }
     });
   });
-
-  // Add proper error handling for this
-  // test('should report error with message - Not found, when user does not exist', (done) => {
-  //   testApp
-  //       .get(`${apiVersionPath}/measures/12345`)
-  //       .expect(httpStatus.NOT_FOUND)
-  //       .then((res) => {
-  //           expect(res.body.message).toEqual('Not Found');
-  //           done();
-  //       })
-  //       .catch(done);
-  // });
 });

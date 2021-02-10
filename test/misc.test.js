@@ -21,39 +21,39 @@ describe('## Misc', () => {
   });
 
   describe(`# GET ${apiVersionPath}/health-check`, () => {
-    test('should return OK', (done) => {
-      testApp
-        .get(`${apiVersionPath}/health-check`)
-        .expect(httpStatus.OK)
-        .then((res) => {
-          expect(res.text).toEqual('OK');
-          done();
-        })
-        .catch(done);
+    test('should return OK', async (done) => {
+      try {
+        const res = await testApp
+          .get(`${apiVersionPath}/health-check`)
+          .expect(httpStatus.OK);
+        expect(res.text).toEqual('OK');
+      } finally {
+        done();
+      }
     });
   });
 
   describe(`# GET ${apiVersionPath}/seed`, () => {
-    test('should return with success', (done) => {
-      testApp
-        .get(`${apiVersionPath}/seed`)
-        .expect(httpStatus.OK)
-        .then((res) => {
-          expect(res.text).toEqual('Database seeded');
-          done();
-        })
-        .catch(done);
+    test('should return with success', async (done) => {
+      try {
+        const res = await testApp
+          .get(`${apiVersionPath}/seed`)
+          .expect(httpStatus.OK)
+        expect(res.text).toEqual('Database seeded');
+      } finally {
+        done();
+      }
     });
 
-    test('should indicate that database has already been seeded', (done) => {
-      testApp
-        .get(`${apiVersionPath}/seed`)
-        .expect(httpStatus.OK)
-        .then((res) => {
-          expect(res.text).toEqual('Database has already been seeded');
-          done();
-        })
-        .catch(done);
+    test('should indicate that database has already been seeded', async (done) => {
+      try {
+        const res = await testApp
+          .get(`${apiVersionPath}/seed`)
+          .expect(httpStatus.OK)
+        expect(res.text).toEqual('Database has already been seeded');
+      } finally {
+        done();
+      }
     });
   });
 });
