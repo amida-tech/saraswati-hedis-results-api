@@ -19,12 +19,12 @@ describe('## User APIs', () => {
   });
 
   let newMeasure = {
-    "name": "test_measure",
-    "displayName": "Test Measure",
-    "eligiblePopulation": 12343,
-    "included": 56578,
-    "percentage": 12,
-    "rating": "3"
+    name: 'test_measure',
+    displayName: 'Test Measure',
+    eligiblePopulation: 12343,
+    included: 56578,
+    percentage: 12,
+    rating: '3.5'
   }
 
   describe(`# POST ${apiVersionPath}/measures/`, () => {
@@ -94,7 +94,6 @@ describe('## User APIs', () => {
         .catch(done);
     });
   });
-
 
   describe(`# DELETE ${apiVersionPath}/measures/:id`, () => {
     test('should delete measure details', (done) => {

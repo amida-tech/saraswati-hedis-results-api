@@ -4,7 +4,6 @@ const path = require('path');
 const _ = require('lodash');
 const config = require('./config');
 const logger = require('./winston');
-const seedData = require('./seedData');
 
 const db = {};
 
@@ -50,20 +49,11 @@ fs.readdirSync(modelsDir)
     db[model.name] = model;
   });
 
-const devEnv = config.env === 'development'
-const testEnv = config.env === 'test';
-
 // Synchronizing any model changes with database.
 sequelize
-  //TODO: Change this
-  //.sync()
   .sync()
   .then(() => {
     logger.info('Database synchronized');
-    if (false) {
-    //if (devEnv || testEnv) {
-      seedData.forEach((record) => db.Measure.create(record));
-    }
   })
   .catch((error) => {
     if (error) {

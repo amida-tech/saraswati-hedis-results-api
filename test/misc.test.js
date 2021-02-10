@@ -14,8 +14,13 @@ describe('## Misc', () => {
     testApp = request(app);
   });
 
-  afterAll((done) => {
-    db.sequelize.close(done);
+  afterAll(async (done) => {
+    try{
+      await db.Measure.destroy({ truncate: true });
+      db.sequelize.close(done);
+    } catch(e){
+      console.log(e)
+    }
   });
 
 
@@ -32,16 +37,28 @@ describe('## Misc', () => {
     });
   });
 
-  // describe(`# GET ${apiVersionPath}/404`, () => {
-  //   test('should return 404 status', (done) => {
-  //     testApp
-  //       .get(`${apiVersionPath}/404`)
-  //       .expect(httpStatus.NOT_FOUND)
-  //       .then((res) => {
-  //         expect(res.body.message).toEqual('Not Found');
-  //         done();
-  //       })
-  //       .catch(done);
-  //   });
-  // });
+  describe(`# GET ${apiVersionPath}/seed`, () => {
+    test('should return with success', (done) => {
+      testApp
+        .get(`${apiVersionPath}/seed`)
+        .expect(httpStatus.OK)
+        .then((res) => {
+          expect(res.text).toEqual('Database seeded');
+          done();
+        })
+        .catch(done);
+    });
+
+    test('should indicate that database has already been seeded', (done) => {
+      testApp
+        .get(`${apiVersionPath}/seed`)
+        .expect(httpStatus.OK)
+        .then((res) => {
+          expect(res.text).toEqual('Database has already been seeded');
+          done();
+        })
+        .catch(done);
+    });
+  });
+
 });

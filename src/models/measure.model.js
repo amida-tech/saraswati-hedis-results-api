@@ -17,9 +17,11 @@ const measure = (sequelize, DataTypes) => {
     },
     eligiblePopulation: {
       type: DataTypes.INTEGER,
+      allowNull: false,
     },
     included: {
       type: DataTypes.INTEGER,
+      allowNull: false,
     },
     percentage: {
       type: DataTypes.INTEGER,
