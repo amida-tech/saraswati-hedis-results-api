@@ -33,7 +33,7 @@ describe('## User APIs', () => {
         const res = await testApp
           .post(`${apiVersionPath}/measures`)
           .send(newMeasure)
-          .expect(httpStatus.OK)
+          .expect(httpStatus.OK);
         expect(res.body.name).toEqual(newMeasure.name);
         expect(res.body.displayName).toEqual(newMeasure.displayName);
         expect(res.body.eligiblePopulation).toEqual(newMeasure.eligiblePopulation);
@@ -52,7 +52,7 @@ describe('## User APIs', () => {
       try {
         const res = await testApp
           .get(`${apiVersionPath}/measures/`)
-          .expect(httpStatus.OK)
+          .expect(httpStatus.OK);
         expect(Array.isArray(res.body));
       } finally {
         done();
@@ -67,7 +67,7 @@ describe('## User APIs', () => {
         const res = await testApp
           .put(`${apiVersionPath}/measures/${newMeasure.id}`)
           .send(newMeasure)
-          .expect(httpStatus.OK)
+          .expect(httpStatus.OK);
         expect(res.body[1][0].displayName).toEqual('Test Measure 2');
       } finally {
         done();
@@ -80,7 +80,7 @@ describe('## User APIs', () => {
       try {
         const res = await testApp
           .get(`${apiVersionPath}/measures/${newMeasure.id}`)
-          .expect(httpStatus.OK)
+          .expect(httpStatus.OK);
         expect(res.body.name).toEqual(newMeasure.name);
         expect(res.body.displayName).toEqual(newMeasure.displayName);
         expect(res.body.eligiblePopulation).toEqual(newMeasure.eligiblePopulation);
@@ -98,7 +98,7 @@ describe('## User APIs', () => {
       try {
         const res = await testApp
           .delete(`${apiVersionPath}/measures/${newMeasure.id}`)
-          .expect(httpStatus.OK)
+          .expect(httpStatus.OK);
         expect(res.text).toEqual('Measure deleted');
       } finally {
         done();

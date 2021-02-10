@@ -38,7 +38,7 @@ describe('## Misc', () => {
       try {
         const res = await testApp
           .get(`${apiVersionPath}/seed`)
-          .expect(httpStatus.OK)
+          .expect(httpStatus.OK);
         expect(res.text).toEqual('Database seeded');
       } finally {
         done();
@@ -49,7 +49,7 @@ describe('## Misc', () => {
       try {
         const res = await testApp
           .get(`${apiVersionPath}/seed`)
-          .expect(httpStatus.OK)
+          .expect(httpStatus.OK);
         expect(res.text).toEqual('Database has already been seeded');
       } finally {
         done();
