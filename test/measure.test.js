@@ -1,9 +1,9 @@
 /* eslint-env jest */
 const request = require('supertest');
 const httpStatus = require('http-status');
-const app = require('../src/express');
-const config = require('../src/config');
-const db = require('../src/sequelize');
+const app = require('../src/config/express');
+const config = require('../src/config/config');
+const db = require('../src/config/sequelize');
 
 const apiVersionPath = `/api/v${config.apiVersion}`;
 

@@ -1,7 +1,7 @@
 const express = require('express');
 const measureRoutes = require('./measure.route');
-const seedData = require('../seedData');
-const db = require('../sequelize');
+const seedData = require('../config/seedData');
+const db = require('../config/sequelize');
 
 const router = express.Router(); // eslint-disable-line new-cap
 

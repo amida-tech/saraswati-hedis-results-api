@@ -1,8 +1,8 @@
-const config = require('./config');
-const winstonInstance = require('./winston');
-const app = require('./express.js');
+const config = require('./config/config');
+const winstonInstance = require('./config/winston');
+const app = require('./config/express.js');
 /* eslint-disable no-unused-vars */
-const db = require('./sequelize');
+const db = require('./config/sequelize');
 
 
 app.listen(config.port, () => {

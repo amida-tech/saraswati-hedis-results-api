@@ -35,7 +35,7 @@ const sequelize = new Sequelize(
   sequelizeOptions,
 );
 
-const modelsDir = path.normalize(`${__dirname}/models`);
+const modelsDir = path.normalize(`${__dirname}/../models`);
 
 // loop through all files in models directory ignoring hidden files and this file
 fs.readdirSync(modelsDir)

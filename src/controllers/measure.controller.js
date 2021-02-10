@@ -1,5 +1,5 @@
 const httpStatus = require('http-status');
-const { Measure } = require('../sequelize');
+const { Measure } = require('../config/sequelize');
 const runAsyncWrapper = require('../util/asyncWrapper');
 
 const list = runAsyncWrapper(async (req, res) => {

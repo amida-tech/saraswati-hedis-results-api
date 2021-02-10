@@ -4,7 +4,7 @@ const swStats = require('swagger-stats');
 const expressWinston = require('express-winston');
 const config = require('./config');
 const winstonInstance = require('./winston');
-const routes = require('./routes/index.route');
+const routes = require('../routes/index.route');
 /* eslint-disable no-unused-vars */
 const db = require('./sequelize');
 
