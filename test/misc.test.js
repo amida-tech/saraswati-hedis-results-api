@@ -15,6 +15,7 @@ describe('## Misc', () => {
   });
 
   afterAll(async (done) => {
+    // remove seeded data for subsequent tests
     try{
       await db.Measure.destroy({ truncate: true });
       db.sequelize.close(done);
