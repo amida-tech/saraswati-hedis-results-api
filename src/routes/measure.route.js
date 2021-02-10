@@ -11,7 +11,7 @@ router.route('/')
 
 router.route('/:id')
   .get(measureCtrl.get)
-  .put(measureCtrl.update)
+  .put(validate(paramValidation.updateMeasure), measureCtrl.update)
   .delete(measureCtrl.remove);
 
 module.exports = router;

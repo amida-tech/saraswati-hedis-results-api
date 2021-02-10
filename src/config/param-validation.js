@@ -13,6 +13,7 @@ module.exports = {
   },
   updateMeasure: {
     body: Joi.object({
+      id: Joi.number(),
       name: Joi.string(),
       displayName: Joi.string(),
       eligiblePopulation: Joi.number(),

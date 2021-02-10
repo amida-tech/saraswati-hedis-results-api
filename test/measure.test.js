@@ -63,13 +63,13 @@ describe('## User APIs', () => {
 
   describe(`# PUT ${apiVersionPath}/measures/:id`, () => {
     test('should update measure details', (done) => {
-      newMeasure.displayName = 'Updated Test Measure';
+      newMeasure.displayName = 'Test Measure 2';
       testApp
         .put(`${apiVersionPath}/measures/${newMeasure.id}`)
         .send(newMeasure)
         .expect(httpStatus.OK)
         .then((res) => {
-          expect(res.body[1][0].displayName).toEqual('Updated Test Measure');
+          expect(res.body[1][0].displayName).toEqual('Test Measure 2');
           done();
         })
         .catch(done);
