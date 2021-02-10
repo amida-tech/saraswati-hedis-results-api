@@ -12,6 +12,7 @@ const sequelizeOptions = {
   dialect: 'postgres',
   port: config.postgres.port,
   host: config.postgres.host,
+  logging: false,
   pool: {
     max: 5,
     min: 0,

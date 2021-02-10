@@ -5,7 +5,7 @@ const pjson = require('../../package.json');
 const config = require('./config');
 
 const logger = createLogger({
-  level: config.logLevel,
+  level: config.env === 'test' ? [] : config.logLevel,
   transports: [
     new transports.Console(),
   ],

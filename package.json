@@ -9,7 +9,7 @@
     "debug": "cross-env nodemon --inspect-brk=9999 src/index.js",
     "lint": "eslint ./",
     "lint:fix": "eslint ./ --fix",
-    "test": "cross-env jest --runInBand",
+    "test": "cross-env jest --silent --runInBand",
     "docker:build": "docker build -t saraswati-hedis-results-api .",
     "docker:run": "docker run -p 3000:3000 saraswati-hedis-results-api"
   },
