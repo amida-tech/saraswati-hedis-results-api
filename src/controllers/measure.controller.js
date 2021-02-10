@@ -2,10 +2,10 @@ const httpStatus = require('http-status');
 const { Measure } = require('../config/sequelize');
 
 const list = async (req, res, next) => {
-  try{
+  try {
     const measures = await Measure.findAll();
     return res.send(measures);
-  } catch(e){
+  } catch (e) {
     return next(e);
   }
 };
@@ -22,7 +22,7 @@ const create = async (req, res, next) => {
       // TODO maybe just calculate percentage and rating ourselves here?
     });
     return res.send(measure);
-  } catch(e){
+  } catch (e) {
     return next(e);
   }
 };
@@ -36,7 +36,7 @@ const get = async (req, res, next) => {
       return next(e);
     }
     return res.send(measure);
-  } catch(e) {
+  } catch (e) {
     return next(e);
   }
 };
@@ -61,7 +61,7 @@ const update = async (req, res, next) => {
     }
     return res.send(updatedRecord);
   } catch (e) {
-    return next(e)
+    return next(e);
   }
 };
 
@@ -71,8 +71,8 @@ const remove = async (req, res, next) => {
       where: { id: req.params.id },
     });
     return res.send('Measure deleted');
-  } catch(e) {
-    return next(e)
+  } catch (e) {
+    return next(e);
   }
 };
 

@@ -18,14 +18,14 @@ describe('## User APIs', () => {
     db.sequelize.close(done);
   });
 
-  let newMeasure = {
+  const newMeasure = {
     name: 'test_measure',
     displayName: 'Test Measure',
     eligiblePopulation: 12343,
     included: 56578,
     percentage: 12,
-    rating: '3.5'
-  }
+    rating: '3.5',
+  };
 
   describe(`# POST ${apiVersionPath}/measures/`, () => {
     test('should create a new measure', (done) => {
@@ -40,8 +40,8 @@ describe('## User APIs', () => {
           expect(res.body.included).toEqual(newMeasure.included);
           expect(res.body.percentage).toEqual(newMeasure.percentage);
           expect(res.body.rating).toEqual(newMeasure.rating);
-          newMeasure.id = res.body.id
-          //newMeasure = res.body
+          newMeasure.id = res.body.id;
+          // newMeasure = res.body
           done();
         })
         .catch(done);
@@ -54,13 +54,12 @@ describe('## User APIs', () => {
         .get(`${apiVersionPath}/measures/`)
         .expect(httpStatus.OK)
         .then((res) => {
-          expect(Array.isArray(res.body))
+          expect(Array.isArray(res.body));
           done();
         })
         .catch(done);
     });
   });
-
 
   describe(`# PUT ${apiVersionPath}/measures/:id`, () => {
     test('should update measure details', (done) => {
@@ -108,16 +107,15 @@ describe('## User APIs', () => {
     });
   });
 
-
-    // Add proper error handling for this
-    // test('should report error with message - Not found, when user does not exist', (done) => {
-    //   testApp
-    //       .get(`${apiVersionPath}/measures/12345`)
-    //       .expect(httpStatus.NOT_FOUND)
-    //       .then((res) => {
-    //           expect(res.body.message).toEqual('Not Found');
-    //           done();
-    //       })
-    //       .catch(done);
-    // });
+  // Add proper error handling for this
+  // test('should report error with message - Not found, when user does not exist', (done) => {
+  //   testApp
+  //       .get(`${apiVersionPath}/measures/12345`)
+  //       .expect(httpStatus.NOT_FOUND)
+  //       .then((res) => {
+  //           expect(res.body.message).toEqual('Not Found');
+  //           done();
+  //       })
+  //       .catch(done);
+  // });
 });

@@ -9,12 +9,12 @@ router.get('/health-check', (req, res) => res.send('OK'));
 
 router.use('/measures', measureRoutes);
 
-router.use('/seed', (async(req, res) => {
-  try{
-    await Promise.all(seedData.map(async (record) => await db.Measure.create(record)));
+router.use('/seed', (async (req, res) => {
+  try {
+    await Promise.all(seedData.map((record) => db.Measure.create(record)));
     return res.send('Database seeded');
   } catch {
-    return res.send('Database has already been seeded')
+    return res.send('Database has already been seeded');
   }
 }));
 

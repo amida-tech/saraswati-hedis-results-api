@@ -1,9 +1,9 @@
 /* eslint-env jest */
-const request  = require('supertest');
-const httpStatus  = require('http-status');
-const app  = require('../src/config/express');
-const config  = require('../src/config/config');
-const db  = require('../src/config/sequelize');
+const request = require('supertest');
+const httpStatus = require('http-status');
+const app = require('../src/config/express');
+const config = require('../src/config/config');
+const db = require('../src/config/sequelize');
 
 const apiVersionPath = `/api/v${config.apiVersion}`;
 
@@ -16,14 +16,9 @@ describe('## Misc', () => {
 
   afterAll(async (done) => {
     // remove seeded data for subsequent tests
-    try{
-      await db.Measure.destroy({ truncate: true });
-      db.sequelize.close(done);
-    } catch(e){
-      console.log(e)
-    }
+    await db.Measure.destroy({ truncate: true });
+    db.sequelize.close(done);
   });
-
 
   describe(`# GET ${apiVersionPath}/health-check`, () => {
     test('should return OK', (done) => {
@@ -61,5 +56,4 @@ describe('## Misc', () => {
         .catch(done);
     });
   });
-
 });
