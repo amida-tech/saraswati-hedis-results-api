@@ -24,7 +24,7 @@ describe('## User APIs', () => {
     eligiblePopulation: 12343,
     included: 56578,
     percentage: 12,
-    rating: '3.5',
+    rating: 3.5,
   };
 
   describe(`# POST ${apiVersionPath}/measures/`, () => {
@@ -68,7 +68,7 @@ describe('## User APIs', () => {
           .put(`${apiVersionPath}/measures/${newMeasure.id}`)
           .send(newMeasure)
           .expect(httpStatus.OK);
-        expect(res.body[1][0].displayName).toEqual('Test Measure 2');
+        expect(res.body.displayName).toEqual('Test Measure 2');
       } finally {
         done();
       }
