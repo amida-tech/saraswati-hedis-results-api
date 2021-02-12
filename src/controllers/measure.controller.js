@@ -1,9 +1,16 @@
 const httpStatus = require('http-status');
 const { Measure } = require('../config/sequelize');
 
+// sequelize converts decimals to strings, so undoing that convert
+// https://github.com/sequelize/sequelize/issues/8019
+const stringToDecimal = (obj) => {{
+  obj.rating = +obj.rating;
+}}
+
 const list = async (req, res, next) => {
   try {
     const measures = await Measure.findAll();
+    measures.forEach(measure => stringToDecimal(measure))
     return res.send(measures);
   } catch (e) {
     return next(e);
@@ -21,6 +28,8 @@ const create = async (req, res, next) => {
       percentage: req.body.percentage,
       // TODO maybe just calculate percentage and rating ourselves here?
     });
+
+    stringToDecimal(measure)
     return res.send(measure);
   } catch (e) {
     return next(e);
@@ -35,6 +44,7 @@ const get = async (req, res, next) => {
       e.status = httpStatus.NOT_FOUND;
       return next(e);
     }
+    stringToDecimal(measure)
     return res.send(measure);
   } catch (e) {
     return next(e);
@@ -46,19 +56,25 @@ const update = async (req, res, next) => {
   const measureKeys = ['name', 'displayName', 'eligiblePopulation', 'included', 'rating', 'percentage'];
   Object.keys(req.body).forEach((key) => {
     if (measureKeys.includes(key)) {
-      potentialUpdates[key] = req.body[key];
+      if (key === 'rating'){
+        potentialUpdates[key] = +req.body[key];
+      } else {
+        potentialUpdates[key] = req.body[key];
+      }
     }
   });
   try {
-    const updatedRecord = await Measure.update(
+    const updatedRecordArray = await Measure.update(
       potentialUpdates,
       { returning: true, where: { id: req.params.id } },
     );
-    if (!updatedRecord) {
+    if (!updatedRecordArray) {
       const e = new Error('Measure does not exist');
       e.status = httpStatus.NOT_FOUND;
       return next(e);
     }
+    const updatedRecord = updatedRecordArray[1][0];
+    stringToDecimal(updatedRecord)
     return res.send(updatedRecord);
   } catch (e) {
     return next(e);

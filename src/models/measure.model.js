@@ -28,7 +28,7 @@ const measure = (sequelize, DataTypes) => {
       allowNull: false,
     },
     rating: {
-      type: DataTypes.STRING,
+      type: DataTypes.NUMERIC(2, 1),
       allowNull: false,
     },
   });
