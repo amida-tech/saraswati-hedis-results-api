@@ -14,29 +14,15 @@ const envVarsSchema = Joi.object({
   HOST: Joi.string()
     .description('Host of mock API service'),
   PORT: Joi.number()
-    .default(3000)
-    .description('Port of mock API service, defaults to 3000'),
-  UNIQUE_NAME_PG_DB: Joi.string()
+    .default(4000)
+    .description('Port of mock API service, defaults to 4000'),
+  DB_NAME: Joi.string()
     .default('hedisdb')
-    .description('Postgres database name'),
-  UNIQUE_NAME_PG_TEST_DB: Joi.string()
-    .default('hedisdb')
-    .description('Postgres database for tests'),
-  UNIQUE_NAME_PG_PORT: Joi.number()
-    .default(5432),
-  UNIQUE_NAME_PG_HOST: Joi.string()
-    .default('localhost'),
-  UNIQUE_NAME_PG_USER: Joi.string().required()
-    .default('postgres')
-    .description('Postgres username'),
-  UNIQUE_NAME_PG_PASSWD: Joi.string().allow('')
-    .default('password')
-    .description('Postgres password'),
-  UNIQUE_NAME_PG_SSL: Joi.bool()
-    .default(false)
-    .description('Enable SSL connection to PostgreSQL'),
-  UNIQUE_NAME_PG_CERT_CA: Joi.string()
-    .description('SSL certificate CA'), // Certificate itself, not a filename
+    .description('MongoDB database'),
+  DB_HOST: Joi.string()
+    .description('Host of DB'),
+  DB_PORT: Joi.number()
+    .default(27017),
 }).unknown();
 
 const { error, value: envVars } = envVarsSchema.validate(process.env);
@@ -50,14 +36,10 @@ const config = {
   host: envVars.HOST,
   port: envVars.PORT,
   apiVersion: envVars.API_VERSION,
-  postgres: {
-    db: envVars.UNIQUE_NAME_PG_DB,
-    port: envVars.UNIQUE_NAME_PG_PORT,
-    host: envVars.UNIQUE_NAME_PG_HOST,
-    user: envVars.UNIQUE_NAME_PG_USER,
-    passwd: envVars.UNIQUE_NAME_PG_PASSWD,
-    ssl: envVars.UNIQUE_NAME_PG_SSL,
-    ssl_ca_cert: envVars.UNIQUE_NAME_PG_CERT_CA,
+  mongodb: {
+    port: envVars.DB_PORT,
+    host: envVars.DB_HOST,
+    name: envVars.DB_NAME,
   },
 };
 

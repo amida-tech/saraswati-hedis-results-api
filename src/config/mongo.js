@@ -1,6 +1,6 @@
 const { MongoClient } = require('mongodb');
-
-const connectionUrl = 'mongodb://localhost:27017';
+const { mongodb } = require('./config');
+const connectionUrl = `mongodb://${mongodb.host}:${mongodb.port}`;
 const dbName = 'hedisdb';
 
 let db;
@@ -8,7 +8,7 @@ let db;
 const init = () =>
   MongoClient.connect(connectionUrl, { useNewUrlParser: true, useUnifiedTopology: true }).then((client) => {
     console.log("DB connected!")
-    db = client.db(dbName);
+    db = client.db(mongodb.name);
     // db.collection("measures").drop(function(err, delOK) {
     //   if (err) throw err;
     //   if (delOK) console.log("Collection deleted");

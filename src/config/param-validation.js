@@ -15,7 +15,7 @@ const measure = {
 
 module.exports = {
   createMeasure: measure,
-  createMeasures: {
+  createMeasureBulk: {
     body: Joi.array().items(measure)
   },
 };
