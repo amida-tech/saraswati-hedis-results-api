@@ -5,7 +5,44 @@
     "eligiblePopulation": 57955,
     "included": 40569,
     "rating": 3.5,
-    "percentage": 70
+    "expressions": {
+      "Initial Population": 41345,
+      "Telehealth Modifier Encounter": 1254,
+      "Telehealth POS Encounter": 1254,
+      "Acute Inpatient Encounter": 41345,
+      "Acute Inpatient Encounter Without Telehealth": 41345,
+      "Acute Inpatient Discharge On Discharge Claim": 1254,
+      "Diabetes Diagnosis By Medication": 1254,
+      "Frailty": 41345,
+      "Acute Inpatient With Advanced Illness": 1254,
+      "Acute Inpatient Discharge With Advanced Illness": 1254,
+      "Taking Dementia Medication": 1254,
+      "Is Living Long Term in Institution": 1254,
+      "Diabetes Exclusions": 1254,
+      "Diabetes Condition": 41345,
+      "Diabetes Condition Numerator": 41345,
+      "Diabetes Condition Denominator": 1254,
+      "HbA1c < 7": 41345
+    },
+    "improvements": {
+      "Initial Population": 12,
+      "Telehealth Modifier Encounter": 6,
+      "Telehealth POS Encounter": 8,
+      "Acute Inpatient Encounter": 10,
+      "Acute Inpatient Encounter Without Telehealth": 5,
+      "Acute Inpatient Discharge On Discharge Claim": 8,
+      "Diabetes Diagnosis By Medication": 13,
+      "Frailty": 21,
+      "Acute Inpatient With Advanced Illness": 10,
+      "Acute Inpatient Discharge With Advanced Illness": 6,
+      "Taking Dementia Medication": 17,
+      "Is Living Long Term in Institution": 15,
+      "Diabetes Exclusions": 13,
+      "Diabetes Condition": 9,
+      "Diabetes Condition Numerator": 11,
+      "Diabetes Condition Denominator": 7,
+      "HbA1c < 7": 10
+    }
   },
   {
     "name": "cdc_hba1c-lessThanEight",
@@ -13,7 +50,44 @@
     "eligiblePopulation": 51257,
     "included":  45518,
     "rating": 4,
-    "percentage": 88
+    "expressions": {
+      "Initial Population": 41345,
+      "Telehealth Modifier Encounter": 1254,
+      "Telehealth POS Encounter": 1254,
+      "Acute Inpatient Encounter": 41345,
+      "Acute Inpatient Encounter Without Telehealth": 41345,
+      "Acute Inpatient Discharge On Discharge Claim": 1254,
+      "Diabetes Diagnosis By Medication": 1254,
+      "Frailty": 41345,
+      "Acute Inpatient With Advanced Illness": 1254,
+      "Acute Inpatient Discharge With Advanced Illness": 1254,
+      "Taking Dementia Medication": 1254,
+      "Is Living Long Term in Institution": 1254,
+      "Diabetes Exclusions": 1254,
+      "Diabetes Condition": 41345,
+      "Diabetes Condition Numerator": 41345,
+      "Diabetes Condition Denominator": 1254,
+      "HbA1c < 8": 41345
+    },
+    "improvements": {
+      "Initial Population": 12,
+      "Telehealth Modifier Encounter": 6,
+      "Telehealth POS Encounter": 8,
+      "Acute Inpatient Encounter": 10,
+      "Acute Inpatient Encounter Without Telehealth": 5,
+      "Acute Inpatient Discharge On Discharge Claim": 8,
+      "Diabetes Diagnosis By Medication": 13,
+      "Frailty": 21,
+      "Acute Inpatient With Advanced Illness": 10,
+      "Acute Inpatient Discharge With Advanced Illness": 6,
+      "Taking Dementia Medication": 17,
+      "Is Living Long Term in Institution": 15,
+      "Diabetes Exclusions": 13,
+      "Diabetes Condition": 9,
+      "Diabetes Condition Numerator": 11,
+      "Diabetes Condition Denominator": 7,
+      "HbA1c < 7": 10
+    }
   },
   {
     "name": "cdc_diabetes-bp",
@@ -21,7 +95,46 @@
     "eligiblePopulation": 45692,
     "included": 16985,
     "rating": 2,
-    "percentage": 37
+    "expressions": {
+      "Initial Population": 41345,
+      "Telehealth Modifier Encounter": 1254,
+      "Telehealth POS Encounter": 1254,
+      "Acute Inpatient Encounter": 41345,
+      "Acute Inpatient Encounter Without Telehealth": 41345,
+      "Acute Inpatient Discharge On Discharge Claim": 1254,
+      "Diabetes Diagnosis By Medication": 1254,
+      "Frailty": 41345,
+      "Acute Inpatient With Advanced Illness": 1254,
+      "Acute Inpatient Discharge With Advanced Illness": 1254,
+      "Taking Dementia Medication": 1254,
+      "Is Living Long Term in Institution": 1254,
+      "Diabetes Exclusions": 1254,
+      "Diabetes Condition": 41345,
+      "Diabetes Condition Numerator": 41345,
+      "Diabetes Condition Denominator": 1254,
+      "Correct Context For BP Reading": 1254,
+      "BP < 140/90 mm Hg": 1254
+    },
+    "improvements": {
+      "Initial Population": 12,
+      "Telehealth Modifier Encounter": 6,
+      "Telehealth POS Encounter": 8,
+      "Acute Inpatient Encounter": 10,
+      "Acute Inpatient Encounter Without Telehealth": 5,
+      "Acute Inpatient Discharge On Discharge Claim": 8,
+      "Diabetes Diagnosis By Medication": 13,
+      "Frailty": 21,
+      "Acute Inpatient With Advanced Illness": 10,
+      "Acute Inpatient Discharge With Advanced Illness": 6,
+      "Taking Dementia Medication": 17,
+      "Is Living Long Term in Institution": 15,
+      "Diabetes Exclusions": 13,
+      "Diabetes Condition": 9,
+      "Diabetes Condition Numerator": 11,
+      "Diabetes Condition Denominator": 7,
+      "Correct Context For BP Reading": 6,
+      "BP < 140/90 mm Hg":8
+    }
   },
   {
     "name": "cis",
@@ -29,7 +142,32 @@
     "eligiblePopulation": 94478,
     "included": 90823,
     "rating": 5,
-    "percentage": 96
+    "expressions": {
+      "DTaP Criteria Met": 92234,
+      "Hepatitis A Criteria Met": 92234,
+      "Hepatitis B Criteria Met": 92234,
+      "HIB Criteria Met": 92234,
+      "Influenza Criteria Met": 92234,
+      "IPV Criteria Met": 92234,
+      "MMR Criteria Met": 92234,
+      "Pneumococcal Conjugate Criteria Met": 2543,
+      "Rotavirus Criteria Met": 2543,
+      "VZV Criteria Met": 92234,
+      "Denominator Exclusions": 2543
+    },
+    "improvements": {
+      "DTaP Criteria Met": 5,
+      "Hepatitis A Criteria Met": 10,
+      "Hepatitis B Criteria Met": 7,
+      "HIB Criteria Met": 8,
+      "Influenza Criteria Met": 12,
+      "IPV Criteria Met": 21,
+      "MMR Criteria Met": 13,
+      "Pneumococcal Conjugate Criteria Met": 14,
+      "Rotavirus Criteria Met": 5,
+      "VZV Criteria Met": 8,
+      "Denominator Exclusions": 23
+    }
   },
   {
     "name": "composite",
@@ -37,6 +175,11 @@
     "eligiblePopulation": 152692,
     "included": 138532,
     "rating": 4.5,
-    "percentage": 91
+    "impact": {
+      "HbA1C - Less than 7%": 23,
+      "HbA1C - Less than 8%": 25,
+      "Diabetes - Blood Pressure": 24,
+      "Childhood Immunizations": 28
+    }
   }
 ]

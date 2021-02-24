@@ -9,6 +9,10 @@ router.route('/')
   .get(measureCtrl.list)
   .post(validate(paramValidation.createMeasure), measureCtrl.create);
 
+router.route('/bulk')
+//  .post(validate(paramValidation.createMeasureBulk), measureCtrl.createBulk)
+  .post(measureCtrl.createBulk)
+
 router.route('/:id')
   .get(measureCtrl.get)
   .put(validate(paramValidation.updateMeasure), measureCtrl.update)
