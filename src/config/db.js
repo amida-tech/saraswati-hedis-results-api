@@ -8,10 +8,6 @@ const init = () =>
   MongoClient.connect(connectionUrl, { useNewUrlParser: true, useUnifiedTopology: true }).then((client) => {
     console.log("DB connected!")
     db = client.db(mongodb.name);
-    // db.collection("measures").drop(function(err, delOK) {
-    //   if (err) throw err;
-    //   if (delOK) console.log("Collection deleted");
-    // });
   });
 
 const insertMeasure = (measure) => {
