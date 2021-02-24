@@ -1,7 +1,6 @@
 const { MongoClient } = require('mongodb');
 const { mongodb } = require('./config');
 const connectionUrl = `mongodb://${mongodb.host}:${mongodb.port}`;
-const dbName = 'hedisdb';
 
 let db;
 

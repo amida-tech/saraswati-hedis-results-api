@@ -1,7 +1,7 @@
 const config = require('./config/config');
 const winstonInstance = require('./config/winston');
 const app = require('./config/express.js');
-const { init } = require('./config/mongo')
+const { init } = require('./config/db')
 
 
 init().then(() => {

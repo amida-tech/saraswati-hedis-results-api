@@ -1,4 +1,4 @@
-const { insertMeasure, insertMeasures, getMeasures } = require('../config/mongo');
+const { insertMeasure, insertMeasures, getMeasures } = require('../config/db');
 
 const list = async (req, res, next) => {
   try {
