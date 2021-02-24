@@ -4,11 +4,10 @@ const connectionUrl = `mongodb://${mongodb.host}:${mongodb.port}`;
 
 let db;
 
-const init = () =>
-  MongoClient.connect(connectionUrl, { useNewUrlParser: true, useUnifiedTopology: true }).then((client) => {
-    console.log("DB connected!")
-    db = client.db(mongodb.name);
-  });
+const init = async () => {
+  const client = await MongoClient.connect(connectionUrl, { useNewUrlParser: true, useUnifiedTopology: true });
+  db = client.db(mongodb.name);
+}
 
 const insertMeasure = (measure) => {
   const collection = db.collection('measures')
