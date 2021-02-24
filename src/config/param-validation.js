@@ -1,21 +1,23 @@
 const Joi = require('joi');
 
+const measureBody = Joi.object({
+  name: Joi.string().required(),
+  displayName: Joi.string().required(),
+  eligiblePopulation: Joi.number().required(),
+  included: Joi.number().required(),
+  rating: Joi.number().required(),
+  expressions: Joi.object(),
+  improvements: Joi.object(),
+  impact: Joi.object()
+})
+
 const measure = {
-  body: Joi.object({
-    name: Joi.string().required(),
-    displayName: Joi.string().required(),
-    eligiblePopulation: Joi.number().required(),
-    included: Joi.number().required(),
-    rating: Joi.number().required(),
-    expressions: Joi.object(),
-    improvements: Joi.object(),
-    impact: Joi.number()
-  }),
+  body: measureBody,
 }
 
 module.exports = {
   createMeasure: measure,
   createMeasureBulk: {
-    body: Joi.array().items(measure)
+    body: Joi.array().items(measureBody)
   },
 };
