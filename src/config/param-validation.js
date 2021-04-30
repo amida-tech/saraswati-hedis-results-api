@@ -6,6 +6,8 @@ const measureBody = Joi.object({
   eligiblePopulation: Joi.number().required(),
   included: Joi.number().required(),
   rating: Joi.number().required(),
+  numerator: Joi.number().required(),
+  denominator: Joi.number().required(),
   expressions: Joi.object(),
   improvements: Joi.object(),
   impact: Joi.object()
