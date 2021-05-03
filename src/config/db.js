@@ -25,7 +25,16 @@ const insertMeasure = (measure) => {
 
 const insertMeasures = (measures) => {
   const collection = db.collection("measures");
-  return collection.insertMany(measures);
+  try {
+    const result = measures.map((measure) =>
+      collection.replaceOne({ _id: measure.displayName }, measure, {
+        upsert: true,
+      })
+    );
+    return result;
+  } catch (e) {
+    console.log(e);
+  }
 };
 
 const getMeasures = () => {
