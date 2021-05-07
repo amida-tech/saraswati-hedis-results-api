@@ -15,7 +15,7 @@ const init = async () => {
 const insertMeasure = (measure) => {
   const collection = db.collection("measures");
   try {
-    return collection.replaceOne({ _id: measure.displayName }, measure, {
+    return collection.replaceOne({ _id: measure.name }, measure, {
       upsert: true,
     });
   } catch (e) {
@@ -24,17 +24,7 @@ const insertMeasure = (measure) => {
 };
 
 const insertMeasures = (measures) => {
-  const collection = db.collection("measures");
-  try {
-    const result = measures.map((measure) =>
-      collection.replaceOne({ _id: measure.displayName }, measure, {
-        upsert: true,
-      })
-    );
-    return result;
-  } catch (e) {
-    console.log(e);
-  }
+  return measures.map((measure) => insertMeasure(measure))
 };
 
 const getMeasures = () => {
