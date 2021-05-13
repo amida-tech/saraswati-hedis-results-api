@@ -3,7 +3,7 @@ const { insertMeasure, insertMeasures, getMeasures } = require('../config/db');
 const list = async (req, res, next) => {
   try {
     const measures = await getMeasures();
-    //measures.forEach(measure => stringToDecimal(measure))
+    // measures.forEach(measure => stringToDecimal(measure))
     return res.send(measures);
   } catch (e) {
     return next(e);

@@ -10,6 +10,6 @@ router.route('/')
   .post(validate(paramValidation.createMeasure), measureCtrl.create);
 
 router.route('/bulk')
-  .post(validate(paramValidation.createMeasureBulk), measureCtrl.createBulk)
+  .post(validate(paramValidation.createMeasureBulk), measureCtrl.createBulk);
 
 module.exports = router;
