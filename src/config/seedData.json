@@ -22,9 +22,9 @@
       "Is Living Long Term in Institution": 4,
       "Diabetes Exclusions": 2,
       "Denominator": 10,
-      "Diabetes Condition": 3,
-      "Diabetes Condition Numerator": 3,
-      "Diabetes Condition Denominator": 9,
+      "Prevantable Complications Condition": 3,
+      "Prevantable Complications Numerator": 3,
+      "Prevantable Complications Denominator": 9,
       "HbA1c < 7": 3,
       "Numerator": 3
     },
@@ -41,10 +41,10 @@
       "Acute Inpatient Discharge With Advanced Illness": 6,
       "Taking Dementia Medication": 17,
       "Is Living Long Term in Institution": 15,
-      "Diabetes Exclusions": 13,
-      "Diabetes Condition": 9,
-      "Diabetes Condition Numerator": 11,
-      "Diabetes Condition Denominator": 7,
+      "Prevantable Complications Exclusions": 13,
+      "Prevantable Complications Condition": 9,
+      "Prevantable Complications Numerator": 11,
+      "Prevantable Complications Denominator": 7,
       "HbA1c < 7": 10
     }
   },
@@ -79,9 +79,9 @@
       "Taking Dementia Medication": 17,
       "Is Living Long Term in Institution": 15,
       "Diabetes Exclusions": 13,
-      "Diabetes Condition": 9,
-      "Diabetes Condition Numerator": 11,
-      "Diabetes Condition Denominator": 7,
+      "Prenatal Postpartum Condition": 9,
+      "Prenatal Postpartum Numerator": 11,
+      "Prenatal Postpartum Denominator": 7,
       "HbA1c < 7": 10
     }
   },
@@ -115,10 +115,10 @@
       "Acute Inpatient Discharge With Advanced Illness": 6,
       "Taking Dementia Medication": 17,
       "Is Living Long Term in Institution": 15,
-      "Diabetes Exclusions": 13,
-      "Diabetes Condition": 9,
-      "Diabetes Condition Numerator": 11,
-      "Diabetes Condition Denominator": 7,
+      "Asthma Exclusions": 13,
+      "Asthma Condition": 9,
+      "Asthma Condition Numerator": 11,
+      "Asthma Condition Denominator": 7,
       "Correct Context For BP Reading": 6,
       "BP < 140/90 mm Hg":8
     }
@@ -133,8 +133,8 @@
     "denominator": 9,
     "expressions": {
       "DTaP Criteria Met": 2,
-      "Hepatitis A Criteria Met": 3,
-      "Hepatitis B Criteria Met": 4,
+      "Depression A Criteria Met": 3,
+      "Depression B Criteria Met": 4,
       "HIB Criteria Met": 3,
       "Influenza Criteria Met": 7,
       "IPV Criteria Met": 9,
@@ -146,8 +146,8 @@
     },
     "improvements": {
       "DTaP Criteria Met": 5,
-      "Hepatitis A Criteria Met": 10,
-      "Hepatitis B Criteria Met": 7,
+      "Depression A Criteria Met": 10,
+      "Depression B Criteria Met": 7,
       "HIB Criteria Met": 8,
       "Influenza Criteria Met": 12,
       "IPV Criteria Met": 21,
