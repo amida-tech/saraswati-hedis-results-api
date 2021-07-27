@@ -32,4 +32,32 @@ const getMeasures = () => {
   return collection.find({}).toArray();
 };
 
-module.exports = { init, insertMeasure, insertMeasures, getMeasures };
+//create collection for simulated hedis data
+const insertSimulatedHedis = (simulated_data) => {
+  const collection = db.collection ("simulated_data");
+  try{
+    return collection.findOneAndReplace({ }, simulated_data, {
+      upsert: true,
+    });
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+// insert predictions into the 'simulated_data' collection as a new document
+const insertPredictions = (predictions) => {
+  const collection = db.collection ("simulated_data");
+  try{
+    return collection.insert(predictions);
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+const getSimulatedHedis = () => {
+  const collection = db.collection("simulated_data");
+  return collection.find({}).toArray();
+};
+
+
+module.exports = { init, insertMeasure, insertMeasures, getMeasures, insertSimulatedHedis, insertPredictions, getSimulatedHedis };
