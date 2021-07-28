@@ -44,20 +44,28 @@ const insertSimulatedHedis = (simulated_data) => {
   }
 };
 
-// insert predictions into the 'simulated_data' collection as a new document
-const insertPredictions = (predictions) => {
-  const collection = db.collection ("simulated_data");
-  try{
-    return collection.insert(predictions);
-  } catch (e) {
-    console.log(e);
-  }
-};
-
 const getSimulatedHedis = () => {
   const collection = db.collection("simulated_data");
   return collection.find({}).toArray();
 };
 
 
-module.exports = { init, insertMeasure, insertMeasures, getMeasures, insertSimulatedHedis, insertPredictions, getSimulatedHedis };
+//create collection for predictions
+const insertPredictions = (predictions) => {
+  const collection = db.collection ("model_predictions");
+  try{
+    return collection.findOneAndReplace({ }, predictions, {
+      upsert: true,
+    });
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+const getPredictions = () => {
+  const collection = db.collection("model_predictions");
+  return collection.find({}).toArray();
+};
+
+
+module.exports = { init, insertMeasure, insertMeasures, getMeasures, insertSimulatedHedis, getSimulatedHedis, insertPredictions, getPredictions };
