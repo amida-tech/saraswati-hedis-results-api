@@ -7,6 +7,7 @@ COPY ./yarn.lock .
 COPY .env.example /app/.env 
 COPY ./src ./src
 
+
 RUN yarn
 EXPOSE 4000
 CMD [ "yarn", "start" ]
