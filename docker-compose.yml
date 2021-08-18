@@ -1,0 +1,17 @@
+version: "3"
+services:
+    database:
+        hostname: mongodb
+        container_name: mongodb
+        image: mongo:4.4
+        #environment:
+        #  MONGO_INITDB_ROOT_USERNAME: root
+        #  MONGO_INITDB_ROOT_PASSWORD: rootpassword
+        ports:
+          - 27017:27017
+    api:
+        build: .
+        environment:
+            DB_HOST: mongodb
+        ports:
+        - "4000:4000"
