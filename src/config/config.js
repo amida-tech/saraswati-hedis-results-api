@@ -23,6 +23,10 @@ const envVarsSchema = Joi.object({
     .description('Host of DB'),
   DB_PORT: Joi.number()
     .default(27017),
+  KAFKA_BROKER: Joi.string()
+    .default('broker:29092'),
+  KAFKA_QUEUE: Joi.string()
+    .default('fhir-logged'),
 }).unknown();
 
 const { error, value: envVars } = envVarsSchema.validate(process.env);
@@ -41,6 +45,10 @@ const config = {
     host: envVars.DB_HOST,
     name: envVars.DB_NAME,
   },
+  kafkaConfig: {
+    broker: envVars.KAFKA_BROKER,
+    queue: envVars.KAFKA_QUEUE,
+  }
 };
 
 module.exports = config;
