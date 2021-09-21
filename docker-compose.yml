@@ -12,3 +12,7 @@ services:
             DB_HOST: mongodb
         ports:
         - "4000:4000"
+networks:
+  default:
+    external: true
+    name: cp-all-in-one-community_default
