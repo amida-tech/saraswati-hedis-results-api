@@ -1,0 +1,6 @@
+FROM node:14.18
+
+COPY package.json .package.json
+RUN yarn
+
+RUN /usr/sbin/useradd -m -s /bin/bash vscode
