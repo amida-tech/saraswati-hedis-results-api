@@ -1,6 +1,7 @@
 FROM node:14.18
+USER node
 
-COPY package.json .package.json
+COPY --chown=node:node package.json .package.json
 RUN yarn
 
-RUN /usr/sbin/useradd -m -s /bin/bash vscode
+#RUN /usr/sbin/useradd -m -s /bin/bash vscode
