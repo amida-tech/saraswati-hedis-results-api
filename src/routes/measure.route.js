@@ -12,4 +12,12 @@ router.route('/')
 router.route('/bulk')
   .post(validate(paramValidation.createMeasureBulk), measureCtrl.createBulk);
 
+router.route('/simulated_hedis')
+  .get(measureCtrl.displayHedis)
+  .post(measureCtrl.createSimulatedHedis);
+
+router.route('/predictions')
+  .get(measureCtrl.displayPredictions)
+  .post(measureCtrl.createPredictions);
+
 module.exports = router;

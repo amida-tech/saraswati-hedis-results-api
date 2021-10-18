@@ -1,4 +1,4 @@
-const { insertMeasure, insertMeasures, getMeasures } = require('../config/db');
+const { insertMeasure, insertMeasures, getMeasures, insertSimulatedHedis, insertPredictions, getSimulatedHedis, getPredictions } = require('../config/db');
 
 const list = async (req, res, next) => {
   try {
@@ -29,8 +29,50 @@ const createBulk = async (req, res, next) => {
   }
 };
 
+const displayHedis = async (req, res, next) => {
+  try {
+    const simulations = await getSimulatedHedis();
+    return res.send(simulations);
+  } catch (e) {
+    return next(e);
+  }
+};
+
+const createSimulatedHedis = async (req, res, next) => {
+  try {
+    const simulations = await insertSimulatedHedis(req.body);
+    return res.send(simulations);
+  } catch (e) {
+    return next (e);
+  }
+};
+
+
+const displayPredictions = async (req, res, next) => {
+  try {
+    const predictions = await getPredictions();
+    return res.send(predictions);
+  } catch (e) {
+    return next(e);
+  }
+};
+
+const createPredictions = async (req, res, next) => {
+  try {
+    const predictions = await insertPredictions(req.body);
+    return res.send(predictions);
+  } catch (e) {
+    return next(e);
+  }
+};
+
+
 module.exports = {
   list,
   create,
   createBulk,
+  displayHedis,
+  createSimulatedHedis,
+  displayPredictions,
+  createPredictions,
 };

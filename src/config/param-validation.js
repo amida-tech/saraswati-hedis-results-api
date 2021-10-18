@@ -13,9 +13,11 @@ const measureBody = Joi.object({
   impact: Joi.object()
 })
 
+
 const measure = {
   body: measureBody,
 }
+
 
 module.exports = {
   createMeasure: measure,
