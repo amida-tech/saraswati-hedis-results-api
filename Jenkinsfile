@@ -37,7 +37,7 @@ spec:
     }
 
     stages {
-        stage('Install Dependencies for Jenkins') {
+        stage('Jenkins Install Dependencies') {
             steps {
                 echo 'Installing..'
                 container('node') {
