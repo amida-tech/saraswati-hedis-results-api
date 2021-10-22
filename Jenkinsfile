@@ -58,7 +58,7 @@ spec:
                             istanbulCoberturaAdapter(
                                 path: 'coverage/clover.xml', 
                                 thresholds: [
-                                    [thresholdTarget: 'Line', unhealthyThreshold: 90.0, unstableThreshold: 85.0]
+                                    [thresholdTarget: 'Line', unhealthyThreshold: 90.0, unstableThreshold: 10.0]
                                 ]
                             )
                         ], 
