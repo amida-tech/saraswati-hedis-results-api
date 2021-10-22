@@ -45,8 +45,30 @@ spec:
                 }
             }
         }
-        stage('Build Production with Kaniko') {
-            when { 
+        stage('Jenkins Test') {
+            steps {
+                echo 'Testing..'
+                container('node') {
+                    sh 'yarn test'
+                    publishCoverage(
+                        failUnstable: true,
+                        failNoReports: true,
+                        skipPublishingChecks: true,
+                        adapters: [
+                            istanbulCoberturaAdapter(
+                                path: 'coverage/clover.xml', 
+                                thresholds: [
+                                    [thresholdTarget: 'Line', unhealthyThreshold: 90.0, unstableThreshold: 85.0]
+                                ]
+                            )
+                        ], 
+                        sourceFileResolver: sourceFiles('NEVER_STORE')
+                    )
+                }
+            }
+        }
+        /*stage('Build Production with Kaniko') {
+            when {
                 expression {env.GIT_BRANCH == 'master'} 
             }
             steps {
@@ -68,6 +90,6 @@ spec:
                 '''
                 }
             }
-        }
+        }*/
     }
 }
