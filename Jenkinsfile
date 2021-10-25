@@ -58,7 +58,7 @@ spec:
                             istanbulCoberturaAdapter(
                                 path: 'coverage/cobertura-coverage.xml', 
                                 thresholds: [
-                                    [thresholdTarget: 'Line', unhealthyThreshold: 15.0, unstableThreshold: 10.0]
+                                    [thresholdTarget: 'Line', unhealthyThreshold: 90.0, unstableThreshold: 85.0]
                                 ]
                             )
                         ], 
