@@ -67,7 +67,7 @@ spec:
                 }
             }
         }
-        /*stage('Build Production with Kaniko') {
+        stage('Build Production with Kaniko') {
             when {
                 expression {env.GIT_BRANCH == 'master'} 
             }
@@ -90,6 +90,6 @@ spec:
                 '''
                 }
             }
-        }*/
+        }
     }
 }
