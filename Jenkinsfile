@@ -56,7 +56,7 @@ spec:
                         skipPublishingChecks: true,
                         adapters: [
                             cobertura(
-                                path: 'coverage/clover.xml', 
+                                path: 'coverage/cobertura-coverage.xml', 
                                 thresholds: [
                                     [thresholdTarget: 'Instruction', unhealthyThreshold: 15.0, unstableThreshold: 10.0]
                                 ]
