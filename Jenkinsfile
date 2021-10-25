@@ -55,7 +55,7 @@ spec:
                         failNoReports: true,
                         skipPublishingChecks: true,
                         adapters: [
-                            jacocoAdapter(
+                            cobertura(
                                 path: 'coverage/clover.xml', 
                                 thresholds: [
                                     [thresholdTarget: 'Line', unhealthyThreshold: 15.0, unstableThreshold: 10.0]
