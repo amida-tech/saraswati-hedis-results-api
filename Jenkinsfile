@@ -55,7 +55,7 @@ spec:
                         failNoReports: true,
                         skipPublishingChecks: true,
                         adapters: [
-                            cobertura(
+                            istanbulCoberturaAdapter(
                                 path: 'coverage/cobertura-coverage.xml', 
                                 thresholds: [
                                     [thresholdTarget: 'Instruction', unhealthyThreshold: 15.0, unstableThreshold: 10.0]
