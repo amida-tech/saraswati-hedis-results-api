@@ -58,7 +58,7 @@ spec:
                             cobertura(
                                 path: 'coverage/clover.xml', 
                                 thresholds: [
-                                    [thresholdTarget: 'Line', unhealthyThreshold: 15.0, unstableThreshold: 10.0]
+                                    [thresholdTarget: 'Instruction', unhealthyThreshold: 15.0, unstableThreshold: 10.0]
                                 ]
                             )
                         ], 
