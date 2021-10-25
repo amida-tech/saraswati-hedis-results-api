@@ -55,10 +55,10 @@ spec:
                         failNoReports: true,
                         skipPublishingChecks: true,
                         adapters: [
-                            istanbulCoberturaAdapter(
+                            jacocoAdapter(
                                 path: 'coverage/clover.xml', 
                                 thresholds: [
-                                    [thresholdTarget: 'Report', unhealthyThreshold: 15.0, unstableThreshold: 10.0]
+                                    [thresholdTarget: 'Lines', unhealthyThreshold: 15.0, unstableThreshold: 10.0]
                                 ]
                             )
                         ], 
@@ -81,7 +81,7 @@ spec:
         }
         stage('Build Develop with Kaniko') {
             when { 
-                expression {env.GIT_BRANCH != 'master'} 
+                expression {env.GIT_BRANCH == 'develop'} 
             }
             steps {
                 container(name: 'kaniko', shell: '/busybox/sh') {
