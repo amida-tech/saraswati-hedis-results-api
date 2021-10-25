@@ -58,7 +58,7 @@ spec:
                             jacocoAdapter(
                                 path: 'coverage/clover.xml', 
                                 thresholds: [
-                                    [thresholdTarget: 'Lines', unhealthyThreshold: 15.0, unstableThreshold: 10.0]
+                                    [thresholdTarget: 'Line', unhealthyThreshold: 15.0, unstableThreshold: 10.0]
                                 ]
                             )
                         ], 
