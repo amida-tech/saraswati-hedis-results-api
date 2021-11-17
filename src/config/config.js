@@ -26,7 +26,7 @@ const envVarsSchema = Joi.object({
   KAFKA_BROKER: Joi.string()
     .default('broker:29092'),
   KAFKA_QUEUE: Joi.string()
-    .default('fhir-logged'),
+    .default('hedis-reports'),
 }).unknown();
 
 const { error, value: envVars } = envVarsSchema.validate(process.env);

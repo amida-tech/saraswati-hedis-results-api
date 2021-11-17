@@ -8,8 +8,14 @@ services:
           - 27017:27017
     api:
         build: .
+        image: amidatech/saraswati-hedis-results-api
+        container_name: saraswati-hedis-api
         environment:
             DB_HOST: mongodb
+            DB_NAME: hedisdb
+            DB_PORT: 27017
+            KAFKA_BROKER: broker:29092
+            KAFKA_QUEUE: hedis-reports
         ports:
         - "4000:4000"
 networks:
