@@ -14,20 +14,15 @@ async function kafkaRunner() {
     await consumer.connect()
 
     await consumer.subscribe({ topic: config.kafkaConfig.queue, fromBeginning: false })
-    console.log(">>>>>>>>>> Config");
-    console.log(JSON.stringify(config));
     await consumer.run({
         eachMessage: async ({ topic, partition, message }) => {
-            console.log(">>>>>>>>>> Hello, this is a message")
             if (message.value.isArray) {
-                console.log(">>>>>>>>>>Trynna send an array value to the mongodb")
                 measureCtrl.createBulk(message.value)
                 console.log({
                     value: message.value.toString(),
                 })
             }
             else {
-                console.log(">>>>>>>>>> trynna send a non-array value to the mongodb")
                 measureCtrl.create(message.value)
                 console.log({
                     value: message.value.toString(),
