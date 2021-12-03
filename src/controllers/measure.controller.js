@@ -1,4 +1,7 @@
-const { insertMeasure, insertMeasures, getMeasures, insertSimulatedHedis, insertPredictions, getSimulatedHedis, getPredictions } = require('../config/db');
+const {
+  insertMeasure, insertMeasures, getMeasures, insertSimulatedHedis,
+  insertPredictions, getSimulatedHedis, getPredictions,
+} = require('../config/db');
 
 const list = async (req, res, next) => {
   try {
@@ -65,7 +68,6 @@ const createPredictions = async (req, res, next) => {
     return next(e);
   }
 };
-
 
 module.exports = {
   list,

@@ -1,5 +1,8 @@
-const { MongoClient } = require("mongodb");
-const { mongodb } = require("./config");
+import 'regenerator-runtime/runtime';
+
+const { MongoClient } = require('mongodb');
+const { mongodb } = require('./config');
+
 const connectionUrl = `mongodb://${mongodb.host}:${mongodb.port}`;
 
 let db;
@@ -13,7 +16,7 @@ const init = async () => {
 };
 
 const insertMeasure = (measure) => {
-  const collection = db.collection("measures");
+  const collection = db.collection('measures');
   try {
     return collection.replaceOne({ _id: measure.name }, measure, {
       upsert: true,
@@ -24,18 +27,18 @@ const insertMeasure = (measure) => {
 };
 
 const insertMeasures = (measures) => {
-  return measures.map((measure) => insertMeasure(measure))
+  return measures.map((measure) => insertMeasure(measure));
 };
 
 const getMeasures = () => {
-  const collection = db.collection("measures");
+  const collection = db.collection('measures');
   return collection.find({}).toArray();
 };
 
 //create collection for simulated hedis data
 const insertSimulatedHedis = (simulated_data) => {
-  const collection = db.collection ("simulated_data");
-  try{
+  const collection = db.collection('simulated_data');
+  try {
     return collection.findOneAndReplace({ }, simulated_data, {
       upsert: true,
     });
@@ -45,15 +48,14 @@ const insertSimulatedHedis = (simulated_data) => {
 };
 
 const getSimulatedHedis = () => {
-  const collection = db.collection("simulated_data");
+  const collection = db.collection('simulated_data');
   return collection.find({}).toArray();
 };
 
-
 //create collection for predictions
 const insertPredictions = (predictions) => {
-  const collection = db.collection ("model_predictions");
-  try{
+  const collection = db.collection('model_predictions');
+  try {
     return collection.findOneAndReplace({ }, predictions, {
       upsert: true,
     });
@@ -63,9 +65,8 @@ const insertPredictions = (predictions) => {
 };
 
 const getPredictions = () => {
-  const collection = db.collection("model_predictions");
+  const collection = db.collection('model_predictions');
   return collection.find({}).toArray();
 };
-
 
 module.exports = { init, insertMeasure, insertMeasures, getMeasures, insertSimulatedHedis, getSimulatedHedis, insertPredictions, getPredictions };
