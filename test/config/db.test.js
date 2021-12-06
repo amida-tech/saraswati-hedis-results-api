@@ -1,5 +1,4 @@
 /* eslint-env jest */
-const { MongoClient } = require('mongodb');
 const fs = require('fs');
 const path = require('path');
 const {
@@ -9,16 +8,21 @@ const {
 
 const data = JSON.parse(fs.readFileSync(`${path.resolve()}/test/resources/bulk-data.json`));
 
+const found = {
+  toArray: jest.fn(() => 'test'),
+};
+
+const collection = {
+  replaceOne: jest.fn(() => 'test'),
+  findOneAndReplace: jest.fn(() => 'test'),
+  find: jest.fn(() => found),
+};
+
 describe('## db.js', () => {
-  let connection;
   let db;
 
   beforeAll(async () => {
-    connection = await MongoClient.connect(global.__MONGO_URI__, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
-    db = await connection.db(global.__MONGO_DB_NAME__);
+    db = { collection: jest.fn(() => collection) };
     initTest(db);
   });
 
@@ -77,13 +81,5 @@ describe('## db.js', () => {
       const test = getPredictions();
       expect(test).toBeTruthy();
     });
-  });
-
-  afterAll(async (done) => {
-    try {
-      await connection.close();
-    } finally {
-      done();
-    }
   });
 });
