@@ -14,10 +14,15 @@ describe('## Misc', () => {
   });
 
   describe(`# GET ${apiVersionPath}/health-check`, () => {
-    test('should return OK', async () => {
-      await testApp
-        .get(`${apiVersionPath}/health-check`)
-        .expect(httpStatus.OK);
+    test('should return OK', async (done) => {
+      try {
+        const res = await testApp
+          .get(`${apiVersionPath}/health-check`)
+          .expect(httpStatus.OK);
+        expect(res.text).toEqual('OK');
+      } finally {
+        done();
+      }
     });
   });
 });

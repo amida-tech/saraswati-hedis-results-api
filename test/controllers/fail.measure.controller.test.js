@@ -45,7 +45,7 @@ jest.mock('../../src/config/db', () => {
   };
 });
 
-describe('## measure.controller.js', () => {
+describe('## measure.controller.js exceptions', () => {
   describe('Test List function', () => {
     it('Should should catch error and call next', async () => {
       const next = jest.fn();

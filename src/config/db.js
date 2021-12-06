@@ -7,6 +7,10 @@ const connectionUrl = `mongodb://${mongodb.host}:${mongodb.port}`;
 
 let db;
 
+const initTest = (mockDb) => {
+  db = mockDb;
+};
+
 const init = async () => {
   const client = await MongoClient.connect(connectionUrl, {
     useNewUrlParser: true,
@@ -69,4 +73,4 @@ const getPredictions = () => {
   return collection.find({}).toArray();
 };
 
-module.exports = { init, insertMeasure, insertMeasures, getMeasures, insertSimulatedHedis, getSimulatedHedis, insertPredictions, getPredictions };
+module.exports = { init, insertMeasure, insertMeasures, getMeasures, insertSimulatedHedis, getSimulatedHedis, insertPredictions, getPredictions, initTest };
