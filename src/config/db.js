@@ -1,5 +1,3 @@
-import 'regenerator-runtime/runtime';
-
 const { MongoClient } = require('mongodb');
 const { mongodb } = require('./config');
 

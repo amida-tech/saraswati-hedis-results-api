@@ -14,7 +14,6 @@
     "docker:run": "docker run -p 3000:3000 saraswati-hedis-results-api"
   },
   "jest": {
-    "preset": "@shelf/jest-mongodb",
     "coverageReporters": [
       "cobertura"
     ]
@@ -41,8 +40,6 @@
     "winston-json-formatter": "^0.10.0"
   },
   "devDependencies": {
-    "@babel/preset-env": "^7.12.13",
-    "@shelf/jest-mongodb": "^2.1.0",
     "cross-env": "^7.0.3",
     "eslint": "^7.18.0",
     "eslint-config-airbnb-base": "^14.2.1",
