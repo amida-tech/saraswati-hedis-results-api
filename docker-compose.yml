@@ -9,7 +9,7 @@ services:
     api:
         build: .
         image: amidatech/saraswati-hedis-results-api
-        container_name: saraswati-hedis-api
+        container_name: saraswati-hedis-results-api
         environment:
             DB_HOST: mongodb
             DB_NAME: hedisdb
