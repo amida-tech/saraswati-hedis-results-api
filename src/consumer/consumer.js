@@ -18,15 +18,9 @@ async function kafkaRunner() {
         eachMessage: async ({ topic, partition, message }) => {
             if (message.value.isArray) {
                 measureCtrl.createBulk(message.value)
-                console.log({
-                    value: message.value.toString(),
-                })
             }
             else {
                 measureCtrl.create(message.value)
-                console.log({
-                    value: message.value.toString(),
-                })
             }
         },
     })
