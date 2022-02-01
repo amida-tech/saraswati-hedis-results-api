@@ -6,3 +6,6 @@
 .bash_history
 .ssh
 /coverage
+.npm
+.config
+.cache
