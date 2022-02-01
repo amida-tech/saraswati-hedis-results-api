@@ -5,7 +5,7 @@ const measureCtrl = require('../controllers/measure.controller');
 
 const kafka = new Kafka({
     clientId: 'cql-execution',
-    brokers: [config.kafkaConfig.broker, 'broker:29093']
+    brokers: [config.kafkaConfig.broker]
 })
 
 async function kafkaRunner() {

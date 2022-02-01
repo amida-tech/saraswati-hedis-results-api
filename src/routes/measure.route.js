@@ -20,4 +20,7 @@ router.route('/predictions')
   .get(measureCtrl.displayPredictions)
   .post(measureCtrl.createPredictions);
 
+router.route('/search')
+  .get(measureCtrl.search)
+
 module.exports = router;
