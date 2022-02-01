@@ -1,5 +1,6 @@
 const Joi = require('joi');
 const dotenv = require('dotenv');
+const util = require('./config-util');
 
 dotenv.config();
 
@@ -23,16 +24,17 @@ const envVarsSchema = Joi.object({
     .description('Host of DB'),
   DB_PORT: Joi.number()
     .default(27017),
-  KAFKA_BROKER: Joi.string()
+  KAFKA_BROKERS: Joi.string()
     .default('broker:29092'),
   KAFKA_QUEUE: Joi.string()
-    .default('hedis-reports'),
+    .default('hedis-measures'),
 }).unknown();
 
 const { error, value: envVars } = envVarsSchema.validate(process.env);
 if (error) {
   throw new Error(`Config validation error: ${error.message}`);
 }
+const arrayDelimiter = util.getDelimiter(envVars.KAFKA_BROKERS);
 
 const config = {
   env: envVars.NODE_ENV,
@@ -46,7 +48,7 @@ const config = {
     name: envVars.DB_NAME,
   },
   kafkaConfig: {
-    broker: envVars.KAFKA_BROKER,
+    brokers: envVars.KAFKA_BROKERS.replace(/[["'\]]/g, '').split(arrayDelimiter),
     queue: envVars.KAFKA_QUEUE,
   }
 };
