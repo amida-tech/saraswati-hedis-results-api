@@ -1,5 +1,6 @@
 const { MongoClient } = require('mongodb');
 const { mongodb } = require('./config');
+const logger = require('./winston');
 
 const connectionUrl = `mongodb://${mongodb.host}:${mongodb.port}`;
 
@@ -17,10 +18,13 @@ const init = async () => {
   db = client.db(mongodb.name);
 };
 
-const insertMeasure = (measure) => {
+const insertMeasure = async (measure) => {
   const collection = db.collection('measures');
   try {
-    return collection.replaceOne({ _id: measure.name }, measure, {
+    const countOfRecords = await collection.countDocuments({ 'memberId': measure.memberId });
+    const recordId = `${measure.memberId}-${measure.measurementType}-${countOfRecords}`;
+    logger.info('Upserting new record with Id: ' + recordId);
+    return collection.replaceOne({ _id: recordId }, measure, {
       upsert: true,
     });
   } catch (e) {
@@ -37,6 +41,15 @@ const getMeasures = () => {
   return collection.find({}).toArray();
 };
 
+const searchMeasures = (query) => {
+  const collection = db.collection('measures');
+  try {
+    return collection.find(query).toArray();
+  } catch(e) {
+    logger.error(e);
+  }
+}
+
 //create collection for simulated hedis data
 const insertSimulatedHedis = (simulated_data) => {
   const collection = db.collection('simulated_data');
@@ -45,7 +58,7 @@ const insertSimulatedHedis = (simulated_data) => {
       upsert: true,
     });
   } catch (e) {
-    console.log(e);
+    logger.error(e);
   }
 };
 
@@ -62,7 +75,7 @@ const insertPredictions = (predictions) => {
       upsert: true,
     });
   } catch (e) {
-    console.log(e);
+    logger.error(e);
   }
 };
 
@@ -71,4 +84,4 @@ const getPredictions = () => {
   return collection.find({}).toArray();
 };
 
-module.exports = { init, insertMeasure, insertMeasures, getMeasures, insertSimulatedHedis, getSimulatedHedis, insertPredictions, getPredictions, initTest };
+module.exports = { init, insertMeasure, insertMeasures, getMeasures, insertSimulatedHedis, getSimulatedHedis, insertPredictions, getPredictions, initTest, searchMeasures };

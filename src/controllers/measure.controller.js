@@ -1,6 +1,6 @@
 const {
   insertMeasure, insertMeasures, getMeasures, insertSimulatedHedis,
-  insertPredictions, getSimulatedHedis, getPredictions,
+  insertPredictions, getSimulatedHedis, getPredictions, searchMeasures
 } = require('../config/db');
 
 const logger = require('../config/winston');
@@ -71,8 +71,12 @@ const createPredictions = async (req, res, next) => {
 };
 
 const search = async (req, res, next) => {
-  logger.info('search called with: ' + req.query);
-  res.send(JSON.stringify(req.query));
+  try {
+    const search = await searchMeasures(req.query);
+    return res.send(search);
+  } catch (e) {
+    return next(e);
+  }
 }
 
 module.exports = {
