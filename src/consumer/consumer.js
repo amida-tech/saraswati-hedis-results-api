@@ -20,9 +20,7 @@ async function kafkaRunner() {
     await consumer.subscribe({ topic: config.kafkaConfig.queue, fromBeginning: false })
     await consumer.run({
         eachMessage: async ({ topic, partition, message }) => {
-            console.log('Message received.');
             var jsonObject = JSON.parse(message.value.toString())
-            console.log(message.value.toString());
             if (jsonObject !== undefined && Array.isArray(jsonObject)) {
                 insertMeasures(jsonObject);
             }
