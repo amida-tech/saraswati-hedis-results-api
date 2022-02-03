@@ -1,7 +1,10 @@
 const { Kafka } = require('kafkajs')
 const config = require("../config/config");
 const paramValidation = require('../config/param-validation');
-const measureCtrl = require('../controllers/measure.controller');
+
+const {
+    insertMeasure, insertMeasures,
+  } = require('../config/db');
 
 const kafka = new Kafka({
     clientId: 'cql-execution',
@@ -18,11 +21,13 @@ async function kafkaRunner() {
     await consumer.run({
         eachMessage: async ({ topic, partition, message }) => {
             console.log('Message received.');
-            if (message.value.isArray) {
-                measureCtrl.createBulk(message.value)
+            var jsonObject = JSON.parse(message.value.toString())
+            console.log(message.value.toString());
+            if (jsonObject !== undefined && Array.isArray(jsonObject)) {
+                insertMeasures(jsonObject);
             }
             else {
-                measureCtrl.create(message.value)
+                insertMeasure(jsonObject);
             }
         },
     })
