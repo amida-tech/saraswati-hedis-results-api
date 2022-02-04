@@ -1,26 +1,31 @@
 const { Kafka } = require('kafkajs')
 const config = require("../config/config");
 const paramValidation = require('../config/param-validation');
-const measureCtrl = require('../controllers/measure.controller');
+
+const {
+    insertMeasure, insertMeasures,
+  } = require('../config/db');
 
 const kafka = new Kafka({
     clientId: 'cql-execution',
-    brokers: [config.kafkaConfig.broker, 'broker:29093']
+    brokers: config.kafkaConfig.brokers
 })
 
+console.log('Running now...');
 async function kafkaRunner() {
-    const consumer = kafka.consumer({ groupId: 'hedis-measures' })
+    const consumer = kafka.consumer({ groupId: config.kafkaConfig.queue })
 
     await consumer.connect()
-
+    
     await consumer.subscribe({ topic: config.kafkaConfig.queue, fromBeginning: false })
     await consumer.run({
         eachMessage: async ({ topic, partition, message }) => {
-            if (message.value.isArray) {
-                measureCtrl.createBulk(message.value)
+            var jsonObject = JSON.parse(message.value.toString())
+            if (jsonObject !== undefined && Array.isArray(jsonObject)) {
+                insertMeasures(jsonObject);
             }
             else {
-                measureCtrl.create(message.value)
+                insertMeasure(jsonObject);
             }
         },
     })

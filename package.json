@@ -30,7 +30,7 @@
     "joi": "^17.3.0",
     "kafkajs": "^1.15.0",
     "lodash": "^4.17.20",
-    "mongodb": "^3.6.4",
+    "mongodb": "^3.7.3",
     "pg": "^8.5.1",
     "regenerator-runtime": "^0.13.9",
     "sequelize": "^6.5.0",
