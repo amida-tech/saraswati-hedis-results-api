@@ -3,6 +3,8 @@ const {
   insertPredictions, getSimulatedHedis, getPredictions, searchMeasures
 } = require('../config/db');
 
+const { calcLatestNumDen } = require('../calculators/NumDenCalculator');
+
 const logger = require('../config/winston');
 
 const list = async (req, res, next) => {
@@ -73,6 +75,7 @@ const createPredictions = async (req, res, next) => {
 const search = async (req, res, next) => {
   try {
     const search = await searchMeasures(req.query);
+    calcLatestNumDen(search);
     return res.send(search);
   } catch (e) {
     return next(e);
