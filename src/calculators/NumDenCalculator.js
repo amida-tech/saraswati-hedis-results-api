@@ -1,10 +1,14 @@
 const calcLatestNumDen = (resultList) => {
 
   const resultMap = new Map();
+  const measurementTypes = [];
 
   for (const patient of resultList) {
     const measurementType = patient.measurementType;
-
+    if (!measurementTypes.includes(measurementType)) {
+      measurementTypes.push(measurementType);
+    }
+    
     if (!resultMap.has(measurementType)) {
       resultMap.set(measurementType, {
         numeratorValues: [],
@@ -13,59 +17,68 @@ const calcLatestNumDen = (resultList) => {
     }
 
     const patientData = patient[patient.memberId]
+    resultHolder = resultMap.get(measurementType);
 
     for (const patientField in patientData) {
-
-      resultHolder = resultMap.get(measurementType);
-
       if (patientField.startsWith('Numerator')) {
-        let numCount = 0;
-        if (patientField !== 'Numerator') {
-          numCount = patientField.replace('Numerator ', '') - 1
-        }
-        const numValue = patientData[patientField] === true ? 1 : 0
-        console.log('Num Value = ' + numValue);
-        if (resultHolder.numeratorValues[numCount] === undefined) {
-          resultHolder.numeratorValues[numCount] = numValue
-        }
-        else {
-          resultHolder.numeratorValues[numCount] += numValue
-        }
+        setValue(resultHolder.numeratorValues, 'Numerator', patientField, patientData);
       }
       else if (patientField.startsWith('Denominator')) {
-        let denCount = 0;
-        if (patientField !== 'Denominator') {
-          denCount = patientField.replace('Denominator ', '') - 1
-        }
-        const denValue = patientData[patientField] === true ? 1 : 0
-        console.log("Den Value = " + denValue);
-        if (resultHolder.denominatorValues[denCount] === undefined) {
-          resultHolder.denominatorValues[denCount] = denValue
-        }
-        else {
-          resultHolder.denominatorValues[denCount] += denValue
-        }
+        setValue(resultHolder.denominatorValues, 'Denominator', patientField, patientData);
       }
     }
   }
 
-  /*const measureTypeCount = resultHolder.size;
-  for(let j = 0; j < measureTypeCount; j++) {
-    const measureSize = numeratorValues.length();
+  //To store final results
+  const valueArray = [];
+
+  for (let k = 0; k < measurementTypes.length; k++) {
+    //Get result holder for the measurement type
+    const measurementType = measurementTypes[k];
+    resultHolder = resultMap.get(measurementType);
+
+    const measureSize = resultHolder.numeratorValues.length;
     const currentDate = new Date();
     const dateString = currentDate.getFullYear() + '-' + (currentDate.getMonth() + 1) + '-' + currentDate.getDate()
     for (let i = 0; i < measureSize; i++) {
-      const numerator = numeratorValues[i];
-      const denominator = denominatorValues[i];
+      const numerator = resultHolder.numeratorValues[i];
+      const denominator = resultHolder.denominatorValues[i];
       valueArray.push({
-        measure: 'drre ' + (i + 1),
+        measure: measurementType + ' ' + (i + 1),
         date: dateString,
         value: (numerator/denominator) * 100
       });
     }
-  }*/
+  }
+  console.log(valueArray);
 
-  //return valueArray;
+  return valueArray;
+}
+
+function setValue(array, valueName, fieldName, patient) {
+  let numCount = 0;
+  //Get which number this is (Numerator 3, Denominator 1, etc...)
+  if (fieldName !== valueName) {
+    numCount = fieldName.replace(valueName + ' ', '') - 1
+  }
+  
+  //Get field value, either convert boolean to int or get size of array
+  const valueField = patient[fieldName];
+  let value = 0;
+  if (valueField.isArray) {
+    value = valueField.size;
+  }
+  else {
+    value = valueField === true ? 1 : 0
+  }
+  
+  //Add value to existing value or create initial value
+  if (array[numCount] === undefined) {
+    array[numCount] = value
+  }
+  else {
+    array[numCount] += value
+  }
 }
 
 module.exports = {

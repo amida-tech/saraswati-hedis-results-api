@@ -75,7 +75,7 @@ const createPredictions = async (req, res, next) => {
 const search = async (req, res, next) => {
   try {
     const search = await searchMeasures(req.query);
-    calcLatestNumDen(search);
+    const valueArray = calcLatestNumDen(search);
     return res.send(search);
   } catch (e) {
     return next(e);
