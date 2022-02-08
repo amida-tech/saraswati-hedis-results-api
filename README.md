@@ -4,7 +4,7 @@ The purpose of this API is to ingest HEDIS data from pyspark, save it, and then 
 ## Set up
 1. Make sure you have Mongo set up on your machine; if not follow [this guide](https://docs.mongodb.com/manual/administration/install-community/) to install and get up and runnning.
 
-Or, run `docker pull mongo` and then `docker run -p 27017:27017 mongo` to setup a fast instance.
+Or, run `docker pull mongo` and then `docker run -d --name=mongo --network cp-all-in-one-community_default 27017:27017 mongo` to setup a fast instance.
 
 2. Run `cp .env.example .env` 
 4. run `yarn` and then `yarn start`
@@ -15,7 +15,7 @@ Or, run `docker pull mongo` and then `docker run -p 27017:27017 mongo` to setup 
 ## Red Panda or Kafka
 Due to recent changes, you need to run this event streaming.
 
-`docker run -d --pull=always --name=redpanda --network cp-all-in-one-community_default -p 9092:9092 -p 9644:9644 docker.vectorized.io/vectorized/redpanda:latest redpanda start --overprovisioned --smp 1 --memory 1G --reserve-memory 0M --node-id 0 --check=false`
+`docker run -d --pull=always --name=redpanda1 --network cp-all-in-one-community_default -p 9092:9092 -p 9644:9644 docker.vectorized.io/vectorized/redpanda:latest redpanda start --overprovisioned --smp 1 --memory 1G --reserve-memory 0M --node-id 0 --check=false`
 
 If you have issues, try using the advertised endpoints (normally these would go into a config file but dev purposes, it's fine):
-`docker run -d --pull=always --name=redpanda --network cp-all-in-one-community_default -p 9092:9092 -p 9644:9644 docker.vectorized.io/vectorized/redpanda:latest redpanda start --overprovisioned --smp 1 --memory 1G --reserve-memory 0M --node-id 0 --check=false --kafka-addr "PLAINTEXT://0.0.0.0:29092,OUTSIDE://0.0.0.0:9092" --advertise-kafka-addr "PLAINTEXT://redpanda:29092,OUTSIDE://redpanda:9092"`
+`docker run -d --pull=always --name=redpanda1 --network cp-all-in-one-community_default -p 9092:9092 -p 9644:9644 docker.vectorized.io/vectorized/redpanda:latest redpanda start --overprovisioned --smp 1 --memory 1G --reserve-memory 0M --node-id 0 --check=false --kafka-addr "PLAINTEXT://0.0.0.0:29092,OUTSIDE://0.0.0.0:9092" --advertise-kafka-addr "PLAINTEXT://redpanda1:29092,OUTSIDE://redpanda1:9092"`
