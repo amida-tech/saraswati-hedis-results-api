@@ -58,7 +58,6 @@ const calcLatestNumDen = (resultList) => {
     //use subscores to calculate aggregate measure score (also storing subscore)
     valueArray.push(calculateMeasureScore(subScoreArray, measurementType, dateString));
   }
-  console.log(valueArray);
 
   return valueArray;
 }
