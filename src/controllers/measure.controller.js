@@ -76,7 +76,7 @@ const search = async (req, res, next) => {
   try {
     const search = await searchMeasures(req.query);
     const valueArray = calcLatestNumDen(search);
-    return res.send(search);
+    return res.send(valueArray);
   } catch (e) {
     return next(e);
   }
