@@ -8,9 +8,10 @@ Or, run `docker pull mongo` and then `docker run -d --name=mongo --network cp-al
 
 2. Run `cp .env.example .env` 
 4. run `yarn` and then `yarn start`
-5. Using postman, hit `POST localhost:4000/api/v1/measures/bulk` with the data in `src/config/seedData.json` to seed the db
+5. Using postman, hit `POST localhost:4000/api/v1/measures/bulk` with the data in `test/seed-data` folder to seed the db
 6. Using the browser or postman, you can view all of that data with `GET localhost:4000/api/v1/measures/`
 7. Using postman, you can also add individual measures with `POST localhost:4000/api/v1/measures/` but that isn't a use case we have currently.
+8. You can search for individual results using any combination of the parameters for `GET localhost:4000/api/v1/measures/search?measurementType=<type>&memberId=<id>`
 
 ## Red Panda or Kafka
 Due to recent changes, you need to run this event streaming.
