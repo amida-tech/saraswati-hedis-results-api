@@ -84,4 +84,36 @@ const getPredictions = () => {
   return collection.find({}).toArray();
 };
 
-module.exports = { init, insertMeasure, insertMeasures, getMeasures, insertSimulatedHedis, getSimulatedHedis, insertPredictions, getPredictions, initTest, searchMeasures };
+//create collection for results
+const insertResults = (results) => {
+  const collection = db.collection('measure_results');
+  for (let i = 0; i < results.length; i++) {
+    const resultObject = results[i];
+    delete resultObject._id;
+
+    const measurementType = resultObject.measure;
+    let date
+    if (Object.prototype.toString.call(resultObject.date) === '[object Date]') {
+      date = resultObject.date.toISOString().split('T')[0];
+    }
+    else {
+      date = resultObject.date.split('T')[0];
+      resultObject.date = new Date(date);
+    }
+    
+    resultObject._id = measurementType + '-' + date;
+    for (let subDate in resultObject.subScores) {
+      subDate.date = resultObject.date;
+    }
+    try {
+      collection.findOneAndReplace(
+          { _id: resultObject._id }, 
+          resultObject, 
+          { upsert: true, });
+    } catch (e) {
+      logger.error(e);
+    }
+  }
+};
+
+module.exports = { init, insertMeasure, insertMeasures, getMeasures, insertSimulatedHedis, getSimulatedHedis, insertPredictions, getPredictions, initTest, searchMeasures, insertResults };

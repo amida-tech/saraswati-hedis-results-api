@@ -1,6 +1,6 @@
 const {
   insertMeasure, insertMeasures, getMeasures, insertSimulatedHedis,
-  insertPredictions, getSimulatedHedis, getPredictions, searchMeasures
+  insertPredictions, getSimulatedHedis, getPredictions, searchMeasures, insertResults
 } = require('../config/db');
 
 const { calcLatestNumDen } = require('../calculators/NumDenCalculator');
@@ -82,6 +82,27 @@ const search = async (req, res, next) => {
   }
 }
 
+const calculateAndStoreResults = async (req, res, next) => {
+  try {
+    const search = await searchMeasures();
+    const valueArray = calcLatestNumDen(search);
+    insertResults(valueArray);
+    return res.send(valueArray);
+  } catch (e) {
+    return next(e);
+  }
+}
+
+const storeResults = async (req, res, next) => {
+  try {
+    const jsonObject = req.body;
+    insertResults(jsonObject);
+    return res.send(jsonObject);
+  } catch (e) {
+    return next(e);
+  }
+}
+
 module.exports = {
   list,
   create,
@@ -90,5 +111,7 @@ module.exports = {
   createSimulatedHedis,
   displayPredictions,
   createPredictions,
-  search
+  search,
+  calculateAndStoreResults,
+  storeResults
 };

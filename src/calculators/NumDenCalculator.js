@@ -41,7 +41,9 @@ const calcLatestNumDen = (resultList) => {
   //To store final results
   const valueArray = [];
   const currentDate = new Date();
-  const dateString = currentDate.getFullYear() + '-' + (currentDate.getMonth() + 1) + '-' + currentDate.getDate();
+  currentDate.setHours(0);
+  currentDate.setMinutes(0);
+  currentDate.setSeconds(0);
 
   for (let k = 0; k < measurementTypes.length; k++) {
     const subScoreArray = [];
@@ -53,10 +55,10 @@ const calcLatestNumDen = (resultList) => {
     
     for (let i = 0; i < measureSize; i++) {
       //calculate scores for each subscore
-      subScoreArray.push(calculateSubScore(resultHolder, measurementType, dateString, i));
+      subScoreArray.push(calculateSubScore(resultHolder, measurementType, currentDate, i));
     }
     //use subscores to calculate aggregate measure score (also storing subscore)
-    valueArray.push(calculateMeasureScore(subScoreArray, measurementType, dateString));
+    valueArray.push(calculateMeasureScore(subScoreArray, measurementType, currentDate));
   }
 
   return valueArray;

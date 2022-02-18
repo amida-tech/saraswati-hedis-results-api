@@ -25,4 +25,10 @@ router.route('/predictions')
 router.route('/search')
   .get(validate(paramValidation.searchMeasure), measureCtrl.search);
 
+router.route('/calculate')
+  .post(measureCtrl.calculateAndStoreResults);
+
+router.route('/storeResults')
+  .post(measureCtrl.storeResults);
+
 module.exports = router;
