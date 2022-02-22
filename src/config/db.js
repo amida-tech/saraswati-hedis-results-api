@@ -42,7 +42,7 @@ const getMeasures = () => {
 };
 
 const searchMeasures = (query) => {
-  const collection = db.collection('measures');
+  const collection = db.collection('measure_results');
   try {
     return collection.find(query).toArray();
   } catch(e) {
