@@ -75,7 +75,8 @@ const createPredictions = async (req, res, next) => {
 const search = async (req, res, next) => {
   try {
     const search = await searchMeasures(req.query);
-    return res.send(search);
+    const sortedSearch = search.sort((a, b) => a.date - b.date);
+    return res.send(sortedSearch);
   } catch (e) {
     return next(e);
   }
