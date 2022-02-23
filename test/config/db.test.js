@@ -19,11 +19,10 @@ const collection = {
   find: jest.fn((query) => {
     if (query !== undefined && query.measurementType === 'drre') {
       return {
-        toArray: jest.fn(() => [{_id: '6dccff7c-db25-a27b-d718-7189b766b218-drre-recordCount'}])
-      }
-    } else {
-      return found;
+        toArray: jest.fn(() => [{ _id: '6dccff7c-db25-a27b-d718-7189b766b218-drre-recordCount' }]),
+      };
     }
+    return found;
   }),
   countDocuments: jest.fn(() => 'recordCount'),
 };
@@ -96,7 +95,7 @@ describe('## db.js', () => {
   describe('Test searchMeasures function', () => {
     test('Should not throw an error', async (done) => {
       try {
-        const result = await searchMeasures({measurementType: 'drre'});
+        const result = await searchMeasures({ measurementType: 'drre' });
         expect(result[0]._id).toEqual('6dccff7c-db25-a27b-d718-7189b766b218-drre-recordCount');
       } finally {
         done();

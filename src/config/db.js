@@ -21,9 +21,9 @@ const init = async () => {
 const insertMeasure = async (measure) => {
   const collection = db.collection('measures');
   try {
-    const countOfRecords = await collection.countDocuments({ 'memberId': measure.memberId });
+    const countOfRecords = await collection.countDocuments({ memberId: measure.memberId });
     const recordId = `${measure.memberId}-${measure.measurementType}-${countOfRecords}`;
-    logger.info('Upserting new record with Id: ' + recordId);
+    logger.info(`Upserting new record with Id: ${recordId}`);
     return collection.replaceOne({ _id: recordId }, measure, {
       upsert: true,
     });
@@ -32,9 +32,7 @@ const insertMeasure = async (measure) => {
   }
 };
 
-const insertMeasures = (measures) => {
-  return measures.map((measure) => insertMeasure(measure));
-};
+const insertMeasures = (measures) => measures.map((measure) => insertMeasure(measure));
 
 const getMeasures = () => {
   const collection = db.collection('measures');
@@ -45,12 +43,12 @@ const searchMeasures = (query) => {
   const collection = db.collection('measure_results');
   try {
     return collection.find(query).toArray();
-  } catch(e) {
+  } catch (e) {
     logger.error(e);
   }
-}
+};
 
-//create collection for simulated hedis data
+// create collection for simulated hedis data
 const insertSimulatedHedis = (simulated_data) => {
   const collection = db.collection('simulated_data');
   try {
@@ -67,7 +65,7 @@ const getSimulatedHedis = () => {
   return collection.find({}).toArray();
 };
 
-//create collection for predictions
+// create collection for predictions
 const insertPredictions = (predictions) => {
   const collection = db.collection('model_predictions');
   try {
@@ -84,7 +82,7 @@ const getPredictions = () => {
   return collection.find({}).toArray();
 };
 
-//create collection for results
+// create collection for results
 const insertResults = (results) => {
   const collection = db.collection('measure_results');
   for (let i = 0; i < results.length; i++) {
@@ -92,28 +90,30 @@ const insertResults = (results) => {
     delete resultObject._id;
 
     const measurementType = resultObject.measure;
-    let date
+    let date;
     if (Object.prototype.toString.call(resultObject.date) === '[object Date]') {
       date = resultObject.date.toISOString().split('T')[0];
-    }
-    else {
+    } else {
       date = resultObject.date.split('T')[0];
       resultObject.date = new Date(date);
     }
-    
-    resultObject._id = measurementType + '-' + date;
-    for (let subDate in resultObject.subScores) {
+
+    resultObject._id = `${measurementType}-${date}`;
+    for (const subDate in resultObject.subScores) {
       subDate.date = resultObject.date;
     }
     try {
       collection.findOneAndReplace(
-          { _id: resultObject._id }, 
-          resultObject, 
-          { upsert: true, });
+        { _id: resultObject._id },
+        resultObject,
+        { upsert: true },
+      );
     } catch (e) {
       logger.error(e);
     }
   }
 };
 
-module.exports = { init, insertMeasure, insertMeasures, getMeasures, insertSimulatedHedis, getSimulatedHedis, insertPredictions, getPredictions, initTest, searchMeasures, insertResults };
+module.exports = {
+  init, insertMeasure, insertMeasures, getMeasures, insertSimulatedHedis, getSimulatedHedis, insertPredictions, getPredictions, initTest, searchMeasures, insertResults,
+};
