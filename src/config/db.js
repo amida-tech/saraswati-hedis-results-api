@@ -82,6 +82,11 @@ const getPredictions = () => {
   return collection.find({}).toArray();
 };
 
+const getPredictionData = (params) => {
+  const collection = db.collection('measure_results');
+  return collection.find(params).toArray();
+};
+
 // create collection for results
 const insertResults = (results) => {
   const collection = db.collection('measure_results');
@@ -115,5 +120,5 @@ const insertResults = (results) => {
 };
 
 module.exports = {
-  init, insertMeasure, insertMeasures, getMeasures, insertSimulatedHedis, getSimulatedHedis, insertPredictions, getPredictions, initTest, searchMeasures, insertResults,
+  init, insertMeasure, insertMeasures, getMeasures, insertSimulatedHedis, getSimulatedHedis, insertPredictions, getPredictions, getPredictionData, initTest, searchMeasures, insertResults,
 };

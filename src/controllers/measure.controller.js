@@ -1,6 +1,6 @@
 const {
   insertMeasure, insertMeasures, getMeasures, insertSimulatedHedis,
-  insertPredictions, getSimulatedHedis, getPredictions, searchMeasures, insertResults,
+  insertPredictions, getSimulatedHedis, getPredictions, getPredictionData, searchMeasures, insertResults,
 } = require('../config/db');
 
 const { calcLatestNumDen } = require('../calculators/NumDenCalculator');
@@ -63,6 +63,27 @@ const displayPredictions = async (req, res, next) => {
   }
 };
 
+const predictionData = async (req, res, next) => {
+  try {
+    const predictionData = await getPredictionData(req.params);
+    console.log(predictionData);
+    let compiledData = {
+      _id: req.params.measure,
+      DATE: {},
+      HEDIS0: {},
+    };
+    for (let i = 0; i < predictionData.length; i++) {
+      const result = predictionData[i];
+      console.log(result);
+      compiledData.DATE[i.toString()] = new Date(result.date).getTime();
+      compiledData.HEDIS0[i.toString()] = result.value;
+    }
+    return res.send([compiledData]);
+  } catch (e) {
+    return next(e);
+  }
+};
+
 const createPredictions = async (req, res, next) => {
   try {
     const predictions = await insertPredictions(req.body);
@@ -110,6 +131,7 @@ module.exports = {
   displayHedis,
   createSimulatedHedis,
   displayPredictions,
+  predictionData,
   createPredictions,
   search,
   calculateAndStoreResults,

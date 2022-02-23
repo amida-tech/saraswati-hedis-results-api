@@ -22,6 +22,9 @@ router.route('/predictions')
   .get(measureCtrl.displayPredictions)
   .post(measureCtrl.createPredictions);
 
+router.route('/predictionData/:measure')
+  .get(measureCtrl.predictionData);
+
 router.route('/search')
   .get(validate(paramValidation.searchMeasure), measureCtrl.search);
 
