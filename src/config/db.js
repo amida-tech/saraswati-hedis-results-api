@@ -69,7 +69,8 @@ const getSimulatedHedis = () => {
 const insertPredictions = (predictions) => {
   const collection = db.collection('model_predictions');
   try {
-    return collection.findOneAndReplace({ }, predictions, {
+    predictions._id = predictions.measure;
+    return collection.findOneAndReplace({ measure: predictions.measure }, predictions, {
       upsert: true,
     });
   } catch (e) {
@@ -82,7 +83,7 @@ const getPredictions = () => {
   return collection.find({}).toArray();
 };
 
-const getPredictionData = (params) => {
+const getResultData = (params) => {
   const collection = db.collection('measure_results');
   return collection.find(params).toArray();
 };
@@ -120,5 +121,6 @@ const insertResults = (results) => {
 };
 
 module.exports = {
-  init, insertMeasure, insertMeasures, getMeasures, insertSimulatedHedis, getSimulatedHedis, insertPredictions, getPredictions, getPredictionData, initTest, searchMeasures, insertResults,
+  init, insertMeasure, insertMeasures, getMeasures, insertSimulatedHedis, getSimulatedHedis, 
+  insertPredictions, getPredictions, getResultData, initTest, searchMeasures, insertResults,
 };

@@ -25,6 +25,9 @@ router.route('/predictions')
 router.route('/predictionData/:measure')
   .get(measureCtrl.predictionData);
 
+router.route('/trends')
+  .get(measureCtrl.trends);
+
 router.route('/search')
   .get(validate(paramValidation.searchMeasure), measureCtrl.search);
 

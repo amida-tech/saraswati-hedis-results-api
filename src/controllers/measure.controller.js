@@ -1,9 +1,11 @@
 const {
   insertMeasure, insertMeasures, getMeasures, insertSimulatedHedis,
-  insertPredictions, getSimulatedHedis, getPredictions, getPredictionData, searchMeasures, insertResults,
+  insertPredictions, getSimulatedHedis, getPredictions, getResultData, searchMeasures, insertResults,
 } = require('../config/db');
 
 const { calcLatestNumDen } = require('../calculators/NumDenCalculator');
+
+const { calculateTrend } = require('../calculators/TrendCalculator.js');
 
 const logger = require('../config/winston');
 
@@ -63,9 +65,22 @@ const displayPredictions = async (req, res, next) => {
   }
 };
 
+const trends = async (req, res, next) => {
+  try {
+    const search = await getResultData( {} );
+
+    const trends = calculateTrend(search, 7);
+
+    return res.send(trends);
+  } catch (e) {
+    return next(e);
+  }
+};
+
 const predictionData = async (req, res, next) => {
   try {
-    const predictionData = await getPredictionData(req.params);
+    const search = await getPredictionData(req.params);
+    const predictionData = search.sort((a, b) => a.date - b.date);
     console.log(predictionData);
     let compiledData = {
       _id: req.params.measure,
@@ -74,7 +89,6 @@ const predictionData = async (req, res, next) => {
     };
     for (let i = 0; i < predictionData.length; i++) {
       const result = predictionData[i];
-      console.log(result);
       compiledData.DATE[i.toString()] = new Date(result.date).getTime();
       compiledData.HEDIS0[i.toString()] = result.value;
     }
@@ -105,7 +119,7 @@ const search = async (req, res, next) => {
 
 const calculateAndStoreResults = async (req, res, next) => {
   try {
-    const search = await searchMeasures();
+    const search = await getMeasures();
     const valueArray = calcLatestNumDen(search);
     insertResults(valueArray);
     return res.send(valueArray);
@@ -136,4 +150,5 @@ module.exports = {
   search,
   calculateAndStoreResults,
   storeResults,
+  trends,
 };
