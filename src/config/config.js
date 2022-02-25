@@ -50,7 +50,7 @@ const config = {
   kafkaConfig: {
     brokers: envVars.KAFKA_BROKERS.replace(/[["'\]]/g, '').split(arrayDelimiter),
     queue: envVars.KAFKA_QUEUE,
-  }
+  },
 };
 
 module.exports = config;

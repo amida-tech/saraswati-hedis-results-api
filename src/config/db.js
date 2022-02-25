@@ -21,9 +21,9 @@ const init = async () => {
 const insertMeasure = async (measure) => {
   const collection = db.collection('measures');
   try {
-    const countOfRecords = await collection.countDocuments({ 'memberId': measure.memberId });
+    const countOfRecords = await collection.countDocuments({ memberId: measure.memberId });
     const recordId = `${measure.memberId}-${measure.measurementType}-${countOfRecords}`;
-    logger.info('Upserting new record with Id: ' + recordId);
+    logger.info(`Upserting new record with Id: ${recordId}`);
     return collection.replaceOne({ _id: recordId }, measure, {
       upsert: true,
     });
@@ -32,9 +32,7 @@ const insertMeasure = async (measure) => {
   }
 };
 
-const insertMeasures = (measures) => {
-  return measures.map((measure) => insertMeasure(measure));
-};
+const insertMeasures = (measures) => measures.map((measure) => insertMeasure(measure));
 
 const getMeasures = () => {
   const collection = db.collection('measures');
@@ -42,15 +40,15 @@ const getMeasures = () => {
 };
 
 const searchMeasures = (query) => {
-  const collection = db.collection('measures');
+  const collection = db.collection('measure_results');
   try {
     return collection.find(query).toArray();
-  } catch(e) {
+  } catch (e) {
     logger.error(e);
   }
-}
+};
 
-//create collection for simulated hedis data
+// create collection for simulated hedis data
 const insertSimulatedHedis = (simulated_data) => {
   const collection = db.collection('simulated_data');
   try {
@@ -67,11 +65,12 @@ const getSimulatedHedis = () => {
   return collection.find({}).toArray();
 };
 
-//create collection for predictions
+// create collection for predictions
 const insertPredictions = (predictions) => {
   const collection = db.collection('model_predictions');
   try {
-    return collection.findOneAndReplace({ }, predictions, {
+    predictions._id = predictions.measure;
+    return collection.findOneAndReplace({ measure: predictions.measure }, predictions, {
       upsert: true,
     });
   } catch (e) {
@@ -84,4 +83,54 @@ const getPredictions = () => {
   return collection.find({}).toArray();
 };
 
-module.exports = { init, insertMeasure, insertMeasures, getMeasures, insertSimulatedHedis, getSimulatedHedis, insertPredictions, getPredictions, initTest, searchMeasures };
+const getResultData = (params) => {
+  const collection = db.collection('measure_results');
+  return collection.find(params).toArray();
+};
+
+// create collection for results
+const insertResults = (results) => {
+  const collection = db.collection('measure_results');
+  for (let i = 0; i < results.length; i += 1) {
+    const resultObject = results[i];
+    delete resultObject._id;
+
+    const measurementType = resultObject.measure;
+    let date;
+    if (Object.prototype.toString.call(resultObject.date) === '[object Date]') {
+      date = resultObject.date.toISOString().split('T')[0];
+    } else {
+      date = resultObject.date.split('T')[0];
+      resultObject.date = new Date(date);
+    }
+
+    resultObject._id = `${measurementType}-${date}`;
+    for (let j = 0; j < resultObject.subScores.length; j += 1) {
+      resultObject.subScores[j].date = resultObject.date;
+    }
+    try {
+      collection.findOneAndReplace(
+        { _id: resultObject._id },
+        resultObject,
+        { upsert: true },
+      );
+    } catch (e) {
+      logger.error(e);
+    }
+  }
+};
+
+module.exports = {
+  init,
+  insertMeasure,
+  insertMeasures,
+  getMeasures,
+  insertSimulatedHedis,
+  getSimulatedHedis,
+  insertPredictions,
+  getPredictions,
+  getResultData,
+  initTest,
+  searchMeasures,
+  insertResults,
+};

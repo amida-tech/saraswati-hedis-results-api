@@ -1,11 +1,11 @@
 function getDelimiter(kafkaBrokers) {
-    let arrayDelimiter = ' ';
-    if (kafkaBrokers.includes(', ')) {
-      arrayDelimiter = ', ';
-    } else if (kafkaBrokers.includes(',')) {
-      arrayDelimiter = ',';
-    }
-    return arrayDelimiter;
+  let arrayDelimiter = ' ';
+  if (kafkaBrokers.includes(', ')) {
+    arrayDelimiter = ', ';
+  } else if (kafkaBrokers.includes(',')) {
+    arrayDelimiter = ',';
   }
-  
-  module.exports = {getDelimiter};
+  return arrayDelimiter;
+}
+
+module.exports = { getDelimiter };

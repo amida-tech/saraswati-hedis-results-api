@@ -8,11 +8,11 @@ const router = express.Router(); // eslint-disable-line new-cap
 router.route('/')
   .get(measureCtrl.list)
   .post(measureCtrl.create);
-  // .post(validate(paramValidation.createMeasure), measureCtrl.create);
+// .post(validate(paramValidation.createMeasure), measureCtrl.create);
 
 router.route('/bulk')
   .post(measureCtrl.createBulk);
-  // .post(validate(paramValidation.createMeasureBulk), measureCtrl.createBulk);
+// .post(validate(paramValidation.createMeasureBulk), measureCtrl.createBulk);
 
 router.route('/simulated_hedis')
   .get(measureCtrl.displayHedis)
@@ -22,7 +22,19 @@ router.route('/predictions')
   .get(measureCtrl.displayPredictions)
   .post(measureCtrl.createPredictions);
 
+router.route('/predictionData/:measure')
+  .get(measureCtrl.predictionData);
+
+router.route('/trends')
+  .get(measureCtrl.trends);
+
 router.route('/search')
   .get(validate(paramValidation.searchMeasure), measureCtrl.search);
+
+router.route('/calculate')
+  .post(measureCtrl.calculateAndStoreResults);
+
+router.route('/storeResults')
+  .post(measureCtrl.storeResults);
 
 module.exports = router;

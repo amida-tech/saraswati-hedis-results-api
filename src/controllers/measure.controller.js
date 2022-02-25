@@ -1,9 +1,11 @@
 const {
-  insertMeasure, insertMeasures, getMeasures, insertSimulatedHedis,
-  insertPredictions, getSimulatedHedis, getPredictions, searchMeasures
+  insertMeasure, insertMeasures, getMeasures, insertSimulatedHedis, insertPredictions,
+  getSimulatedHedis, getPredictions, getResultData, searchMeasures, insertResults,
 } = require('../config/db');
 
 const { calcLatestNumDen } = require('../calculators/NumDenCalculator');
+
+const { calculateTrend } = require('../calculators/TrendCalculator.js');
 
 const logger = require('../config/winston');
 
@@ -63,6 +65,39 @@ const displayPredictions = async (req, res, next) => {
   }
 };
 
+const trends = async (req, res, next) => {
+  try {
+    const results = await getResultData({});
+    const predictions = await getPredictions();
+
+    const trendData = calculateTrend(results, predictions, 7);
+
+    return res.send(trendData);
+  } catch (e) {
+    return next(e);
+  }
+};
+
+const predictionData = async (req, res, next) => {
+  try {
+    const search = await getResultData(req.params);
+    const predictionData = search.sort((a, b) => a.date - b.date);
+    const compiledData = {
+      _id: req.params.measure,
+      DATE: {},
+      HEDIS0: {},
+    };
+    for (let i = 0; i < predictionData.length; i += 1) {
+      const result = predictionData[i];
+      compiledData.DATE[i.toString()] = new Date(result.date).getTime();
+      compiledData.HEDIS0[i.toString()] = result.value;
+    }
+    return res.send([compiledData]);
+  } catch (e) {
+    return next(e);
+  }
+};
+
 const createPredictions = async (req, res, next) => {
   try {
     const predictions = await insertPredictions(req.body);
@@ -75,12 +110,33 @@ const createPredictions = async (req, res, next) => {
 const search = async (req, res, next) => {
   try {
     const search = await searchMeasures(req.query);
+    const sortedSearch = search.sort((a, b) => a.date - b.date);
+    return res.send(sortedSearch);
+  } catch (e) {
+    return next(e);
+  }
+};
+
+const calculateAndStoreResults = async (req, res, next) => {
+  try {
+    const search = await getMeasures();
     const valueArray = calcLatestNumDen(search);
+    insertResults(valueArray);
     return res.send(valueArray);
   } catch (e) {
     return next(e);
   }
-}
+};
+
+const storeResults = async (req, res, next) => {
+  try {
+    const jsonObject = req.body;
+    insertResults(jsonObject);
+    return res.send(jsonObject);
+  } catch (e) {
+    return next(e);
+  }
+};
 
 module.exports = {
   list,
@@ -89,6 +145,10 @@ module.exports = {
   displayHedis,
   createSimulatedHedis,
   displayPredictions,
+  predictionData,
   createPredictions,
-  search
+  search,
+  calculateAndStoreResults,
+  storeResults,
+  trends,
 };
