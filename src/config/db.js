@@ -91,7 +91,7 @@ const getResultData = (params) => {
 // create collection for results
 const insertResults = (results) => {
   const collection = db.collection('measure_results');
-  for (let i = 0; i < results.length; i++) {
+  for (let i = 0; i < results.length; i += 1) {
     const resultObject = results[i];
     delete resultObject._id;
 
@@ -105,8 +105,8 @@ const insertResults = (results) => {
     }
 
     resultObject._id = `${measurementType}-${date}`;
-    for (const subDate in resultObject.subScores) {
-      subDate.date = resultObject.date;
+    for (let j = 0; j < resultObject.subScores.length; j += 1) {
+      resultObject.subScores[j].date = resultObject.date;
     }
     try {
       collection.findOneAndReplace(
@@ -121,6 +121,16 @@ const insertResults = (results) => {
 };
 
 module.exports = {
-  init, insertMeasure, insertMeasures, getMeasures, insertSimulatedHedis, getSimulatedHedis, 
-  insertPredictions, getPredictions, getResultData, initTest, searchMeasures, insertResults,
+  init,
+  insertMeasure,
+  insertMeasures,
+  getMeasures,
+  insertSimulatedHedis,
+  getSimulatedHedis,
+  insertPredictions,
+  getPredictions,
+  getResultData,
+  initTest,
+  searchMeasures,
+  insertResults,
 };

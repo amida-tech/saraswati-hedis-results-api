@@ -1,6 +1,6 @@
 const {
-  insertMeasure, insertMeasures, getMeasures, insertSimulatedHedis,
-  insertPredictions, getSimulatedHedis, getPredictions, getResultData, searchMeasures, insertResults,
+  insertMeasure, insertMeasures, getMeasures, insertSimulatedHedis, insertPredictions,
+  getSimulatedHedis, getPredictions, getResultData, searchMeasures, insertResults,
 } = require('../config/db');
 
 const { calcLatestNumDen } = require('../calculators/NumDenCalculator');
@@ -67,12 +67,12 @@ const displayPredictions = async (req, res, next) => {
 
 const trends = async (req, res, next) => {
   try {
-    const results = await getResultData( {} );
+    const results = await getResultData({});
     const predictions = await getPredictions();
 
-    const trends = calculateTrend(results, predictions, 7);
+    const trendData = calculateTrend(results, predictions, 7);
 
-    return res.send(trends);
+    return res.send(trendData);
   } catch (e) {
     return next(e);
   }
@@ -82,13 +82,12 @@ const predictionData = async (req, res, next) => {
   try {
     const search = await getPredictionData(req.params);
     const predictionData = search.sort((a, b) => a.date - b.date);
-    console.log(predictionData);
-    let compiledData = {
+    const compiledData = {
       _id: req.params.measure,
       DATE: {},
       HEDIS0: {},
     };
-    for (let i = 0; i < predictionData.length; i++) {
+    for (let i = 0; i < predictionData.length; i += 1) {
       const result = predictionData[i];
       compiledData.DATE[i.toString()] = new Date(result.date).getTime();
       compiledData.HEDIS0[i.toString()] = result.value;

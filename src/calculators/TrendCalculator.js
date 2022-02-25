@@ -3,21 +3,21 @@ const calculateTrend = (resultData, predictionData, days) => {
   const latestDate = resultList[0].date;
   const baseDate = new Date(latestDate.getTime() - (days * 24 * 60 * 60 * 1000));
 
-  let resultMap = new Map();
-  let measureList = [];
+  const resultMap = new Map();
+  const measureList = [];
   let measureCount = 0;
 
-  for(let i = 0; i < resultList.length; i++) {
-    let result = resultList[i];
+  for (let i = 0; i < resultList.length; i += 1) {
+    const result = resultList[i];
     if (result.date.getTime() === latestDate.getTime()) {
       resultMap.set(result.measure, { latest: result });
       measureList.push(result.measure);
     }
 
     if (result.date.getTime() === baseDate.getTime()) {
-      var storedResult = resultMap.get(result.measure);
+      const storedResult = resultMap.get(result.measure);
       storedResult.base = result;
-      measureCount++;
+      measureCount += 1;
     }
 
     if (measureCount === measureList.length) {
@@ -25,25 +25,24 @@ const calculateTrend = (resultData, predictionData, days) => {
     }
   }
 
-  let finalResult = [];
-  for(let i = 0; i < measureList.length; i++) {
-    let measure = measureList[i];
-    let result = resultMap.get(measure);
-    let changePercent = Math.round(((result.latest.value - result.base.value) / result.base.value) * 100);
+  const finalResult = [];
+  for (let i = 0; i < measureList.length; i += 1) {
+    const measure = measureList[i];
+    const result = resultMap.get(measure);
+    const changePercent = Math.round(((result.latest.value - result.base.value) / result.base.value) * 100);
     let futurePrediction = {};
-    for (let j = 0; j < predictionData.length; j++) {
-      if (predictionData[j].measure == measure && predictionData[j].Prophet_Predictions) {
+    for (let j = 0; j < predictionData.length; j += 1) {
+      if (predictionData[j].measure === measure && predictionData[j].Prophet_Predictions) {
         futurePrediction = predictionData[j].Prophet_Predictions.yhat;
         break;
       }
     }
 
-    finalResult.push( { measure, changePercent, futurePrediction })
+    finalResult.push({ measure, changePercent, futurePrediction });
   }
 
   return finalResult;
-
-}
+};
 
 module.exports = {
   calculateTrend,
