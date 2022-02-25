@@ -80,7 +80,7 @@ const trends = async (req, res, next) => {
 
 const predictionData = async (req, res, next) => {
   try {
-    const search = await getPredictionData(req.params);
+    const search = await getResultData(req.params);
     const predictionData = search.sort((a, b) => a.date - b.date);
     const compiledData = {
       _id: req.params.measure,
