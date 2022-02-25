@@ -67,9 +67,10 @@ const displayPredictions = async (req, res, next) => {
 
 const trends = async (req, res, next) => {
   try {
-    const search = await getResultData( {} );
+    const results = await getResultData( {} );
+    const predictions = await getPredictions();
 
-    const trends = calculateTrend(search, 7);
+    const trends = calculateTrend(results, predictions, 7);
 
     return res.send(trends);
   } catch (e) {

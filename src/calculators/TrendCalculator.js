@@ -1,4 +1,4 @@
-const calculateTrend = (resultData, days) => {
+const calculateTrend = (resultData, predictionData, days) => {
   const resultList = resultData.sort((a, b) => b.date - a.date);
   const latestDate = resultList[0].date;
   const baseDate = new Date(latestDate.getTime() - (days * 24 * 60 * 60 * 1000));
@@ -24,8 +24,15 @@ const calculateTrend = (resultData, days) => {
     let measure = measureList[i];
     let result = resultMap.get(measure);
     let changePercent = Math.round(((result.latest.value - result.base.value) / result.latest.value) * 100);
+    let futurePrediction = {};
+    for (let j = 0; j < predictionData.length; j++) {
+      if (predictionData[j].measure == measure && predictionData[j].Prophet_Predictions) {
+        futurePrediction = predictionData[j].Prophet_Predictions.yhat;
+        break;
+      }
+    }
 
-    finalResult.push( { measure, changePercent })
+    finalResult.push( { measure, changePercent, futurePrediction })
   }
 
   return finalResult;
