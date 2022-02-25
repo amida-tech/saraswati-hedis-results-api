@@ -5,17 +5,23 @@ const calculateTrend = (resultData, predictionData, days) => {
 
   let resultMap = new Map();
   let measureList = [];
+  let measureCount = 0;
 
   for(let i = 0; i < resultList.length; i++) {
     let result = resultList[i];
-    if (result.date.getTime() == latestDate.getTime()) {
+    if (result.date.getTime() === latestDate.getTime()) {
       resultMap.set(result.measure, { latest: result });
       measureList.push(result.measure);
     }
 
-    if (result.date.getTime() == baseDate.getTime()) {
+    if (result.date.getTime() === baseDate.getTime()) {
       var storedResult = resultMap.get(result.measure);
       storedResult.base = result;
+      measureCount++;
+    }
+
+    if (measureCount === measureList.length) {
+      break;
     }
   }
 
@@ -23,7 +29,7 @@ const calculateTrend = (resultData, predictionData, days) => {
   for(let i = 0; i < measureList.length; i++) {
     let measure = measureList[i];
     let result = resultMap.get(measure);
-    let changePercent = Math.round(((result.latest.value - result.base.value) / result.latest.value) * 100);
+    let changePercent = Math.round(((result.latest.value - result.base.value) / result.base.value) * 100);
     let futurePrediction = {};
     for (let j = 0; j < predictionData.length; j++) {
       if (predictionData[j].measure == measure && predictionData[j].Prophet_Predictions) {
