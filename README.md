@@ -4,7 +4,7 @@ The purpose of this API is to ingest HEDIS data from pyspark, save it, and then 
 ## Set up
 1. Make sure you have Mongo set up on your machine; if not follow [this guide](https://docs.mongodb.com/manual/administration/install-community/) to install and get up and runnning.
 
-Or, run `docker pull mongo` and then `docker run -d --name=mongo --network cp-all-in-one-community_default 27017:27017 mongo` to setup a fast instance.
+Or, run `docker pull mongo` and then `docker run -d --name=mongo --network cp-all-in-one-community_default -p 27017:27017 mongo` to setup a fast instance.
 
 2. Run `cp .env.example .env` 
 4. run `yarn` and then `yarn start`
