@@ -24,7 +24,6 @@ const queryParams = { measure: 'drre' };
 
 jest.mock('../../src/config/dao', () => {
   const originalModule = jest.requireActual('../../src/config/dao');
-
   return {
     __esModule: true,
     ...originalModule,
@@ -38,6 +37,22 @@ jest.mock('../../src/config/dao', () => {
     insertPredictions: jest.fn(() => []),
     insertSimulatedHedis: jest.fn(() => []),
   };
+});
+
+jest.mock('../../src/calculators/NumDenCalculator', () => {
+  const originalModule = jest.requireActual('../../src/calculators/NumDenCalculator');
+  return {
+    ...originalModule,
+    calcLatestNumDen: jest.fn(() => []),
+  }
+});
+
+jest.mock('../../src/calculators/TrendCalculator', () => {
+  const originalModule = jest.requireActual('../../src/calculators/TrendCalculator');
+  return {
+    ...originalModule,
+    calculateTrend: jest.fn(() => []),
+  }
 });
 
 describe('## measure.controller.js', () => {

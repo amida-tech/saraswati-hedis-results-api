@@ -97,9 +97,9 @@ const postBulkMeasure = async (req, res, next) => {
 
 const postCalculateAndStoreResults = async (req, res, next) => {
   try {
-    const search = await dao.getMeasures();
+    const search = await dao.findMeasures();
     const valueArray = calcLatestNumDen(search);
-    insertResults(valueArray);
+    dao.insertMeasureResults(valueArray);
     return res.send(valueArray);
   } catch (e) {
     return next(e);
