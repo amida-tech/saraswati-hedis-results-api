@@ -11,18 +11,27 @@ const {
   createSimulatedHedis,
   displayPredictions,
   createPredictions,
-  searchResults,
+  searchMeasureResults,
 } = require('../../src/controllers/measure.controller');
 
 const data = JSON.parse(fs.readFileSync(`${path.resolve()}/test/resources/bulk-data.json`));
 
-jest.mock('../../src/config/db', () => {
-  const originalModule = jest.requireActual('../../src/config/db');
+jest.mock('../../src/config/dao', () => {
+  const originalModule = jest.requireActual('../../src/config/dao');
 
   return {
     __esModule: true,
     ...originalModule,
     getMeasures: jest.fn().mockImplementation(() => {
+      throw new Error();
+    }),
+    getMeasureResults: jest.fn().mockImplementation(() => {
+      throw new Error();
+    }),
+    getPredictions: jest.fn().mockImplementation(() => {
+      throw new Error();
+    }),
+    getSimulatedHedis: jest.fn().mockImplementation(() => {
       throw new Error();
     }),
     insertMeasure: jest.fn().mockImplementation(() => {
@@ -31,19 +40,13 @@ jest.mock('../../src/config/db', () => {
     insertMeasures: jest.fn().mockImplementation(() => {
       throw new Error();
     }),
-    insertSimulatedHedis: jest.fn().mockImplementation(() => {
-      throw new Error();
-    }),
-    getSimulatedHedis: jest.fn().mockImplementation(() => {
-      throw new Error();
-    }),
-    getPredictions: jest.fn().mockImplementation(() => {
+    insertMeasureResults: jest.fn().mockImplementation(() => {
       throw new Error();
     }),
     insertPredictions: jest.fn().mockImplementation(() => {
       throw new Error();
     }),
-    searchMeasureResults: jest.fn().mockImplementation(() => {
+    insertSimulatedHedis: jest.fn().mockImplementation(() => {
       throw new Error();
     }),
   };
@@ -106,10 +109,10 @@ describe('## measure.controller.js exceptions', () => {
     });
   });
 
-  describe('Test searchResults', () => {
+  describe('Test searchMeasureResults', () => {
     it('Should should catch error and call next', async () => {
       const next = jest.fn();
-      await searchResults({ body: data }, jest.fn(), next);
+      await searchMeasureResults({ body: data }, jest.fn(), next);
       expect(next).toHaveBeenCalled();
     });
   });

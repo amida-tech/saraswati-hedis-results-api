@@ -29,7 +29,7 @@ router.route('/trends')
   .get(measureCtrl.trends);
 
 router.route('/searchResults')
-  .get(validate(paramValidation.searchMeasureResults), measureCtrl.searchResults);
+  .get(validate(paramValidation.searchMeasureResults), measureCtrl.searchMeasureResults);
 
 router.route('/calculate')
   .post(measureCtrl.calculateAndStoreResults);

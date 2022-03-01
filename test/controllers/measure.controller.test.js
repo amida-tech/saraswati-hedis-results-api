@@ -11,26 +11,27 @@ const {
   createSimulatedHedis,
   displayPredictions,
   createPredictions,
-  searchResults,
+  searchMeasureResults,
 } = require('../../src/controllers/measure.controller');
 
 const data = JSON.parse(fs.readFileSync(`${path.resolve()}/test/resources/bulk-data.json`));
 const queryParams = { measure: 'drre' };
 
-jest.mock('../../src/config/db', () => {
-  const originalModule = jest.requireActual('../../src/config/db');
+jest.mock('../../src/config/dao', () => {
+  const originalModule = jest.requireActual('../../src/config/dao');
 
   return {
     __esModule: true,
     ...originalModule,
     getMeasures: jest.fn(() => []),
+    getMeasureResults: jest.fn(() => []),
+    getPredictions: jest.fn(() => {}),
+    getSimulatedHedis: jest.fn(() => []),
     insertMeasure: jest.fn(() => {}),
     insertMeasures: jest.fn(() => []),
-    insertSimulatedHedis: jest.fn(() => []),
-    getSimulatedHedis: jest.fn(() => []),
-    getPredictions: jest.fn(() => {}),
+    insertMeasureResults: jest.fn(() => []),
     insertPredictions: jest.fn(() => []),
-    searchMeasureResults: jest.fn(() => []),
+    insertSimulatedHedis: jest.fn(() => []),
   };
 });
 
@@ -91,10 +92,10 @@ describe('## measure.controller.js', () => {
     });
   });
 
-  describe('Test searchResults', () => {
+  describe('Test searchMeasureResults', () => {
     it('Should call response.send', async () => {
       const response = { send: jest.fn().mockReturnValue(Promise.resolve()) };
-      await searchResults({ query: queryParams }, response, jest.fn());
+      await searchMeasureResults({ query: queryParams }, response, jest.fn());
       expect(response.send).toHaveBeenCalled();
     });
   });

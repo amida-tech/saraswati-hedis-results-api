@@ -1,7 +1,4 @@
-const {
-  insertMeasure, insertMeasures, getMeasures, insertSimulatedHedis, insertPredictions,
-  getSimulatedHedis, getPredictions, getResultData, searchMeasureResults, insertResults,
-} = require('../config/db');
+const dao = require('../config/dao');
 
 const { calcLatestNumDen } = require('../calculators/NumDenCalculator');
 
@@ -11,7 +8,7 @@ const logger = require('../config/winston');
 
 const list = async (req, res, next) => {
   try {
-    const measures = await getMeasures();
+    const measures = await dao.getMeasures();
     // measures.forEach(measure => stringToDecimal(measure))
     return res.send(measures);
   } catch (e) {
@@ -21,7 +18,7 @@ const list = async (req, res, next) => {
 
 const create = async (req, res, next) => {
   try {
-    const measure = await insertMeasure(req.body);
+    const measure = await dao.insertMeasure(req.body);
     return res.send(measure);
   } catch (e) {
     return next(e);
@@ -31,7 +28,7 @@ const create = async (req, res, next) => {
 const createBulk = async (req, res, next) => {
   try {
     const options = { ordered: true };
-    const measures = await insertMeasures(req.body, options);
+    const measures = await dao.insertMeasures(req.body, options);
     return res.send(measures);
   } catch (e) {
     return next(e);
@@ -40,7 +37,7 @@ const createBulk = async (req, res, next) => {
 
 const displayHedis = async (req, res, next) => {
   try {
-    const simulations = await getSimulatedHedis();
+    const simulations = await dao.getSimulatedHedis();
     return res.send(simulations);
   } catch (e) {
     return next(e);
@@ -49,7 +46,7 @@ const displayHedis = async (req, res, next) => {
 
 const createSimulatedHedis = async (req, res, next) => {
   try {
-    const simulations = await insertSimulatedHedis(req.body);
+    const simulations = await dao.insertSimulatedHedis(req.body);
     return res.send(simulations);
   } catch (e) {
     return next(e);
@@ -58,7 +55,7 @@ const createSimulatedHedis = async (req, res, next) => {
 
 const displayPredictions = async (req, res, next) => {
   try {
-    const predictions = await getPredictions();
+    const predictions = await dao.getPredictions();
     return res.send(predictions);
   } catch (e) {
     return next(e);
@@ -67,8 +64,8 @@ const displayPredictions = async (req, res, next) => {
 
 const trends = async (req, res, next) => {
   try {
-    const results = await getResultData({});
-    const predictions = await getPredictions();
+    const results = await dao.getMeasureResults({});
+    const predictions = await dao.getPredictions();
 
     const trendData = calculateTrend(results, predictions, 7);
 
@@ -80,7 +77,7 @@ const trends = async (req, res, next) => {
 
 const predictionData = async (req, res, next) => {
   try {
-    const search = await getResultData(req.params);
+    const search = await dao.getMeasureResults(req.params);
     const predictionData = search.sort((a, b) => a.date - b.date);
     const compiledData = {
       _id: req.params.measure,
@@ -100,16 +97,16 @@ const predictionData = async (req, res, next) => {
 
 const createPredictions = async (req, res, next) => {
   try {
-    const predictions = await insertPredictions(req.body);
+    const predictions = await dao.insertPredictions(req.body);
     return res.send(predictions);
   } catch (e) {
     return next(e);
   }
 };
 
-const searchResults = async (req, res, next) => {
+const searchMeasureResults = async (req, res, next) => {
   try {
-    const search = await searchMeasureResults(req.query);
+    const search = await dao.getMeasureResults(req.query);
     const sortedSearch = search.sort((a, b) => a.date - b.date);
     return res.send(sortedSearch);
   } catch (e) {
@@ -119,7 +116,7 @@ const searchResults = async (req, res, next) => {
 
 const calculateAndStoreResults = async (req, res, next) => {
   try {
-    const search = await getMeasures();
+    const search = await dao.getMeasures();
     const valueArray = calcLatestNumDen(search);
     insertResults(valueArray);
     return res.send(valueArray);
@@ -131,7 +128,7 @@ const calculateAndStoreResults = async (req, res, next) => {
 const storeResults = async (req, res, next) => {
   try {
     const jsonObject = req.body;
-    insertResults(jsonObject);
+    dao.insertMeasureResults(jsonObject);
     return res.send(jsonObject);
   } catch (e) {
     return next(e);
@@ -147,7 +144,7 @@ module.exports = {
   displayPredictions,
   predictionData,
   createPredictions,
-  searchResults,
+  searchMeasureResults,
   calculateAndStoreResults,
   storeResults,
   trends,

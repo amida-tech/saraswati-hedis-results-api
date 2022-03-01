@@ -6,16 +6,40 @@ const connectionUrl = `mongodb://${mongodb.host}:${mongodb.port}`;
 
 let db;
 
-const initTest = (mockDb) => {
-  db = mockDb;
-};
-
 const init = async () => {
   const client = await MongoClient.connect(connectionUrl, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   });
   db = client.db(mongodb.name);
+};
+
+const initTest = (mockDb) => {
+  db = mockDb;
+};
+
+const getMeasures = () => {
+  const collection = db.collection('measures');
+  return collection.find({}).toArray();
+};
+
+const getMeasureResults = (query) => {
+  const collection = db.collection('measure_results');
+  try {
+    return collection.find(query).toArray();
+  } catch (e) {
+    logger.error(e);
+  }
+};
+
+const getPredictions = () => {
+  const collection = db.collection('model_predictions');
+  return collection.find({}).toArray();
+};
+
+const getSimulatedHedis = () => {
+  const collection = db.collection('simulated_data');
+  return collection.find({}).toArray();
 };
 
 const insertMeasure = async (measure) => {
@@ -34,62 +58,8 @@ const insertMeasure = async (measure) => {
 
 const insertMeasures = (measures) => measures.map((measure) => insertMeasure(measure));
 
-const getMeasures = () => {
-  const collection = db.collection('measures');
-  return collection.find({}).toArray();
-};
-
-const searchMeasureResults = (query) => {
-  const collection = db.collection('measure_results');
-  try {
-    return collection.find(query).toArray();
-  } catch (e) {
-    logger.error(e);
-  }
-};
-
-// create collection for simulated hedis data
-const insertSimulatedHedis = (simulated_data) => {
-  const collection = db.collection('simulated_data');
-  try {
-    return collection.findOneAndReplace({ }, simulated_data, {
-      upsert: true,
-    });
-  } catch (e) {
-    logger.error(e);
-  }
-};
-
-const getSimulatedHedis = () => {
-  const collection = db.collection('simulated_data');
-  return collection.find({}).toArray();
-};
-
-// create collection for predictions
-const insertPredictions = (predictions) => {
-  const collection = db.collection('model_predictions');
-  try {
-    predictions._id = predictions.measure;
-    return collection.findOneAndReplace({ measure: predictions.measure }, predictions, {
-      upsert: true,
-    });
-  } catch (e) {
-    logger.error(e);
-  }
-};
-
-const getPredictions = () => {
-  const collection = db.collection('model_predictions');
-  return collection.find({}).toArray();
-};
-
-const getResultData = (params) => {
-  const collection = db.collection('measure_results');
-  return collection.find(params).toArray();
-};
-
 // create collection for results
-const insertResults = (results) => {
+const insertMeasureResults = (results) => {
   const collection = db.collection('measure_results');
   for (let i = 0; i < results.length; i += 1) {
     const resultObject = results[i];
@@ -120,17 +90,41 @@ const insertResults = (results) => {
   }
 };
 
+// create collection for predictions
+const insertPredictions = (predictions) => {
+  const collection = db.collection('model_predictions');
+  try {
+    predictions._id = predictions.measure;
+    return collection.findOneAndReplace({ measure: predictions.measure }, predictions, {
+      upsert: true,
+    });
+  } catch (e) {
+    logger.error(e);
+  }
+};
+
+// create collection for simulated hedis data
+const insertSimulatedHedis = (simulated_data) => {
+  const collection = db.collection('simulated_data');
+  try {
+    return collection.findOneAndReplace({ }, simulated_data, {
+      upsert: true,
+    });
+  } catch (e) {
+    logger.error(e);
+  }
+};
+
 module.exports = {
   init,
+  initTest,
+  getMeasures,
+  getMeasureResults,
+  getPredictions,
+  getSimulatedHedis,
   insertMeasure,
   insertMeasures,
-  getMeasures,
-  insertSimulatedHedis,
-  getSimulatedHedis,
+  insertMeasureResults,
   insertPredictions,
-  getPredictions,
-  getResultData,
-  initTest,
-  searchMeasureResults,
-  insertResults,
+  insertSimulatedHedis,
 };
