@@ -1,9 +1,8 @@
 const dao = require('../config/dao');
 
 const { calcLatestNumDen } = require('../calculators/NumDenCalculator');
-
-const { calculateTrend } = require('../calculators/TrendCalculator.js');
-
+const { calculateTrend } = require('../calculators/TrendCalculator');
+const { calculateStarRating } = require('../calculators/StarRatingCalculator');
 const logger = require('../config/winston');
 
 const getHedis = async (req, res, next) => {
@@ -37,7 +36,7 @@ const getMeasureResults = async (req, res, next) => {
 
 const getStarRating = async (req, res, next) => {
   try {
-    
+    const search = await dao.findMeasureResults(req.query);
   } catch(e) {
     return next(e);
   }
@@ -67,10 +66,10 @@ const getPredictions = async (req, res, next) => {
 
 const getPredictionData = async (req, res, next) => {
   try {
-    const search = await dao.findMeasureResults(req.params);
+    const search = await dao.findMeasureResults(req.query);
     const predictionData = search.sort((a, b) => a.date - b.date);
     const compiledData = {
-      _id: req.params.measure,
+      _id: req.query.measure,
       DATE: {},
       HEDIS0: {},
     };

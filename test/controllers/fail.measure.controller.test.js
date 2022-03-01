@@ -84,13 +84,13 @@ describe('## measure.controller.js exceptions', () => {
     });
   });
 
-  describe('Test getStarRating', () => {
-    it('Should catch error and call next', async () => {
-      const next = jest.fn();
-      await getStarRating({ query: queryParams }, jest.fn(), next);
-      expect(next).toHaveBeenCalled();
-    });
-  });
+  // describe('Test getStarRating', () => {
+  //   it('Should catch error and call next', async () => {
+  //     const next = jest.fn();
+  //     await getStarRating({ query: queryParams }, jest.fn(), next);
+  //     expect(next).toHaveBeenCalled();
+  //   });
+  // });
 
   describe('Test getTrends', () => {
     it('Should catch error and call next', async () => {
