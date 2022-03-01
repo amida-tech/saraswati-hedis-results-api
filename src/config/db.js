@@ -39,7 +39,7 @@ const getMeasures = () => {
   return collection.find({}).toArray();
 };
 
-const searchMeasures = (query) => {
+const searchMeasureResults = (query) => {
   const collection = db.collection('measure_results');
   try {
     return collection.find(query).toArray();
@@ -131,6 +131,6 @@ module.exports = {
   getPredictions,
   getResultData,
   initTest,
-  searchMeasures,
+  searchMeasureResults,
   insertResults,
 };

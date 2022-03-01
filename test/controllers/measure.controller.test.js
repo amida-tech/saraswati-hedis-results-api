@@ -11,9 +11,11 @@ const {
   createSimulatedHedis,
   displayPredictions,
   createPredictions,
+  searchResults,
 } = require('../../src/controllers/measure.controller');
 
 const data = JSON.parse(fs.readFileSync(`${path.resolve()}/test/resources/bulk-data.json`));
+const queryParams = { measure: 'drre' };
 
 jest.mock('../../src/config/db', () => {
   const originalModule = jest.requireActual('../../src/config/db');
@@ -28,6 +30,7 @@ jest.mock('../../src/config/db', () => {
     getSimulatedHedis: jest.fn(() => []),
     getPredictions: jest.fn(() => {}),
     insertPredictions: jest.fn(() => []),
+    searchMeasureResults: jest.fn(() => []),
   };
 });
 
@@ -84,6 +87,14 @@ describe('## measure.controller.js', () => {
     it('Should call response.send', async () => {
       const response = { send: jest.fn().mockReturnValue(Promise.resolve()) };
       await createPredictions({ body: data }, response, jest.fn());
+      expect(response.send).toHaveBeenCalled();
+    });
+  });
+
+  describe('Test searchResults', () => {
+    it('Should call response.send', async () => {
+      const response = { send: jest.fn().mockReturnValue(Promise.resolve()) };
+      await searchResults({ query: queryParams }, response, jest.fn());
       expect(response.send).toHaveBeenCalled();
     });
   });

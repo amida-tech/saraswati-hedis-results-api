@@ -28,8 +28,8 @@ router.route('/predictionData/:measure')
 router.route('/trends')
   .get(measureCtrl.trends);
 
-router.route('/search')
-  .get(validate(paramValidation.searchMeasure), measureCtrl.search);
+router.route('/searchResults')
+  .get(validate(paramValidation.searchMeasureResults), measureCtrl.searchResults);
 
 router.route('/calculate')
   .post(measureCtrl.calculateAndStoreResults);

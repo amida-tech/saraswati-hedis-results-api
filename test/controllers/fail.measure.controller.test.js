@@ -11,6 +11,7 @@ const {
   createSimulatedHedis,
   displayPredictions,
   createPredictions,
+  searchResults,
 } = require('../../src/controllers/measure.controller');
 
 const data = JSON.parse(fs.readFileSync(`${path.resolve()}/test/resources/bulk-data.json`));
@@ -40,6 +41,9 @@ jest.mock('../../src/config/db', () => {
       throw new Error();
     }),
     insertPredictions: jest.fn().mockImplementation(() => {
+      throw new Error();
+    }),
+    searchMeasureResults: jest.fn().mockImplementation(() => {
       throw new Error();
     }),
   };
@@ -98,6 +102,14 @@ describe('## measure.controller.js exceptions', () => {
     it('Should should catch error and call next', async () => {
       const next = jest.fn();
       await createPredictions({ body: data }, jest.fn(), next);
+      expect(next).toHaveBeenCalled();
+    });
+  });
+
+  describe('Test searchResults', () => {
+    it('Should should catch error and call next', async () => {
+      const next = jest.fn();
+      await searchResults({ body: data }, jest.fn(), next);
       expect(next).toHaveBeenCalled();
     });
   });

@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const {
   insertMeasure, insertMeasures, getMeasures, insertSimulatedHedis,
-  insertPredictions, getSimulatedHedis, getPredictions, initTest, searchMeasures,
+  insertPredictions, getSimulatedHedis, getPredictions, initTest, searchMeasureResults,
 } = require('../../src/config/db');
 
 const data = JSON.parse(fs.readFileSync(`${path.resolve()}/test/resources/bulk-data.json`));
@@ -17,7 +17,7 @@ const collection = {
   replaceOne: jest.fn(() => 'test'),
   findOneAndReplace: jest.fn(() => 'test'),
   find: jest.fn((query) => {
-    if (query !== undefined && query.measurementType === 'drre') {
+    if (query !== undefined && query.measurement === 'drre') {
       return {
         toArray: jest.fn(() => [{ _id: '6dccff7c-db25-a27b-d718-7189b766b218-drre-recordCount' }]),
       };
@@ -92,10 +92,10 @@ describe('## db.js', () => {
     });
   });
 
-  describe('Test searchMeasures function', () => {
+  describe('Test searchMeasureResults function', () => {
     test('Should not throw an error', async (done) => {
       try {
-        const result = await searchMeasures({ measurementType: 'drre' });
+        const result = await searchMeasureResults({ measurement: 'drre' });
         expect(result[0]._id).toEqual('6dccff7c-db25-a27b-d718-7189b766b218-drre-recordCount');
       } finally {
         done();
