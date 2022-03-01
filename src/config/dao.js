@@ -18,12 +18,12 @@ const initTest = (mockDb) => {
   db = mockDb;
 };
 
-const getMeasures = () => {
+const findMeasures = () => {
   const collection = db.collection('measures');
   return collection.find({}).toArray();
 };
 
-const getMeasureResults = (query) => {
+const findMeasureResults = (query) => {
   const collection = db.collection('measure_results');
   try {
     return collection.find(query).toArray();
@@ -32,13 +32,13 @@ const getMeasureResults = (query) => {
   }
 };
 
-const getPredictions = () => {
-  const collection = db.collection('model_predictions');
+const findSimulatedHedis = () => {
+  const collection = db.collection('simulated_data');
   return collection.find({}).toArray();
 };
 
-const getSimulatedHedis = () => {
-  const collection = db.collection('simulated_data');
+const findPredictions = () => {
+  const collection = db.collection('model_predictions');
   return collection.find({}).toArray();
 };
 
@@ -90,6 +90,18 @@ const insertMeasureResults = (results) => {
   }
 };
 
+// create collection for simulated hedis data
+const insertSimulatedHedis = (simulated_data) => {
+  const collection = db.collection('simulated_data');
+  try {
+    return collection.findOneAndReplace({ }, simulated_data, {
+      upsert: true,
+    });
+  } catch (e) {
+    logger.error(e);
+  }
+};
+
 // create collection for predictions
 const insertPredictions = (predictions) => {
   const collection = db.collection('model_predictions');
@@ -103,28 +115,17 @@ const insertPredictions = (predictions) => {
   }
 };
 
-// create collection for simulated hedis data
-const insertSimulatedHedis = (simulated_data) => {
-  const collection = db.collection('simulated_data');
-  try {
-    return collection.findOneAndReplace({ }, simulated_data, {
-      upsert: true,
-    });
-  } catch (e) {
-    logger.error(e);
-  }
-};
 
 module.exports = {
   init,
   initTest,
-  getMeasures,
-  getMeasureResults,
-  getPredictions,
-  getSimulatedHedis,
+  findMeasures,
+  findMeasureResults,
+  findSimulatedHedis,
+  findPredictions,
   insertMeasure,
   insertMeasures,
   insertMeasureResults,
-  insertPredictions,
   insertSimulatedHedis,
+  insertPredictions,
 };

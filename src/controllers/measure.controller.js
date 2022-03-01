@@ -6,9 +6,18 @@ const { calculateTrend } = require('../calculators/TrendCalculator.js');
 
 const logger = require('../config/winston');
 
-const list = async (req, res, next) => {
+const getHedis = async (req, res, next) => {
   try {
-    const measures = await dao.getMeasures();
+    const simulations = await dao.findSimulatedHedis();
+    return res.send(simulations);
+  } catch (e) {
+    return next(e);
+  }
+};
+
+const getMeasures = async (req, res, next) => {
+  try {
+    const measures = await dao.findMeasures();
     // measures.forEach(measure => stringToDecimal(measure))
     return res.send(measures);
   } catch (e) {
@@ -16,56 +25,28 @@ const list = async (req, res, next) => {
   }
 };
 
-const create = async (req, res, next) => {
+const getMeasureResults = async (req, res, next) => {
   try {
-    const measure = await dao.insertMeasure(req.body);
-    return res.send(measure);
+    const search = await dao.findMeasureResults(req.query);
+    const sortedSearch = search.sort((a, b) => a.date - b.date);
+    return res.send(sortedSearch);
   } catch (e) {
     return next(e);
   }
 };
 
-const createBulk = async (req, res, next) => {
+const getStarRating = async (req, res, next) => {
   try {
-    const options = { ordered: true };
-    const measures = await dao.insertMeasures(req.body, options);
-    return res.send(measures);
-  } catch (e) {
+    
+  } catch(e) {
     return next(e);
   }
-};
+}
 
-const displayHedis = async (req, res, next) => {
+const getTrends = async (req, res, next) => {
   try {
-    const simulations = await dao.getSimulatedHedis();
-    return res.send(simulations);
-  } catch (e) {
-    return next(e);
-  }
-};
-
-const createSimulatedHedis = async (req, res, next) => {
-  try {
-    const simulations = await dao.insertSimulatedHedis(req.body);
-    return res.send(simulations);
-  } catch (e) {
-    return next(e);
-  }
-};
-
-const displayPredictions = async (req, res, next) => {
-  try {
-    const predictions = await dao.getPredictions();
-    return res.send(predictions);
-  } catch (e) {
-    return next(e);
-  }
-};
-
-const trends = async (req, res, next) => {
-  try {
-    const results = await dao.getMeasureResults({});
-    const predictions = await dao.getPredictions();
+    const results = await dao.findMeasureResults({});
+    const predictions = await dao.findPredictions();
 
     const trendData = calculateTrend(results, predictions, 7);
 
@@ -75,9 +56,18 @@ const trends = async (req, res, next) => {
   }
 };
 
-const predictionData = async (req, res, next) => {
+const getPredictions = async (req, res, next) => {
   try {
-    const search = await dao.getMeasureResults(req.params);
+    const predictions = await dao.findPredictions();
+    return res.send(predictions);
+  } catch (e) {
+    return next(e);
+  }
+};
+
+const getPredictionData = async (req, res, next) => {
+  try {
+    const search = await dao.findMeasureResults(req.params);
     const predictionData = search.sort((a, b) => a.date - b.date);
     const compiledData = {
       _id: req.params.measure,
@@ -95,26 +85,17 @@ const predictionData = async (req, res, next) => {
   }
 };
 
-const createPredictions = async (req, res, next) => {
+const postBulkMeasure = async (req, res, next) => {
   try {
-    const predictions = await dao.insertPredictions(req.body);
-    return res.send(predictions);
+    const options = { ordered: true };
+    const measures = await dao.insertMeasures(req.body, options);
+    return res.send(measures);
   } catch (e) {
     return next(e);
   }
 };
 
-const searchMeasureResults = async (req, res, next) => {
-  try {
-    const search = await dao.getMeasureResults(req.query);
-    const sortedSearch = search.sort((a, b) => a.date - b.date);
-    return res.send(sortedSearch);
-  } catch (e) {
-    return next(e);
-  }
-};
-
-const calculateAndStoreResults = async (req, res, next) => {
+const postCalculateAndStoreResults = async (req, res, next) => {
   try {
     const search = await dao.getMeasures();
     const valueArray = calcLatestNumDen(search);
@@ -125,7 +106,16 @@ const calculateAndStoreResults = async (req, res, next) => {
   }
 };
 
-const storeResults = async (req, res, next) => {
+const postMeasure = async (req, res, next) => {
+  try {
+    const measure = await dao.insertMeasure(req.body);
+    return res.send(measure);
+  } catch (e) {
+    return next(e);
+  }
+};
+
+const postMeasureResults = async (req, res, next) => {
   try {
     const jsonObject = req.body;
     dao.insertMeasureResults(jsonObject);
@@ -135,17 +125,36 @@ const storeResults = async (req, res, next) => {
   }
 };
 
+const postSimulatedHedis = async (req, res, next) => {
+  try {
+    const simulations = await dao.insertSimulatedHedis(req.body);
+    return res.send(simulations);
+  } catch (e) {
+    return next(e);
+  }
+};
+
+const postPredictions = async (req, res, next) => {
+  try {
+    const predictions = await dao.insertPredictions(req.body);
+    return res.send(predictions);
+  } catch (e) {
+    return next(e);
+  }
+};
+
 module.exports = {
-  list,
-  create,
-  createBulk,
-  displayHedis,
-  createSimulatedHedis,
-  displayPredictions,
-  predictionData,
-  createPredictions,
-  searchMeasureResults,
-  calculateAndStoreResults,
-  storeResults,
-  trends,
+  getHedis,
+  getMeasures,
+  getMeasureResults,
+  getStarRating,
+  getTrends,
+  getPredictions,
+  getPredictionData,
+  postBulkMeasure,
+  postCalculateAndStoreResults,
+  postMeasure,
+  postMeasureResults,
+  postSimulatedHedis,
+  postPredictions,
 };

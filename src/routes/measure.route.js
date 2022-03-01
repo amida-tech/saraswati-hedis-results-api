@@ -14,27 +14,30 @@ router.route('/bulk')
   .post(measureCtrl.createBulk);
 // .post(validate(paramValidation.createMeasureBulk), measureCtrl.createBulk);
 
-router.route('/simulated_hedis')
-  .get(measureCtrl.displayHedis)
-  .post(measureCtrl.createSimulatedHedis);
+router.route('/calculate')
+  .post(measureCtrl.postCalculateAndStoreResults);
 
 router.route('/predictions')
-  .get(measureCtrl.displayPredictions)
-  .post(measureCtrl.createPredictions);
+  .get(measureCtrl.getPredictions)
+  .post(measureCtrl.postPredictions);
 
 router.route('/predictionData/:measure')
-  .get(measureCtrl.predictionData);
-
-router.route('/trends')
-  .get(measureCtrl.trends);
+  .get(measureCtrl.getPredictionData);
 
 router.route('/searchResults')
-  .get(validate(paramValidation.searchMeasureResults), measureCtrl.searchMeasureResults);
+  .get(validate(paramValidation.searchMeasurements), measureCtrl.getMeasureResults);
 
-router.route('/calculate')
-  .post(measureCtrl.calculateAndStoreResults);
+router.route('/simulated_hedis')
+  .get(measureCtrl.getHedis)
+  .post(measureCtrl.postSimulatedHedis);
+
+route.route('/starRating')
+  .get(validate(paramValidation.searchMeasurements), measureCtrl.getStarRating);
 
 router.route('/storeResults')
-  .post(measureCtrl.storeResults);
+  .post(measureCtrl.postMeasureResults);
+
+router.route('/trends')
+  .get(measureCtrl.postTrends);
 
 module.exports = router;
