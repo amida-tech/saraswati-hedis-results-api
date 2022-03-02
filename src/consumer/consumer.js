@@ -4,7 +4,7 @@ const paramValidation = require('../config/param-validation');
 
 const {
   insertMeasure, insertMeasures,
-} = require('../config/db');
+} = require('../config/dao');
 
 const kafka = new Kafka({
   clientId: 'cql-execution',
