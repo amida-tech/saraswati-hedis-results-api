@@ -84,7 +84,7 @@ const getPredictionData = async (req, res, next) => {
   }
 };
 
-const postBulkMeasure = async (req, res, next) => {
+const postBulkMeasures = async (req, res, next) => {
   try {
     const options = { ordered: true };
     const measures = await dao.insertMeasures(req.body, options);
@@ -150,7 +150,7 @@ module.exports = {
   getTrends,
   getPredictions,
   getPredictionData,
-  postBulkMeasure,
+  postBulkMeasures,
   postCalculateAndStoreResults,
   postMeasure,
   postMeasureResults,

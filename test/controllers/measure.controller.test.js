@@ -11,7 +11,7 @@ const {
   getTrends,
   getPredictions,
   getPredictionData,
-  postBulkMeasure,
+  postBulkMeasures,
   postCalculateAndStoreResults,
   postMeasure,
   postMeasureResults,
@@ -112,10 +112,10 @@ describe('## measure.controller.js', () => {
     });
   });
 
-  describe('Test postBulkMeasure upload', () => {
+  describe('Test postBulkMeasures upload', () => {
     it('Should call response.send', async () => {
       const response = { send: jest.fn().mockReturnValue(Promise.resolve()) };
-      await postBulkMeasure({ body: data }, response, jest.fn());
+      await postBulkMeasures({ body: data }, response, jest.fn());
       expect(response.send).toHaveBeenCalled();
     });
   });

@@ -11,7 +11,7 @@ const {
   getTrends,
   getPredictions,
   getPredictionData,
-  postBulkMeasure,
+  postBulkMeasures,
   postCalculateAndStoreResults,
   postMeasure,
   postMeasureResults,
@@ -116,10 +116,10 @@ describe('## measure.controller.js exceptions', () => {
     });
   });
 
-  describe('Test postBulkMeasure upload', () => {
+  describe('Test postBulkMeasures upload', () => {
     it('Should catch error and call next', async () => {
       const next = jest.fn();
-      await postBulkMeasure({ body: data }, jest.fn(), next);
+      await postBulkMeasures({ body: data }, jest.fn(), next);
       expect(next).toHaveBeenCalled();
     });
   });
