@@ -66,10 +66,10 @@ const getPredictions = async (req, res, next) => {
 
 const getPredictionData = async (req, res, next) => {
   try {
-    const search = await dao.findMeasureResults(req.query);
+    const search = await dao.findMeasureResults(req.params);
     const predictionData = search.sort((a, b) => a.date - b.date);
     const compiledData = {
-      _id: req.query.measure,
+      _id: req.params.measure,
       DATE: {},
       HEDIS0: {},
     };
