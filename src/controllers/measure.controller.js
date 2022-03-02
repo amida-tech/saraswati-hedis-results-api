@@ -37,6 +37,12 @@ const getMeasureResults = async (req, res, next) => {
 const getStarRating = async (req, res, next) => {
   try {
     const search = await dao.findMeasureResults(req.query);
+    let sortedSearch = search.sort((a, b) => a.date - b.date);
+    if (sortedSearch.length === 0) {
+      sortedSearch = [{ measure: req.query.measure }];
+    }
+    const starRatingData = calculateStarRating(sortedSearch[sortedSearch.length-1]);
+    return res.send(starRatingData);
   } catch(e) {
     return next(e);
   }
