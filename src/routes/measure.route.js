@@ -31,8 +31,8 @@ router.route('/simulated_hedis')
   .get(measureCtrl.getHedis)
   .post(measureCtrl.postSimulatedHedis);
 
-// route.route('/starRating')
-//   .get(validate(paramValidation.searchMeasurements), measureCtrl.getStarRating);
+router.route('/starRating')
+  .get(validate(paramValidation.searchMeasurements), measureCtrl.getStarRating);
 
 router.route('/storeResults')
   .post(measureCtrl.postMeasureResults);

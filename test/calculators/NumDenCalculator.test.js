@@ -4,7 +4,7 @@ const { calcLatestNumDen } = require('../../src/calculators/NumDenCalculator');
 
 const data = JSON.parse(fs.readFileSync(`${path.resolve()}/test/resources/search-data.json`));
 
-describe(' Calculation test ', () => {
+describe(' NumDenCalculator test ', () => {
   let resultArray;
 
   beforeAll(() => {

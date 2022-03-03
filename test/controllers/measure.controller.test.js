@@ -80,13 +80,13 @@ describe('## measure.controller.js', () => {
     });
   });
 
-  // describe('Test getStarRating', () => {
-  //   it('Should call response.send', async () => {
-  //     const response = { send: jest.fn().mockReturnValue(Promise.resolve()) };
-  //     await getStarRating({ query: queryOrParams }, response, jest.fn());
-  //     expect(response.send).toHaveBeenCalled();
-  //   });
-  // });
+  describe('Test getStarRating', () => {
+    it('Should call response.send', async () => {
+      const response = { send: jest.fn().mockReturnValue(Promise.resolve()) };
+      await getStarRating({ query: queryOrParams }, response, jest.fn());
+      expect(response.send).toHaveBeenCalled();
+    });
+  });
 
   describe('Test getTrends function', () => {
     it('Should call response.send', async () => {
