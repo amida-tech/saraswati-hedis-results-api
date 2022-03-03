@@ -2,9 +2,10 @@
 const fs = require('fs');
 const path = require('path');
 const {
-  insertMeasure, insertMeasures, getMeasures, insertSimulatedHedis,
-  insertPredictions, getSimulatedHedis, getPredictions, initTest, searchMeasures,
-} = require('../../src/config/db');
+  initTest, findMeasures, findMeasureResults, findPredictions, findSimulatedHedis,
+  insertMeasure, insertMeasures, insertMeasureResults, insertPredictions,
+  insertSimulatedHedis,
+} = require('../../src/config/dao');
 
 const data = JSON.parse(fs.readFileSync(`${path.resolve()}/test/resources/bulk-data.json`));
 const drreData = JSON.parse(fs.readFileSync(`${path.resolve()}/test/resources/drre-data.json`));
@@ -17,7 +18,7 @@ const collection = {
   replaceOne: jest.fn(() => 'test'),
   findOneAndReplace: jest.fn(() => 'test'),
   find: jest.fn((query) => {
-    if (query !== undefined && query.measurementType === 'drre') {
+    if (query !== undefined && query.measurement === 'drre') {
       return {
         toArray: jest.fn(() => [{ _id: '6dccff7c-db25-a27b-d718-7189b766b218-drre-recordCount' }]),
       };
@@ -33,6 +34,34 @@ describe('## db.js', () => {
   beforeAll(async () => {
     db = { collection: jest.fn(() => collection) };
     initTest(db);
+  });  
+
+  describe('Test getMeasures function', () => {
+    test('Should not throw an error', async () => {
+      const test = findMeasures();
+      expect(test).toBeTruthy();
+    });
+  });
+
+  describe('Test getMeasureResults function', () => {
+    test('Should not throw an error', async () => {
+      const test = findMeasureResults();
+      expect(test).toBeTruthy();
+    });
+  });
+
+  describe('Test getPredictions function', () => {
+    test('Should not throw an error', async () => {
+      const test = findPredictions();
+      expect(test).toBeTruthy();
+    });
+  });
+
+  describe('Test getSimulatedHedis function', () => {
+    test('Should not throw an error', async () => {
+      const test = findSimulatedHedis();
+      expect(test).toBeTruthy();
+    });
   });
 
   describe('Test insertMeasure function', () => {
@@ -57,10 +86,14 @@ describe('## db.js', () => {
     });
   });
 
-  describe('Test getMeasure function', () => {
-    test('Should not throw an error', async () => {
-      const test = getMeasures();
-      expect(test).toBeTruthy();
+  describe('Test insertMeasureResults function', () => {
+    test('Should not throw an error', async (done) => {
+      try {
+        const test = insertMeasureResults(data);
+        expect(test).toBeTruthy();
+      } finally {
+        done();
+      }
     });
   });
 
@@ -71,35 +104,10 @@ describe('## db.js', () => {
     });
   });
 
-  describe('Test getSimulatedHedis function', () => {
-    test('Should not throw an error', async () => {
-      const test = getSimulatedHedis();
-      expect(test).toBeTruthy();
-    });
-  });
-
   describe('Test insertPredictions function', () => {
     test('Should not throw an error', async () => {
       const test = insertPredictions(data);
       expect(test).toBeTruthy();
-    });
-  });
-
-  describe('Test getPredictions function', () => {
-    test('Should not throw an error', async () => {
-      const test = getPredictions();
-      expect(test).toBeTruthy();
-    });
-  });
-
-  describe('Test searchMeasures function', () => {
-    test('Should not throw an error', async (done) => {
-      try {
-        const result = await searchMeasures({ measurementType: 'drre' });
-        expect(result[0]._id).toEqual('6dccff7c-db25-a27b-d718-7189b766b218-drre-recordCount');
-      } finally {
-        done();
-      }
     });
   });
 });

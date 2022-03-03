@@ -4,24 +4,40 @@ const fs = require('fs');
 const path = require('path');
 
 const {
-  list,
-  create,
-  createBulk,
-  displayHedis,
-  createSimulatedHedis,
-  displayPredictions,
-  createPredictions,
+  getHedis,
+  getMeasures,
+  getMeasureResults,
+  getStarRating,
+  getTrends,
+  getPredictions,
+  getPredictionData,
+  postBulkMeasures,
+  postCalculateAndStoreResults,
+  postMeasure,
+  postMeasureResults,
+  postSimulatedHedis,
+  postPredictions,
 } = require('../../src/controllers/measure.controller');
 
 const data = JSON.parse(fs.readFileSync(`${path.resolve()}/test/resources/bulk-data.json`));
+const queryParams = { measure: 'drre' };
 
-jest.mock('../../src/config/db', () => {
-  const originalModule = jest.requireActual('../../src/config/db');
+jest.mock('../../src/config/dao', () => {
+  const originalModule = jest.requireActual('../../src/config/dao');
 
   return {
     __esModule: true,
     ...originalModule,
-    getMeasures: jest.fn().mockImplementation(() => {
+    findMeasures: jest.fn().mockImplementation(() => {
+      throw new Error();
+    }),
+    findMeasureResults: jest.fn().mockImplementation(() => {
+      throw new Error();
+    }),
+    findPredictions: jest.fn().mockImplementation(() => {
+      throw new Error();
+    }),
+    findSimulatedHedis: jest.fn().mockImplementation(() => {
       throw new Error();
     }),
     insertMeasure: jest.fn().mockImplementation(() => {
@@ -30,74 +46,120 @@ jest.mock('../../src/config/db', () => {
     insertMeasures: jest.fn().mockImplementation(() => {
       throw new Error();
     }),
-    insertSimulatedHedis: jest.fn().mockImplementation(() => {
-      throw new Error();
-    }),
-    getSimulatedHedis: jest.fn().mockImplementation(() => {
-      throw new Error();
-    }),
-    getPredictions: jest.fn().mockImplementation(() => {
+    insertMeasureResults: jest.fn().mockImplementation(() => {
       throw new Error();
     }),
     insertPredictions: jest.fn().mockImplementation(() => {
+      throw new Error();
+    }),
+    insertSimulatedHedis: jest.fn().mockImplementation(() => {
       throw new Error();
     }),
   };
 });
 
 describe('## measure.controller.js exceptions', () => {
-  describe('Test List function', () => {
-    it('Should should catch error and call next', async () => {
+  
+  describe('Test getHedis', () => {
+    it('Should catch error and call next', async () => {
       const next = jest.fn();
-      await list({}, jest.fn(), next);
+      await getHedis({ }, jest.fn(), next);
       expect(next).toHaveBeenCalled();
     });
   });
 
-  describe('Test Create function', () => {
-    it('Should should catch error and call next', async () => {
+  describe('Test getMeasures function', () => {
+    it('Should catch error and call next', async () => {
       const next = jest.fn();
-      await create({ body: data }, jest.fn(), next);
+      await getMeasures({}, jest.fn(), next);
       expect(next).toHaveBeenCalled();
     });
   });
 
-  describe('Test CreateBulk upload', () => {
-    it('Should should catch error and call next', async () => {
+  describe('Test getMeasureResults', () => {
+    it('Should catch error and call next', async () => {
       const next = jest.fn();
-      await createBulk({ body: data }, jest.fn(), next);
+      await getMeasureResults({ body: data }, jest.fn(), next);
       expect(next).toHaveBeenCalled();
     });
   });
 
-  describe('Test DisplayHedis', () => {
-    it('Should should catch error and call next', async () => {
+  // describe('Test getStarRating', () => {
+  //   it('Should catch error and call next', async () => {
+  //     const next = jest.fn();
+  //     await getStarRating({ query: queryParams }, jest.fn(), next);
+  //     expect(next).toHaveBeenCalled();
+  //   });
+  // });
+
+  describe('Test getTrends', () => {
+    it('Should catch error and call next', async () => {
       const next = jest.fn();
-      await displayHedis({ }, jest.fn(), next);
+      await getTrends({ query: queryParams }, jest.fn(), next);
       expect(next).toHaveBeenCalled();
     });
   });
 
-  describe('Test createSimulatedHedis', () => {
-    it('Should should catch error and call next', async () => {
+  describe('Test getPredictions', () => {
+    it('Should catch error and call next', async () => {
       const next = jest.fn();
-      await createSimulatedHedis({ body: data }, jest.fn(), next);
+      await getPredictions({ }, jest.fn(), next);
       expect(next).toHaveBeenCalled();
     });
   });
 
-  describe('Test displayPredictions', () => {
-    it('Should should catch error and call next', async () => {
+  describe('Test getPredictionData', () => {
+    it('Should catch error and call next', async () => {
       const next = jest.fn();
-      await displayPredictions({ }, jest.fn(), next);
+      await getPredictionData({ body: data }, jest.fn(), next);
       expect(next).toHaveBeenCalled();
     });
   });
 
-  describe('Test createPredictions', () => {
-    it('Should should catch error and call next', async () => {
+  describe('Test postBulkMeasures upload', () => {
+    it('Should catch error and call next', async () => {
       const next = jest.fn();
-      await createPredictions({ body: data }, jest.fn(), next);
+      await postBulkMeasures({ body: data }, jest.fn(), next);
+      expect(next).toHaveBeenCalled();
+    });
+  });
+
+  describe('Test postCalculateAndStoreResults upload', () => {
+    it('Should catch error and call next', async () => {
+      const next = jest.fn();
+      await postCalculateAndStoreResults({}, jest.fn(), next);
+      expect(next).toHaveBeenCalled();
+    });
+  });
+
+  describe('Test postMeasure function', () => {
+    it('Should catch error and call next', async () => {
+      const next = jest.fn();
+      await postMeasure({ body: data }, jest.fn(), next);
+      expect(next).toHaveBeenCalled();
+    });
+  });
+  
+  describe('Test postMeasureResults function', () => {
+    it('Should catch error and call next', async () => {
+      const next = jest.fn();
+      await postMeasureResults({ body: data }, jest.fn(), next);
+      expect(next).toHaveBeenCalled();
+    });
+  });
+
+  describe('Test postSimulatedHedis', () => {
+    it('Should catch error and call next', async () => {
+      const next = jest.fn();
+      await postSimulatedHedis({ body: data }, jest.fn(), next);
+      expect(next).toHaveBeenCalled();
+    });
+  });
+
+  describe('Test postPredictions', () => {
+    it('Should catch error and call next', async () => {
+      const next = jest.fn();
+      await postPredictions({ body: data }, jest.fn(), next);
       expect(next).toHaveBeenCalled();
     });
   });

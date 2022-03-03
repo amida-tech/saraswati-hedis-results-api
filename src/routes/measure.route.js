@@ -6,35 +6,38 @@ const measureCtrl = require('../controllers/measure.controller');
 const router = express.Router(); // eslint-disable-line new-cap
 
 router.route('/')
-  .get(measureCtrl.list)
-  .post(measureCtrl.create);
+  .get(measureCtrl.getMeasures)
+  .post(measureCtrl.postMeasure);
 // .post(validate(paramValidation.createMeasure), measureCtrl.create);
 
 router.route('/bulk')
-  .post(measureCtrl.createBulk);
+  .post(measureCtrl.postBulkMeasures);
 // .post(validate(paramValidation.createMeasureBulk), measureCtrl.createBulk);
 
-router.route('/simulated_hedis')
-  .get(measureCtrl.displayHedis)
-  .post(measureCtrl.createSimulatedHedis);
+router.route('/calculate')
+  .post(measureCtrl.postCalculateAndStoreResults);
 
 router.route('/predictions')
-  .get(measureCtrl.displayPredictions)
-  .post(measureCtrl.createPredictions);
+  .get(measureCtrl.getPredictions)
+  .post(measureCtrl.postPredictions);
 
 router.route('/predictionData/:measure')
-  .get(measureCtrl.predictionData);
+  .get(measureCtrl.getPredictionData);
 
-router.route('/trends')
-  .get(measureCtrl.trends);
+router.route('/searchResults')
+  .get(validate(paramValidation.searchMeasurements), measureCtrl.getMeasureResults);
 
-router.route('/search')
-  .get(validate(paramValidation.searchMeasure), measureCtrl.search);
+router.route('/simulated_hedis')
+  .get(measureCtrl.getHedis)
+  .post(measureCtrl.postSimulatedHedis);
 
-router.route('/calculate')
-  .post(measureCtrl.calculateAndStoreResults);
+// route.route('/starRating')
+//   .get(validate(paramValidation.searchMeasurements), measureCtrl.getStarRating);
 
 router.route('/storeResults')
-  .post(measureCtrl.storeResults);
+  .post(measureCtrl.postMeasureResults);
+
+router.route('/trends')
+  .get(measureCtrl.getTrends);
 
 module.exports = router;

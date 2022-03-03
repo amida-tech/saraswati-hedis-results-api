@@ -10,10 +10,9 @@ const measure = {
   body: measureBody,
 };
 
-const measureQuery = {
+const measurementQuery = {
   query: Joi.object({
-    measurementType: Joi.string().optional(),
-    memberId: Joi.string().optional(),
+    measure: Joi.string().optional(),
   }),
 };
 
@@ -22,5 +21,5 @@ module.exports = {
   createMeasureBulk: {
     body: Joi.array().items(measureBody),
   },
-  searchMeasure: measureQuery,
+  searchMeasurements: measurementQuery
 };
