@@ -146,7 +146,7 @@ function calculateSubScore(resultHolder, measurementType, date, index) {
   const denominator = resultHolder.denominatorValues[index];
   const percentValue = denominator === 0 ? 0 : numerator / denominator;
   return {
-    measure: `${measurementType} ${index + 1}`,
+    measure: `${measurementType}-${index + 1}`,
     date,
     value: percentValue * 100,
     denominator,

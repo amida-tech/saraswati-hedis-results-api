@@ -10,7 +10,7 @@
         "exclusions": 4,
         "subScores": [
             {
-                "measure": "drre 1",
+                "measure": "drre-1",
                 "date": "2022-02-12T00:00:00.000Z",
                 "value": 86.6666666666667,
                 "denominator": 15,
@@ -19,7 +19,7 @@
                 "exclusions": 1
             },
             {
-                "measure": "drre 2",
+                "measure": "drre-2",
                 "date": "2022-02-12T00:00:00.000Z",
                 "value": 46.6666666666667,
                 "denominator": 15,
@@ -28,7 +28,7 @@
                 "exclusions": 2
             },
             {
-                "measure": "drre 3",
+                "measure": "drre-3",
                 "date": "2022-02-12T00:00:00.000Z",
                 "value": 66.6666666666667,
                 "denominator": 12,
@@ -49,7 +49,7 @@
         "exclusions": 22,
         "subScores": [
             {
-                "measure": "aab 1",
+                "measure": "aab-1",
                 "date": "2022-02-12T00:00:00.000Z",
                 "value": 75,
                 "denominator": 24,
@@ -70,7 +70,7 @@
         "exclusions": 77,
         "subScores": [
             {
-                "measure": "aise 1",
+                "measure": "aise-1",
                 "date": "2022-02-12T00:00:00.000Z",
                 "value": 42.1052631578947,
                 "denominator": 19,
@@ -79,7 +79,7 @@
                 "exclusions": 20
             },
             {
-                "measure": "aise 2",
+                "measure": "aise-2",
                 "date": "2022-02-12T00:00:00.000Z",
                 "value": 57.8947368421053,
                 "denominator": 19,
@@ -88,7 +88,7 @@
                 "exclusions": 20
             },
             {
-                "measure": "aise 3",
+                "measure": "aise-3",
                 "date": "2022-02-12T00:00:00.000Z",
                 "value": 50,
                 "denominator": 18,
@@ -97,7 +97,7 @@
                 "exclusions": 20
             },
             {
-                "measure": "aise 4",
+                "measure": "aise-4",
                 "date": "2022-02-12T00:00:00.000Z",
                 "value": 50,
                 "denominator": 12,
@@ -118,7 +118,7 @@
         "exclusions": 50,
         "subScores": [
             {
-                "measure": "imae 1",
+                "measure": "imae-1",
                 "date": "2022-02-12T00:00:00.000Z",
                 "value": 50,
                 "denominator": 10,
@@ -127,7 +127,7 @@
                 "exclusions": 10
             },
             {
-                "measure": "imae 2",
+                "measure": "imae-2",
                 "date": "2022-02-12T00:00:00.000Z",
                 "value": 60,
                 "denominator": 10,
@@ -136,7 +136,7 @@
                 "exclusions": 10
             },
             {
-                "measure": "imae 3",
+                "measure": "imae-3",
                 "date": "2022-02-12T00:00:00.000Z",
                 "value": 55.5555555555556,
                 "denominator": 9,
@@ -145,7 +145,7 @@
                 "exclusions": 10
             },
             {
-                "measure": "imae 4",
+                "measure": "imae-4",
                 "date": "2022-02-12T00:00:00.000Z",
                 "value": 37.5,
                 "denominator": 8,
@@ -154,7 +154,7 @@
                 "exclusions": 10
             },
             {
-                "measure": "imae 5",
+                "measure": "imae-5",
                 "date": "2022-02-12T00:00:00.000Z",
                 "value": 40,
                 "denominator": 5,
@@ -186,7 +186,7 @@
         "exclusions": 4,
         "subScores": [
             {
-                "measure": "drre 1",
+                "measure": "drre-1",
                 "date": "2022-02-13T00:00:00.000Z",
                 "value": 86.6666666666667,
                 "denominator": 15,
@@ -195,7 +195,7 @@
                 "exclusions": 1
             },
             {
-                "measure": "drre 2",
+                "measure": "drre-2",
                 "date": "2022-02-13T00:00:00.000Z",
                 "value": 46.6666666666667,
                 "denominator": 15,
@@ -204,7 +204,7 @@
                 "exclusions": 2
             },
             {
-                "measure": "drre 3",
+                "measure": "drre-3",
                 "date": "2022-02-13T00:00:00.000Z",
                 "value": 66.6666666666667,
                 "denominator": 12,
@@ -225,7 +225,7 @@
         "exclusions": 22,
         "subScores": [
             {
-                "measure": "aab 1",
+                "measure": "aab-1",
                 "date": "2022-02-13T00:00:00.000Z",
                 "value": 79.1666666666667,
                 "denominator": 24,
@@ -246,7 +246,7 @@
         "exclusions": 77,
         "subScores": [
             {
-                "measure": "aise 1",
+                "measure": "aise-1",
                 "date": "2022-02-13T00:00:00.000Z",
                 "value": 42.1052631578947,
                 "denominator": 19,
@@ -255,7 +255,7 @@
                 "exclusions": 20
             },
             {
-                "measure": "aise 2",
+                "measure": "aise-2",
                 "date": "2022-02-13T00:00:00.000Z",
                 "value": 57.8947368421053,
                 "denominator": 19,
@@ -264,7 +264,7 @@
                 "exclusions": 20
             },
             {
-                "measure": "aise 3",
+                "measure": "aise-3",
                 "date": "2022-02-13T00:00:00.000Z",
                 "value": 44.4444444444444,
                 "denominator": 18,
@@ -273,7 +273,7 @@
                 "exclusions": 20
             },
             {
-                "measure": "aise 4",
+                "measure": "aise-4",
                 "date": "2022-02-13T00:00:00.000Z",
                 "value": 50,
                 "denominator": 12,
@@ -294,7 +294,7 @@
         "exclusions": 50,
         "subScores": [
             {
-                "measure": "imae 1",
+                "measure": "imae-1",
                 "date": "2022-02-13T00:00:00.000Z",
                 "value": 50,
                 "denominator": 10,
@@ -303,7 +303,7 @@
                 "exclusions": 10
             },
             {
-                "measure": "imae 2",
+                "measure": "imae-2",
                 "date": "2022-02-13T00:00:00.000Z",
                 "value": 60,
                 "denominator": 10,
@@ -312,7 +312,7 @@
                 "exclusions": 10
             },
             {
-                "measure": "imae 3",
+                "measure": "imae-3",
                 "date": "2022-02-13T00:00:00.000Z",
                 "value": 44.4444444444444,
                 "denominator": 9,
@@ -321,7 +321,7 @@
                 "exclusions": 10
             },
             {
-                "measure": "imae 4",
+                "measure": "imae-4",
                 "date": "2022-02-13T00:00:00.000Z",
                 "value": 37.5,
                 "denominator": 8,
@@ -330,7 +330,7 @@
                 "exclusions": 10
             },
             {
-                "measure": "imae 5",
+                "measure": "imae-5",
                 "date": "2022-02-13T00:00:00.000Z",
                 "value": 40,
                 "denominator": 5,
@@ -362,7 +362,7 @@
         "exclusions": 4,
         "subScores": [
             {
-                "measure": "drre 1",
+                "measure": "drre-1",
                 "date": "2022-02-14T00:00:00.000Z",
                 "value": 80,
                 "denominator": 15,
@@ -371,7 +371,7 @@
                 "exclusions": 1
             },
             {
-                "measure": "drre 2",
+                "measure": "drre-2",
                 "date": "2022-02-14T00:00:00.000Z",
                 "value": 46.6666666666667,
                 "denominator": 15,
@@ -380,7 +380,7 @@
                 "exclusions": 2
             },
             {
-                "measure": "drre 3",
+                "measure": "drre-3",
                 "date": "2022-02-14T00:00:00.000Z",
                 "value": 66.6666666666667,
                 "denominator": 12,
@@ -401,7 +401,7 @@
         "exclusions": 22,
         "subScores": [
             {
-                "measure": "aab 1",
+                "measure": "aab-1",
                 "date": "2022-02-14T00:00:00.000Z",
                 "value": 83.3333333333333,
                 "denominator": 24,
@@ -422,7 +422,7 @@
         "exclusions": 77,
         "subScores": [
             {
-                "measure": "aise 1",
+                "measure": "aise-1",
                 "date": "2022-02-14T00:00:00.000Z",
                 "value": 36.8421052631579,
                 "denominator": 19,
@@ -431,7 +431,7 @@
                 "exclusions": 20
             },
             {
-                "measure": "aise 2",
+                "measure": "aise-2",
                 "date": "2022-02-14T00:00:00.000Z",
                 "value": 63.1578947368421,
                 "denominator": 19,
@@ -440,7 +440,7 @@
                 "exclusions": 20
             },
             {
-                "measure": "aise 3",
+                "measure": "aise-3",
                 "date": "2022-02-14T00:00:00.000Z",
                 "value": 44.4444444444444,
                 "denominator": 18,
@@ -449,7 +449,7 @@
                 "exclusions": 20
             },
             {
-                "measure": "aise 4",
+                "measure": "aise-4",
                 "date": "2022-02-14T00:00:00.000Z",
                 "value": 53.8461538461538,
                 "denominator": 13,
@@ -470,7 +470,7 @@
         "exclusions": 50,
         "subScores": [
             {
-                "measure": "imae 1",
+                "measure": "imae-1",
                 "date": "2022-02-14T00:00:00.000Z",
                 "value": 50,
                 "denominator": 10,
@@ -479,7 +479,7 @@
                 "exclusions": 10
             },
             {
-                "measure": "imae 2",
+                "measure": "imae-2",
                 "date": "2022-02-14T00:00:00.000Z",
                 "value": 60,
                 "denominator": 10,
@@ -488,7 +488,7 @@
                 "exclusions": 10
             },
             {
-                "measure": "imae 3",
+                "measure": "imae-3",
                 "date": "2022-02-14T00:00:00.000Z",
                 "value": 44.4444444444444,
                 "denominator": 9,
@@ -497,7 +497,7 @@
                 "exclusions": 10
             },
             {
-                "measure": "imae 4",
+                "measure": "imae-4",
                 "date": "2022-02-14T00:00:00.000Z",
                 "value": 25,
                 "denominator": 8,
@@ -506,7 +506,7 @@
                 "exclusions": 10
             },
             {
-                "measure": "imae 5",
+                "measure": "imae-5",
                 "date": "2022-02-14T00:00:00.000Z",
                 "value": 33.3333333333333,
                 "denominator": 6,
@@ -538,7 +538,7 @@
         "exclusions": 4,
         "subScores": [
             {
-                "measure": "drre 1",
+                "measure": "drre-1",
                 "date": "2022-02-15T00:00:00.000Z",
                 "value": 86.6666666666667,
                 "denominator": 15,
@@ -547,7 +547,7 @@
                 "exclusions": 1
             },
             {
-                "measure": "drre 2",
+                "measure": "drre-2",
                 "date": "2022-02-15T00:00:00.000Z",
                 "value": 53.3333333333333,
                 "denominator": 15,
@@ -556,7 +556,7 @@
                 "exclusions": 2
             },
             {
-                "measure": "drre 3",
+                "measure": "drre-3",
                 "date": "2022-02-15T00:00:00.000Z",
                 "value": 76.9230769230769,
                 "denominator": 13,
@@ -577,7 +577,7 @@
         "exclusions": 22,
         "subScores": [
             {
-                "measure": "aab 1",
+                "measure": "aab-1",
                 "date": "2022-02-15T00:00:00.000Z",
                 "value": 87.5,
                 "denominator": 24,
@@ -598,7 +598,7 @@
         "exclusions": 78,
         "subScores": [
             {
-                "measure": "aise 1",
+                "measure": "aise-1",
                 "date": "2022-02-15T00:00:00.000Z",
                 "value": 47.3684210526316,
                 "denominator": 19,
@@ -607,7 +607,7 @@
                 "exclusions": 20
             },
             {
-                "measure": "aise 2",
+                "measure": "aise-2",
                 "date": "2022-02-15T00:00:00.000Z",
                 "value": 63.1578947368421,
                 "denominator": 19,
@@ -616,7 +616,7 @@
                 "exclusions": 20
             },
             {
-                "measure": "aise 3",
+                "measure": "aise-3",
                 "date": "2022-02-15T00:00:00.000Z",
                 "value": 44.4444444444444,
                 "denominator": 18,
@@ -625,7 +625,7 @@
                 "exclusions": 20
             },
             {
-                "measure": "aise 4",
+                "measure": "aise-4",
                 "date": "2022-02-15T00:00:00.000Z",
                 "value": 57.1428571428571,
                 "denominator": 14,
@@ -657,7 +657,7 @@
         "exclusions": 50,
         "subScores": [
             {
-                "measure": "imae 1",
+                "measure": "imae-1",
                 "date": "2022-02-15T00:00:00.000Z",
                 "value": 50,
                 "denominator": 10,
@@ -666,7 +666,7 @@
                 "exclusions": 10
             },
             {
-                "measure": "imae 2",
+                "measure": "imae-2",
                 "date": "2022-02-15T00:00:00.000Z",
                 "value": 60,
                 "denominator": 10,
@@ -675,7 +675,7 @@
                 "exclusions": 10
             },
             {
-                "measure": "imae 3",
+                "measure": "imae-3",
                 "date": "2022-02-15T00:00:00.000Z",
                 "value": 50,
                 "denominator": 10,
@@ -684,7 +684,7 @@
                 "exclusions": 10
             },
             {
-                "measure": "imae 4",
+                "measure": "imae-4",
                 "date": "2022-02-15T00:00:00.000Z",
                 "value": 33.3333333333333,
                 "denominator": 9,
@@ -693,7 +693,7 @@
                 "exclusions": 10
             },
             {
-                "measure": "imae 5",
+                "measure": "imae-5",
                 "date": "2022-02-15T00:00:00.000Z",
                 "value": 33.3333333333333,
                 "denominator": 9,
@@ -714,7 +714,7 @@
         "exclusions": 4,
         "subScores": [
             {
-                "measure": "drre 1",
+                "measure": "drre-1",
                 "date": "2022-02-16T00:00:00.000Z",
                 "value": 86.6666666666667,
                 "denominator": 15,
@@ -723,7 +723,7 @@
                 "exclusions": 1
             },
             {
-                "measure": "drre 2",
+                "measure": "drre-2",
                 "date": "2022-02-16T00:00:00.000Z",
                 "value": 53.3333333333333,
                 "denominator": 15,
@@ -732,7 +732,7 @@
                 "exclusions": 2
             },
             {
-                "measure": "drre 3",
+                "measure": "drre-3",
                 "date": "2022-02-16T00:00:00.000Z",
                 "value": 76.9230769230769,
                 "denominator": 13,
@@ -753,7 +753,7 @@
         "exclusions": 22,
         "subScores": [
             {
-                "measure": "aab 1",
+                "measure": "aab-1",
                 "date": "2022-02-16T00:00:00.000Z",
                 "value": 91.304347826087,
                 "denominator": 23,
@@ -774,7 +774,7 @@
         "exclusions": 50,
         "subScores": [
             {
-                "measure": "imae 1",
+                "measure": "imae-1",
                 "date": "2022-02-16T00:00:00.000Z",
                 "value": 40,
                 "denominator": 10,
@@ -783,7 +783,7 @@
                 "exclusions": 10
             },
             {
-                "measure": "imae 2",
+                "measure": "imae-2",
                 "date": "2022-02-16T00:00:00.000Z",
                 "value": 60,
                 "denominator": 10,
@@ -792,7 +792,7 @@
                 "exclusions": 10
             },
             {
-                "measure": "imae 3",
+                "measure": "imae-3",
                 "date": "2022-02-16T00:00:00.000Z",
                 "value": 50,
                 "denominator": 10,
@@ -801,7 +801,7 @@
                 "exclusions": 10
             },
             {
-                "measure": "imae 4",
+                "measure": "imae-4",
                 "date": "2022-02-16T00:00:00.000Z",
                 "value": 30,
                 "denominator": 10,
@@ -810,7 +810,7 @@
                 "exclusions": 10
             },
             {
-                "measure": "imae 5",
+                "measure": "imae-5",
                 "date": "2022-02-16T00:00:00.000Z",
                 "value": 30,
                 "denominator": 10,
@@ -842,7 +842,7 @@
         "exclusions": 78,
         "subScores": [
             {
-                "measure": "aise 1",
+                "measure": "aise-1",
                 "date": "2022-02-16T00:00:00.000Z",
                 "value": 47.3684210526316,
                 "denominator": 19,
@@ -851,7 +851,7 @@
                 "exclusions": 20
             },
             {
-                "measure": "aise 2",
+                "measure": "aise-2",
                 "date": "2022-02-16T00:00:00.000Z",
                 "value": 63.1578947368421,
                 "denominator": 19,
@@ -860,7 +860,7 @@
                 "exclusions": 20
             },
             {
-                "measure": "aise 3",
+                "measure": "aise-3",
                 "date": "2022-02-16T00:00:00.000Z",
                 "value": 44.4444444444444,
                 "denominator": 18,
@@ -869,7 +869,7 @@
                 "exclusions": 20
             },
             {
-                "measure": "aise 4",
+                "measure": "aise-4",
                 "date": "2022-02-16T00:00:00.000Z",
                 "value": 46.6666666666667,
                 "denominator": 15,
@@ -890,7 +890,7 @@
         "exclusions": 4,
         "subScores": [
             {
-                "measure": "drre 1",
+                "measure": "drre-1",
                 "date": "2022-02-17T00:00:00.000Z",
                 "value": 93.3333333333333,
                 "denominator": 15,
@@ -899,7 +899,7 @@
                 "exclusions": 1
             },
             {
-                "measure": "drre 2",
+                "measure": "drre-2",
                 "date": "2022-02-17T00:00:00.000Z",
                 "value": 60,
                 "denominator": 15,
@@ -908,7 +908,7 @@
                 "exclusions": 2
             },
             {
-                "measure": "drre 3",
+                "measure": "drre-3",
                 "date": "2022-02-17T00:00:00.000Z",
                 "value": 78.5714285714286,
                 "denominator": 14,
@@ -929,7 +929,7 @@
         "exclusions": 80,
         "subScores": [
             {
-                "measure": "aise 1",
+                "measure": "aise-1",
                 "date": "2022-02-17T00:00:00.000Z",
                 "value": 47.3684210526316,
                 "denominator": 19,
@@ -938,7 +938,7 @@
                 "exclusions": 20
             },
             {
-                "measure": "aise 2",
+                "measure": "aise-2",
                 "date": "2022-02-17T00:00:00.000Z",
                 "value": 73.6842105263158,
                 "denominator": 19,
@@ -947,7 +947,7 @@
                 "exclusions": 20
             },
             {
-                "measure": "aise 3",
+                "measure": "aise-3",
                 "date": "2022-02-17T00:00:00.000Z",
                 "value": 55.5555555555556,
                 "denominator": 18,
@@ -956,7 +956,7 @@
                 "exclusions": 20
             },
             {
-                "measure": "aise 4",
+                "measure": "aise-4",
                 "date": "2022-02-17T00:00:00.000Z",
                 "value": 58.8235294117647,
                 "denominator": 17,
@@ -977,7 +977,7 @@
         "exclusions": 22,
         "subScores": [
             {
-                "measure": "aab 1",
+                "measure": "aab-1",
                 "date": "2022-02-17T00:00:00.000Z",
                 "value": 95.4545454545455,
                 "denominator": 22,
@@ -998,7 +998,7 @@
         "exclusions": 50,
         "subScores": [
             {
-                "measure": "imae 1",
+                "measure": "imae-1",
                 "date": "2022-02-17T00:00:00.000Z",
                 "value": 40,
                 "denominator": 10,
@@ -1007,7 +1007,7 @@
                 "exclusions": 10
             },
             {
-                "measure": "imae 2",
+                "measure": "imae-2",
                 "date": "2022-02-17T00:00:00.000Z",
                 "value": 70,
                 "denominator": 10,
@@ -1016,7 +1016,7 @@
                 "exclusions": 10
             },
             {
-                "measure": "imae 3",
+                "measure": "imae-3",
                 "date": "2022-02-17T00:00:00.000Z",
                 "value": 70,
                 "denominator": 10,
@@ -1025,7 +1025,7 @@
                 "exclusions": 10
             },
             {
-                "measure": "imae 4",
+                "measure": "imae-4",
                 "date": "2022-02-17T00:00:00.000Z",
                 "value": 30,
                 "denominator": 10,
@@ -1034,7 +1034,7 @@
                 "exclusions": 10
             },
             {
-                "measure": "imae 5",
+                "measure": "imae-5",
                 "date": "2022-02-17T00:00:00.000Z",
                 "value": 20,
                 "denominator": 10,
@@ -1066,7 +1066,7 @@
         "exclusions": 79,
         "subScores": [
             {
-                "measure": "aise 1",
+                "measure": "aise-1",
                 "date": "2022-02-18T00:00:00.000Z",
                 "value": 47.3684210526316,
                 "denominator": 19,
@@ -1075,7 +1075,7 @@
                 "exclusions": 20
             },
             {
-                "measure": "aise 2",
+                "measure": "aise-2",
                 "date": "2022-02-18T00:00:00.000Z",
                 "value": 73.6842105263158,
                 "denominator": 19,
@@ -1084,7 +1084,7 @@
                 "exclusions": 20
             },
             {
-                "measure": "aise 3",
+                "measure": "aise-3",
                 "date": "2022-02-18T00:00:00.000Z",
                 "value": 44.4444444444444,
                 "denominator": 18,
@@ -1093,7 +1093,7 @@
                 "exclusions": 20
             },
             {
-                "measure": "aise 4",
+                "measure": "aise-4",
                 "date": "2022-02-18T00:00:00.000Z",
                 "value": 50,
                 "denominator": 16,
@@ -1114,7 +1114,7 @@
         "exclusions": 50,
         "subScores": [
             {
-                "measure": "imae 1",
+                "measure": "imae-1",
                 "date": "2022-02-18T00:00:00.000Z",
                 "value": 40,
                 "denominator": 10,
@@ -1123,7 +1123,7 @@
                 "exclusions": 10
             },
             {
-                "measure": "imae 2",
+                "measure": "imae-2",
                 "date": "2022-02-18T00:00:00.000Z",
                 "value": 60,
                 "denominator": 10,
@@ -1132,7 +1132,7 @@
                 "exclusions": 10
             },
             {
-                "measure": "imae 3",
+                "measure": "imae-3",
                 "date": "2022-02-18T00:00:00.000Z",
                 "value": 70,
                 "denominator": 10,
@@ -1141,7 +1141,7 @@
                 "exclusions": 10
             },
             {
-                "measure": "imae 4",
+                "measure": "imae-4",
                 "date": "2022-02-18T00:00:00.000Z",
                 "value": 30,
                 "denominator": 10,
@@ -1150,7 +1150,7 @@
                 "exclusions": 10
             },
             {
-                "measure": "imae 5",
+                "measure": "imae-5",
                 "date": "2022-02-18T00:00:00.000Z",
                 "value": 30,
                 "denominator": 10,
@@ -1171,7 +1171,7 @@
         "exclusions": 4,
         "subScores": [
             {
-                "measure": "drre 1",
+                "measure": "drre-1",
                 "date": "2022-02-18T00:00:00.000Z",
                 "value": 93.3333333333333,
                 "denominator": 15,
@@ -1180,7 +1180,7 @@
                 "exclusions": 1
             },
             {
-                "measure": "drre 2",
+                "measure": "drre-2",
                 "date": "2022-02-18T00:00:00.000Z",
                 "value": 53.3333333333333,
                 "denominator": 15,
@@ -1189,7 +1189,7 @@
                 "exclusions": 2
             },
             {
-                "measure": "drre 3",
+                "measure": "drre-3",
                 "date": "2022-02-18T00:00:00.000Z",
                 "value": 76.9230769230769,
                 "denominator": 13,
@@ -1210,7 +1210,7 @@
         "exclusions": 22,
         "subScores": [
             {
-                "measure": "aab 1",
+                "measure": "aab-1",
                 "date": "2022-02-18T00:00:00.000Z",
                 "value": 86.9565217391304,
                 "denominator": 23,
@@ -1242,7 +1242,7 @@
         "exclusions": 4,
         "subScores": [
             {
-                "measure": "drre 1",
+                "measure": "drre-1",
                 "date": "2022-02-19T00:00:00.000Z",
                 "value": 80,
                 "denominator": 15,
@@ -1251,7 +1251,7 @@
                 "exclusions": 1
             },
             {
-                "measure": "drre 2",
+                "measure": "drre-2",
                 "date": "2022-02-19T00:00:00.000Z",
                 "value": 33.3333333333333,
                 "denominator": 15,
@@ -1260,7 +1260,7 @@
                 "exclusions": 2
             },
             {
-                "measure": "drre 3",
+                "measure": "drre-3",
                 "date": "2022-02-19T00:00:00.000Z",
                 "value": 50,
                 "denominator": 12,
@@ -1281,7 +1281,7 @@
         "exclusions": 22,
         "subScores": [
             {
-                "measure": "aab 1",
+                "measure": "aab-1",
                 "date": "2022-02-19T00:00:00.000Z",
                 "value": 69.2307692307692,
                 "denominator": 26,
@@ -1302,7 +1302,7 @@
         "exclusions": 77,
         "subScores": [
             {
-                "measure": "aise 1",
+                "measure": "aise-1",
                 "date": "2022-02-19T00:00:00.000Z",
                 "value": 52.6315789473684,
                 "denominator": 19,
@@ -1311,7 +1311,7 @@
                 "exclusions": 20
             },
             {
-                "measure": "aise 2",
+                "measure": "aise-2",
                 "date": "2022-02-19T00:00:00.000Z",
                 "value": 63.1578947368421,
                 "denominator": 19,
@@ -1320,7 +1320,7 @@
                 "exclusions": 20
             },
             {
-                "measure": "aise 3",
+                "measure": "aise-3",
                 "date": "2022-02-19T00:00:00.000Z",
                 "value": 47.0588235294118,
                 "denominator": 17,
@@ -1329,7 +1329,7 @@
                 "exclusions": 20
             },
             {
-                "measure": "aise 4",
+                "measure": "aise-4",
                 "date": "2022-02-19T00:00:00.000Z",
                 "value": 70,
                 "denominator": 10,
@@ -1350,7 +1350,7 @@
         "exclusions": 50,
         "subScores": [
             {
-                "measure": "imae 1",
+                "measure": "imae-1",
                 "date": "2022-02-19T00:00:00.000Z",
                 "value": 70,
                 "denominator": 10,
@@ -1359,7 +1359,7 @@
                 "exclusions": 10
             },
             {
-                "measure": "imae 2",
+                "measure": "imae-2",
                 "date": "2022-02-19T00:00:00.000Z",
                 "value": 70,
                 "denominator": 10,
@@ -1368,7 +1368,7 @@
                 "exclusions": 10
             },
             {
-                "measure": "imae 3",
+                "measure": "imae-3",
                 "date": "2022-02-19T00:00:00.000Z",
                 "value": 55.5555555555556,
                 "denominator": 9,
@@ -1377,7 +1377,7 @@
                 "exclusions": 10
             },
             {
-                "measure": "imae 4",
+                "measure": "imae-4",
                 "date": "2022-02-19T00:00:00.000Z",
                 "value": 42.8571428571429,
                 "denominator": 7,
@@ -1386,7 +1386,7 @@
                 "exclusions": 10
             },
             {
-                "measure": "imae 5",
+                "measure": "imae-5",
                 "date": "2022-02-19T00:00:00.000Z",
                 "value": 40,
                 "denominator": 5,
@@ -1418,7 +1418,7 @@
         "exclusions": 4,
         "subScores": [
             {
-                "measure": "drre 1",
+                "measure": "drre-1",
                 "date": "2022-02-20T00:00:00.000Z",
                 "value": 66.6666666666667,
                 "denominator": 15,
@@ -1427,7 +1427,7 @@
                 "exclusions": 1
             },
             {
-                "measure": "drre 2",
+                "measure": "drre-2",
                 "date": "2022-02-20T00:00:00.000Z",
                 "value": 20,
                 "denominator": 15,
@@ -1436,7 +1436,7 @@
                 "exclusions": 2
             },
             {
-                "measure": "drre 3",
+                "measure": "drre-3",
                 "date": "2022-02-20T00:00:00.000Z",
                 "value": 23.0769230769231,
                 "denominator": 13,
@@ -1457,7 +1457,7 @@
         "exclusions": 22,
         "subScores": [
             {
-                "measure": "aab 1",
+                "measure": "aab-1",
                 "date": "2022-02-20T00:00:00.000Z",
                 "value": 57.1428571428571,
                 "denominator": 28,
@@ -1478,7 +1478,7 @@
         "exclusions": 74,
         "subScores": [
             {
-                "measure": "aise 1",
+                "measure": "aise-1",
                 "date": "2022-02-20T00:00:00.000Z",
                 "value": 47.3684210526316,
                 "denominator": 19,
@@ -1487,7 +1487,7 @@
                 "exclusions": 20
             },
             {
-                "measure": "aise 2",
+                "measure": "aise-2",
                 "date": "2022-02-20T00:00:00.000Z",
                 "value": 57.8947368421053,
                 "denominator": 19,
@@ -1496,7 +1496,7 @@
                 "exclusions": 19
             },
             {
-                "measure": "aise 3",
+                "measure": "aise-3",
                 "date": "2022-02-20T00:00:00.000Z",
                 "value": 50,
                 "denominator": 18,
@@ -1505,7 +1505,7 @@
                 "exclusions": 19
             },
             {
-                "measure": "aise 4",
+                "measure": "aise-4",
                 "date": "2022-02-20T00:00:00.000Z",
                 "value": 60,
                 "denominator": 10,
@@ -1526,7 +1526,7 @@
         "exclusions": 50,
         "subScores": [
             {
-                "measure": "imae 1",
+                "measure": "imae-1",
                 "date": "2022-02-20T00:00:00.000Z",
                 "value": 70,
                 "denominator": 10,
@@ -1535,7 +1535,7 @@
                 "exclusions": 10
             },
             {
-                "measure": "imae 2",
+                "measure": "imae-2",
                 "date": "2022-02-20T00:00:00.000Z",
                 "value": 70,
                 "denominator": 10,
@@ -1544,7 +1544,7 @@
                 "exclusions": 10
             },
             {
-                "measure": "imae 3",
+                "measure": "imae-3",
                 "date": "2022-02-20T00:00:00.000Z",
                 "value": 55.5555555555556,
                 "denominator": 9,
@@ -1553,7 +1553,7 @@
                 "exclusions": 10
             },
             {
-                "measure": "imae 4",
+                "measure": "imae-4",
                 "date": "2022-02-20T00:00:00.000Z",
                 "value": 33.3333333333333,
                 "denominator": 9,
@@ -1562,7 +1562,7 @@
                 "exclusions": 10
             },
             {
-                "measure": "imae 5",
+                "measure": "imae-5",
                 "date": "2022-02-20T00:00:00.000Z",
                 "value": 40,
                 "denominator": 5,
@@ -1594,7 +1594,7 @@
         "exclusions": 4,
         "subScores": [
             {
-                "measure": "drre 1",
+                "measure": "drre-1",
                 "date": "2022-02-21T00:00:00.000Z",
                 "value": 80,
                 "denominator": 15,
@@ -1603,7 +1603,7 @@
                 "exclusions": 1
             },
             {
-                "measure": "drre 2",
+                "measure": "drre-2",
                 "date": "2022-02-21T00:00:00.000Z",
                 "value": 13.3333333333333,
                 "denominator": 15,
@@ -1612,7 +1612,7 @@
                 "exclusions": 2
             },
             {
-                "measure": "drre 3",
+                "measure": "drre-3",
                 "date": "2022-02-21T00:00:00.000Z",
                 "value": 23.0769230769231,
                 "denominator": 13,
@@ -1633,7 +1633,7 @@
         "exclusions": 22,
         "subScores": [
             {
-                "measure": "aab 1",
+                "measure": "aab-1",
                 "date": "2022-02-21T00:00:00.000Z",
                 "value": 55.1724137931034,
                 "denominator": 29,
@@ -1654,7 +1654,7 @@
         "exclusions": 74,
         "subScores": [
             {
-                "measure": "aise 1",
+                "measure": "aise-1",
                 "date": "2022-02-21T00:00:00.000Z",
                 "value": 42.1052631578947,
                 "denominator": 19,
@@ -1663,7 +1663,7 @@
                 "exclusions": 20
             },
             {
-                "measure": "aise 2",
+                "measure": "aise-2",
                 "date": "2022-02-21T00:00:00.000Z",
                 "value": 57.8947368421053,
                 "denominator": 19,
@@ -1672,7 +1672,7 @@
                 "exclusions": 19
             },
             {
-                "measure": "aise 3",
+                "measure": "aise-3",
                 "date": "2022-02-21T00:00:00.000Z",
                 "value": 38.8888888888889,
                 "denominator": 18,
@@ -1681,7 +1681,7 @@
                 "exclusions": 19
             },
             {
-                "measure": "aise 4",
+                "measure": "aise-4",
                 "date": "2022-02-21T00:00:00.000Z",
                 "value": 60,
                 "denominator": 10,
@@ -1702,7 +1702,7 @@
         "exclusions": 50,
         "subScores": [
             {
-                "measure": "imae 1",
+                "measure": "imae-1",
                 "date": "2022-02-21T00:00:00.000Z",
                 "value": 70,
                 "denominator": 10,
@@ -1711,7 +1711,7 @@
                 "exclusions": 10
             },
             {
-                "measure": "imae 2",
+                "measure": "imae-2",
                 "date": "2022-02-21T00:00:00.000Z",
                 "value": 70,
                 "denominator": 10,
@@ -1720,7 +1720,7 @@
                 "exclusions": 10
             },
             {
-                "measure": "imae 3",
+                "measure": "imae-3",
                 "date": "2022-02-21T00:00:00.000Z",
                 "value": 55.5555555555556,
                 "denominator": 9,
@@ -1729,7 +1729,7 @@
                 "exclusions": 10
             },
             {
-                "measure": "imae 4",
+                "measure": "imae-4",
                 "date": "2022-02-21T00:00:00.000Z",
                 "value": 33.3333333333333,
                 "denominator": 9,
@@ -1738,7 +1738,7 @@
                 "exclusions": 10
             },
             {
-                "measure": "imae 5",
+                "measure": "imae-5",
                 "date": "2022-02-21T00:00:00.000Z",
                 "value": 20,
                 "denominator": 5,
@@ -1770,7 +1770,7 @@
         "exclusions": 3,
         "subScores": [
             {
-                "measure": "drre 1",
+                "measure": "drre-1",
                 "date": "2022-02-22T00:00:00.000Z",
                 "value": 86.6666666666667,
                 "denominator": 15,
@@ -1779,7 +1779,7 @@
                 "exclusions": 1
             },
             {
-                "measure": "drre 2",
+                "measure": "drre-2",
                 "date": "2022-02-22T00:00:00.000Z",
                 "value": 13.3333333333333,
                 "denominator": 15,
@@ -1788,7 +1788,7 @@
                 "exclusions": 1
             },
             {
-                "measure": "drre 3",
+                "measure": "drre-3",
                 "date": "2022-02-22T00:00:00.000Z",
                 "value": 27.2727272727273,
                 "denominator": 11,
@@ -1809,7 +1809,7 @@
         "exclusions": 22,
         "subScores": [
             {
-                "measure": "aab 1",
+                "measure": "aab-1",
                 "date": "2022-02-22T00:00:00.000Z",
                 "value": 51.6129032258064,
                 "denominator": 31,
@@ -1830,7 +1830,7 @@
         "exclusions": 74,
         "subScores": [
             {
-                "measure": "aise 1",
+                "measure": "aise-1",
                 "date": "2022-02-22T00:00:00.000Z",
                 "value": 36.8421052631579,
                 "denominator": 19,
@@ -1839,7 +1839,7 @@
                 "exclusions": 20
             },
             {
-                "measure": "aise 2",
+                "measure": "aise-2",
                 "date": "2022-02-22T00:00:00.000Z",
                 "value": 52.6315789473684,
                 "denominator": 19,
@@ -1848,7 +1848,7 @@
                 "exclusions": 19
             },
             {
-                "measure": "aise 3",
+                "measure": "aise-3",
                 "date": "2022-02-22T00:00:00.000Z",
                 "value": 27.7777777777778,
                 "denominator": 18,
@@ -1857,7 +1857,7 @@
                 "exclusions": 19
             },
             {
-                "measure": "aise 4",
+                "measure": "aise-4",
                 "date": "2022-02-22T00:00:00.000Z",
                 "value": 50,
                 "denominator": 10,
@@ -1878,7 +1878,7 @@
         "exclusions": 50,
         "subScores": [
             {
-                "measure": "imae 1",
+                "measure": "imae-1",
                 "date": "2022-02-22T00:00:00.000Z",
                 "value": 70,
                 "denominator": 10,
@@ -1887,7 +1887,7 @@
                 "exclusions": 10
             },
             {
-                "measure": "imae 2",
+                "measure": "imae-2",
                 "date": "2022-02-22T00:00:00.000Z",
                 "value": 60,
                 "denominator": 10,
@@ -1896,7 +1896,7 @@
                 "exclusions": 10
             },
             {
-                "measure": "imae 3",
+                "measure": "imae-3",
                 "date": "2022-02-22T00:00:00.000Z",
                 "value": 33.3333333333333,
                 "denominator": 9,
@@ -1905,7 +1905,7 @@
                 "exclusions": 10
             },
             {
-                "measure": "imae 4",
+                "measure": "imae-4",
                 "date": "2022-02-22T00:00:00.000Z",
                 "value": 11.1111111111111,
                 "denominator": 9,
@@ -1914,7 +1914,7 @@
                 "exclusions": 10
             },
             {
-                "measure": "imae 5",
+                "measure": "imae-5",
                 "date": "2022-02-22T00:00:00.000Z",
                 "value": 20,
                 "denominator": 5,
@@ -1947,7 +1947,7 @@
         "exclusions": 21,
         "subScores": [
             {
-                "measure": "aab 1",
+                "measure": "aab-1",
                 "date": "2022-02-23T00:00:00.000Z",
                 "value": 91.30434782608695,
                 "denominator": 23,
@@ -1969,7 +1969,7 @@
         "exclusions": 72,
         "subScores": [
             {
-                "measure": "aise 1",
+                "measure": "aise-1",
                 "date": "2022-02-23T00:00:00.000Z",
                 "value": 47.368421052631575,
                 "denominator": 19,
@@ -1978,7 +1978,7 @@
                 "exclusions": 18
             },
             {
-                "measure": "aise 2",
+                "measure": "aise-2",
                 "date": "2022-02-23T00:00:00.000Z",
                 "value": 68.42105263157895,
                 "denominator": 19,
@@ -1987,7 +1987,7 @@
                 "exclusions": 18
             },
             {
-                "measure": "aise 3",
+                "measure": "aise-3",
                 "date": "2022-02-23T00:00:00.000Z",
                 "value": 52.94117647058824,
                 "denominator": 17,
@@ -1996,7 +1996,7 @@
                 "exclusions": 18
             },
             {
-                "measure": "aise 4",
+                "measure": "aise-4",
                 "date": "2022-02-23T00:00:00.000Z",
                 "value": 60,
                 "denominator": 15,
@@ -2018,7 +2018,7 @@
         "exclusions": 0,
         "subScores": [
             {
-                "measure": "drre 1",
+                "measure": "drre-1",
                 "date": "2022-02-23T00:00:00.000Z",
                 "value": 90,
                 "denominator": 10,
@@ -2027,7 +2027,7 @@
                 "exclusions": 0
             },
             {
-                "measure": "drre 2",
+                "measure": "drre-2",
                 "date": "2022-02-23T00:00:00.000Z",
                 "value": 60,
                 "denominator": 10,
@@ -2036,7 +2036,7 @@
                 "exclusions": 0
             },
             {
-                "measure": "drre 3",
+                "measure": "drre-3",
                 "date": "2022-02-23T00:00:00.000Z",
                 "value": 77.77777777777779,
                 "denominator": 9,
@@ -2058,7 +2058,7 @@
         "exclusions": 40,
         "subScores": [
             {
-                "measure": "imae 1",
+                "measure": "imae-1",
                 "date": "2022-02-23T00:00:00.000Z",
                 "value": 40,
                 "denominator": 10,
@@ -2067,7 +2067,7 @@
                 "exclusions": 8
             },
             {
-                "measure": "imae 2",
+                "measure": "imae-2",
                 "date": "2022-02-23T00:00:00.000Z",
                 "value": 70,
                 "denominator": 10,
@@ -2076,7 +2076,7 @@
                 "exclusions": 8
             },
             {
-                "measure": "imae 3",
+                "measure": "imae-3",
                 "date": "2022-02-23T00:00:00.000Z",
                 "value": 70,
                 "denominator": 10,
@@ -2085,7 +2085,7 @@
                 "exclusions": 8
             },
             {
-                "measure": "imae 4",
+                "measure": "imae-4",
                 "date": "2022-02-23T00:00:00.000Z",
                 "value": 30,
                 "denominator": 10,
@@ -2094,7 +2094,7 @@
                 "exclusions": 8
             },
             {
-                "measure": "imae 5",
+                "measure": "imae-5",
                 "date": "2022-02-23T00:00:00.000Z",
                 "value": 25,
                 "denominator": 8,
@@ -2127,7 +2127,7 @@
         "exclusions": 21,
         "subScores": [
             {
-                "measure": "aab 1",
+                "measure": "aab-1",
                 "date": "2022-02-24T00:00:00.000Z",
                 "value": 77.77777777777779,
                 "denominator": 27,
@@ -2149,7 +2149,7 @@
         "exclusions": 72,
         "subScores": [
             {
-                "measure": "aise 1",
+                "measure": "aise-1",
                 "date": "2022-02-24T00:00:00.000Z",
                 "value": 47.368421052631575,
                 "denominator": 19,
@@ -2158,7 +2158,7 @@
                 "exclusions": 18
             },
             {
-                "measure": "aise 2",
+                "measure": "aise-2",
                 "date": "2022-02-24T00:00:00.000Z",
                 "value": 68.42105263157895,
                 "denominator": 19,
@@ -2167,7 +2167,7 @@
                 "exclusions": 18
             },
             {
-                "measure": "aise 3",
+                "measure": "aise-3",
                 "date": "2022-02-24T00:00:00.000Z",
                 "value": 52.94117647058824,
                 "denominator": 17,
@@ -2176,7 +2176,7 @@
                 "exclusions": 18
             },
             {
-                "measure": "aise 4",
+                "measure": "aise-4",
                 "date": "2022-02-24T00:00:00.000Z",
                 "value": 60,
                 "denominator": 15,
@@ -2198,7 +2198,7 @@
         "exclusions": 0,
         "subScores": [
             {
-                "measure": "drre 1",
+                "measure": "drre-1",
                 "date": "2022-02-24T00:00:00.000Z",
                 "value": 90,
                 "denominator": 10,
@@ -2207,7 +2207,7 @@
                 "exclusions": 0
             },
             {
-                "measure": "drre 2",
+                "measure": "drre-2",
                 "date": "2022-02-24T00:00:00.000Z",
                 "value": 60,
                 "denominator": 10,
@@ -2216,7 +2216,7 @@
                 "exclusions": 0
             },
             {
-                "measure": "drre 3",
+                "measure": "drre-3",
                 "date": "2022-02-24T00:00:00.000Z",
                 "value": 70,
                 "denominator": 10,
@@ -2238,7 +2238,7 @@
         "exclusions": 35,
         "subScores": [
             {
-                "measure": "imae 1",
+                "measure": "imae-1",
                 "date": "2022-02-24T00:00:00.000Z",
                 "value": 40,
                 "denominator": 10,
@@ -2247,7 +2247,7 @@
                 "exclusions": 7
             },
             {
-                "measure": "imae 2",
+                "measure": "imae-2",
                 "date": "2022-02-24T00:00:00.000Z",
                 "value": 70,
                 "denominator": 10,
@@ -2256,7 +2256,7 @@
                 "exclusions": 7
             },
             {
-                "measure": "imae 3",
+                "measure": "imae-3",
                 "date": "2022-02-24T00:00:00.000Z",
                 "value": 60,
                 "denominator": 10,
@@ -2265,7 +2265,7 @@
                 "exclusions": 7
             },
             {
-                "measure": "imae 4",
+                "measure": "imae-4",
                 "date": "2022-02-24T00:00:00.000Z",
                 "value": 30,
                 "denominator": 10,
@@ -2274,7 +2274,7 @@
                 "exclusions": 7
             },
             {
-                "measure": "imae 5",
+                "measure": "imae-5",
                 "date": "2022-02-24T00:00:00.000Z",
                 "value": 28.57142857142857,
                 "denominator": 7,
@@ -2307,7 +2307,7 @@
         "exclusions": 22,
         "subScores": [
             {
-                "measure": "aab 1",
+                "measure": "aab-1",
                 "date": "2022-02-25T00:00:00.000Z",
                 "value": 68.75,
                 "denominator": 32,
@@ -2329,7 +2329,7 @@
         "exclusions": 72,
         "subScores": [
             {
-                "measure": "aise 1",
+                "measure": "aise-1",
                 "date": "2022-02-25T00:00:00.000Z",
                 "value": 47.368421052631575,
                 "denominator": 19,
@@ -2338,7 +2338,7 @@
                 "exclusions": 18
             },
             {
-                "measure": "aise 2",
+                "measure": "aise-2",
                 "date": "2022-02-25T00:00:00.000Z",
                 "value": 63.1578947368421,
                 "denominator": 19,
@@ -2347,7 +2347,7 @@
                 "exclusions": 18
             },
             {
-                "measure": "aise 3",
+                "measure": "aise-3",
                 "date": "2022-02-25T00:00:00.000Z",
                 "value": 52.94117647058824,
                 "denominator": 17,
@@ -2356,7 +2356,7 @@
                 "exclusions": 18
             },
             {
-                "measure": "aise 4",
+                "measure": "aise-4",
                 "date": "2022-02-25T00:00:00.000Z",
                 "value": 46.666666666666664,
                 "denominator": 15,
@@ -2378,7 +2378,7 @@
         "exclusions": 0,
         "subScores": [
             {
-                "measure": "drre 1",
+                "measure": "drre-1",
                 "date": "2022-02-25T00:00:00.000Z",
                 "value": 90,
                 "denominator": 10,
@@ -2387,7 +2387,7 @@
                 "exclusions": 0
             },
             {
-                "measure": "drre 2",
+                "measure": "drre-2",
                 "date": "2022-02-25T00:00:00.000Z",
                 "value": 50,
                 "denominator": 10,
@@ -2396,7 +2396,7 @@
                 "exclusions": 0
             },
             {
-                "measure": "drre 3",
+                "measure": "drre-3",
                 "date": "2022-02-25T00:00:00.000Z",
                 "value": 60,
                 "denominator": 10,
@@ -2418,7 +2418,7 @@
         "exclusions": 35,
         "subScores": [
             {
-                "measure": "imae 1",
+                "measure": "imae-1",
                 "date": "2022-02-25T00:00:00.000Z",
                 "value": 40,
                 "denominator": 10,
@@ -2427,7 +2427,7 @@
                 "exclusions": 7
             },
             {
-                "measure": "imae 2",
+                "measure": "imae-2",
                 "date": "2022-02-25T00:00:00.000Z",
                 "value": 60,
                 "denominator": 10,
@@ -2436,7 +2436,7 @@
                 "exclusions": 7
             },
             {
-                "measure": "imae 3",
+                "measure": "imae-3",
                 "date": "2022-02-25T00:00:00.000Z",
                 "value": 50,
                 "denominator": 10,
@@ -2445,7 +2445,7 @@
                 "exclusions": 7
             },
             {
-                "measure": "imae 4",
+                "measure": "imae-4",
                 "date": "2022-02-25T00:00:00.000Z",
                 "value": 30,
                 "denominator": 10,
@@ -2454,7 +2454,7 @@
                 "exclusions": 7
             },
             {
-                "measure": "imae 5",
+                "measure": "imae-5",
                 "date": "2022-02-25T00:00:00.000Z",
                 "value": 28.57142857142857,
                 "denominator": 7,
@@ -2487,7 +2487,7 @@
         "exclusions": 22,
         "subScores": [
             {
-                "measure": "aab 1",
+                "measure": "aab-1",
                 "date": "2022-02-26T00:00:00.000Z",
                 "value": 53.125,
                 "denominator": 32,
@@ -2509,7 +2509,7 @@
         "exclusions": 72,
         "subScores": [
             {
-                "measure": "aise 1",
+                "measure": "aise-1",
                 "date": "2022-02-26T00:00:00.000Z",
                 "value": 47.368421052631575,
                 "denominator": 19,
@@ -2518,7 +2518,7 @@
                 "exclusions": 18
             },
             {
-                "measure": "aise 2",
+                "measure": "aise-2",
                 "date": "2022-02-26T00:00:00.000Z",
                 "value": 57.89473684210527,
                 "denominator": 19,
@@ -2527,7 +2527,7 @@
                 "exclusions": 18
             },
             {
-                "measure": "aise 3",
+                "measure": "aise-3",
                 "date": "2022-02-26T00:00:00.000Z",
                 "value": 52.94117647058824,
                 "denominator": 17,
@@ -2536,7 +2536,7 @@
                 "exclusions": 18
             },
             {
-                "measure": "aise 4",
+                "measure": "aise-4",
                 "date": "2022-02-26T00:00:00.000Z",
                 "value": 33.33333333333333,
                 "denominator": 15,
@@ -2558,7 +2558,7 @@
         "exclusions": 0,
         "subScores": [
             {
-                "measure": "drre 1",
+                "measure": "drre-1",
                 "date": "2022-02-26T00:00:00.000Z",
                 "value": 90,
                 "denominator": 10,
@@ -2567,7 +2567,7 @@
                 "exclusions": 0
             },
             {
-                "measure": "drre 2",
+                "measure": "drre-2",
                 "date": "2022-02-26T00:00:00.000Z",
                 "value": 50,
                 "denominator": 10,
@@ -2576,7 +2576,7 @@
                 "exclusions": 0
             },
             {
-                "measure": "drre 3",
+                "measure": "drre-3",
                 "date": "2022-02-26T00:00:00.000Z",
                 "value": 40,
                 "denominator": 10,
@@ -2598,7 +2598,7 @@
         "exclusions": 35,
         "subScores": [
             {
-                "measure": "imae 1",
+                "measure": "imae-1",
                 "date": "2022-02-26T00:00:00.000Z",
                 "value": 40,
                 "denominator": 10,
@@ -2607,7 +2607,7 @@
                 "exclusions": 7
             },
             {
-                "measure": "imae 2",
+                "measure": "imae-2",
                 "date": "2022-02-26T00:00:00.000Z",
                 "value": 60,
                 "denominator": 10,
@@ -2616,7 +2616,7 @@
                 "exclusions": 7
             },
             {
-                "measure": "imae 3",
+                "measure": "imae-3",
                 "date": "2022-02-26T00:00:00.000Z",
                 "value": 40,
                 "denominator": 10,
@@ -2625,7 +2625,7 @@
                 "exclusions": 7
             },
             {
-                "measure": "imae 4",
+                "measure": "imae-4",
                 "date": "2022-02-26T00:00:00.000Z",
                 "value": 11.11111111111111,
                 "denominator": 9,
@@ -2634,7 +2634,7 @@
                 "exclusions": 7
             },
             {
-                "measure": "imae 5",
+                "measure": "imae-5",
                 "date": "2022-02-26T00:00:00.000Z",
                 "value": 16.666666666666664,
                 "denominator": 6,
@@ -2667,7 +2667,7 @@
         "exclusions": 22,
         "subScores": [
             {
-                "measure": "aab 1",
+                "measure": "aab-1",
                 "date": "2022-02-27T00:00:00.000Z",
                 "value": 62.5,
                 "denominator": 32,
@@ -2689,7 +2689,7 @@
         "exclusions": 72,
         "subScores": [
             {
-                "measure": "aise 1",
+                "measure": "aise-1",
                 "date": "2022-02-27T00:00:00.000Z",
                 "value": 36.84210526315789,
                 "denominator": 19,
@@ -2698,7 +2698,7 @@
                 "exclusions": 18
             },
             {
-                "measure": "aise 2",
+                "measure": "aise-2",
                 "date": "2022-02-27T00:00:00.000Z",
                 "value": 52.63157894736842,
                 "denominator": 19,
@@ -2707,7 +2707,7 @@
                 "exclusions": 18
             },
             {
-                "measure": "aise 3",
+                "measure": "aise-3",
                 "date": "2022-02-27T00:00:00.000Z",
                 "value": 52.94117647058824,
                 "denominator": 17,
@@ -2716,7 +2716,7 @@
                 "exclusions": 18
             },
             {
-                "measure": "aise 4",
+                "measure": "aise-4",
                 "date": "2022-02-27T00:00:00.000Z",
                 "value": 33.33333333333333,
                 "denominator": 15,
@@ -2738,7 +2738,7 @@
         "exclusions": 0,
         "subScores": [
             {
-                "measure": "drre 1",
+                "measure": "drre-1",
                 "date": "2022-02-27T00:00:00.000Z",
                 "value": 90,
                 "denominator": 10,
@@ -2747,7 +2747,7 @@
                 "exclusions": 0
             },
             {
-                "measure": "drre 2",
+                "measure": "drre-2",
                 "date": "2022-02-27T00:00:00.000Z",
                 "value": 30,
                 "denominator": 10,
@@ -2756,7 +2756,7 @@
                 "exclusions": 0
             },
             {
-                "measure": "drre 3",
+                "measure": "drre-3",
                 "date": "2022-02-27T00:00:00.000Z",
                 "value": 30,
                 "denominator": 10,
@@ -2778,7 +2778,7 @@
         "exclusions": 35,
         "subScores": [
             {
-                "measure": "imae 1",
+                "measure": "imae-1",
                 "date": "2022-02-27T00:00:00.000Z",
                 "value": 40,
                 "denominator": 10,
@@ -2787,7 +2787,7 @@
                 "exclusions": 7
             },
             {
-                "measure": "imae 2",
+                "measure": "imae-2",
                 "date": "2022-02-27T00:00:00.000Z",
                 "value": 50,
                 "denominator": 10,
@@ -2796,7 +2796,7 @@
                 "exclusions": 7
             },
             {
-                "measure": "imae 3",
+                "measure": "imae-3",
                 "date": "2022-02-27T00:00:00.000Z",
                 "value": 30,
                 "denominator": 10,
@@ -2805,7 +2805,7 @@
                 "exclusions": 7
             },
             {
-                "measure": "imae 4",
+                "measure": "imae-4",
                 "date": "2022-02-27T00:00:00.000Z",
                 "value": 0,
                 "denominator": 9,
@@ -2814,7 +2814,7 @@
                 "exclusions": 7
             },
             {
-                "measure": "imae 5",
+                "measure": "imae-5",
                 "date": "2022-02-27T00:00:00.000Z",
                 "value": 0,
                 "denominator": 6,
