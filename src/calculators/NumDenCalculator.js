@@ -27,22 +27,20 @@ function calculateMeasureScore(subScoreArray, measurementType, date) {
     exclusions += subScoreArray[i].exclusions;
   }
   const value = (denominator === 0 ? 0 : numerator / denominator) * 100;
-  const denominatorValue = denominator / subScoreArray.length;
-  const numeratorValue = numerator / subScoreArray.length;
-  const starValue = calculateStarRating({
+  const starRating = calculateStarRating({
     measure: measurementType,
-    numerator: numeratorValue,
-    denominator: denominatorValue,
+    numerator,
+    denominator,
   }).starRating;
   return {
     measure: measurementType,
     date,
     value,
-    starValue,
-    denominator: denominatorValue,
-    numerator: numeratorValue,
-    initialPopulation: initialPopulation / subScoreArray.length,
-    exclusions: exclusions / subScoreArray.length,
+    starRating,
+    denominator,
+    numerator,
+    initialPopulation,
+    exclusions,
     subScores: subScoreArray,
   };
 }
@@ -108,24 +106,36 @@ const calcLatestNumDen = (resultList) => {
   }
 
   //calculate the total overall score and star rating
-  let compositeStarValue = 0;
+  let compositeStarRating = 0;
   let compositeValue = 0;
   let starValueCount = 0;
+  let numerator = 0;
+  let denominator = 0;
+  let initialPopulation = 0;
+  let exclusions = 0;
   for (let result of valueArray) {
     compositeValue += result.value;
-    if (result.starValue >= 0) {
+    if (result.starRating >= 0) {
       starValueCount += 1;
-      compositeStarValue += result.starValue;
+      compositeStarRating += result.starRating;
     }
+    numerator += result.numerator;
+    denominator += result.denominator;
+    initialPopulation += result.initialPopulation;
+    exclusions += result.exclusions;
   }
-  compositeStarValue = starValueCount === 0 ? 0 : compositeStarValue / starValueCount;
+  compositeStarRating = starValueCount === 0 ? 0 : compositeStarRating / starValueCount;
   compositeValue = compositeValue / valueArray.length;
 
   valueArray.push({
-    measure: 'total',
+    measure: 'composite',
     date: currentDate,
     value: compositeValue,
-    starValue: convertValueToStar(compositeStarValue),
+    starRating: convertValueToStar(compositeStarRating),
+    numerator,
+    denominator,
+    initialPopulation,
+    exclusions,
   });
 
   return valueArray;
