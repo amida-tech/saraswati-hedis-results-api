@@ -1,6 +1,6 @@
 [
   {
-      "id": "composite",
+      "_id": "composite",
       "composite": {
           "title": "Composite"
       }
