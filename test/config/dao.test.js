@@ -34,7 +34,7 @@ describe('## db.js', () => {
   beforeAll(async () => {
     db = { collection: jest.fn(() => collection) };
     initTest(db);
-  });  
+  });
 
   describe('Test getMeasures function', () => {
     test('Should not throw an error', async () => {

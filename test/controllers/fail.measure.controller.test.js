@@ -59,7 +59,6 @@ jest.mock('../../src/config/dao', () => {
 });
 
 describe('## measure.controller.js exceptions', () => {
-  
   describe('Test getHedis', () => {
     it('Should catch error and call next', async () => {
       const next = jest.fn();
@@ -139,7 +138,7 @@ describe('## measure.controller.js exceptions', () => {
       expect(next).toHaveBeenCalled();
     });
   });
-  
+
   describe('Test postMeasureResults function', () => {
     it('Should catch error and call next', async () => {
       const next = jest.fn();

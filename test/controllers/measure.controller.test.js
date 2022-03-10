@@ -44,7 +44,7 @@ jest.mock('../../src/calculators/NumDenCalculator', () => {
   return {
     ...originalModule,
     calcLatestNumDen: jest.fn(() => []),
-  }
+  };
 });
 
 jest.mock('../../src/calculators/TrendCalculator', () => {
@@ -52,7 +52,7 @@ jest.mock('../../src/calculators/TrendCalculator', () => {
   return {
     ...originalModule,
     calculateTrend: jest.fn(() => []),
-  }
+  };
 });
 
 describe('## measure.controller.js', () => {

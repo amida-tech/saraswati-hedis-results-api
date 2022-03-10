@@ -56,7 +56,7 @@ const calcLatestNumDen = (resultList) => {
     }
 
     const patientData = patient[patient.memberId];
-    let resultHolder = resultMap.get(measurementType);
+    const resultHolder = resultMap.get(measurementType);
 
     // Save values for each field name, putting subscores into their respective index
     for (const patientField in patientData) {

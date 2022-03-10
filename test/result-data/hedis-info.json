@@ -1,5 +1,11 @@
 [
   {
+      "id": "composite",
+      "composite": {
+          "title": "Composite"
+      }
+  },
+  {
       "_id": "aise",
       "aise": {
           "domainOfCare": "ECDS",

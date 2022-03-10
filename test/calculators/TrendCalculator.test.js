@@ -8,10 +8,10 @@ describe(' Trend Calculation test ', () => {
   let resultArray;
 
   beforeAll(() => {
-    let correctData = [];
+    const correctData = [];
     for (let i = 0; i < data.length; i += 1) {
-      let dateObject = new Date(data[i].date);
-      let newObject = data[i];
+      const dateObject = new Date(data[i].date);
+      const newObject = data[i];
       newObject.date = dateObject;
       correctData.push(newObject);
     }

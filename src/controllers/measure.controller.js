@@ -4,7 +4,6 @@ const { calcLatestNumDen } = require('../calculators/NumDenCalculator');
 const { calculateTrend } = require('../calculators/TrendCalculator');
 const { calculateStarRating } = require('../calculators/StarRatingCalculator');
 const logger = require('../config/winston');
-const { async } = require('regenerator-runtime');
 
 const getHedis = async (req, res, next) => {
   try {
@@ -42,12 +41,12 @@ const getStarRating = async (req, res, next) => {
     if (sortedSearch.length === 0) {
       sortedSearch = [{ measure: req.query.measure }];
     }
-    const starRatingData = calculateStarRating(sortedSearch[sortedSearch.length-1]);
+    const starRatingData = calculateStarRating(sortedSearch[sortedSearch.length - 1]);
     return res.send(starRatingData);
-  } catch(e) {
+  } catch (e) {
     return next(e);
   }
-}
+};
 
 const getTrends = async (req, res, next) => {
   try {
@@ -91,12 +90,12 @@ const getPredictionData = async (req, res, next) => {
   }
 };
 
-//Compiles individual info records into one JSON object
-const getInfo = async ( req, res, next) => {
+// Compiles individual info records into one JSON object
+const getInfo = async (req, res, next) => {
   try {
     const infoList = await dao.findInfo();
-    let fullInfo = {};
-    for (let i = 0; i < infoList.length; i++) {
+    const fullInfo = {};
+    for (let i = 0; i < infoList.length; i += 1) {
       const info = infoList[i];
       fullInfo[info._id] = info[info._id];
     }
@@ -104,7 +103,7 @@ const getInfo = async ( req, res, next) => {
   } catch (e) {
     return next(e);
   }
-}
+};
 
 const postBulkMeasures = async (req, res, next) => {
   try {
@@ -171,7 +170,7 @@ const postInfo = async (req, res, next) => {
   } catch (e) {
     return next(e);
   }
-}
+};
 
 module.exports = {
   getHedis,

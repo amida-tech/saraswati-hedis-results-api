@@ -45,7 +45,7 @@ const findPredictions = () => {
 const findInfo = () => {
   const collection = db.collection('hedis_info');
   return collection.find({}).toArray();
-}
+};
 
 const insertMeasure = async (measure) => {
   const collection = db.collection('measures');
@@ -110,9 +110,10 @@ const insertSimulatedHedis = (simulated_data) => {
 // create collection for predictions
 const insertPredictions = (predictions) => {
   const collection = db.collection('model_predictions');
+  const predictionInsert = predictions;
   try {
-    predictions._id = predictions.measure;
-    return collection.findOneAndReplace({ measure: predictions.measure }, predictions, {
+    predictionInsert._id = predictionInsert.measure;
+    return collection.findOneAndReplace({ measure: predictionInsert.measure }, predictionInsert, {
       upsert: true,
     });
   } catch (e) {
@@ -131,7 +132,6 @@ const insertInfo = (info) => {
     logger.error(e);
   }
 };
-
 
 module.exports = {
   init,
