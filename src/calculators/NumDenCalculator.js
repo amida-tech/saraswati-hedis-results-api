@@ -1,3 +1,5 @@
+const { calculateCompositeStarRating, calculateMeasureStarRating } = require('../calculators/StarRatingCalculator');
+
 function setValue(array, valueName, fieldName, patient) {
   let numCount = 0;
   // Get which number this is (Numerator 3, Denominator 1, etc...)
@@ -13,7 +15,7 @@ function setValue(array, valueName, fieldName, patient) {
   array[numCount] === undefined ? (array[numCount] = value) : (array[numCount] += value);
 }
 
-function calculateMeasureScore(subScoreArray, measurementType, dateString) {
+function calculateMeasureScore(subScoreArray, measurementType, date) {
   let numerator = 0;
   let denominator = 0;
   let initialPopulation = 0;
@@ -24,10 +26,17 @@ function calculateMeasureScore(subScoreArray, measurementType, dateString) {
     initialPopulation += subScoreArray[i].initialPopulation;
     exclusions += subScoreArray[i].exclusions;
   }
+  const value = (denominator === 0 ? 0 : numerator / denominator) * 100;
+  const starRating = calculateMeasureStarRating({
+    measure: measurementType,
+    numerator,
+    denominator,
+  }).starRating;
   return {
     measure: measurementType,
-    date: dateString,
-    value: (denominator === 0 ? 0 : numerator / denominator) * 100,
+    date,
+    value,
+    starRating,
     denominator,
     numerator,
     initialPopulation,
@@ -78,6 +87,7 @@ const calcLatestNumDen = (resultList) => {
   currentDate.setHours(0);
   currentDate.setMinutes(0);
   currentDate.setSeconds(0);
+  currentDate.setMilliseconds(0);
 
   for (let k = 0; k < measurementTypes.length; k += 1) {
     const subScoreArray = [];
@@ -95,16 +105,49 @@ const calcLatestNumDen = (resultList) => {
     valueArray.push(calculateMeasureScore(subScoreArray, measurementType, currentDate));
   }
 
+  //calculate the total overall score and star rating
+  let compositeStarRating = 0;
+  let compositeValue = 0;
+  let starValueCount = 0;
+  let numerator = 0;
+  let denominator = 0;
+  let initialPopulation = 0;
+  let exclusions = 0;
+  for (let result of valueArray) {
+    compositeValue += result.value;
+    if (result.starRating >= 0) {
+      starValueCount += 1;
+      compositeStarRating += result.starRating;
+    }
+    numerator += result.numerator;
+    denominator += result.denominator;
+    initialPopulation += result.initialPopulation;
+    exclusions += result.exclusions;
+  }
+  compositeStarRating = starValueCount === 0 ? 0 : compositeStarRating / starValueCount;
+  compositeValue = compositeValue / valueArray.length;
+
+  valueArray.push({
+    measure: 'composite',
+    date: currentDate,
+    value: compositeValue,
+    starRating: calculateCompositeStarRating(compositeStarRating),
+    numerator,
+    denominator,
+    initialPopulation,
+    exclusions,
+  });
+
   return valueArray;
 };
 
-function calculateSubScore(resultHolder, measurementType, dateString, index) {
+function calculateSubScore(resultHolder, measurementType, date, index) {
   const numerator = resultHolder.numeratorValues[index];
   const denominator = resultHolder.denominatorValues[index];
   const percentValue = denominator === 0 ? 0 : numerator / denominator;
   return {
-    measure: `${measurementType} ${index + 1}`,
-    date: dateString,
+    measure: `${measurementType}-${index + 1}`,
+    date,
     value: percentValue * 100,
     denominator,
     numerator,

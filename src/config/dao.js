@@ -80,9 +80,12 @@ const insertMeasureResults = (results) => {
     }
 
     resultObject._id = `${measurementType}-${date}`;
-    for (let j = 0; j < resultObject.subScores.length; j += 1) {
-      resultObject.subScores[j].date = resultObject.date;
+    if (resultObject.subScores) {
+      for (let j = 0; j < resultObject.subScores.length; j += 1) {
+        resultObject.subScores[j].date = resultObject.date;
+      }
     }
+    
     try {
       collection.findOneAndReplace(
         { _id: resultObject._id },
