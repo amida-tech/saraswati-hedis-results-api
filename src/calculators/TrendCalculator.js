@@ -29,7 +29,10 @@ const calculateTrend = (resultData, predictionData, days) => {
   for (let i = 0; i < measureList.length; i += 1) {
     const measure = measureList[i];
     const result = resultMap.get(measure);
-    const changePercent = Math.round(((result.latest.value - result.base.value) / result.base.value) * 100);
+    const changePercent = 0;
+    if (result.base != undefined) {
+      changePercent = Math.round(((result.latest.value - result.base.value) / result.base.value) * 100);
+    }
     let futurePrediction = {};
     for (let j = 0; j < predictionData.length; j += 1) {
       if (predictionData[j].measure === measure && predictionData[j].Prophet_Predictions) {
