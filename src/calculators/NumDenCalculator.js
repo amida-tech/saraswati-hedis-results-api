@@ -1,4 +1,4 @@
-const { convertValueToStar, calculateStarRating } = require('../calculators/StarRatingCalculator');
+const { calculateCompositeStarRating, calculateMeasureStarRating } = require('../calculators/StarRatingCalculator');
 
 function setValue(array, valueName, fieldName, patient) {
   let numCount = 0;
@@ -27,7 +27,7 @@ function calculateMeasureScore(subScoreArray, measurementType, date) {
     exclusions += subScoreArray[i].exclusions;
   }
   const value = (denominator === 0 ? 0 : numerator / denominator) * 100;
-  const starRating = calculateStarRating({
+  const starRating = calculateMeasureStarRating({
     measure: measurementType,
     numerator,
     denominator,
@@ -131,7 +131,7 @@ const calcLatestNumDen = (resultList) => {
     measure: 'composite',
     date: currentDate,
     value: compositeValue,
-    starRating: convertValueToStar(compositeStarRating),
+    starRating: calculateCompositeStarRating(compositeStarRating),
     numerator,
     denominator,
     initialPopulation,

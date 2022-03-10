@@ -1,4 +1,4 @@
-const calculateStarRating = (rating) => {
+const calculateMeasureStarRating = (rating) => {
     const measurementStarRating = {
         'measure': rating.measure,
     };
@@ -19,7 +19,7 @@ const calculateStarRating = (rating) => {
     return measurementStarRating;
 }
 
-const convertValueToStar = (value) => {
+const calculateCompositeStarRating = (value) => {
     const starDecimal = value % 1;
     let star = Math.trunc(value);
     if (starDecimal >= 0.75) {
@@ -32,6 +32,6 @@ const convertValueToStar = (value) => {
 }
 
 module.exports = {
-    calculateStarRating,
-    convertValueToStar,
+    calculateMeasureStarRating,
+    calculateCompositeStarRating,
 }

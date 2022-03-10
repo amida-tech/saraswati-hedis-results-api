@@ -2,7 +2,7 @@ const dao = require('../config/dao');
 
 const { calcLatestNumDen } = require('../calculators/NumDenCalculator');
 const { calculateTrend } = require('../calculators/TrendCalculator');
-const { calculateStarRating } = require('../calculators/StarRatingCalculator');
+const { calculateMeasureStarRating } = require('../calculators/StarRatingCalculator');
 const logger = require('../config/winston');
 
 const getHedis = async (req, res, next) => {
@@ -41,7 +41,7 @@ const getStarRating = async (req, res, next) => {
     if (sortedSearch.length === 0) {
       sortedSearch = [{ measure: req.query.measure }];
     }
-    const starRatingData = calculateStarRating(sortedSearch[sortedSearch.length-1]);
+    const starRatingData = calculateMeasureStarRating(sortedSearch[sortedSearch.length-1]);
     return res.send(starRatingData);
   } catch(e) {
     return next(e);
