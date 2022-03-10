@@ -1,0 +1,155 @@
+[
+  {
+      "_id": "aise",
+      "aise": {
+          "domainOfCare": "ECDS",
+          "title": "Adult Immunization Status",
+          "measureType": "process",
+          "weight": 1
+      }
+  },
+  {
+      "_id": "aise-1",
+      "aise-1": {
+          "domainOfCare": "ECDS",
+          "title": "Adult Immunization Status: Influenza",
+          "measureType": "process",
+          "weight": 1
+      }
+  },
+  {
+      "_id": "aise-2",
+      "aise-2": {
+          "domainOfCare": "ECDS",
+          "title": "Adult Immunization Status: Td/Tdap",
+          "measureType": "process",
+          "weight": 1
+      }
+  },
+  {
+      "_id": "aise-3",
+      "aise-3": {
+          "domainOfCare": "ECDS",
+          "title": "Adult Immunization Status: Zoster",
+          "measureType": "process",
+          "weight": 1
+      }
+  },
+  {
+      "_id": "aise-4",
+      "aise-4": {
+          "domainOfCare": "ECDS",
+          "title": "Adult Immunization Status: Pneumococcal",
+          "measureType": "process",
+          "weight": 1
+      }
+  },
+  {
+      "_id": "aab",
+      "aab": {
+          "domainOfCare": "EOC",
+          "title": "Avoidance of Antibiotic Treatment in Adults with Acute Bronchitis",
+          "measureType": "process",
+          "weight": 1
+      }
+  },
+  {
+      "_id": "aab-1",
+      "aab-1": {
+          "domainOfCare": "EOC",
+          "title": "Avoidance of Antibiotic Treatment in Adults with Acute Bronchitis",
+          "measureType": "process",
+          "weight": 1
+      }
+  },
+  {
+      "_id": "drre",
+      "drre": {
+          "domainOfCare": "ECDS",
+          "title": "Depression Remission or Response for Adolescents and Adults",
+          "measureType": "outcome",
+          "weight": 1
+      }
+  },
+  {
+      "_id": "drre-1",
+      "drre-1": {
+          "domainOfCare": "ECDS",
+          "title": "Depression Follow-Up",
+          "measureType": "outcome",
+          "weight": 1
+      }
+  },
+  {
+      "_id": "drre-2",
+      "drre-2": {
+          "domainOfCare": "ECDS",
+          "title": "Depression Remission",
+          "measureType": "outcome",
+          "weight": 1
+      }
+  },
+  {
+      "_id": "drre-3",
+      "drre-3": {
+          "domainOfCare": "ECDS",
+          "title": "Depression Response",
+          "measureType": "outcome",
+          "weight": 1
+      }
+  },
+  {
+      "_id": "imae",
+      "imae": {
+          "domainOfCare": "ECDS",
+          "title": "Immunizations for Adolescents",
+          "measureType": "outcome",
+          "weight": 3
+      }
+  },
+  {
+      "_id": "imae-1",
+      "imae-1": {
+          "domainOfCare": "ECDS",
+          "title": "Meningococcal Serogroups A, C, W, Y",
+          "measureType": "outcome",
+          "weight": 3
+      }
+  },
+  {
+      "_id": "imae-2",
+      "imae-2": {
+          "domainOfCare": "ECDS",
+          "title": "Tdap",
+          "measureType": "outcome",
+          "weight": 3
+      }
+  },
+  {
+      "_id": "imae-3",
+      "imae-3": {
+          "domainOfCare": "ECDS",
+          "title": "HPV",
+          "measureType": "outcome",
+          "weight": 3
+      }
+  },
+  {
+      "_id": "imae-4",
+      "imae-4": {
+          "domainOfCare": "ECDS",
+          "title": "Combination 1: Meningococcal, Tdap",
+          "measureType": "outcome",
+          "weight": 3
+      }
+  },
+  {
+      "_id": "imae-5",
+      "imae-5": {
+          "domainOfCare": "ECDS",
+          "title": "Combination 2: Meningococcal, Tdap, HPV",
+          "measureType": "outcome",
+          "weight": 3
+      }
+  }
+]

@@ -4,6 +4,7 @@ const { calcLatestNumDen } = require('../calculators/NumDenCalculator');
 const { calculateTrend } = require('../calculators/TrendCalculator');
 const { calculateStarRating } = require('../calculators/StarRatingCalculator');
 const logger = require('../config/winston');
+const { async } = require('regenerator-runtime');
 
 const getHedis = async (req, res, next) => {
   try {
@@ -90,6 +91,21 @@ const getPredictionData = async (req, res, next) => {
   }
 };
 
+//Compiles individual info records into one JSON object
+const getInfo = async ( req, res, next) => {
+  try {
+    const infoList = await dao.findInfo();
+    let fullInfo = {};
+    for (let i = 0; i < infoList.length; i++) {
+      const info = infoList[i];
+      fullInfo[info._id] = info[info._id];
+    }
+    return res.send(infoList);
+  } catch (e) {
+    return next(e);
+  }
+}
+
 const postBulkMeasures = async (req, res, next) => {
   try {
     const options = { ordered: true };
@@ -148,6 +164,15 @@ const postPredictions = async (req, res, next) => {
   }
 };
 
+const postInfo = async (req, res, next) => {
+  try {
+    const info = await dao.insertInfo(req.body);
+    return res.send(info);
+  } catch (e) {
+    return next(e);
+  }
+}
+
 module.exports = {
   getHedis,
   getMeasures,
@@ -156,10 +181,12 @@ module.exports = {
   getTrends,
   getPredictions,
   getPredictionData,
+  getInfo,
   postBulkMeasures,
   postCalculateAndStoreResults,
   postMeasure,
   postMeasureResults,
   postSimulatedHedis,
   postPredictions,
+  postInfo,
 };

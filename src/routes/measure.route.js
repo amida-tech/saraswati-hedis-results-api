@@ -17,6 +17,10 @@ router.route('/bulk')
 router.route('/calculate')
   .post(measureCtrl.postCalculateAndStoreResults);
 
+router.route('/info')
+  .get(measureCtrl.getInfo)
+  .post(measureCtrl.postInfo);
+
 router.route('/predictions')
   .get(measureCtrl.getPredictions)
   .post(measureCtrl.postPredictions);

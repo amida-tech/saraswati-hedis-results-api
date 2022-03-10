@@ -42,6 +42,11 @@ const findPredictions = () => {
   return collection.find({}).toArray();
 };
 
+const findInfo = () => {
+  const collection = db.collection('hedis_info');
+  return collection.find({}).toArray();
+}
+
 const insertMeasure = async (measure) => {
   const collection = db.collection('measures');
   try {
@@ -115,6 +120,18 @@ const insertPredictions = (predictions) => {
   }
 };
 
+// create collection for hedis info
+const insertInfo = (info) => {
+  const collection = db.collection('hedis_info');
+  try {
+    return collection.insertMany(info, {
+      upsert: true,
+    });
+  } catch (e) {
+    logger.error(e);
+  }
+};
+
 
 module.exports = {
   init,
@@ -123,9 +140,11 @@ module.exports = {
   findMeasureResults,
   findSimulatedHedis,
   findPredictions,
+  findInfo,
   insertMeasure,
   insertMeasures,
   insertMeasureResults,
   insertSimulatedHedis,
   insertPredictions,
+  insertInfo,
 };
