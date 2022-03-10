@@ -85,7 +85,7 @@ const insertMeasureResults = (results) => {
         resultObject.subScores[j].date = resultObject.date;
       }
     }
-    
+
     try {
       collection.findOneAndReplace(
         { _id: resultObject._id },
