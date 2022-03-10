@@ -29,7 +29,7 @@ const calculateTrend = (resultData, predictionData, days) => {
   for (let i = 0; i < measureList.length; i += 1) {
     const measure = measureList[i];
     const result = resultMap.get(measure);
-    const changePercent = 0;
+    let changePercent = 0;
     if (result.base != undefined) {
       changePercent = Math.round(((result.latest.value - result.base.value) / result.base.value) * 100);
     }
