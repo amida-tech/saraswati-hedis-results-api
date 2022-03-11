@@ -99,7 +99,7 @@ const getInfo = async (req, res, next) => {
       const info = infoList[i];
       fullInfo[info._id] = info[info._id];
     }
-    return res.send(infoList);
+    return res.send(fullInfo);
   } catch (e) {
     return next(e);
   }
