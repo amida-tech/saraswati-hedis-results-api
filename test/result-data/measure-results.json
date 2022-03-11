@@ -1,6 +1,5 @@
 [
     {
-        "_id": "drre-2022-02-12",
         "measure": "drre",
         "date": "2022-02-12T00:00:00.000Z",
         "value": 66.6666666666667,
@@ -36,10 +35,11 @@
                 "initialPopulation": 12,
                 "exclusions": 1
             }
-        ]
+        ],
+        "starRating": 3.5,
+        "_id": "drre-2022-02-12"
     },
     {
-        "_id": "aab-2022-02-12",
         "measure": "aab",
         "date": "2022-02-12T00:00:00.000Z",
         "value": 75,
@@ -57,10 +57,11 @@
                 "initialPopulation": 22,
                 "exclusions": 22
             }
-        ]
+        ],
+        "starRating": -1,
+        "_id": "aab-2022-02-12"
     },
     {
-        "_id": "aise-2022-02-12",
         "measure": "aise",
         "date": "2022-02-12T00:00:00.000Z",
         "value": 50,
@@ -105,10 +106,11 @@
                 "initialPopulation": 13,
                 "exclusions": 17
             }
-        ]
+        ],
+        "starRating": 2.5,
+        "_id": "aise-2022-02-12"
     },
     {
-        "_id": "imae-2022-02-12",
         "measure": "imae",
         "date": "2022-02-12T00:00:00.000Z",
         "value": 50,
@@ -162,10 +164,11 @@
                 "initialPopulation": 6,
                 "exclusions": 10
             }
-        ]
+        ],
+        "starRating": 2.5,
+        "_id": "imae-2022-02-12"
     },
     {
-        "_id": "composite-2022-02-12",
         "measure": "composite",
         "starRating": 3,
         "value": 56.54450261780105,
@@ -173,10 +176,10 @@
         "denominator": 382,
         "initialPopulation": 376,
         "exclusions": 316,
-        "date": "2022-02-12T00:00:00.000Z"
+        "date": "2022-02-12T00:00:00.000Z",
+        "_id": "composite-2022-02-12"
     },
     {
-        "_id": "drre-2022-02-13",
         "measure": "drre",
         "date": "2022-02-13T00:00:00.000Z",
         "value": 66.6666666666667,
@@ -212,10 +215,11 @@
                 "initialPopulation": 12,
                 "exclusions": 1
             }
-        ]
+        ],
+        "starRating": 3.5,
+        "_id": "drre-2022-02-13"
     },
     {
-        "_id": "aab-2022-02-13",
         "measure": "aab",
         "date": "2022-02-13T00:00:00.000Z",
         "value": 79.1666666666667,
@@ -233,10 +237,11 @@
                 "initialPopulation": 22,
                 "exclusions": 22
             }
-        ]
+        ],
+        "starRating": -1,
+        "_id": "aab-2022-02-13"
     },
     {
-        "_id": "aise-2022-02-13",
         "measure": "aise",
         "date": "2022-02-13T00:00:00.000Z",
         "value": 48.5294117647059,
@@ -281,10 +286,11 @@
                 "initialPopulation": 13,
                 "exclusions": 17
             }
-        ]
+        ],
+        "starRating": 2.5,
+        "_id": "aise-2022-02-13"
     },
     {
-        "_id": "imae-2022-02-13",
         "measure": "imae",
         "date": "2022-02-13T00:00:00.000Z",
         "value": 47.6190476190476,
@@ -338,10 +344,11 @@
                 "initialPopulation": 6,
                 "exclusions": 10
             }
-        ]
+        ],
+        "starRating": 2.5,
+        "_id": "imae-2022-02-13"
     },
     {
-        "_id": "composite-2022-02-13",
         "measure": "composite",
         "starRating": 3,
         "value": 55.026455026455025,
@@ -349,10 +356,10 @@
         "denominator": 189,
         "initialPopulation": 188,
         "exclusions": 158,
-        "date": "2022-02-13T00:00:00.000Z"
+        "date": "2022-02-13T00:00:00.000Z",
+        "_id": "composite-2022-02-13"
     },
     {
-        "_id": "drre-2022-02-14",
         "measure": "drre",
         "date": "2022-02-14T00:00:00.000Z",
         "value": 64.2857142857143,
@@ -388,10 +395,11 @@
                 "initialPopulation": 12,
                 "exclusions": 1
             }
-        ]
+        ],
+        "starRating": 3,
+        "_id": "drre-2022-02-14"
     },
     {
-        "_id": "aab-2022-02-14",
         "measure": "aab",
         "date": "2022-02-14T00:00:00.000Z",
         "value": 83.3333333333333,
@@ -409,10 +417,11 @@
                 "initialPopulation": 22,
                 "exclusions": 22
             }
-        ]
+        ],
+        "starRating": -1,
+        "_id": "aab-2022-02-14"
     },
     {
-        "_id": "aise-2022-02-14",
         "measure": "aise",
         "date": "2022-02-14T00:00:00.000Z",
         "value": 49.2753623188406,
@@ -457,10 +466,11 @@
                 "initialPopulation": 14,
                 "exclusions": 17
             }
-        ]
+        ],
+        "starRating": 2.5,
+        "_id": "aise-2022-02-14"
     },
     {
-        "_id": "imae-2022-02-14",
         "measure": "imae",
         "date": "2022-02-14T00:00:00.000Z",
         "value": 44.1860465116279,
@@ -514,10 +524,11 @@
                 "initialPopulation": 6,
                 "exclusions": 10
             }
-        ]
+        ],
+        "starRating": 2,
+        "_id": "imae-2022-02-14"
     },
     {
-        "_id": "composite-2022-02-14",
         "measure": "composite",
         "starRating": 2.5,
         "value": 54.45026178010471,
@@ -525,10 +536,10 @@
         "denominator": 191,
         "initialPopulation": 189,
         "exclusions": 158,
-        "date": "2022-02-14T00:00:00.000Z"
+        "date": "2022-02-14T00:00:00.000Z",
+        "_id": "composite-2022-02-14"
     },
     {
-        "_id": "drre-2022-02-15",
         "measure": "drre",
         "date": "2022-02-15T00:00:00.000Z",
         "value": 72.0930232558139,
@@ -564,10 +575,11 @@
                 "initialPopulation": 13,
                 "exclusions": 1
             }
-        ]
+        ],
+        "starRating": 3.5,
+        "_id": "drre-2022-02-15"
     },
     {
-        "_id": "aab-2022-02-15",
         "measure": "aab",
         "date": "2022-02-15T00:00:00.000Z",
         "value": 87.5,
@@ -585,10 +597,11 @@
                 "initialPopulation": 22,
                 "exclusions": 22
             }
-        ]
+        ],
+        "starRating": -1,
+        "_id": "aab-2022-02-15"
     },
     {
-        "_id": "aise-2022-02-15",
         "measure": "aise",
         "date": "2022-02-15T00:00:00.000Z",
         "value": 52.8571428571429,
@@ -633,10 +646,11 @@
                 "initialPopulation": 15,
                 "exclusions": 18
             }
-        ]
+        ],
+        "starRating": 2.5,
+        "_id": "aise-2022-02-15"
     },
     {
-        "_id": "composite-2022-02-15",
         "measure": "composite",
         "starRating": 3,
         "value": 58.673469387755105,
@@ -644,10 +658,50 @@
         "denominator": 196,
         "initialPopulation": 195,
         "exclusions": 159,
-        "date": "2022-02-15T00:00:00.000Z"
+        "date": "2022-02-15T00:00:00.000Z",
+        "_id": "composite-2022-02-15"
     },
     {
-        "_id": "imae-2022-02-15",
+        "measure": "drre",
+        "date": "2022-02-16T00:00:00.000Z",
+        "value": 72.0930232558139,
+        "denominator": 43,
+        "numerator": 31,
+        "initialPopulation": 43,
+        "exclusions": 4,
+        "subScores": [
+            {
+                "measure": "drre-1",
+                "date": "2022-02-16T00:00:00.000Z",
+                "value": 86.6666666666667,
+                "denominator": 15,
+                "numerator": 13,
+                "initialPopulation": 15,
+                "exclusions": 1
+            },
+            {
+                "measure": "drre-2",
+                "date": "2022-02-16T00:00:00.000Z",
+                "value": 53.3333333333333,
+                "denominator": 15,
+                "numerator": 8,
+                "initialPopulation": 15,
+                "exclusions": 2
+            },
+            {
+                "measure": "drre-3",
+                "date": "2022-02-16T00:00:00.000Z",
+                "value": 76.9230769230769,
+                "denominator": 13,
+                "numerator": 10,
+                "initialPopulation": 13,
+                "exclusions": 1
+            }
+        ],
+        "starRating": 3.5,
+        "_id": "drre-2022-02-16"
+    },
+    {
         "measure": "imae",
         "date": "2022-02-15T00:00:00.000Z",
         "value": 45.8333333333333,
@@ -701,49 +755,11 @@
                 "initialPopulation": 10,
                 "exclusions": 10
             }
-        ]
+        ],
+        "starRating": 2.5,
+        "_id": "imae-2022-02-15"
     },
     {
-        "_id": "drre-2022-02-16",
-        "measure": "drre",
-        "date": "2022-02-16T00:00:00.000Z",
-        "value": 72.0930232558139,
-        "denominator": 43,
-        "numerator": 31,
-        "initialPopulation": 43,
-        "exclusions": 4,
-        "subScores": [
-            {
-                "measure": "drre-1",
-                "date": "2022-02-16T00:00:00.000Z",
-                "value": 86.6666666666667,
-                "denominator": 15,
-                "numerator": 13,
-                "initialPopulation": 15,
-                "exclusions": 1
-            },
-            {
-                "measure": "drre-2",
-                "date": "2022-02-16T00:00:00.000Z",
-                "value": 53.3333333333333,
-                "denominator": 15,
-                "numerator": 8,
-                "initialPopulation": 15,
-                "exclusions": 2
-            },
-            {
-                "measure": "drre-3",
-                "date": "2022-02-16T00:00:00.000Z",
-                "value": 76.9230769230769,
-                "denominator": 13,
-                "numerator": 10,
-                "initialPopulation": 13,
-                "exclusions": 1
-            }
-        ]
-    },
-    {
-        "_id": "aab-2022-02-16",
         "measure": "aab",
         "date": "2022-02-16T00:00:00.000Z",
         "value": 91.304347826087,
@@ -761,10 +777,11 @@
                 "initialPopulation": 22,
                 "exclusions": 22
             }
-        ]
+        ],
+        "starRating": -1,
+        "_id": "aab-2022-02-16"
     },
     {
-        "_id": "imae-2022-02-16",
         "measure": "imae",
         "date": "2022-02-16T00:00:00.000Z",
         "value": 42,
@@ -818,10 +835,11 @@
                 "initialPopulation": 10,
                 "exclusions": 10
             }
-        ]
+        ],
+        "starRating": 2,
+        "_id": "imae-2022-02-16"
     },
     {
-        "_id": "composite-2022-02-16",
         "measure": "composite",
         "starRating": 3,
         "value": 57.57575757575758,
@@ -829,10 +847,10 @@
         "denominator": 198,
         "initialPopulation": 195,
         "exclusions": 159,
-        "date": "2022-02-16T00:00:00.000Z"
+        "date": "2022-02-16T00:00:00.000Z",
+        "_id": "composite-2022-02-16"
     },
     {
-        "_id": "aise-2022-02-16",
         "measure": "aise",
         "date": "2022-02-16T00:00:00.000Z",
         "value": 50.7042253521127,
@@ -877,10 +895,11 @@
                 "initialPopulation": 15,
                 "exclusions": 18
             }
-        ]
+        ],
+        "starRating": 2.5,
+        "_id": "aise-2022-02-16"
     },
     {
-        "_id": "drre-2022-02-17",
         "measure": "drre",
         "date": "2022-02-17T00:00:00.000Z",
         "value": 77.2727272727273,
@@ -916,10 +935,11 @@
                 "initialPopulation": 14,
                 "exclusions": 1
             }
-        ]
+        ],
+        "starRating": 4,
+        "_id": "drre-2022-02-17"
     },
     {
-        "_id": "aise-2022-02-17",
         "measure": "aise",
         "date": "2022-02-17T00:00:00.000Z",
         "value": 58.9041095890411,
@@ -964,10 +984,11 @@
                 "initialPopulation": 17,
                 "exclusions": 20
             }
-        ]
+        ],
+        "starRating": 3,
+        "_id": "aise-2022-02-17"
     },
     {
-        "_id": "aab-2022-02-17",
         "measure": "aab",
         "date": "2022-02-17T00:00:00.000Z",
         "value": 95.4545454545455,
@@ -985,10 +1006,22 @@
                 "initialPopulation": 22,
                 "exclusions": 22
             }
-        ]
+        ],
+        "starRating": -1,
+        "_id": "aab-2022-02-17"
     },
     {
-        "_id": "imae-2022-02-17",
+        "measure": "composite",
+        "starRating": 3,
+        "value": 64.14141414141415,
+        "numerator": 127,
+        "denominator": 198,
+        "initialPopulation": 197,
+        "exclusions": 161,
+        "date": "2022-02-17T00:00:00.000Z",
+        "_id": "composite-2022-02-17"
+    },
+    {
         "measure": "imae",
         "date": "2022-02-17T00:00:00.000Z",
         "value": 46,
@@ -1042,21 +1075,11 @@
                 "initialPopulation": 10,
                 "exclusions": 10
             }
-        ]
+        ],
+        "starRating": 2.5,
+        "_id": "imae-2022-02-17"
     },
     {
-        "_id": "composite-2022-02-17",
-        "measure": "composite",
-        "starRating": 3,
-        "value": 64.14141414141415,
-        "numerator": 127,
-        "denominator": 198,
-        "initialPopulation": 197,
-        "exclusions": 161,
-        "date": "2022-02-17T00:00:00.000Z"
-    },
-    {
-        "_id": "aise-2022-02-18",
         "measure": "aise",
         "date": "2022-02-18T00:00:00.000Z",
         "value": 54.1666666666667,
@@ -1101,10 +1124,11 @@
                 "initialPopulation": 16,
                 "exclusions": 19
             }
-        ]
+        ],
+        "starRating": 2.5,
+        "_id": "aise-2022-02-18"
     },
     {
-        "_id": "imae-2022-02-18",
         "measure": "imae",
         "date": "2022-02-18T00:00:00.000Z",
         "value": 46,
@@ -1158,10 +1182,11 @@
                 "initialPopulation": 10,
                 "exclusions": 10
             }
-        ]
+        ],
+        "starRating": 2.5,
+        "_id": "imae-2022-02-18"
     },
     {
-        "_id": "drre-2022-02-18",
         "measure": "drre",
         "date": "2022-02-18T00:00:00.000Z",
         "value": 74.4186046511628,
@@ -1197,10 +1222,11 @@
                 "initialPopulation": 13,
                 "exclusions": 1
             }
-        ]
+        ],
+        "starRating": 3.5,
+        "_id": "drre-2022-02-18"
     },
     {
-        "_id": "aab-2022-02-18",
         "measure": "aab",
         "date": "2022-02-18T00:00:00.000Z",
         "value": 86.9565217391304,
@@ -1218,10 +1244,11 @@
                 "initialPopulation": 22,
                 "exclusions": 22
             }
-        ]
+        ],
+        "starRating": -1,
+        "_id": "aab-2022-02-18"
     },
     {
-        "_id": "composite-2022-02-18",
         "measure": "composite",
         "starRating": 3,
         "value": 60.1010101010101,
@@ -1229,10 +1256,10 @@
         "denominator": 198,
         "initialPopulation": 196,
         "exclusions": 160,
-        "date": "2022-02-18T00:00:00.000Z"
+        "date": "2022-02-18T00:00:00.000Z",
+        "_id": "composite-2022-02-18"
     },
     {
-        "_id": "drre-2022-02-19",
         "measure": "drre",
         "date": "2022-02-19T00:00:00.000Z",
         "value": 54.7619047619048,
@@ -1268,10 +1295,11 @@
                 "initialPopulation": 12,
                 "exclusions": 1
             }
-        ]
+        ],
+        "starRating": 2.5,
+        "_id": "drre-2022-02-19"
     },
     {
-        "_id": "aab-2022-02-19",
         "measure": "aab",
         "date": "2022-02-19T00:00:00.000Z",
         "value": 69.2307692307692,
@@ -1289,10 +1317,11 @@
                 "initialPopulation": 22,
                 "exclusions": 22
             }
-        ]
+        ],
+        "starRating": -1,
+        "_id": "aab-2022-02-19"
     },
     {
-        "_id": "aise-2022-02-19",
         "measure": "aise",
         "date": "2022-02-19T00:00:00.000Z",
         "value": 56.9230769230769,
@@ -1337,10 +1366,11 @@
                 "initialPopulation": 11,
                 "exclusions": 17
             }
-        ]
+        ],
+        "starRating": 3,
+        "_id": "aise-2022-02-19"
     },
     {
-        "_id": "imae-2022-02-19",
         "measure": "imae",
         "date": "2022-02-19T00:00:00.000Z",
         "value": 58.5365853658537,
@@ -1394,10 +1424,11 @@
                 "initialPopulation": 6,
                 "exclusions": 10
             }
-        ]
+        ],
+        "starRating": 3,
+        "_id": "imae-2022-02-19"
     },
     {
-        "_id": "composite-2022-02-19",
         "measure": "composite",
         "starRating": 3,
         "value": 58.1151832460733,
@@ -1405,10 +1436,10 @@
         "denominator": 191,
         "initialPopulation": 187,
         "exclusions": 158,
-        "date": "2022-02-19T00:00:00.000Z"
+        "date": "2022-02-19T00:00:00.000Z",
+        "_id": "composite-2022-02-19"
     },
     {
-        "_id": "drre-2022-02-20",
         "measure": "drre",
         "date": "2022-02-20T00:00:00.000Z",
         "value": 37.2093023255814,
@@ -1444,10 +1475,11 @@
                 "initialPopulation": 13,
                 "exclusions": 1
             }
-        ]
+        ],
+        "starRating": 2,
+        "_id": "drre-2022-02-20"
     },
     {
-        "_id": "aab-2022-02-20",
         "measure": "aab",
         "date": "2022-02-20T00:00:00.000Z",
         "value": 57.1428571428571,
@@ -1465,10 +1497,11 @@
                 "initialPopulation": 24,
                 "exclusions": 22
             }
-        ]
+        ],
+        "starRating": -1,
+        "_id": "aab-2022-02-20"
     },
     {
-        "_id": "aise-2022-02-20",
         "measure": "aise",
         "date": "2022-02-20T00:00:00.000Z",
         "value": 53.030303030303,
@@ -1513,10 +1546,11 @@
                 "initialPopulation": 11,
                 "exclusions": 16
             }
-        ]
+        ],
+        "starRating": 2.5,
+        "_id": "aise-2022-02-20"
     },
     {
-        "_id": "imae-2022-02-20",
         "measure": "imae",
         "date": "2022-02-20T00:00:00.000Z",
         "value": 55.8139534883721,
@@ -1570,10 +1604,11 @@
                 "initialPopulation": 6,
                 "exclusions": 10
             }
-        ]
+        ],
+        "starRating": 3,
+        "_id": "imae-2022-02-20"
     },
     {
-        "_id": "composite-2022-02-20",
         "measure": "composite",
         "starRating": 2.5,
         "value": 50.505050505050505,
@@ -1581,10 +1616,10 @@
         "denominator": 198,
         "initialPopulation": 191,
         "exclusions": 153,
-        "date": "2022-02-20T00:00:00.000Z"
+        "date": "2022-02-20T00:00:00.000Z",
+        "_id": "composite-2022-02-20"
     },
     {
-        "_id": "drre-2022-02-21",
         "measure": "drre",
         "date": "2022-02-21T00:00:00.000Z",
         "value": 39.5348837209302,
@@ -1620,10 +1655,11 @@
                 "initialPopulation": 12,
                 "exclusions": 1
             }
-        ]
+        ],
+        "starRating": 2,
+        "_id": "drre-2022-02-21"
     },
     {
-        "_id": "aab-2022-02-21",
         "measure": "aab",
         "date": "2022-02-21T00:00:00.000Z",
         "value": 55.1724137931034,
@@ -1641,10 +1677,11 @@
                 "initialPopulation": 24,
                 "exclusions": 22
             }
-        ]
+        ],
+        "starRating": -1,
+        "_id": "aab-2022-02-21"
     },
     {
-        "_id": "aise-2022-02-21",
         "measure": "aise",
         "date": "2022-02-21T00:00:00.000Z",
         "value": 48.4848484848485,
@@ -1689,10 +1726,11 @@
                 "initialPopulation": 11,
                 "exclusions": 16
             }
-        ]
+        ],
+        "starRating": 2.5,
+        "_id": "aise-2022-02-21"
     },
     {
-        "_id": "imae-2022-02-21",
         "measure": "imae",
         "date": "2022-02-21T00:00:00.000Z",
         "value": 53.4883720930233,
@@ -1746,10 +1784,11 @@
                 "initialPopulation": 6,
                 "exclusions": 10
             }
-        ]
+        ],
+        "starRating": 2.5,
+        "_id": "imae-2022-02-21"
     },
     {
-        "_id": "composite-2022-02-21",
         "measure": "composite",
         "starRating": 2.5,
         "value": 49.74874371859296,
@@ -1757,10 +1796,10 @@
         "denominator": 199,
         "initialPopulation": 190,
         "exclusions": 153,
-        "date": "2022-02-21T00:00:00.000Z"
+        "date": "2022-02-21T00:00:00.000Z",
+        "_id": "composite-2022-02-21"
     },
     {
-        "_id": "drre-2022-02-22",
         "measure": "drre",
         "date": "2022-02-22T00:00:00.000Z",
         "value": 43.9024390243902,
@@ -1796,10 +1835,11 @@
                 "initialPopulation": 12,
                 "exclusions": 1
             }
-        ]
+        ],
+        "starRating": 2,
+        "_id": "drre-2022-02-22"
     },
     {
-        "_id": "aab-2022-02-22",
         "measure": "aab",
         "date": "2022-02-22T00:00:00.000Z",
         "value": 51.6129032258064,
@@ -1817,10 +1857,11 @@
                 "initialPopulation": 25,
                 "exclusions": 22
             }
-        ]
+        ],
+        "starRating": 2.5,
+        "_id": "aab-2022-02-22"
     },
     {
-        "_id": "aise-2022-02-22",
         "measure": "aise",
         "date": "2022-02-22T00:00:00.000Z",
         "value": 40.9090909090909,
@@ -1865,10 +1906,11 @@
                 "initialPopulation": 11,
                 "exclusions": 16
             }
-        ]
+        ],
+        "starRating": 2,
+        "_id": "aise-2022-02-22"
     },
     {
-        "_id": "imae-2022-02-22",
         "measure": "imae",
         "date": "2022-02-22T00:00:00.000Z",
         "value": 41.8604651162791,
@@ -1922,10 +1964,11 @@
                 "initialPopulation": 6,
                 "exclusions": 10
             }
-        ]
+        ],
+        "starRating": 2,
+        "_id": "imae-2022-02-22"
     },
     {
-        "_id": "composite-2022-02-22",
         "measure": "composite",
         "starRating": 2,
         "value": 44.221105527638194,
@@ -1933,10 +1976,10 @@
         "denominator": 199,
         "initialPopulation": 191,
         "exclusions": 152,
-        "date": "2022-02-22T00:00:00.000Z"
+        "date": "2022-02-22T00:00:00.000Z",
+        "_id": "composite-2022-02-22"
     },
     {
-        "_id": "aab-2022-02-23",
         "measure": "aab",
         "date": "2022-02-23T00:00:00.000Z",
         "value": 91.30434782608695,
@@ -1955,10 +1998,10 @@
                 "initialPopulation": 24,
                 "exclusions": 21
             }
-        ]
+        ],
+        "_id": "aab-2022-02-23"
     },
     {
-        "_id": "aise-2022-02-23",
         "measure": "aise",
         "date": "2022-02-23T00:00:00.000Z",
         "value": 57.14285714285714,
@@ -2004,10 +2047,10 @@
                 "initialPopulation": 15,
                 "exclusions": 18
             }
-        ]
+        ],
+        "_id": "aise-2022-02-23"
     },
     {
-        "_id": "drre-2022-02-23",
         "measure": "drre",
         "date": "2022-02-23T00:00:00.000Z",
         "value": 75.86206896551724,
@@ -2044,10 +2087,10 @@
                 "initialPopulation": 10,
                 "exclusions": 0
             }
-        ]
+        ],
+        "_id": "drre-2022-02-23"
     },
     {
-        "_id": "imae-2022-02-23",
         "measure": "imae",
         "date": "2022-02-23T00:00:00.000Z",
         "value": 47.91666666666667,
@@ -2102,10 +2145,10 @@
                 "initialPopulation": 10,
                 "exclusions": 8
             }
-        ]
+        ],
+        "_id": "imae-2022-02-23"
     },
     {
-        "_id": "composite-2022-02-23",
         "measure": "composite",
         "date": "2022-02-23T00:00:00.000Z",
         "value": 68.056485150282,
@@ -2113,10 +2156,10 @@
         "numerator": 106,
         "denominator": 170,
         "initialPopulation": 175,
-        "exclusions": 133
+        "exclusions": 133,
+        "_id": "composite-2022-02-23"
     },
     {
-        "_id": "aab-2022-02-24",
         "measure": "aab",
         "date": "2022-02-24T00:00:00.000Z",
         "value": 77.77777777777779,
@@ -2135,10 +2178,10 @@
                 "initialPopulation": 28,
                 "exclusions": 21
             }
-        ]
+        ],
+        "_id": "aab-2022-02-24"
     },
     {
-        "_id": "aise-2022-02-24",
         "measure": "aise",
         "date": "2022-02-24T00:00:00.000Z",
         "value": 57.14285714285714,
@@ -2184,10 +2227,10 @@
                 "initialPopulation": 15,
                 "exclusions": 18
             }
-        ]
+        ],
+        "_id": "aise-2022-02-24"
     },
     {
-        "_id": "drre-2022-02-24",
         "measure": "drre",
         "date": "2022-02-24T00:00:00.000Z",
         "value": 73.33333333333333,
@@ -2224,10 +2267,10 @@
                 "initialPopulation": 10,
                 "exclusions": 0
             }
-        ]
+        ],
+        "_id": "drre-2022-02-24"
     },
     {
-        "_id": "imae-2022-02-24",
         "measure": "imae",
         "date": "2022-02-24T00:00:00.000Z",
         "value": 46.808510638297875,
@@ -2282,10 +2325,10 @@
                 "initialPopulation": 10,
                 "exclusions": 7
             }
-        ]
+        ],
+        "_id": "imae-2022-02-24"
     },
     {
-        "_id": "composite-2022-02-24",
         "measure": "composite",
         "date": "2022-02-24T00:00:00.000Z",
         "value": 63.765619723066536,
@@ -2293,10 +2336,10 @@
         "numerator": 105,
         "denominator": 174,
         "initialPopulation": 179,
-        "exclusions": 128
+        "exclusions": 128,
+        "_id": "composite-2022-02-24"
     },
     {
-        "_id": "aab-2022-02-25",
         "measure": "aab",
         "date": "2022-02-25T00:00:00.000Z",
         "value": 68.75,
@@ -2315,10 +2358,10 @@
                 "initialPopulation": 33,
                 "exclusions": 22
             }
-        ]
+        ],
+        "_id": "aab-2022-02-25"
     },
     {
-        "_id": "aise-2022-02-25",
         "measure": "aise",
         "date": "2022-02-25T00:00:00.000Z",
         "value": 52.85714285714286,
@@ -2364,10 +2407,10 @@
                 "initialPopulation": 15,
                 "exclusions": 18
             }
-        ]
+        ],
+        "_id": "aise-2022-02-25"
     },
     {
-        "_id": "drre-2022-02-25",
         "measure": "drre",
         "date": "2022-02-25T00:00:00.000Z",
         "value": 66.66666666666666,
@@ -2404,10 +2447,10 @@
                 "initialPopulation": 10,
                 "exclusions": 0
             }
-        ]
+        ],
+        "_id": "drre-2022-02-25"
     },
     {
-        "_id": "imae-2022-02-25",
         "measure": "imae",
         "date": "2022-02-25T00:00:00.000Z",
         "value": 42.5531914893617,
@@ -2462,10 +2505,10 @@
                 "initialPopulation": 10,
                 "exclusions": 7
             }
-        ]
+        ],
+        "_id": "imae-2022-02-25"
     },
     {
-        "_id": "composite-2022-02-25",
         "measure": "composite",
         "date": "2022-02-25T00:00:00.000Z",
         "value": 57.7067502532928,
@@ -2473,10 +2516,10 @@
         "numerator": 99,
         "denominator": 179,
         "initialPopulation": 184,
-        "exclusions": 129
+        "exclusions": 129,
+        "_id": "composite-2022-02-25"
     },
     {
-        "_id": "aab-2022-02-26",
         "measure": "aab",
         "date": "2022-02-26T00:00:00.000Z",
         "value": 53.125,
@@ -2495,10 +2538,10 @@
                 "initialPopulation": 33,
                 "exclusions": 22
             }
-        ]
+        ],
+        "_id": "aab-2022-02-26"
     },
     {
-        "_id": "aise-2022-02-26",
         "measure": "aise",
         "date": "2022-02-26T00:00:00.000Z",
         "value": 48.57142857142857,
@@ -2544,10 +2587,10 @@
                 "initialPopulation": 15,
                 "exclusions": 18
             }
-        ]
+        ],
+        "_id": "aise-2022-02-26"
     },
     {
-        "_id": "drre-2022-02-26",
         "measure": "drre",
         "date": "2022-02-26T00:00:00.000Z",
         "value": 60,
@@ -2584,10 +2627,10 @@
                 "initialPopulation": 10,
                 "exclusions": 0
             }
-        ]
+        ],
+        "_id": "drre-2022-02-26"
     },
     {
-        "_id": "imae-2022-02-26",
         "measure": "imae",
         "date": "2022-02-26T00:00:00.000Z",
         "value": 35.55555555555556,
@@ -2642,10 +2685,10 @@
                 "initialPopulation": 9,
                 "exclusions": 7
             }
-        ]
+        ],
+        "_id": "imae-2022-02-26"
     },
     {
-        "_id": "composite-2022-02-26",
         "measure": "composite",
         "date": "2022-02-26T00:00:00.000Z",
         "value": 49.312996031746025,
@@ -2653,10 +2696,10 @@
         "numerator": 85,
         "denominator": 177,
         "initialPopulation": 183,
-        "exclusions": 129
+        "exclusions": 129,
+        "_id": "composite-2022-02-26"
     },
     {
-        "_id": "aab-2022-02-27",
         "measure": "aab",
         "date": "2022-02-27T00:00:00.000Z",
         "value": 62.5,
@@ -2675,10 +2718,10 @@
                 "initialPopulation": 33,
                 "exclusions": 22
             }
-        ]
+        ],
+        "_id": "aab-2022-02-27"
     },
     {
-        "_id": "aise-2022-02-27",
         "measure": "aise",
         "date": "2022-02-27T00:00:00.000Z",
         "value": 44.285714285714285,
@@ -2724,10 +2767,10 @@
                 "initialPopulation": 15,
                 "exclusions": 18
             }
-        ]
+        ],
+        "_id": "aise-2022-02-27"
     },
     {
-        "_id": "drre-2022-02-27",
         "measure": "drre",
         "date": "2022-02-27T00:00:00.000Z",
         "value": 50,
@@ -2764,10 +2807,10 @@
                 "initialPopulation": 10,
                 "exclusions": 0
             }
-        ]
+        ],
+        "_id": "drre-2022-02-27"
     },
     {
-        "_id": "imae-2022-02-27",
         "measure": "imae",
         "date": "2022-02-27T00:00:00.000Z",
         "value": 26.666666666666668,
@@ -2822,17 +2865,18 @@
                 "initialPopulation": 9,
                 "exclusions": 7
             }
-        ]
+        ],
+        "_id": "imae-2022-02-27"
     },
     {
-        "_id": "composite-2022-02-27",
         "measure": "composite",
         "date": "2022-02-27T00:00:00.000Z",
         "value": 45.863095238095234,
-        "starRating": 2.5,
+        "starRating": 2,
         "numerator": 78,
         "denominator": 177,
         "initialPopulation": 183,
-        "exclusions": 129
+        "exclusions": 129,
+        "_id": "composite-2022-02-27"
     }
 ]
