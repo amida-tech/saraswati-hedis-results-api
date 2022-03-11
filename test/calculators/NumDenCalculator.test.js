@@ -16,7 +16,7 @@ describe(' NumDenCalculator test ', () => {
   });
 
   test('Check measurement type sorting', () => {
-    expect(resultArray.length).toEqual(3);
+    expect(resultArray.length).toEqual(4);
   });
 
   test('Check calculations', () => {

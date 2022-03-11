@@ -11,12 +11,14 @@ const {
   getTrends,
   getPredictions,
   getPredictionData,
+  getInfo,
   postBulkMeasures,
   postCalculateAndStoreResults,
   postMeasure,
   postMeasureResults,
   postSimulatedHedis,
   postPredictions,
+  postInfo,
 } = require('../../src/controllers/measure.controller');
 
 const data = JSON.parse(fs.readFileSync(`${path.resolve()}/test/resources/bulk-data.json`));
@@ -31,11 +33,13 @@ jest.mock('../../src/config/dao', () => {
     findMeasureResults: jest.fn(() => []),
     findSimulatedHedis: jest.fn(() => []),
     findPredictions: jest.fn(() => {}),
+    findInfo: jest.fn(() => []),
     insertMeasure: jest.fn(() => {}),
     insertMeasures: jest.fn(() => []),
     insertMeasureResults: jest.fn(() => []),
     insertPredictions: jest.fn(() => []),
     insertSimulatedHedis: jest.fn(() => []),
+    insertInfo: jest.fn(() => {}),
   };
 });
 
@@ -112,6 +116,14 @@ describe('## measure.controller.js', () => {
     });
   });
 
+  describe('Test getInfo', () => {
+    it('Should call response.send', async () => {
+      const response = { send: jest.fn().mockReturnValue(Promise.resolve()) };
+      await getInfo({ }, response, jest.fn());
+      expect(response.send).toHaveBeenCalled();
+    });
+  });
+
   describe('Test postBulkMeasures upload', () => {
     it('Should call response.send', async () => {
       const response = { send: jest.fn().mockReturnValue(Promise.resolve()) };
@@ -156,6 +168,14 @@ describe('## measure.controller.js', () => {
     it('Should call response.send', async () => {
       const response = { send: jest.fn().mockReturnValue(Promise.resolve()) };
       await postPredictions({ body: data }, response, jest.fn());
+      expect(response.send).toHaveBeenCalled();
+    });
+  });
+
+  describe('Test postInfo', () => {
+    it('Should call response.send', async () => {
+      const response = { send: jest.fn().mockReturnValue(Promise.resolve()) };
+      await postInfo({ }, response, jest.fn());
       expect(response.send).toHaveBeenCalled();
     });
   });

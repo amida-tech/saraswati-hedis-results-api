@@ -23,12 +23,12 @@ describe(' Trend Calculation test ', () => {
   });
 
   test('Check measurement type sorting', () => {
-    expect(resultArray.length).toEqual(6);
+    expect(resultArray.length).toEqual(5);
   });
 
   test('Check calculations', () => {
-    expect(resultArray[0].changePercent).toEqual(-39);
-    expect(resultArray[2].changePercent).toEqual(-36);
-    expect(resultArray[4].changePercent).toEqual(-23);
+    expect(resultArray[0].changePercent).toEqual(9);
+    expect(resultArray[2].changePercent).toEqual(34);
+    expect(resultArray[4].changePercent).toEqual(-9);
   });
 });
