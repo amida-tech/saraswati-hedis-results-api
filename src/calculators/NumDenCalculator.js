@@ -1,15 +1,15 @@
-const { calculateCompositeStarRating, calculateMeasureStarRating } = require('../calculators/StarRatingCalculator');
+const { calculateCompositeStarRating, calculateMeasureStarRating } = require('./StarRatingCalculator');
 
 function setValue(array, valueName, fieldName, patient) {
   let numCount = 0;
   // Get which number this is (Numerator 3, Denominator 1, etc...)
-  if (fieldName != valueName) {
+  if (fieldName !== valueName) {
     numCount = fieldName.replace(`${valueName} `, '') - 1;
   }
 
   // Get field value, either convert boolean to int or get size of array
   const valueField = patient[fieldName];
-  const value = Array.isArray(valueField) ? valueField.length : valueField === true ? 1 : 0;
+  const value = Array.isArray(valueField) ? valueField.length : (valueField === true ? 1 : 0);
 
   // Add value to existing value or create initial value
   array[numCount] === undefined ? (array[numCount] = value) : (array[numCount] += value);
@@ -27,11 +27,11 @@ function calculateMeasureScore(subScoreArray, measurementType, date) {
     exclusions += subScoreArray[i].exclusions;
   }
   const value = (denominator === 0 ? 0 : numerator / denominator) * 100;
-  const starRating = calculateMeasureStarRating({
+  const { starRating } = calculateMeasureStarRating({
     measure: measurementType,
     numerator,
     denominator,
-  }).starRating;
+  });
   return {
     measure: measurementType,
     date,
@@ -65,7 +65,7 @@ const calcLatestNumDen = (resultList) => {
     }
 
     const patientData = patient[patient.memberId];
-    let resultHolder = resultMap.get(measurementType);
+    const resultHolder = resultMap.get(measurementType);
 
     // Save values for each field name, putting subscores into their respective index
     for (const patientField in patientData) {
@@ -105,7 +105,7 @@ const calcLatestNumDen = (resultList) => {
     valueArray.push(calculateMeasureScore(subScoreArray, measurementType, currentDate));
   }
 
-  //calculate the total overall score and star rating
+  // calculate the total overall score and star rating
   let compositeStarRating = 0;
   let compositeValue = 0;
   let starValueCount = 0;
@@ -113,7 +113,7 @@ const calcLatestNumDen = (resultList) => {
   let denominator = 0;
   let initialPopulation = 0;
   let exclusions = 0;
-  for (let result of valueArray) {
+  for (const result of valueArray) {
     compositeValue += result.value;
     if (result.starRating >= 0) {
       starValueCount += 1;
@@ -125,7 +125,7 @@ const calcLatestNumDen = (resultList) => {
     exclusions += result.exclusions;
   }
   compositeStarRating = starValueCount === 0 ? 0 : compositeStarRating / starValueCount;
-  compositeValue = compositeValue / valueArray.length;
+  compositeValue /= valueArray.length;
 
   valueArray.push({
     measure: 'composite',

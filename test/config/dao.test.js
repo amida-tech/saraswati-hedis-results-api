@@ -5,10 +5,13 @@ const {
   initTest, findMeasures, findMeasureResults, findPredictions, findSimulatedHedis,
   insertMeasure, insertMeasures, insertMeasureResults, insertPredictions,
   insertSimulatedHedis,
+  findInfo,
+  insertInfo,
 } = require('../../src/config/dao');
 
 const data = JSON.parse(fs.readFileSync(`${path.resolve()}/test/resources/bulk-data.json`));
 const drreData = JSON.parse(fs.readFileSync(`${path.resolve()}/test/resources/drre-data.json`));
+const infoData = JSON.parse(fs.readFileSync(`${path.resolve()}/test/result-data/hedis-info.json`));
 
 const found = {
   toArray: jest.fn(() => 'test'),
@@ -26,6 +29,7 @@ const collection = {
     return found;
   }),
   countDocuments: jest.fn(() => 'recordCount'),
+  insertMany: jest.fn(() => []),
 };
 
 describe('## db.js', () => {
@@ -34,7 +38,7 @@ describe('## db.js', () => {
   beforeAll(async () => {
     db = { collection: jest.fn(() => collection) };
     initTest(db);
-  });  
+  });
 
   describe('Test getMeasures function', () => {
     test('Should not throw an error', async () => {
@@ -60,6 +64,13 @@ describe('## db.js', () => {
   describe('Test getSimulatedHedis function', () => {
     test('Should not throw an error', async () => {
       const test = findSimulatedHedis();
+      expect(test).toBeTruthy();
+    });
+  });
+
+  describe('Test findInfo function', () => {
+    test('Should not throw an error', async () => {
+      const test = findInfo();
       expect(test).toBeTruthy();
     });
   });
@@ -107,6 +118,13 @@ describe('## db.js', () => {
   describe('Test insertPredictions function', () => {
     test('Should not throw an error', async () => {
       const test = insertPredictions(data);
+      expect(test).toBeTruthy();
+    });
+  });
+
+  describe('Test insertInfo function', () => {
+    test('Should not throw an error', async () => {
+      const test = insertInfo(infoData);
       expect(test).toBeTruthy();
     });
   });

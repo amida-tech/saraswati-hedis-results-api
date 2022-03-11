@@ -41,12 +41,12 @@ const getStarRating = async (req, res, next) => {
     if (sortedSearch.length === 0) {
       sortedSearch = [{ measure: req.query.measure }];
     }
-    const starRatingData = calculateMeasureStarRating(sortedSearch[sortedSearch.length-1]);
+    const starRatingData = calculateMeasureStarRating(sortedSearch[sortedSearch.length - 1]);
     return res.send(starRatingData);
-  } catch(e) {
+  } catch (e) {
     return next(e);
   }
-}
+};
 
 const getTrends = async (req, res, next) => {
   try {
@@ -85,6 +85,21 @@ const getPredictionData = async (req, res, next) => {
       compiledData.HEDIS0[i.toString()] = result.value;
     }
     return res.send([compiledData]);
+  } catch (e) {
+    return next(e);
+  }
+};
+
+// Compiles individual info records into one JSON object
+const getInfo = async (req, res, next) => {
+  try {
+    const infoList = await dao.findInfo();
+    const fullInfo = {};
+    for (let i = 0; i < infoList.length; i += 1) {
+      const info = infoList[i];
+      fullInfo[info._id] = info[info._id];
+    }
+    return res.send(fullInfo);
   } catch (e) {
     return next(e);
   }
@@ -148,6 +163,15 @@ const postPredictions = async (req, res, next) => {
   }
 };
 
+const postInfo = async (req, res, next) => {
+  try {
+    const info = await dao.insertInfo(req.body);
+    return res.send(info);
+  } catch (e) {
+    return next(e);
+  }
+};
+
 module.exports = {
   getHedis,
   getMeasures,
@@ -156,10 +180,12 @@ module.exports = {
   getTrends,
   getPredictions,
   getPredictionData,
+  getInfo,
   postBulkMeasures,
   postCalculateAndStoreResults,
   postMeasure,
   postMeasureResults,
   postSimulatedHedis,
   postPredictions,
+  postInfo,
 };

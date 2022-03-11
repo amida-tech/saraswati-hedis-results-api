@@ -21,5 +21,5 @@ module.exports = {
   createMeasureBulk: {
     body: Joi.array().items(measureBody),
   },
-  searchMeasurements: measurementQuery
+  searchMeasurements: measurementQuery,
 };

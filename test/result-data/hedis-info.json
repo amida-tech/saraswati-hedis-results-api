@@ -1,0 +1,197 @@
+[
+    {
+        "_id": "composite",
+        "composite": {
+            "title": "Composite",
+            "displayLabel": "Composite",
+            "hasSubMeasures": false
+        }
+    },
+    {
+        "_id": "aise",
+        "aise": {
+            "domainOfCare": "ECDS",
+            "title": "Adult Immunization Status",
+            "displayLabel": "AIS-E",
+            "measureType": "process",
+            "weight": 1,
+            "hasSubMeasures": true
+        }
+    },
+    {
+        "_id": "aise-1",
+        "aise-1": {
+            "domainOfCare": "ECDS",
+            "title": "Adult Immunization Status: Influenza",
+            "displayLabel": "AIS-E: Influenza",
+            "measureType": "process",
+            "weight": 1,
+            "hasSubMeasures": false
+        }
+    },
+    {
+        "_id": "aise-2",
+        "aise-2": {
+            "domainOfCare": "ECDS",
+            "title": "Adult Immunization Status: Td/Tdap",
+            "displayLabel": "AIS-E: Td/Tdap",
+            "measureType": "process",
+            "weight": 1,
+            "hasSubMeasures": false
+        }
+    },
+    {
+        "_id": "aise-3",
+        "aise-3": {
+            "domainOfCare": "ECDS",
+            "title": "Adult Immunization Status: Zoster",
+            "displayLabel": "AIS-E: Zoster",
+            "measureType": "process",
+            "weight": 1,
+            "hasSubMeasures": false
+        }
+    },
+    {
+        "_id": "aise-4",
+        "aise-4": {
+            "domainOfCare": "ECDS",
+            "title": "Adult Immunization Status: Pneumococcal",
+            "displayLabel": "AIS-E: Pneumococcal",
+            "measureType": "process",
+            "weight": 1,
+            "hasSubMeasures": false
+        }
+    },
+    {
+        "_id": "aab",
+        "aab": {
+            "domainOfCare": "EOC",
+            "title": "Avoidance of Antibiotic Treatment in Adults with Acute Bronchitis",
+            "displayLabel": "AAB",
+            "measureType": "process",
+            "weight": 1,
+            "hasSubMeasures": false
+        }
+    },
+    {
+        "_id": "aab-1",
+        "aab-1": {
+            "domainOfCare": "EOC",
+            "title": "Avoidance of Antibiotic Treatment in Adults with Acute Bronchitis",
+            "displayLabel": "AAB",
+            "measureType": "process",
+            "weight": 1,
+            "hasSubMeasures": false
+        }
+    },
+    {
+        "_id": "drre",
+        "drre": {
+            "domainOfCare": "ECDS",
+            "title": "Depression Remission or Response for Adolescents and Adults",
+            "displayLabel": "DRR-E",
+            "measureType": "outcome",
+            "weight": 1,
+            "hasSubMeasures": true
+        }
+    },
+    {
+        "_id": "drre-1",
+        "drre-1": {
+            "domainOfCare": "ECDS",
+            "title": "Depression Follow-Up",
+            "displayLabel": "DRR-E: Follow-Up",
+            "measureType": "outcome",
+            "weight": 1,
+            "hasSubMeasures": false
+        }
+    },
+    {
+        "_id": "drre-2",
+        "drre-2": {
+            "domainOfCare": "ECDS",
+            "title": "Depression Remission",
+            "displayLabel": "DRR-E: Remission",
+            "measureType": "outcome",
+            "weight": 1,
+            "hasSubMeasures": false
+        }
+    },
+    {
+        "_id": "drre-3",
+        "drre-3": {
+            "domainOfCare": "ECDS",
+            "title": "Depression Response",
+            "displayLabel": "DRR-E: Response",
+            "measureType": "outcome",
+            "weight": 1,
+            "hasSubMeasures": false
+        }
+    },
+    {
+        "_id": "imae",
+        "imae": {
+            "domainOfCare": "ECDS",
+            "title": "Immunizations for Adolescents",
+            "displayLabel": "IMA-E",
+            "measureType": "outcome",
+            "weight": 3,
+            "hasSubMeasures": true
+        }
+    },
+    {
+        "_id": "imae-1",
+        "imae-1": {
+            "domainOfCare": "ECDS",
+            "title": "Meningococcal Serogroups A, C, W, Y",
+            "displayLabel": "IMA-E: Meningococcal",
+            "measureType": "outcome",
+            "weight": 3,
+            "hasSubMeasures": false
+        }
+    },
+    {
+        "_id": "imae-2",
+        "imae-2": {
+            "domainOfCare": "ECDS",
+            "title": "Tdap",
+            "displayLabel": "IMA-E: Tdap",
+            "measureType": "outcome",
+            "weight": 3,
+            "hasSubMeasures": false
+        }
+    },
+    {
+        "_id": "imae-3",
+        "imae-3": {
+            "domainOfCare": "ECDS",
+            "title": "HPV",
+            "displayLabel": "IMA-E: HPV",
+            "measureType": "outcome",
+            "weight": 3,
+            "hasSubMeasures": false
+        }
+    },
+    {
+        "_id": "imae-4",
+        "imae-4": {
+            "domainOfCare": "ECDS",
+            "title": "Combination 1: Meningococcal, Tdap",
+            "displayLabel": "IMA-E: Combination 1",
+            "measureType": "outcome",
+            "weight": 3,
+            "hasSubMeasures": false
+        }
+    },
+    {
+        "_id": "imae-5",
+        "imae-5": {
+            "domainOfCare": "ECDS",
+            "title": "Combination 2: Meningococcal, Tdap, HPV",
+            "displayLabel": "IMA-E: Combination 2",
+            "measureType": "outcome",
+            "weight": 3,
+            "hasSubMeasures": false
+        }
+    }
+]

@@ -42,6 +42,11 @@ const findPredictions = () => {
   return collection.find({}).toArray();
 };
 
+const findInfo = () => {
+  const collection = db.collection('hedis_info');
+  return collection.find({}).toArray();
+};
+
 const insertMeasure = async (measure) => {
   const collection = db.collection('measures');
   try {
@@ -80,7 +85,7 @@ const insertMeasureResults = (results) => {
         resultObject.subScores[j].date = resultObject.date;
       }
     }
-    
+
     try {
       collection.findOneAndReplace(
         { _id: resultObject._id },
@@ -108,9 +113,10 @@ const insertSimulatedHedis = (simulated_data) => {
 // create collection for predictions
 const insertPredictions = (predictions) => {
   const collection = db.collection('model_predictions');
+  const predictionInsert = predictions;
   try {
-    predictions._id = predictions.measure;
-    return collection.findOneAndReplace({ measure: predictions.measure }, predictions, {
+    predictionInsert._id = predictionInsert.measure;
+    return collection.findOneAndReplace({ measure: predictionInsert.measure }, predictionInsert, {
       upsert: true,
     });
   } catch (e) {
@@ -118,6 +124,17 @@ const insertPredictions = (predictions) => {
   }
 };
 
+// create collection for hedis info
+const insertInfo = (info) => {
+  const collection = db.collection('hedis_info');
+  try {
+    return collection.insertMany(info, {
+      upsert: true,
+    });
+  } catch (e) {
+    logger.error(e);
+  }
+};
 
 module.exports = {
   init,
@@ -126,9 +143,11 @@ module.exports = {
   findMeasureResults,
   findSimulatedHedis,
   findPredictions,
+  findInfo,
   insertMeasure,
   insertMeasures,
   insertMeasureResults,
   insertSimulatedHedis,
   insertPredictions,
+  insertInfo,
 };
