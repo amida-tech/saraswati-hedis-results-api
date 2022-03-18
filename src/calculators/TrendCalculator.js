@@ -29,12 +29,24 @@ const calculateTrend = (resultData, predictionData, days) => {
   for (let i = 0; i < measureList.length; i += 1) {
     const measure = measureList[i];
     const result = resultMap.get(measure);
-    let changePercent = 0;
+    let percentChange = 0;
     if (result.base !== undefined) {
-      changePercent = Math.round(
+      percentChange = Math.round(
         ((result.latest.value - result.base.value) / result.base.value) * 100,
       );
     }
+
+    let subScoreTrends = [];
+    if (measure !== 'composite') {
+      for (let k = 0; k < result.latest.subScores.length; k += 1) {
+        const latestSubScore = result.latest.subScores[k];
+        const baseSubScore = result.base.subScores[k];
+        const subScoreChange = Math.round(
+          ((latestSubScore.value - baseSubScore.value) / result.base.value) * 100);
+        subScoreTrends.push({ measure: latestSubScore.measure, percentChange: subScoreChange });
+      }
+    }
+
     let futurePrediction = {};
     for (let j = 0; j < predictionData.length; j += 1) {
       if (predictionData[j].measure === measure && predictionData[j].Prophet_Predictions) {
@@ -43,7 +55,7 @@ const calculateTrend = (resultData, predictionData, days) => {
       }
     }
 
-    finalResult.push({ measure, changePercent, futurePrediction });
+    finalResult.push({ measure, percentChange, subScoreTrends, futurePrediction });
   }
 
   return finalResult;
