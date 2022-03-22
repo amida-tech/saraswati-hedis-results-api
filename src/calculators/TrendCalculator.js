@@ -48,7 +48,7 @@ const calculateTrend = (resultData, predictionData, days) => {
             ((latestSubScore.value - baseSubScore.value) / result.base.value) * 100);
           subScoreTrends.push({ measure: latestSubScore.measure, percentChange: subScoreChange });
         } else {
-          subScoreTrends.push({ measure: latestSubScore.measure, percentChange: 'NA' });
+          subScoreTrends.push({ measure: latestSubScore.measure });
         }
       }
     }
@@ -61,7 +61,12 @@ const calculateTrend = (resultData, predictionData, days) => {
       }
     }
 
-    finalResult.push({ measure, percentChange, subScoreTrends, futurePrediction });
+    if (percentChange !== 'NA') {
+      finalResult.push({ measure, percentChange, subScoreTrends, futurePrediction });
+    } else {
+      finalResult.push({ measure, subScoreTrends, futurePrediction });
+    }
+    
   }
 
   return finalResult;
