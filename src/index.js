@@ -1,12 +1,12 @@
 const config = require('./config/config');
 const winstonInstance = require('./config/winston');
 const app = require('./config/express.js');
-const { init, findMeasures, findMeasureResults, insertMeasureResults } = require('./config/dao');
+const dao = require('./config/dao');
 const { calculateMeasureStarRating } = require('./calculators/StarRatingCalculator');
 const { calcLatestNumDen } = require('./calculators/NumDenCalculator');
 const consumer = require('./consumer/consumer');
 
-init().then(() => {
+dao.init().then(() => {
   consumer.kafkaRunner();
   app.listen(config.port, () => {
     winstonInstance.info(`server started on port ${config.port} (${config.env})`, {
@@ -18,7 +18,7 @@ init().then(() => {
 });
 
 async function calculateData() {
-  const measureResults = await findMeasureResults();
+  const measureResults = await dao.findMeasureResults();
   const sortedList = measureResults.sort((a, b) => b.date - a.date);
   let latestDate = sortedList[0].date;
 
@@ -30,7 +30,7 @@ async function calculateData() {
   if(latestDate.getTime() >= currentDate.getTime()) {
     return;
   }
-  const patientResults = await findMeasures();
+  const patientResults = await dao.findMeasures();
   const hedisResults = calcLatestNumDen(patientResults);
   const fullResultList = [];
   while (latestDate.getTime() < currentDate.getTime()) {
@@ -46,7 +46,7 @@ async function calculateData() {
     });
   }
 
-  insertMeasureResults(fullResultList);
+  dao.insertMeasureResults(fullResultList);
   console.log(fullResultList);
 }
 
