@@ -1,21 +1,10 @@
+const cron = require('node-cron');
 const config = require('./config/config');
 const winstonInstance = require('./config/winston');
 const app = require('./config/express.js');
 const dao = require('./config/dao');
-const { calculateMeasureStarRating } = require('./calculators/StarRatingCalculator');
 const { calcLatestNumDen } = require('./calculators/NumDenCalculator');
 const consumer = require('./consumer/consumer');
-
-dao.init().then(() => {
-  consumer.kafkaRunner();
-  app.listen(config.port, () => {
-    winstonInstance.info(`server started on port ${config.port} (${config.env})`, {
-      port: config.port,
-      node_env: config.env,
-    });
-    calculateData();
-  });
-});
 
 async function calculateData() {
   const measureResults = await dao.findMeasureResults();
@@ -27,7 +16,7 @@ async function calculateData() {
   currentDate.setMinutes(0);
   currentDate.setSeconds(0);
   currentDate.setMilliseconds(0);
-  if(latestDate.getTime() >= currentDate.getTime()) {
+  if (latestDate.getTime() >= currentDate.getTime()) {
     return;
   }
   const patientResults = await dao.findMeasures();
@@ -47,7 +36,20 @@ async function calculateData() {
   }
 
   dao.insertMeasureResults(fullResultList);
-  console.log(fullResultList);
 }
+
+dao.init().then(() => {
+  consumer.kafkaRunner();
+  app.listen(config.port, () => {
+    winstonInstance.info(`server started on port ${config.port} (${config.env})`, {
+      port: config.port,
+      node_env: config.env,
+    });
+    calculateData();
+    cron.schedule('0 * * * *', () => {
+      calculateData();
+    });
+  });
+});
 
 module.exports = app;
