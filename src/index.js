@@ -8,6 +8,9 @@ const consumer = require('./consumer/consumer');
 
 async function calculateData() {
   const measureResults = await dao.findMeasureResults();
+  if (measureResults.length === 0) {
+    return;
+  }
   const sortedList = measureResults.sort((a, b) => b.date - a.date);
   let latestDate = sortedList[0].date;
 
