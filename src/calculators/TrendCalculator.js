@@ -38,14 +38,15 @@ const calculateTrend = (resultData, predictionData, days) => {
       percentChange = 'NA';
     }
 
-    let subScoreTrends = [];
+    const subScoreTrends = [];
     if (measure !== 'composite') {
       for (let k = 0; k < result.latest.subScores.length; k += 1) {
         const latestSubScore = result.latest.subScores[k];
         if (result.base !== undefined) {
           const baseSubScore = result.base.subScores[k];
           const subScoreChange = Math.round(
-            ((latestSubScore.value - baseSubScore.value) / result.base.value) * 100);
+            ((latestSubScore.value - baseSubScore.value) / result.base.value) * 100,
+          );
           subScoreTrends.push({ measure: latestSubScore.measure, percentChange: subScoreChange });
         } else {
           subScoreTrends.push({ measure: latestSubScore.measure });
@@ -62,11 +63,12 @@ const calculateTrend = (resultData, predictionData, days) => {
     }
 
     if (percentChange !== 'NA') {
-      finalResult.push({ measure, percentChange, subScoreTrends, futurePrediction });
+      finalResult.push({
+        measure, percentChange, subScoreTrends, futurePrediction,
+      });
     } else {
       finalResult.push({ measure, subScoreTrends, futurePrediction });
     }
-    
   }
 
   return finalResult;
