@@ -14,15 +14,19 @@ async function calculateData() {
   currentDate.setMinutes(0);
   currentDate.setSeconds(0);
   currentDate.setMilliseconds(0);
-  
+
   let latestDate;
   // If there are records, use the latest one to get the date.
   // If there are no records, set the latest date as yesterday to calculate today
   if (measureResults.length !== 0) {
     const sortedList = measureResults.sort((a, b) => b.date - a.date);
     latestDate = sortedList[0].date;
+    // If the latestDate is today, push this back one day to force a recalculation of today
+    if (latestDate.getTime() === currentDate.getTime()) {
+      latestDate = new Date(currentDate.getTime() - (24 * 60 * 60 * 1000));
+    }
   } else {
-    latestDate = new Date(latestDate.getTime() - (24 * 60 * 60 * 1000));
+    latestDate = new Date(currentDate.getTime() - (24 * 60 * 60 * 1000));
   }
 
   const patientResults = await dao.findMeasures();
