@@ -1,6 +1,7 @@
 const { calculateCompositeStarRating, calculateMeasureStarRating } = require('./StarRatingCalculator');
 
-function setValue(array, valueName, fieldName, patient) {
+function setValue(valueArray, valueName, fieldName, patient) {
+  const array = valueArray;
   let numCount = 0;
   // Get which number this is (Numerator 3, Denominator 1, etc...)
   if (fieldName !== valueName) {
@@ -9,10 +10,19 @@ function setValue(array, valueName, fieldName, patient) {
 
   // Get field value, either convert boolean to int or get size of array
   const valueField = patient[fieldName];
-  const value = Array.isArray(valueField) ? valueField.length : (valueField === true ? 1 : 0);
+  let value = 0;
+  if (Array.isArray(valueField)) {
+    value = valueField.length;
+  } else {
+    value = valueField === true ? 1 : 0;
+  }
 
   // Add value to existing value or create initial value
-  array[numCount] === undefined ? (array[numCount] = value) : (array[numCount] += value);
+  if (array[numCount] === undefined) {
+    array[numCount] = value;
+  } else {
+    array[numCount] += value;
+  }
 }
 
 function calculateMeasureScore(subScoreArray, measurementType, date) {
@@ -45,11 +55,26 @@ function calculateMeasureScore(subScoreArray, measurementType, date) {
   };
 }
 
+function calculateSubScore(resultHolder, measurementType, date, index) {
+  const numerator = resultHolder.numeratorValues[index];
+  const denominator = resultHolder.denominatorValues[index];
+  const percentValue = denominator === 0 ? 0 : numerator / denominator;
+  return {
+    measure: `${measurementType}-${index + 1}`,
+    date,
+    value: percentValue * 100,
+    denominator,
+    numerator,
+    initialPopulation: resultHolder.initialPopulationValues[index],
+    exclusions: resultHolder.exclusionValues[index],
+  };
+}
+
 const calcLatestNumDen = (resultList) => {
   const resultMap = new Map();
   const measurementTypes = [];
 
-  for (const patient of resultList) {
+  resultList.forEach((patient) => {
     const { measurementType } = patient;
     if (!measurementTypes.includes(measurementType)) {
       measurementTypes.push(measurementType);
@@ -68,7 +93,7 @@ const calcLatestNumDen = (resultList) => {
     const resultHolder = resultMap.get(measurementType);
 
     // Save values for each field name, putting subscores into their respective index
-    for (const patientField in patientData) {
+    Object.keys(patientData).forEach((patientField) => {
       if (patientField.startsWith('Numerator')) {
         setValue(resultHolder.numeratorValues, 'Numerator', patientField, patientData);
       } else if (patientField.startsWith('Denominator')) {
@@ -78,8 +103,8 @@ const calcLatestNumDen = (resultList) => {
       } else if (patientField.startsWith('Exclusions')) {
         setValue(resultHolder.exclusionValues, 'Exclusions', patientField, patientData);
       }
-    }
-  }
+    });
+  });
 
   // To store final results
   const valueArray = [];
@@ -93,7 +118,7 @@ const calcLatestNumDen = (resultList) => {
     const subScoreArray = [];
     // Get result holder for the measurement type
     const measurementType = measurementTypes[k];
-    resultHolder = resultMap.get(measurementType);
+    const resultHolder = resultMap.get(measurementType);
 
     const measureSize = resultHolder.numeratorValues.length;
 
@@ -113,7 +138,7 @@ const calcLatestNumDen = (resultList) => {
   let denominator = 0;
   let initialPopulation = 0;
   let exclusions = 0;
-  for (const result of valueArray) {
+  valueArray.forEach((result) => {
     compositeValue += result.value;
     if (result.starRating >= 0) {
       starValueCount += 1;
@@ -123,7 +148,7 @@ const calcLatestNumDen = (resultList) => {
     denominator += result.denominator;
     initialPopulation += result.initialPopulation;
     exclusions += result.exclusions;
-  }
+  });
   compositeStarRating = starValueCount === 0 ? 0 : compositeStarRating / starValueCount;
   compositeValue /= valueArray.length;
 
@@ -140,21 +165,6 @@ const calcLatestNumDen = (resultList) => {
 
   return valueArray;
 };
-
-function calculateSubScore(resultHolder, measurementType, date, index) {
-  const numerator = resultHolder.numeratorValues[index];
-  const denominator = resultHolder.denominatorValues[index];
-  const percentValue = denominator === 0 ? 0 : numerator / denominator;
-  return {
-    measure: `${measurementType}-${index + 1}`,
-    date,
-    value: percentValue * 100,
-    denominator,
-    numerator,
-    initialPopulation: resultHolder.initialPopulationValues[index],
-    exclusions: resultHolder.exclusionValues[index],
-  };
-}
 
 module.exports = {
   calcLatestNumDen,
