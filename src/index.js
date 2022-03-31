@@ -50,14 +50,16 @@ async function calculateData() {
 }
 
 dao.init().then(() => {
-  consumer.kafkaRunner();
+  if (config.kafkaConfig.active) {
+    consumer.kafkaRunner();
+  }
   app.listen(config.port, () => {
     winstonInstance.info(`server started on port ${config.port} (${config.env})`, {
       port: config.port,
       node_env: config.env,
     });
     calculateData();
-    cron.schedule('0 * * * *', () => {
+    cron.schedule(config.calculationSchedule, () => {
       calculateData();
     });
   });
