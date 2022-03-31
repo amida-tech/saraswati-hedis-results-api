@@ -1,12 +1,7 @@
 /* eslint-env jest */
 const fs = require('fs');
 const path = require('path');
-const {
-  initTest, findMeasures, findMeasureResults, findPredictions,
-  insertMeasure, insertMeasures, insertMeasureResults, insertPredictions,
-  findInfo,
-  insertInfo,
-} = require('../../src/config/dao');
+const dao = require('../../src/config/dao');
 
 const data = JSON.parse(fs.readFileSync(`${path.resolve()}/test/resources/bulk-data.json`));
 const drreData = JSON.parse(fs.readFileSync(`${path.resolve()}/test/resources/drre-data.json`));
@@ -36,33 +31,33 @@ describe('## db.js', () => {
 
   beforeAll(async () => {
     db = { collection: jest.fn(() => collection) };
-    initTest(db);
+    dao.initTest(db);
   });
 
   describe('Test getMeasures function', () => {
     test('Should not throw an error', async () => {
-      const test = findMeasures();
+      const test = dao.findMeasures();
       expect(test).toBeTruthy();
     });
   });
 
   describe('Test getMeasureResults function', () => {
     test('Should not throw an error', async () => {
-      const test = findMeasureResults();
+      const test = dao.findMeasureResults();
       expect(test).toBeTruthy();
     });
   });
 
   describe('Test getPredictions function', () => {
     test('Should not throw an error', async () => {
-      const test = findPredictions();
+      const test = dao.findPredictions();
       expect(test).toBeTruthy();
     });
   });
 
   describe('Test findInfo function', () => {
     test('Should not throw an error', async () => {
-      const test = findInfo();
+      const test = dao.findInfo();
       expect(test).toBeTruthy();
     });
   });
@@ -70,7 +65,7 @@ describe('## db.js', () => {
   describe('Test insertMeasure function', () => {
     test('Should not throw an error', async (done) => {
       try {
-        const test = insertMeasure(drreData);
+        const test = dao.insertMeasure(drreData);
         expect(test).toBeTruthy();
       } finally {
         done();
@@ -81,7 +76,7 @@ describe('## db.js', () => {
   describe('Test insertMeasures function', () => {
     test('Should not throw an error', async (done) => {
       try {
-        const test = insertMeasures(data);
+        const test = dao.insertMeasures(data);
         expect(test).toBeTruthy();
       } finally {
         done();
@@ -103,14 +98,14 @@ describe('## db.js', () => {
 
   describe('Test insertPredictions function', () => {
     test('Should not throw an error', async () => {
-      const test = insertPredictions(data);
+      const test = dao.insertPredictions(data);
       expect(test).toBeTruthy();
     });
   });
 
   describe('Test insertInfo function', () => {
     test('Should not throw an error', async () => {
-      const test = insertInfo(infoData);
+      const test = dao.insertInfo(infoData);
       expect(test).toBeTruthy();
     });
   });
