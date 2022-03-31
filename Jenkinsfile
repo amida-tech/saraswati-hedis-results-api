@@ -39,7 +39,7 @@ spec:
     stages {
         stage('Install Dependencies') {
             steps {
-                echo 'Installing..'
+                echo 'Installing... ' + env.GIT_BRANCH
                 container('node') {
                     sh 'yarn'
                 }
