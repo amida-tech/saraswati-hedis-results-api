@@ -10,7 +10,7 @@ metadata:
 spec:
   containers:
   - name: node
-    image: node:13.10.1-alpine3.11
+    image: node:16.14.2-alpine3.15
     command:
     - cat
     tty: true
@@ -39,7 +39,7 @@ spec:
     stages {
         stage('Jenkins Install Dependencies') {
             steps {
-                echo 'Installing..'
+                echo 'Installing... ' + env.GIT_BRANCH
                 container('node') {
                     sh 'yarn'
                 }
@@ -68,8 +68,8 @@ spec:
             }
         }
         stage('Build Production with Kaniko') {
-            when {
-                expression {env.GIT_BRANCH == 'master'} 
+            when { 
+                expression {env.GIT_BRANCH == 'origin/master'} 
             }
             steps {
                 container(name: 'kaniko', shell: '/busybox/sh') {
@@ -81,7 +81,7 @@ spec:
         }
         stage('Build Develop with Kaniko') {
             when { 
-                expression {env.GIT_BRANCH == 'develop'} 
+                expression {env.GIT_BRANCH == 'origin/develop'} 
             }
             steps {
                 container(name: 'kaniko', shell: '/busybox/sh') {
