@@ -2,9 +2,8 @@
 const fs = require('fs');
 const path = require('path');
 const {
-  initTest, findMeasures, findMeasureResults, findPredictions, findSimulatedHedis,
+  initTest, findMeasures, findMeasureResults, findPredictions,
   insertMeasure, insertMeasures, insertMeasureResults, insertPredictions,
-  insertSimulatedHedis,
   findInfo,
   insertInfo,
 } = require('../../src/config/dao');
@@ -61,13 +60,6 @@ describe('## db.js', () => {
     });
   });
 
-  describe('Test getSimulatedHedis function', () => {
-    test('Should not throw an error', async () => {
-      const test = findSimulatedHedis();
-      expect(test).toBeTruthy();
-    });
-  });
-
   describe('Test findInfo function', () => {
     test('Should not throw an error', async () => {
       const test = findInfo();
@@ -105,13 +97,6 @@ describe('## db.js', () => {
       } finally {
         done();
       }
-    });
-  });
-
-  describe('Test insertSimulatedHedis function', () => {
-    test('Should not throw an error', async () => {
-      const test = insertSimulatedHedis(data);
-      expect(test).toBeTruthy();
     });
   });
 

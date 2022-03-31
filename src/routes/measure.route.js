@@ -14,9 +14,6 @@ router.route('/bulk')
   .post(measureCtrl.postBulkMeasures);
 // .post(validate(paramValidation.createMeasureBulk), measureCtrl.createBulk);
 
-router.route('/calculate')
-  .post(measureCtrl.postCalculateAndStoreResults);
-
 router.route('/info')
   .get(measureCtrl.getInfo)
   .post(measureCtrl.postInfo);
@@ -30,13 +27,6 @@ router.route('/predictionData/:measure')
 
 router.route('/searchResults')
   .get(validate(paramValidation.searchMeasurements), measureCtrl.getMeasureResults);
-
-router.route('/simulated_hedis')
-  .get(measureCtrl.getHedis)
-  .post(measureCtrl.postSimulatedHedis);
-
-router.route('/starRating')
-  .get(validate(paramValidation.searchMeasurements), measureCtrl.getStarRating);
 
 router.route('/storeResults')
   .post(measureCtrl.postMeasureResults);

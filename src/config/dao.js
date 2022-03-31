@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 const { MongoClient } = require('mongodb');
 const { mongodb } = require('./config');
 const logger = require('./winston');
@@ -29,12 +30,8 @@ const findMeasureResults = (query) => {
     return collection.find(query).toArray();
   } catch (e) {
     logger.error(e);
+    return e;
   }
-};
-
-const findSimulatedHedis = () => {
-  const collection = db.collection('simulated_data');
-  return collection.find({}).toArray();
 };
 
 const findPredictions = () => {
@@ -57,7 +54,8 @@ const insertMeasure = async (measure) => {
       upsert: true,
     });
   } catch (e) {
-    console.log(e);
+    logger.error(e);
+    return e;
   }
 };
 
@@ -98,18 +96,6 @@ const insertMeasureResults = (results) => {
   }
 };
 
-// create collection for simulated hedis data
-const insertSimulatedHedis = (simulated_data) => {
-  const collection = db.collection('simulated_data');
-  try {
-    return collection.findOneAndReplace({ }, simulated_data, {
-      upsert: true,
-    });
-  } catch (e) {
-    logger.error(e);
-  }
-};
-
 // create collection for predictions
 const insertPredictions = (predictions) => {
   const collection = db.collection('model_predictions');
@@ -121,6 +107,7 @@ const insertPredictions = (predictions) => {
     });
   } catch (e) {
     logger.error(e);
+    return e;
   }
 };
 
@@ -133,6 +120,7 @@ const insertInfo = (info) => {
     });
   } catch (e) {
     logger.error(e);
+    return e;
   }
 };
 
@@ -141,13 +129,11 @@ module.exports = {
   initTest,
   findMeasures,
   findMeasureResults,
-  findSimulatedHedis,
   findPredictions,
   findInfo,
   insertMeasure,
   insertMeasures,
   insertMeasureResults,
-  insertSimulatedHedis,
   insertPredictions,
   insertInfo,
 };
