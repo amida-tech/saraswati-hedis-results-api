@@ -37,11 +37,33 @@ spec:
     }
 
     stages {
-        stage('Install Dependencies') {
+        stage('Jenkins Install Dependencies') {
             steps {
                 echo 'Installing... ' + env.GIT_BRANCH
                 container('node') {
                     sh 'yarn'
+                }
+            }
+        }
+        stage('Jenkins Test') {
+            steps {
+                echo 'Testing..'
+                container('node') {
+                    sh 'yarn test'
+                    publishCoverage(
+                        failUnstable: true,
+                        failNoReports: true,
+                        skipPublishingChecks: true,
+                        adapters: [
+                            istanbulCoberturaAdapter(
+                                path: 'coverage/cobertura-coverage.xml', 
+                                thresholds: [
+                                    [thresholdTarget: 'Line', unhealthyThreshold: 90.0, unstableThreshold: 85.0]
+                                ]
+                            )
+                        ], 
+                        sourceFileResolver: sourceFiles('NEVER_STORE')
+                    )
                 }
             }
         }
