@@ -8,11 +8,9 @@ const router = express.Router(); // eslint-disable-line new-cap
 router.route('/')
   .get(measureCtrl.getMeasures)
   .post(measureCtrl.postMeasure);
-// .post(validate(paramValidation.createMeasure), measureCtrl.create);
 
 router.route('/bulk')
   .post(measureCtrl.postBulkMeasures);
-// .post(validate(paramValidation.createMeasureBulk), measureCtrl.createBulk);
 
 router.route('/info')
   .get(measureCtrl.getInfo)
