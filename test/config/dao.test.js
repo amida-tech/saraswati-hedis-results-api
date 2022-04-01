@@ -4,6 +4,7 @@ const path = require('path');
 const dao = require('../../src/config/dao');
 
 const data = JSON.parse(fs.readFileSync(`${path.resolve()}/test/resources/bulk-data.json`));
+const resultData = JSON.parse(fs.readFileSync(`${path.resolve()}/test/result-data/measure-results.json`));
 const drreData = JSON.parse(fs.readFileSync(`${path.resolve()}/test/resources/drre-data.json`));
 const infoData = JSON.parse(fs.readFileSync(`${path.resolve()}/test/result-data/hedis-info.json`));
 
@@ -36,8 +37,8 @@ describe('## db.js', () => {
 
   describe('Test getMeasures function', () => {
     test('Should not throw an error', async () => {
-      const test = dao.findMeasures();
-      expect(test).toBeTruthy();
+      const success = dao.findMeasures();
+      expect(success).toBeTruthy();
     });
   });
 
@@ -85,16 +86,16 @@ describe('## db.js', () => {
   });
 
   // TODO: Fix this so it doesn't return a bad promise.
-  // describe('Test insertMeasureResults function', () => {
-  //   test('Should not throw an error', async (done) => {
-  //     try {
-  //       const test = insertMeasureResults(data);
-  //       expect(test).toBeTruthy();
-  //     } finally {
-  //       done();
-  //     }
-  //   });
-  // });
+  describe('Test insertMeasureResults function', () => {
+    test('Should not throw an error', async (done) => {
+      try {
+        const test = dao.insertMeasureResults(resultData);
+        expect(test).toBeTruthy();
+      } finally {
+        done();
+      }
+    });
+  });
 
   describe('Test insertPredictions function', () => {
     test('Should not throw an error', async () => {

@@ -92,8 +92,10 @@ const insertMeasureResults = (results) => {
       );
     } catch (e) {
       logger.error(e);
+      return false;
     }
   }
+  return true;
 };
 
 // create collection for predictions
