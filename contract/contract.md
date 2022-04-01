@@ -11,7 +11,7 @@ Restful API
     Returns 200 if successful
 
   GET /measures
-    Returns array of all measures in `measures` colleection
+    Returns array of all measures in `measures` collection
 
   POST /measures
     Body: Single JSON object of patient data
