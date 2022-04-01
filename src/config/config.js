@@ -28,6 +28,10 @@ const envVarsSchema = Joi.object({
     .default('broker:29092'),
   KAFKA_QUEUE: Joi.string()
     .default('hedis-measures'),
+  KAFKA_ACTIVE: Joi.boolean()
+    .default(true),
+  CALCULATION_SCHEDULE: Joi.string()
+    .default('0 * * * *'),
 }).unknown();
 
 const { error, value: envVars } = envVarsSchema.validate(process.env);
@@ -50,7 +54,9 @@ const config = {
   kafkaConfig: {
     brokers: envVars.KAFKA_BROKERS.replace(/[["'\]]/g, '').split(arrayDelimiter),
     queue: envVars.KAFKA_QUEUE,
+    active: envVars.KAFKA_ACTIVE,
   },
+  calculationSchedule: envVars.CALCULATION_SCHEDULE,
 };
 
 module.exports = config;
