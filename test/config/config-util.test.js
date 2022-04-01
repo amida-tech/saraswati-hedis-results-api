@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 const { getDelimiter } = require('../../src/config/config-util');
 
 describe('## config-util.js', () => {

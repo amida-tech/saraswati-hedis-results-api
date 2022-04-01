@@ -1,15 +1,10 @@
 /* eslint-env jest */
 const fs = require('fs');
 const path = require('path');
-const {
-  initTest, findMeasures, findMeasureResults, findPredictions, findSimulatedHedis,
-  insertMeasure, insertMeasures, insertMeasureResults, insertPredictions,
-  insertSimulatedHedis,
-  findInfo,
-  insertInfo,
-} = require('../../src/config/dao');
+const dao = require('../../src/config/dao');
 
 const data = JSON.parse(fs.readFileSync(`${path.resolve()}/test/resources/bulk-data.json`));
+const resultData = JSON.parse(fs.readFileSync(`${path.resolve()}/test/result-data/measure-results.json`));
 const drreData = JSON.parse(fs.readFileSync(`${path.resolve()}/test/resources/drre-data.json`));
 const infoData = JSON.parse(fs.readFileSync(`${path.resolve()}/test/result-data/hedis-info.json`));
 
@@ -37,40 +32,33 @@ describe('## db.js', () => {
 
   beforeAll(async () => {
     db = { collection: jest.fn(() => collection) };
-    initTest(db);
+    dao.initTest(db);
   });
 
   describe('Test getMeasures function', () => {
     test('Should not throw an error', async () => {
-      const test = findMeasures();
-      expect(test).toBeTruthy();
+      const success = dao.findMeasures();
+      expect(success).toBeTruthy();
     });
   });
 
   describe('Test getMeasureResults function', () => {
     test('Should not throw an error', async () => {
-      const test = findMeasureResults();
+      const test = dao.findMeasureResults();
       expect(test).toBeTruthy();
     });
   });
 
   describe('Test getPredictions function', () => {
     test('Should not throw an error', async () => {
-      const test = findPredictions();
-      expect(test).toBeTruthy();
-    });
-  });
-
-  describe('Test getSimulatedHedis function', () => {
-    test('Should not throw an error', async () => {
-      const test = findSimulatedHedis();
+      const test = dao.findPredictions();
       expect(test).toBeTruthy();
     });
   });
 
   describe('Test findInfo function', () => {
     test('Should not throw an error', async () => {
-      const test = findInfo();
+      const test = dao.findInfo();
       expect(test).toBeTruthy();
     });
   });
@@ -78,7 +66,7 @@ describe('## db.js', () => {
   describe('Test insertMeasure function', () => {
     test('Should not throw an error', async (done) => {
       try {
-        const test = insertMeasure(drreData);
+        const test = dao.insertMeasure(drreData);
         expect(test).toBeTruthy();
       } finally {
         done();
@@ -89,7 +77,7 @@ describe('## db.js', () => {
   describe('Test insertMeasures function', () => {
     test('Should not throw an error', async (done) => {
       try {
-        const test = insertMeasures(data);
+        const test = dao.insertMeasures(data);
         expect(test).toBeTruthy();
       } finally {
         done();
@@ -98,34 +86,27 @@ describe('## db.js', () => {
   });
 
   // TODO: Fix this so it doesn't return a bad promise.
-  // describe('Test insertMeasureResults function', () => {
-  //   test('Should not throw an error', async (done) => {
-  //     try {
-  //       const test = insertMeasureResults(data);
-  //       expect(test).toBeTruthy();
-  //     } finally {
-  //       done();
-  //     }
-  //   });
-  // });
-
-  describe('Test insertSimulatedHedis function', () => {
-    test('Should not throw an error', async () => {
-      const test = insertSimulatedHedis(data);
-      expect(test).toBeTruthy();
+  describe('Test insertMeasureResults function', () => {
+    test('Should not throw an error', async (done) => {
+      try {
+        const test = dao.insertMeasureResults(resultData);
+        expect(test).toBeTruthy();
+      } finally {
+        done();
+      }
     });
   });
 
   describe('Test insertPredictions function', () => {
     test('Should not throw an error', async () => {
-      const test = insertPredictions(data);
+      const test = dao.insertPredictions(data);
       expect(test).toBeTruthy();
     });
   });
 
   describe('Test insertInfo function', () => {
     test('Should not throw an error', async () => {
-      const test = insertInfo(infoData);
+      const test = dao.insertInfo(infoData);
       expect(test).toBeTruthy();
     });
   });

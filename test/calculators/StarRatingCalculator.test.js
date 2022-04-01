@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 const { calculateMeasureStarRating } = require('../../src/calculators/StarRatingCalculator');
 
 describe(' StarRatingCalculator test ', () => {

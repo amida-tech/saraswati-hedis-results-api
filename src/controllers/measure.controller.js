@@ -1,18 +1,7 @@
+/* eslint-disable no-underscore-dangle */
 const dao = require('../config/dao');
 
-const { calcLatestNumDen } = require('../calculators/NumDenCalculator');
 const { calculateTrend } = require('../calculators/TrendCalculator');
-const { calculateMeasureStarRating } = require('../calculators/StarRatingCalculator');
-const logger = require('../config/winston');
-
-const getHedis = async (req, res, next) => {
-  try {
-    const simulations = await dao.findSimulatedHedis();
-    return res.send(simulations);
-  } catch (e) {
-    return next(e);
-  }
-};
 
 const getMeasures = async (req, res, next) => {
   try {
@@ -34,20 +23,6 @@ const getMeasureResults = async (req, res, next) => {
   }
 };
 
-const getStarRating = async (req, res, next) => {
-  try {
-    const search = await dao.findMeasureResults(req.query);
-    let sortedSearch = search.sort((a, b) => a.date - b.date);
-    if (sortedSearch.length === 0) {
-      sortedSearch = [{ measure: req.query.measure }];
-    }
-    const starRatingData = calculateMeasureStarRating(sortedSearch[sortedSearch.length - 1]);
-    return res.send(starRatingData);
-  } catch (e) {
-    return next(e);
-  }
-};
-
 const getTrends = async (req, res, next) => {
   try {
     const results = await dao.findMeasureResults({});
@@ -61,6 +36,7 @@ const getTrends = async (req, res, next) => {
   }
 };
 
+// Access predictions made by time series
 const getPredictions = async (req, res, next) => {
   try {
     const predictions = await dao.findPredictions();
@@ -70,6 +46,7 @@ const getPredictions = async (req, res, next) => {
   }
 };
 
+// Data time series to make predictions with
 const getPredictionData = async (req, res, next) => {
   try {
     const search = await dao.findMeasureResults(req.params);
@@ -115,17 +92,6 @@ const postBulkMeasures = async (req, res, next) => {
   }
 };
 
-const postCalculateAndStoreResults = async (req, res, next) => {
-  try {
-    const search = await dao.findMeasures();
-    const valueArray = calcLatestNumDen(search);
-    dao.insertMeasureResults(valueArray);
-    return res.send(valueArray);
-  } catch (e) {
-    return next(e);
-  }
-};
-
 const postMeasure = async (req, res, next) => {
   try {
     const measure = await dao.insertMeasure(req.body);
@@ -140,15 +106,6 @@ const postMeasureResults = async (req, res, next) => {
     const jsonObject = req.body;
     dao.insertMeasureResults(jsonObject);
     return res.send(jsonObject);
-  } catch (e) {
-    return next(e);
-  }
-};
-
-const postSimulatedHedis = async (req, res, next) => {
-  try {
-    const simulations = await dao.insertSimulatedHedis(req.body);
-    return res.send(simulations);
   } catch (e) {
     return next(e);
   }
@@ -173,19 +130,15 @@ const postInfo = async (req, res, next) => {
 };
 
 module.exports = {
-  getHedis,
   getMeasures,
   getMeasureResults,
-  getStarRating,
   getTrends,
   getPredictions,
   getPredictionData,
   getInfo,
   postBulkMeasures,
-  postCalculateAndStoreResults,
   postMeasure,
   postMeasureResults,
-  postSimulatedHedis,
   postPredictions,
   postInfo,
 };

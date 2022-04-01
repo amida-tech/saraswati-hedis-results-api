@@ -4,19 +4,15 @@ const fs = require('fs');
 const path = require('path');
 
 const {
-  getHedis,
   getMeasures,
   getMeasureResults,
-  getStarRating,
   getTrends,
   getPredictions,
   getPredictionData,
   getInfo,
   postBulkMeasures,
-  postCalculateAndStoreResults,
   postMeasure,
   postMeasureResults,
-  postSimulatedHedis,
   postPredictions,
   postInfo,
 } = require('../../src/controllers/measure.controller');
@@ -31,14 +27,12 @@ jest.mock('../../src/config/dao', () => {
     ...originalModule,
     findMeasures: jest.fn(() => []),
     findMeasureResults: jest.fn(() => []),
-    findSimulatedHedis: jest.fn(() => []),
     findPredictions: jest.fn(() => {}),
     findInfo: jest.fn(() => []),
     insertMeasure: jest.fn(() => {}),
     insertMeasures: jest.fn(() => []),
     insertMeasureResults: jest.fn(() => []),
     insertPredictions: jest.fn(() => []),
-    insertSimulatedHedis: jest.fn(() => []),
     insertInfo: jest.fn(() => {}),
   };
 });
@@ -60,14 +54,6 @@ jest.mock('../../src/calculators/TrendCalculator', () => {
 });
 
 describe('## measure.controller.js', () => {
-  describe('Test getHedis function', () => {
-    it('Should call response.send', async () => {
-      const response = { send: jest.fn().mockReturnValue(Promise.resolve()) };
-      await getHedis({}, response, jest.fn());
-      expect(response.send).toHaveBeenCalled();
-    });
-  });
-
   describe('Test getMeasures function', () => {
     it('Should call response.send', async () => {
       const response = { send: jest.fn().mockReturnValue(Promise.resolve()) };
@@ -80,14 +66,6 @@ describe('## measure.controller.js', () => {
     it('Should call response.send', async () => {
       const response = { send: jest.fn().mockReturnValue(Promise.resolve()) };
       await getMeasureResults({ query: queryOrParams }, response, jest.fn());
-      expect(response.send).toHaveBeenCalled();
-    });
-  });
-
-  describe('Test getStarRating', () => {
-    it('Should call response.send', async () => {
-      const response = { send: jest.fn().mockReturnValue(Promise.resolve()) };
-      await getStarRating({ query: queryOrParams }, response, jest.fn());
       expect(response.send).toHaveBeenCalled();
     });
   });
@@ -132,14 +110,6 @@ describe('## measure.controller.js', () => {
     });
   });
 
-  describe('Test postCalculateAndStoreResults function', () => {
-    it('Should call response.send', async () => {
-      const response = { send: jest.fn().mockReturnValue(Promise.resolve()) };
-      await postCalculateAndStoreResults({}, response, jest.fn());
-      expect(response.send).toHaveBeenCalled();
-    });
-  });
-
   describe('Test postMeasure function', () => {
     it('Should call response.send', async () => {
       const response = { send: jest.fn().mockReturnValue(Promise.resolve()) };
@@ -152,14 +122,6 @@ describe('## measure.controller.js', () => {
     it('Should call response.send', async () => {
       const response = { send: jest.fn().mockReturnValue(Promise.resolve()) };
       await postMeasureResults({ body: data }, response, jest.fn());
-      expect(response.send).toHaveBeenCalled();
-    });
-  });
-
-  describe('Test postSimulatedHedis', () => {
-    it('Should call response.send', async () => {
-      const response = { send: jest.fn().mockReturnValue(Promise.resolve()) };
-      await postSimulatedHedis({ body: data }, response, jest.fn());
       expect(response.send).toHaveBeenCalled();
     });
   });
