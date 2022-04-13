@@ -14,6 +14,7 @@ Or, run `docker pull mongo` and then `docker run -d --name=mongo --network cp-al
 8. You can search for individual results using any combination of the parameters for `GET localhost:4000/api/v1/measures/search?measurementType=<type>&memberId=<id>`
 9. To add the measure results, copy the JSON from `test/result-data/measure-results.json` place in the body for `POST http://localhost:4000/api/v1/measures/storeResults`
 10. After measure results are created predicition data can be created through `saraswati-time-series` with `GET http://localhost:5050/get_predictions/<measure>`
+11. Don't forget to push metadata to the info endpoint. Go to `test/test-data/hedis-info.json` for the body and `POST http://localhost:4000/api/v1/measures/info`
 
 ## Red Panda or Kafka
 Due to recent changes, you need to run this event streaming.
