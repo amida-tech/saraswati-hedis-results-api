@@ -34,15 +34,18 @@ async function calculateData() {
   const fullResultList = [];
   // Store results for each day until it's caught up to today
   while (latestDate.getTime() < currentDate.getTime()) {
-    latestDate = new Date(latestDate.getTime() + (24 * 60 * 60 * 1000));
+    const newLatestDate = new Date(latestDate.getTime() + (24 * 60 * 60 * 1000));
     hedisResults.forEach((result) => {
-      result.date = latestDate;
-      if (result.subScores) {
-        result.subScores.forEach((subscore) => {
-          subscore.date = latestDate;
+      const newResult = { ...result };
+      newResult.date = newLatestDate;
+      if (newResult.subScores) {
+        newResult.subScores.forEach((subscore, index) => {
+          const newSubScore = { ...subscore };
+          newSubScore.date = newLatestDate;
+          newResult.subscore[index] = newSubScore;
         });
       }
-      fullResultList.push(JSON.parse(JSON.stringify(result)));
+      fullResultList.push(JSON.parse(JSON.stringify(newResult)));
     });
   }
 
@@ -58,10 +61,12 @@ dao.init().then(() => {
       port: config.port,
       node_env: config.env,
     });
-    calculateData();
-    cron.schedule(config.calculationSchedule, () => {
+    if (config.calculation.active) {
       calculateData();
-    });
+      cron.schedule(config.calculation.schedule, () => {
+        calculateData();
+      });
+    }
   });
 });
 

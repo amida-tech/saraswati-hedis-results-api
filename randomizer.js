@@ -41,7 +41,6 @@ async function generateData() {
     let currentCount = 0;
     const newResultList = [];
     while (latestDate < currentDate) {
-      console.log('Adding a daaaay!');
       const newDate = new Date(latestDate.getTime() + (24 * 60 * 60 * 1000));
       for (let i = 0; i < measureArray.length; i += 1) {
         measureArray[i].date = newDate;

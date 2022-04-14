@@ -30,6 +30,8 @@ const envVarsSchema = Joi.object({
     .default('hedis-measures'),
   KAFKA_ACTIVE: Joi.boolean()
     .default(true),
+  CALCULATION_ACTIVE: Joi.boolean()
+    .default(true),
   CALCULATION_SCHEDULE: Joi.string()
     .default('0 * * * *'),
 }).unknown();
@@ -56,7 +58,10 @@ const config = {
     queue: envVars.KAFKA_QUEUE,
     active: envVars.KAFKA_ACTIVE,
   },
-  calculationSchedule: envVars.CALCULATION_SCHEDULE,
+  calculation: {
+    active: envVars.CALCULATION_ACTIVE,
+    schedule: envVars.CALCULATION_SCHEDULE,
+  },
 };
 
 module.exports = config;
