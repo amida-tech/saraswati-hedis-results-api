@@ -1,0 +1,24 @@
+version: "3"
+services:
+    database:
+        hostname: mongodb
+        container_name: mongodb
+        image: mongo:4.4
+        ports:
+          - 27017:27017
+    api:
+        build: .
+        image: amidatech/saraswati-hedis-results-api
+        container_name: saraswati-hedis-results-api
+        environment:
+            DB_HOST: mongodb
+            DB_NAME: hedisdb
+            DB_PORT: 27017
+            KAFKA_BROKER: redpanda1:9092
+            KAFKA_QUEUE: hedis-measures
+        ports:
+        - "4000:4000"
+networks:
+  default:
+    external: true
+    name: cp-all-in-one-community_default

@@ -1,0 +1,12 @@
+/node_modules
+.env
+.vscode-server
+.yarnrc
+.gitconfig
+.bash_history
+.ssh
+/coverage
+.npm
+.config
+.cache
+.vscode

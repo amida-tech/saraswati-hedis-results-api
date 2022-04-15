@@ -1,0 +1,8 @@
+{
+    "files.exclude": {
+        "**/.bash_history": true,
+        "**/.gitconfig": true,
+        "**/.vscode-server": true,
+        "**/.yarnrc": true
+    }
+}
