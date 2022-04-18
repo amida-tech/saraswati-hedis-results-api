@@ -7,13 +7,10 @@ const {
   getMeasures,
   getMeasureResults,
   getTrends,
-  getPredictions,
-  getPredictionData,
   getInfo,
   postBulkMeasures,
   postMeasure,
   postMeasureResults,
-  postPredictions,
   postInfo,
 } = require('../../src/controllers/measure.controller');
 
@@ -32,7 +29,6 @@ jest.mock('../../src/config/dao', () => {
     insertMeasure: jest.fn(() => {}),
     insertMeasures: jest.fn(() => []),
     insertMeasureResults: jest.fn(() => []),
-    insertPredictions: jest.fn(() => []),
     insertInfo: jest.fn(() => {}),
   };
 });
@@ -78,22 +74,6 @@ describe('## measure.controller.js', () => {
     });
   });
 
-  describe('Test getPredictions', () => {
-    it('Should call response.send', async () => {
-      const response = { send: jest.fn().mockReturnValue(Promise.resolve()) };
-      await getPredictions({ }, response, jest.fn());
-      expect(response.send).toHaveBeenCalled();
-    });
-  });
-
-  describe('Test getPredictionData', () => {
-    it('Should call response.send', async () => {
-      const response = { send: jest.fn().mockReturnValue(Promise.resolve()) };
-      await getPredictionData({ params: queryOrParams }, response, jest.fn());
-      expect(response.send).toHaveBeenCalled();
-    });
-  });
-
   describe('Test getInfo', () => {
     it('Should call response.send', async () => {
       const response = { send: jest.fn().mockReturnValue(Promise.resolve()) };
@@ -122,14 +102,6 @@ describe('## measure.controller.js', () => {
     it('Should call response.send', async () => {
       const response = { send: jest.fn().mockReturnValue(Promise.resolve()) };
       await postMeasureResults({ body: data }, response, jest.fn());
-      expect(response.send).toHaveBeenCalled();
-    });
-  });
-
-  describe('Test postPredictions', () => {
-    it('Should call response.send', async () => {
-      const response = { send: jest.fn().mockReturnValue(Promise.resolve()) };
-      await postPredictions({ body: data }, response, jest.fn());
       expect(response.send).toHaveBeenCalled();
     });
   });
