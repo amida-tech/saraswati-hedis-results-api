@@ -82,6 +82,21 @@ const getInfo = async (req, res, next) => {
   }
 };
 
+const exportCsv = async (req, res, next) => {
+  try {
+    res.set({ 'Content-Disposition': 'attachment; filename=results-export.csv' });
+    let search = await dao.findMeasureResults(req.query);
+    search = search.sort((a, b) => a.date - b.date);
+    let csv = 'Measure,Date,Compliance Result,Star Rating,Numerator,Denominator,Initial Population,Exclusions';
+    search.forEach((result) => {
+      csv += `\n${result.measure},${result.date},${result.value},${result.starRating},${result.numerator},${result.denominator},${result.initialPopulation},${result.exclusions}`;
+    });
+    res.send(csv);
+  } catch (e) {
+    next(e);
+  }
+};
+
 const postBulkMeasures = async (req, res, next) => {
   try {
     const options = { ordered: true };
@@ -136,6 +151,7 @@ module.exports = {
   getPredictions,
   getPredictionData,
   getInfo,
+  exportCsv,
   postBulkMeasures,
   postMeasure,
   postMeasureResults,
