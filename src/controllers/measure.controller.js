@@ -85,11 +85,14 @@ const getInfo = async (req, res, next) => {
 const exportCsv = async (req, res, next) => {
   try {
     res.set({ 'Content-Disposition': 'attachment; filename=results-export.csv' });
-    let search = await dao.findMeasureResults(req.query);
-    search = search.sort((a, b) => a.date - b.date);
-    let csv = 'Measure,Date,Compliance Result,Star Rating,Numerator,Denominator,Initial Population,Exclusions';
+    const search = await dao.findMeasures();
+    let csv = 'Member ID, Measurement, Time Stamp';
     search.forEach((result) => {
-      csv += `\n${result.measure},${result.date},${result.value},${result.starRating},${result.numerator},${result.denominator},${result.initialPopulation},${result.exclusions}`;
+      const patientResult = result[result.memberId];
+      Object.entries(patientResult).forEach(([key, entry]) => {
+        console.log(key);
+      });
+      csv += `\n${result.memberId},${result.measurementType},${result.timeStamp},`;
     });
     res.send(csv);
   } catch (e) {
