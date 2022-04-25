@@ -168,4 +168,5 @@ const calcLatestNumDen = (resultList) => {
 
 module.exports = {
   calcLatestNumDen,
+  setValue,
 };
