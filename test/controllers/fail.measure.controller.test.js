@@ -28,9 +28,6 @@ jest.mock('../../src/config/dao', () => {
     findMeasureResults: jest.fn().mockImplementation(() => {
       throw new Error();
     }),
-    findPredictions: jest.fn().mockImplementation(() => {
-      throw new Error();
-    }),
     insertMeasure: jest.fn().mockImplementation(() => {
       throw new Error();
     }),
@@ -38,9 +35,6 @@ jest.mock('../../src/config/dao', () => {
       throw new Error();
     }),
     insertMeasureResults: jest.fn().mockImplementation(() => {
-      throw new Error();
-    }),
-    insertPredictions: jest.fn().mockImplementation(() => {
       throw new Error();
     }),
   };
