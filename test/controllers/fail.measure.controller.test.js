@@ -13,6 +13,7 @@ const {
   postMeasure,
   postMeasureResults,
   postPredictions,
+  exportCsv,
 } = require('../../src/controllers/measure.controller');
 
 const data = JSON.parse(fs.readFileSync(`${path.resolve()}/test/resources/bulk-data.json`));
@@ -85,6 +86,14 @@ describe('## measure.controller.js exceptions', () => {
     it('Should catch error and call next', async () => {
       const next = jest.fn();
       await getPredictionData({ body: data }, jest.fn(), next);
+      expect(next).toHaveBeenCalled();
+    });
+  });
+
+  describe('Test exportCsv', () => {
+    it('Should catch error and call next', async () => {
+      const next = jest.fn();
+      await exportCsv({ }, jest.fn(), next);
       expect(next).toHaveBeenCalled();
     });
   });
