@@ -7,12 +7,9 @@ const {
   getMeasures,
   getMeasureResults,
   getTrends,
-  getPredictions,
-  getPredictionData,
   postBulkMeasures,
   postMeasure,
   postMeasureResults,
-  postPredictions,
   exportCsv,
 } = require('../../src/controllers/measure.controller');
 
@@ -74,22 +71,6 @@ describe('## measure.controller.js exceptions', () => {
     });
   });
 
-  describe('Test getPredictions', () => {
-    it('Should catch error and call next', async () => {
-      const next = jest.fn();
-      await getPredictions({ }, jest.fn(), next);
-      expect(next).toHaveBeenCalled();
-    });
-  });
-
-  describe('Test getPredictionData', () => {
-    it('Should catch error and call next', async () => {
-      const next = jest.fn();
-      await getPredictionData({ body: data }, jest.fn(), next);
-      expect(next).toHaveBeenCalled();
-    });
-  });
-
   describe('Test exportCsv', () => {
     it('Should catch error and call next', async () => {
       const next = jest.fn();
@@ -118,14 +99,6 @@ describe('## measure.controller.js exceptions', () => {
     it('Should catch error and call next', async () => {
       const next = jest.fn();
       await postMeasureResults({ body: data }, jest.fn(), next);
-      expect(next).toHaveBeenCalled();
-    });
-  });
-
-  describe('Test postPredictions', () => {
-    it('Should catch error and call next', async () => {
-      const next = jest.fn();
-      await postPredictions({ body: data }, jest.fn(), next);
       expect(next).toHaveBeenCalled();
     });
   });

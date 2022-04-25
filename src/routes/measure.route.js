@@ -16,13 +16,6 @@ router.route('/info')
   .get(measureCtrl.getInfo)
   .post(measureCtrl.postInfo);
 
-router.route('/predictions')
-  .get(measureCtrl.getPredictions)
-  .post(measureCtrl.postPredictions);
-
-router.route('/predictionData/:measure')
-  .get(measureCtrl.getPredictionData);
-
 router.route('/searchResults')
   .get(validate(paramValidation.searchMeasurements), measureCtrl.getMeasureResults);
 
