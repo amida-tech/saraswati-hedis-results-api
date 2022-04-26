@@ -12,17 +12,20 @@ const {
   postMeasure,
   postMeasureResults,
   postInfo,
+  exportCsv,
 } = require('../../src/controllers/measure.controller');
 
 const data = JSON.parse(fs.readFileSync(`${path.resolve()}/test/resources/bulk-data.json`));
 const queryOrParams = { measure: 'drre' };
+
+const mockDrrePatientResults = JSON.parse(fs.readFileSync(`${path.resolve()}/test/seed-data/drre.json`));
 
 jest.mock('../../src/config/dao', () => {
   const originalModule = jest.requireActual('../../src/config/dao');
   return {
     __esModule: true,
     ...originalModule,
-    findMeasures: jest.fn(() => []),
+    findMeasures: jest.fn(() => mockDrrePatientResults),
     findMeasureResults: jest.fn(() => []),
     findPredictions: jest.fn(() => {}),
     findInfo: jest.fn(() => []),
@@ -78,6 +81,17 @@ describe('## measure.controller.js', () => {
     it('Should call response.send', async () => {
       const response = { send: jest.fn().mockReturnValue(Promise.resolve()) };
       await getInfo({ }, response, jest.fn());
+      expect(response.send).toHaveBeenCalled();
+    });
+  });
+
+  describe('Test exportCsv', () => {
+    it('Should call response.send', async () => {
+      const response = {
+        send: jest.fn().mockReturnValue(Promise.resolve()),
+        set: jest.fn().mockReturnValue({}),
+      };
+      await exportCsv({ }, response, jest.fn());
       expect(response.send).toHaveBeenCalled();
     });
   });

@@ -19,9 +19,9 @@ const initTest = (mockDb) => {
   db = mockDb;
 };
 
-const findMeasures = () => {
+const findMeasures = (query) => {
   const collection = db.collection('measures');
-  return collection.find({}).toArray();
+  return collection.find(query).toArray();
 };
 
 const findMeasureResults = (query) => {

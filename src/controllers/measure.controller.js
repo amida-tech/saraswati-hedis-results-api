@@ -2,11 +2,11 @@
 const dao = require('../config/dao');
 
 const { calculateTrend } = require('../calculators/TrendCalculator');
+const { setValue } = require('../calculators/NumDenCalculator');
 
 const getMeasures = async (req, res, next) => {
   try {
-    const measures = await dao.findMeasures();
-    // measures.forEach(measure => stringToDecimal(measure))
+    const measures = await dao.findMeasures({});
     return res.send(measures);
   } catch (e) {
     return next(e);
@@ -48,6 +48,37 @@ const getInfo = async (req, res, next) => {
     return res.send(fullInfo);
   } catch (e) {
     return next(e);
+  }
+};
+
+const exportCsv = async (req, res, next) => {
+  try {
+    res.set({ 'Content-Disposition': 'attachment; filename=results-export.csv' });
+    const search = await dao.findMeasures(req.query);
+    let csv = 'Member ID, Measurement, Time Stamp';
+    search.forEach((result) => {
+      const numeratorArray = [];
+      const denominatorArray = [];
+      const patientResult = result[result.memberId];
+      Object.keys(patientResult).forEach((fieldName) => {
+        if (fieldName.startsWith('Numerator')) {
+          setValue(numeratorArray, 'Numerator', fieldName, patientResult);
+        } else if (fieldName.startsWith('Denominator')) {
+          setValue(denominatorArray, 'Denominator', fieldName, patientResult);
+        }
+      });
+      let index = 0;
+      while (index < numeratorArray.length) {
+        if (numeratorArray[index] !== denominatorArray[index]) {
+          csv += `\n${result.memberId},${result.measurementType},${result.timeStamp},`;
+          break;
+        }
+        index += 1;
+      }
+    });
+    res.send(csv);
+  } catch (e) {
+    next(e);
   }
 };
 
@@ -94,6 +125,7 @@ module.exports = {
   getMeasureResults,
   getTrends,
   getInfo,
+  exportCsv,
   postBulkMeasures,
   postMeasure,
   postMeasureResults,

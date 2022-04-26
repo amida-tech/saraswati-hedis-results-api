@@ -25,4 +25,7 @@ router.route('/storeResults')
 router.route('/trends')
   .get(measureCtrl.getTrends);
 
+router.route('/exportCsv')
+  .get(measureCtrl.exportCsv);
+
 module.exports = router;

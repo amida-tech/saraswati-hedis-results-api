@@ -7,7 +7,7 @@ const { calcLatestNumDen } = require('./calculators/NumDenCalculator');
 const consumer = require('./consumer/consumer');
 
 async function calculateData() {
-  const measureResults = await dao.findMeasureResults();
+  let measureResults = await dao.findMeasureResults();
 
   const currentDate = new Date();
   currentDate.setHours(0);
@@ -19,8 +19,8 @@ async function calculateData() {
   // If there are records, use the latest one to get the date.
   // If there are no records, set the latest date as yesterday to calculate today
   if (measureResults.length !== 0) {
-    const sortedList = measureResults.sort((a, b) => b.date - a.date);
-    latestDate = sortedList[0].date;
+    measureResults = measureResults.sort((a, b) => b.date - a.date);
+    latestDate = measureResults[0].date;
     // If the latestDate is today, push this back one day to force a recalculation of today
     if (latestDate.getTime() === currentDate.getTime()) {
       latestDate = new Date(currentDate.getTime() - (24 * 60 * 60 * 1000));
@@ -42,11 +42,12 @@ async function calculateData() {
         newResult.subScores.forEach((subscore, index) => {
           const newSubScore = { ...subscore };
           newSubScore.date = newLatestDate;
-          newResult.subscore[index] = newSubScore;
+          newResult.subScores[index] = newSubScore;
         });
       }
       fullResultList.push(JSON.parse(JSON.stringify(newResult)));
     });
+    latestDate = new Date(newLatestDate);
   }
 
   dao.insertMeasureResults(fullResultList);

@@ -10,6 +10,7 @@ const {
   postBulkMeasures,
   postMeasure,
   postMeasureResults,
+  exportCsv,
 } = require('../../src/controllers/measure.controller');
 
 const data = JSON.parse(fs.readFileSync(`${path.resolve()}/test/resources/bulk-data.json`));
@@ -27,9 +28,6 @@ jest.mock('../../src/config/dao', () => {
     findMeasureResults: jest.fn().mockImplementation(() => {
       throw new Error();
     }),
-    findPredictions: jest.fn().mockImplementation(() => {
-      throw new Error();
-    }),
     insertMeasure: jest.fn().mockImplementation(() => {
       throw new Error();
     }),
@@ -37,9 +35,6 @@ jest.mock('../../src/config/dao', () => {
       throw new Error();
     }),
     insertMeasureResults: jest.fn().mockImplementation(() => {
-      throw new Error();
-    }),
-    insertPredictions: jest.fn().mockImplementation(() => {
       throw new Error();
     }),
   };
@@ -66,6 +61,14 @@ describe('## measure.controller.js exceptions', () => {
     it('Should catch error and call next', async () => {
       const next = jest.fn();
       await getTrends({ query: queryParams }, jest.fn(), next);
+      expect(next).toHaveBeenCalled();
+    });
+  });
+
+  describe('Test exportCsv', () => {
+    it('Should catch error and call next', async () => {
+      const next = jest.fn();
+      await exportCsv({ }, jest.fn(), next);
       expect(next).toHaveBeenCalled();
     });
   });
