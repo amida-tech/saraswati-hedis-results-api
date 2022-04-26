@@ -10,7 +10,6 @@ const {
 } = require('../../src/controllers/prediction.controller');
 
 const data = JSON.parse(fs.readFileSync(`${path.resolve()}/test/resources/bulk-data.json`));
-const queryParams = { measure: 'drre' };
 
 jest.mock('../../src/config/dao', () => {
   const originalModule = jest.requireActual('../../src/config/dao');
