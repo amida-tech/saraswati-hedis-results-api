@@ -28,8 +28,8 @@ describe(' Trend Calculation test ', () => {
   });
 
   test('Check calculations', () => {
-    expect(resultArray[0].percentChange).toEqual(-30);
-    expect(resultArray[2].percentChange).toEqual(-18);
-    expect(resultArray[4].percentChange).toEqual(23);
+    expect(resultArray[0].percentChange).toEqual(-21);
+    expect(resultArray[2].percentChange).toEqual(-8);
+    expect(resultArray[4].percentChange).toEqual(11);
   });
 });
