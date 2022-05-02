@@ -19,6 +19,7 @@ const data = JSON.parse(fs.readFileSync(`${path.resolve()}/test/resources/bulk-d
 const queryOrParams = { measure: 'drre' };
 
 const mockDrrePatientResults = JSON.parse(fs.readFileSync(`${path.resolve()}/test/seed-data/drre.json`));
+const mockMeasureInfo = JSON.parse(fs.readFileSync(`${path.resolve()}/test/result-data/hedis-info.json`));
 
 jest.mock('../../src/config/dao', () => {
   const originalModule = jest.requireActual('../../src/config/dao');
@@ -28,7 +29,7 @@ jest.mock('../../src/config/dao', () => {
     findMeasures: jest.fn(() => mockDrrePatientResults),
     findMeasureResults: jest.fn(() => []),
     findPredictions: jest.fn(() => {}),
-    findInfo: jest.fn(() => []),
+    findInfo: jest.fn(() => mockMeasureInfo),
     insertMeasure: jest.fn(() => {}),
     insertMeasures: jest.fn(() => []),
     insertMeasureResults: jest.fn(() => []),
@@ -91,7 +92,7 @@ describe('## measure.controller.js', () => {
         send: jest.fn().mockReturnValue(Promise.resolve()),
         set: jest.fn().mockReturnValue({}),
       };
-      await exportCsv({ }, response, jest.fn());
+      await exportCsv({ query: { measurementType: 'drre' } }, response, jest.fn());
       expect(response.send).toHaveBeenCalled();
     });
   });

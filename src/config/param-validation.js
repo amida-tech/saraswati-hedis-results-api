@@ -16,10 +16,17 @@ const measurementQuery = {
   }),
 };
 
+const exportCsv = {
+  query: Joi.object({
+    measurementType: Joi.string().required(),
+  }),
+};
+
 module.exports = {
   createMeasure: measure,
   createMeasureBulk: {
     body: Joi.array().items(measureBody),
   },
   searchMeasurements: measurementQuery,
+  exportCsv,
 };

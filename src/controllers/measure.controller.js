@@ -2,8 +2,8 @@
 const dao = require('../config/dao');
 
 const { calculateTrend } = require('../calculators/TrendCalculator');
-const { setValue } = require('../calculators/NumDenCalculator');
 const { createInfoObject } = require('../utilities/infoUtil');
+const { generateCsv } = require('../utilities/reportsUtil');
 
 const getMeasures = async (req, res, next) => {
   try {
@@ -40,7 +40,8 @@ const getTrends = async (req, res, next) => {
 // Compiles individual info records into one JSON object
 const getInfo = async (req, res, next) => {
   try {
-    const fullInfo = await createInfoObject(dao);
+    const infoList = await dao.findInfo();
+    const fullInfo = createInfoObject(infoList);
     return res.send(fullInfo);
   } catch (e) {
     return next(e);
@@ -50,54 +51,10 @@ const getInfo = async (req, res, next) => {
 const exportCsv = async (req, res, next) => {
   try {
     res.set({ 'Content-Disposition': 'attachment; filename=results-export.csv' });
-    const search = await dao.findMeasures(req.query);
-    const info = await createInfoObject(dao, req.query.measurementType);
-    let csv = 'Member ID,Measurement,Time Stamp';
-    if (Object.keys(info).length <= 2) {
-      const { displayLabel } = info[req.query.measurementType];
-      csv += `,${displayLabel} Denominator,${displayLabel} Numerator`;
-    } else {
-      Object.keys(info).forEach((fieldKey) => {
-        const { displayLabel } = info[fieldKey];
-        csv += `,${displayLabel} Denominator,${displayLabel} Numerator`;
-      });
-    }
-
-    search.forEach((result) => {
-      const numeratorArray = [];
-      const denominatorArray = [];
-      const patientResult = result[result.memberId];
-      Object.keys(patientResult).forEach((fieldName) => {
-        if (fieldName.startsWith('Numerator')) {
-          setValue(numeratorArray, 'Numerator', fieldName, patientResult);
-        } else if (fieldName.startsWith('Denominator')) {
-          setValue(denominatorArray, 'Denominator', fieldName, patientResult);
-        }
-      });
-      let numeratorTotal = 0;
-      numeratorArray.forEach((value) => {
-        numeratorTotal += value;
-      });
-      let denominatorTotal = 0;
-      denominatorArray.forEach((value) => {
-        denominatorTotal += value;
-      });
-      let recordToAdd = `\n${result.memberId},${result.measurementType},${result.timeStamp},${denominatorTotal},${numeratorTotal}`;
-      let addPatient = false;
-      let index = 0;
-      while (index < numeratorArray.length) {
-        if (numeratorArray.length > 1) {
-          recordToAdd += `,${denominatorArray[index]},${numeratorArray[index]}`;
-        }
-        if (numeratorArray[index] !== denominatorArray[index]) {
-          addPatient = true;
-        }
-        index += 1;
-      }
-      if (addPatient) {
-        csv += recordToAdd;
-      }
-    });
+    const patientResults = await dao.findMeasures(req.query);
+    const infoList = await dao.findInfo(req.query.measurementType);
+    const measureInfo = createInfoObject(infoList);
+    const csv = generateCsv(patientResults, measureInfo, req.query.measurementType);
     res.send(csv);
   } catch (e) {
     next(e);

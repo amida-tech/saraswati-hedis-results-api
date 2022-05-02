@@ -1,6 +1,5 @@
 /* eslint-disable no-underscore-dangle */
-const createInfoObject = async (dao, measure) => {
-  const infoList = await dao.findInfo(measure);
+const createInfoObject = (infoList) => {
   const fullInfo = {};
   for (let i = 0; i < infoList.length; i += 1) {
     const info = infoList[i];
