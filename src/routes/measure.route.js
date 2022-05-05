@@ -19,6 +19,9 @@ router.route('/info')
 router.route('/searchResults')
   .get(validate(paramValidation.searchMeasurements), measureCtrl.getMeasureResults);
 
+router.route('/dailyMeasureResults')
+  .get(measureCtrl.getDailyMeasureResults);
+
 router.route('/storeResults')
   .post(measureCtrl.postMeasureResults);
 

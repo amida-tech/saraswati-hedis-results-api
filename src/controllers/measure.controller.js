@@ -2,7 +2,7 @@
 const dao = require('../config/dao');
 
 const { calculateTrend } = require('../calculators/TrendCalculator');
-const { setValue } = require('../calculators/NumDenCalculator');
+const { setValue, calcLatestNumDen } = require('../calculators/NumDenCalculator');
 
 const getMeasures = async (req, res, next) => {
   try {
@@ -21,6 +21,32 @@ const getMeasureResults = async (req, res, next) => {
   } catch (e) {
     return next(e);
   }
+};
+
+const getDailyMeasureResults = async (req, res, next) => {
+  let search = await dao.findMeasures({});
+
+  if (search.length === 0) {
+    res.send([]);
+  }
+
+  const currentDate = new Date();
+  currentDate.setHours(0);
+  currentDate.setMinutes(0);
+  currentDate.setSeconds(0);
+  currentDate.setMilliseconds(0);
+  let dailyMeasureResults = calcLatestNumDen(search, currentDate);
+
+  let newDate = new Date(currentDate.getTime() - (24 * 60 * 60 * 1000));
+  search = search.filter((element) => new Date(element.timeStamp).getTime() < newDate.getTime());
+  while (search.length !== 0) {
+    dailyMeasureResults = dailyMeasureResults.concat(calcLatestNumDen(search, newDate));
+    newDate = new Date(newDate.getTime() - (24 * 60 * 60 * 1000));
+    search = search.filter((element) => new Date(element.timeStamp).getTime() < newDate.getTime());
+  }
+
+  dailyMeasureResults = dailyMeasureResults.sort((a, b) => a.date - b.date);
+  res.send(dailyMeasureResults);
 };
 
 const getTrends = async (req, res, next) => {
@@ -123,6 +149,7 @@ const postInfo = async (req, res, next) => {
 module.exports = {
   getMeasures,
   getMeasureResults,
+  getDailyMeasureResults,
   getTrends,
   getInfo,
   exportCsv,
