@@ -3,9 +3,6 @@
 const { v4: uuidv4 } = require('uuid');
 const dao = require('./src/config/dao');
 
-// a-array of dates, b-booleans, p-prime/no sub scores, s-subscores
-// All boolean submeasures should be checked for correct denom logic.
-// For example, denom 3 == denom 1 && denom 2
 const template = {
   aab: {
     subs: 1, type: 'date', gap: 31, newEntry: 'newSingleDate', updateEntry: 'updatedSingleDate',
@@ -28,9 +25,9 @@ const template = {
   ccs: {
     subs: 1, type: 'bool', newEntry: 'newSingleBool', updateEntry: 'updateSingleBool',
   },
-  // cise: {
-  //   subs: 13, type: 'bool', newEntry: 'newCISE', updateEntry: 'updateCISE',
-  // },
+  cise: {
+    subs: 13, type: 'bool', newEntry: 'newCISE', updateEntry: 'updateCISE',
+  },
   cole: {
     subs: 1, type: 'bool', newEntry: 'newSingleBool', updateEntry: 'updateSingleBool',
   },
@@ -73,6 +70,9 @@ const dateFormatter = (date) => {
 };
 const today = new Date();
 const todayOfYear = dayOfYear(today);
+const numeratorCheck = (data, index) => (
+  (index > 1) ? data[`Numerator ${index}`] && numeratorCheck(data, index - 1) : data[`Numerator ${index}`]
+);
 
 const dataTemplate = (measure, date) => {
   const id = `${measure}-${uuidv4()}`;
@@ -227,8 +227,28 @@ const measureFunctions = {
     };
     return data;
   },
-  newCISE: (measure, date) => {
+  newCISE: (measure, date) => { // 13 nums, have fun!
     const { data, id } = dataTemplate(measure, date);
+    const exclusion = !randomTruerBool();
+    data[id] = {};
+    for (let i = 1; i < 14; i += 1) { // Not as performant but easier to read.
+      data[id][`Initial Population ${i}`] = true;
+    }
+    for (let i = 1; i < 14; i += 1) {
+      data[id][`Exclusion ${i}`] = exclusion;
+    }
+    for (let i = 1; i < 14; i += 1) {
+      data[id][`Denominator ${i}`] = true;
+    }
+    for (let i = 1; i < 11; i += 1) {
+      data[id][`Numerator ${i}`] = randomTruerBool();
+    }
+    const numerator11 = numeratorCheck(data[id], 7);
+    const numerator12 = numerator11 && data[id]['Numerator 8'] && data[id]['Numerator 9'];
+    const numerator13 = numerator12 && data[id]['Numerator 10'];
+    data[id]['Numerator 11'] = numerator11;
+    data[id]['Numerator 12'] = numerator12;
+    data[id]['Numerator 13'] = numerator13;
     return data;
   },
   newDMSE: (measure, date) => { // Checks 3 times a year, then denom is always true
@@ -281,7 +301,7 @@ const measureFunctions = {
 async function generateData() {
   const newScores = [];
   for (let i = 0; i < 50; i += 1) {
-    newScores.push(measureFunctions[template.drre.newEntry]('drre', new Date()));
+    newScores.push(measureFunctions[template.cise.newEntry]('cise', new Date()));
   }
   // console.log(JSON.stringify(newScores));
   console.log(newScores);
