@@ -11,7 +11,7 @@ const template = {
     subs: 2, type: 'bool', newEntry: 'newADDE', updateEntry: 'updateADDE',
   },
   aise: {
-    subs: 4, type: 'bool', newEntry: 'newAISE', updateEnry: 'updateAISE',
+    subs: 4, type: 'bool', newEntry: 'newAISE', updateEntry: 'updateAISE',
   },
   apme: {
     subs: 3, type: 'bool', newEntry: 'newTripleDependBool', updateEntry: 'updateTripleDependBool',
@@ -34,7 +34,9 @@ const template = {
   cou: {
     subs: 1, type: 'bool', newEntry: 'newSingleBool', updateEntry: 'updateSingleBool',
   },
-  // cwp: { subs: 1, type: 'date' },
+  cwp: {
+    subs: 1, type: 'date', gap: 31, newEntry: 'newSingleDate', updateEntry: 'updatedSingleDate',
+  },
   dmse: {
     subs: 3, type: 'bool', newEntry: 'newDMSE', updateEntry: 'updateDMSE',
   },
@@ -44,22 +46,35 @@ const template = {
   dsfe: {
     subs: 2, type: 'bool', newEntry: 'newDoubleBool', updateEntry: 'updateDoubleBool',
   },
-  // fum: { subs: 2, type: 'date' },
-  // imae: { subs: 5, type: 'bool' },
-  // pdse: { subs: 2, type: 'object' },
-  // pnde: { subs: 2, type: 'object' },
-  // prse: { subs: 3, type: 'object' },
+  fum: {
+    subs: 2, type: 'date', gap: 31, newEntry: 'newFUM', updateEntry: 'updateFUM',
+  },
+  imae: {
+    subs: 5, type: 'bool', newEntry: 'newIMAE', updateEntry: 'updateIMAE',
+  },
+  pdse: {
+    subs: 2, type: 'object', newEntry: 'newDoubleDeliveries', updateEntry: 'updateDoubleDeliveries',
+  },
+  pnde: {
+    subs: 2, type: 'object', newEntry: 'newDoubleDeliveries', updateEntry: 'updateDoubleDeliveries',
+  },
+  prse: {
+    subs: 3, type: 'object', newEntry: 'newPRSE', updateEntry: 'updatePRSE',
+  },
   psa: {
     subs: 1, type: 'bool', newEntry: 'newSingleBool', updateEntry: 'updateSingleBool',
   },
   uop: {
     subs: 3, type: 'bool', newEntry: 'newTripleDependBool', updateEntry: 'updateTripleDependBool',
   },
-  // uri: { subs: 1, type: 'date' },
+  uri: {
+    subs: 1, type: 'date', gap: 31, newEntry: 'newSingleDate', updateEntry: 'updateSingleDate',
+  },
 };
 
 const randomBool = () => Math.random() < 0.5;
 const randomTruerBool = () => Math.random() < 0.7;
+const randomTruestBool = () => Math.random() < 0.9;
 const dayOfYear = (date) => Math.floor(
   (date - new Date(date.getFullYear(), 0, 0)) / 1000 / 60 / 60 / 25,
 );
@@ -74,7 +89,7 @@ const numeratorCheck = (data, index) => (
   (index > 1) ? data[`Numerator ${index}`] && numeratorCheck(data, index - 1) : data[`Numerator ${index}`]
 );
 
-const dataTemplate = (measure, date) => {
+const scoreTemplate = (measure, date) => {
   const id = `${measure}-${uuidv4()}`;
   const data = {
     measurementType: measure,
@@ -84,55 +99,74 @@ const dataTemplate = (measure, date) => {
   return { data, id };
 };
 
-const measureFunctions = {
-  newSingleDate: (measure, date, gap) => {
-    const { data, id } = dataTemplate(measure, date);
-    const days = dayOfYear(date);
-    const denominatorDates = [];
-    const numeratorDates = [];
-    const totalGaps = Math.floor(days / gap);
-    if (totalGaps < 0 || randomBool()) { // There are fewer days in the year than a gap.
-      const randomDay = dateFormatter(
-        new Date(today.getFullYear(), 0, 1 + Math.floor(Math.random() * todayOfYear)),
-      );
-      denominatorDates.push(randomDay);
-      if (randomBool()) {
-        numeratorDates.push(randomDay);
+const dateGenerator = (date, gap) => {
+  const days = dayOfYear(date);
+  const initialPopDates = [];
+  const numeratorDates = [];
+  const exclusionDates = [];
+  const totalGaps = Math.floor(days / gap);
+  if (totalGaps < 0 || randomBool()) { // There are fewer days in the year than a gap.
+    const randomDay = dateFormatter(
+      new Date(today.getFullYear(), 0, 1 + Math.floor(Math.random() * todayOfYear)),
+    );
+    initialPopDates.push(randomDay);
+    if (randomBool()) {
+      numeratorDates.push(randomDay);
+    }
+  } else { // Multiple days.
+    let previousDays = 0;
+    let doctorInformed = randomBool();
+    for (let i = 0; i < totalGaps; i += 1) {
+      if (previousDays + gap > todayOfYear) {
+        break;
       }
-    } else { // Multiple days.
-      let previousDays = 0;
-      let doctorInformed = randomBool();
-      for (let i = 0; i < totalGaps; i += 1) {
-        if (previousDays + gap > todayOfYear) {
-          break;
-        }
-        if (denominatorDates.length === 0) {
-          previousDays = Math.floor(Math.random() * (gap * totalGaps));
-        } else if (randomBool()) { // Sometimes stop to generate ranges of 1 thru X.
-          break;
-        } else {
-          previousDays += gap + Math.floor(Math.random() * gap);
-        }
-        const gapDate = dateFormatter(new Date(today.getFullYear(), 0, 1 + previousDays));
-        denominatorDates.push(gapDate);
-        if (doctorInformed) {
-          numeratorDates.push(gapDate);
-        } else {
-          doctorInformed = randomBool();
-        }
+      if (initialPopDates.length === 0) {
+        previousDays = Math.floor(Math.random() * (gap * totalGaps));
+      } else if (randomBool()) { // Sometimes stop to generate ranges of 1 thru X.
+        break;
+      } else {
+        previousDays += gap + Math.floor(Math.random() * gap);
+      }
+      const gapDate = dateFormatter(new Date(today.getFullYear(), 0, 1 + previousDays));
+      initialPopDates.push(gapDate);
+      if (doctorInformed) {
+        numeratorDates.push(gapDate);
+      } else {
+        doctorInformed = randomBool();
+      }
+      if (!randomTruerBool()) {
+        exclusionDates.push(gapDate);
       }
     }
+  }
+  return { initialPopDates, exclusionDates, numeratorDates };
+};
+
+const deliveryGenerator = (measure) => ({
+  status: {
+    value: 'complete',
+  },
+  id: {
+    value: `procedure-${measure}-${uuidv4()}`,
+  },
+});
+
+const measureFunctions = {
+  newSingleDate: (measure, date) => {
+    const { gap } = template[measure];
+    const { data, id } = scoreTemplate(measure, date);
+    const { initialPopDates, exclusionDates, numeratorDates } = dateGenerator(date, gap);
     data[id] = {
-      'Initial Population': true,
-      Exclusions: randomBool(),
-      Denominator: denominatorDates,
+      'Initial Population': initialPopDates,
+      Exclusions: exclusionDates,
+      Denominator: initialPopDates,
       Numerator: numeratorDates,
       id,
     };
     return data;
   },
   newSingleBool: (measure, date) => { // Single boolean value, nothing interesting.
-    const { data, id } = dataTemplate(measure, date);
+    const { data, id } = scoreTemplate(measure, date);
     data[id] = {
       'Initial Population': true,
       Exclusions: randomBool(),
@@ -143,7 +177,7 @@ const measureFunctions = {
     return data;
   },
   newDoubleBoolean: (measure, date) => { // Same init pop and denom, differing numerators.
-    const { data, id } = dataTemplate(measure, date);
+    const { data, id } = scoreTemplate(measure, date);
     const exclusion = randomBool();
     const numerator1 = randomBool();
     const denominator2 = randomBool();
@@ -161,7 +195,7 @@ const measureFunctions = {
     return data;
   },
   newTripleDependBool: (measure, date) => { // Same init pop and denom, 3rd num depends on prior 2
-    const { data, id } = dataTemplate(measure, date);
+    const { data, id } = scoreTemplate(measure, date);
     const exclusion = randomBool();
     const numerator1 = randomBool();
     const numerator2 = randomBool();
@@ -182,8 +216,27 @@ const measureFunctions = {
     };
     return data;
   },
+  newDoubleDeliveries: (measure, date) => {
+    const { data, id } = scoreTemplate(measure, date);
+    const initialPop1 = [deliveryGenerator()];
+    const exclusion = randomBool() ? initialPop1 : [];
+    const denominator2 = randomTruerBool() ? initialPop1 : [];
+    const numerator1 = denominator2.length > 0 && randomTruerBool() ? initialPop1 : [];
+    data[id] = {
+      'Initial Population 1': initialPop1,
+      'Initial Population 2': initialPop1,
+      'Exclusions 1': exclusion,
+      'Exclusions 2': exclusion,
+      'Denominator 1': initialPop1,
+      'Denominator 2': denominator2,
+      'Numerator 1': numerator1,
+      'Numerator 2': numerator1 && randomTruerBool() ? numerator1 : [],
+      id,
+    };
+    return data;
+  },
   newADDE: (measure, date) => { // Differing initial populations
-    const { data, id } = dataTemplate(measure, date);
+    const { data, id } = scoreTemplate(measure, date);
     const exclusion = randomBool();
     const numerator1 = randomBool();
     const initialPop2 = randomBool();
@@ -202,7 +255,7 @@ const measureFunctions = {
     return data;
   },
   newAISE: (measure, date) => { // 4 sub measure, depending on vaccines and age ranges
-    const { data, id } = dataTemplate(measure, date);
+    const { data, id } = scoreTemplate(measure, date);
     const exclusion = randomBool();
     const initialPop3 = randomBool();
     const initialPop4 = initialPop3 ? randomBool() : false;
@@ -228,7 +281,7 @@ const measureFunctions = {
     return data;
   },
   newCISE: (measure, date) => { // 13 nums, have fun!
-    const { data, id } = dataTemplate(measure, date);
+    const { data, id } = scoreTemplate(measure, date);
     const exclusion = !randomTruerBool();
     data[id] = {};
     for (let i = 1; i < 14; i += 1) { // Not as performant but easier to read.
@@ -252,7 +305,7 @@ const measureFunctions = {
     return data;
   },
   newDMSE: (measure, date) => { // Checks 3 times a year, then denom is always true
-    const { data, id } = dataTemplate(measure, date);
+    const { data, id } = scoreTemplate(measure, date);
     const exclusion = randomBool();
     const initialPop1 = randomBool();
     const initialPop2 = initialPop1 || randomTruerBool();
@@ -275,7 +328,7 @@ const measureFunctions = {
     return data;
   },
   newDRRE: (measure, date) => { // Checks 3 times a year, then denom is always true
-    const { data, id } = dataTemplate(measure, date);
+    const { data, id } = scoreTemplate(measure, date);
     const exclusion = !randomTruerBool();
     const numerator3 = randomBool(); // Numerator 2 is dependent on 3.
     const numerator2 = numerator3 ? randomTruerBool() : false;
@@ -296,12 +349,77 @@ const measureFunctions = {
     };
     return data;
   },
+  newFUM: (measure, date) => { // One for 30 day gap, another for 7.
+    const { gap } = template[measure];
+    const { data, id } = scoreTemplate(measure, date);
+    const { initialPopDates, exclusionDates, numeratorDates } = dateGenerator(date, gap);
+    const numerator2Dates = Array.from(numeratorDates);
+    if (!randomTruerBool()) {
+      numerator2Dates.splice(Math.floor(Math.random(numeratorDates.length) * numeratorDates), 1);
+    }
+    data[id] = {
+      'Initial Population': initialPopDates,
+      'Initial Population2': initialPopDates,
+      'Exclusions 1': exclusionDates,
+      'Exclusions 2': exclusionDates,
+      'Denominator 1': initialPopDates,
+      'Denominator 2': initialPopDates,
+      'Numerator 1': numeratorDates,
+      'Numerator 2': numerator2Dates,
+      id,
+    };
+    return data;
+  },
+  newIMAE: (measure, date) => { // 4 is based on 1, 2, and 5 on 1, 2, 3
+    const { data, id } = scoreTemplate(measure, date);
+    const exclusion = !randomTruerBool();
+    data[id] = {};
+    for (let i = 1; i < 6; i += 1) { // Not as performant but easier to read.
+      data[id][`Initial Population ${i}`] = true;
+    }
+    for (let i = 1; i < 6; i += 1) {
+      data[id][`Exclusion ${i}`] = exclusion;
+    }
+    for (let i = 1; i < 6; i += 1) {
+      data[id][`Denominator ${i}`] = true;
+    }
+    for (let i = 1; i < 4; i += 1) {
+      data[id][`Numerator ${i}`] = randomTruerBool();
+    }
+    const numerator4 = data[id]['Numerator 1'] && data[id]['Numerator 2'];
+    data[id]['Numerator 4'] = numerator4;
+    data[id]['Numerator 5'] = numerator4 && data[id]['Numerator 3'];
+    return data;
+  },
+  newPRSE: (measure, date) => {
+    const { data, id } = scoreTemplate(measure, date);
+    const initialPop1 = [deliveryGenerator()];
+    const exclusion = randomBool() ? initialPop1 : [];
+    const numerator1 = randomTruestBool() ? initialPop1 : [];
+    const numerator2 = randomTruestBool() ? initialPop1 : [];
+    data[id] = {
+      'Initial Population 1': initialPop1,
+      'Initial Population 2': initialPop1,
+      'Initial Population 3': initialPop1,
+      'Exclusions 1': exclusion,
+      'Exclusions 2': exclusion,
+      'Exclusions 3': exclusion,
+      'Denominator 1': initialPop1,
+      'Denominator 2': initialPop1,
+      'Denominator 3': initialPop1,
+      'Numerator 1': numerator1,
+      'Numerator 2': numerator2,
+      'Numerator 3': numerator1.length === numerator2.length ? initialPop1 : [],
+      id,
+    };
+    return data;
+  },
 };
 
 async function generateData() {
   const newScores = [];
   for (let i = 0; i < 50; i += 1) {
-    newScores.push(measureFunctions[template.cise.newEntry]('cise', new Date()));
+    newScores.push(measureFunctions[template.prse.newEntry]('prse', new Date()));
   }
   // console.log(JSON.stringify(newScores));
   console.log(newScores);
