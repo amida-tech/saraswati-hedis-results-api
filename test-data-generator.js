@@ -1,7 +1,18 @@
 /* eslint-disable no-console */
 /* eslint-disable no-underscore-dangle */
 const { v4: uuidv4 } = require('uuid');
+const minimist = require('minimist');
+const fs = require('fs');
 const dao = require('./src/config/dao');
+
+const parseArgs = minimist(process.argv.slice(2), {
+  alias: {
+    h: 'help',
+    i: 'include',
+    s: 'size',
+    o: 'output',
+  },
+});
 
 const template = {
   aab: {
@@ -72,11 +83,13 @@ const template = {
   },
 };
 
+const measureList = Object.keys(template);
+
 const randomBool = () => Math.random() < 0.5;
 const randomTruerBool = () => Math.random() < 0.7;
 const randomTruestBool = () => Math.random() < 0.9;
 const dayOfYear = (date) => Math.floor(
-  (date - new Date(date.getFullYear(), 0, 0)) / 1000 / 60 / 60 / 25,
+  (date - new Date(date.getFullYear(), 0, 0)) / 1000 / 60 / 60 / 24,
 );
 const dateFormatter = (date) => {
   const month = date.getMonth() + 1;
@@ -417,31 +430,58 @@ const measureFunctions = {
 };
 
 async function generateData() {
-  const measureList = Object.keys(template);
+  const scoreAmount = parseArgs.s || 300;
+  console.log(`\n\x1b[33mInfo:\x1b[0m Starting test data generation for ${scoreAmount} scores.`);
   const newScores = [];
   let measure;
-  for (let i = 0; i < 300; i += 1) {
+  for (let i = 0; i < scoreAmount; i += 1) {
     measure = measureList[i % measureList.length];
     newScores.push(measureFunctions[template[measure].newEntry](measure, new Date()));
   }
   return newScores;
 }
 
-async function processData() {
-  console.log('\nInfo: Starting test data generation.');
-  await dao.init();
-  const newScoresList = await generateData();
-  console.log(`\nInfo: ${newScoresList.length} results to be added.`);
-  const insertResults = await dao.insertMeasures(newScoresList);
-  if (!insertResults) {
-    console.error('\x1b[31mError: Something went wrong during insertion.\x1b[0m');
+function outputData(newScoresList) {
+  let fileTitle = `saraswati-test-data_${today.getMonth()}-${today.getDate()}-${today.getFullYear()}`;
+  fileTitle += `_${today.getHours()}-${today.getMinutes()}-${today.getSeconds()}.json`;
+
+  try {
+    fs.writeFileSync(fileTitle, JSON.stringify(newScoresList, null, 4));
+  } catch (writeErr) {
+    console.error(`\x1b[31mError:\x1b[0m Unable to write to directory:${writeErr}.`);
     process.exit();
   }
-  console.log(`Info: Results are being inserted into DAO. Please wait ${newScoresList.length / 10} seconds for asynchronous completion...`);
+  console.log(`\x1b[32mSuccess:\x1b[0m Check ${fileTitle} for new data.`);
+  process.exit();
+}
+
+async function processData() {
+  await dao.init();
+  const newScoresList = await generateData();
+  console.log(`\x1b[33mInfo:\x1b[0m ${newScoresList.length} scores to be inserted.`);
+  const insertResults = await dao.insertMeasures(newScoresList);
+  if (parseArgs.o) {
+    outputData(newScoresList);
+  }
+  if (!insertResults) {
+    console.error('\x1b[31mError:\x1b[0m Something went wrong during insertion.');
+    process.exit();
+  }
+  console.log(`\x1b[33mInfo:\x1b[0m Results are being inserted into DAO. Please wait ${newScoresList.length / 10} seconds for asynchronous completion...`);
   setTimeout(() => {
-    console.log('\x1b[32mSuccess: Check database for new insertions.\x1b[0m');
+    console.log('\x1b[32mSuccess:\x1b[0m Check database for new insertions.');
     process.exit();
   }, newScoresList.length * 10);
+}
+
+if (parseArgs.h === true) {
+  console.log('\n A script for generated fake HEDIS scores for Saraswati.\n\n Options:');
+  console.log('   -h, --help: Help command. What you\'re reading now...\n');
+  console.log('   -i, --include: A spaceless, comma separated of measures to create. Default is to use all. Valid options are: ');
+  console.log(`\t${measureList.join(', ')}`);
+  console.log('   -s, --size: The number of produced HEDIS measurement scores. Default is 300.');
+  console.log('   -o, --output: Instead of inserting into database, writes output to the file "saraswati-test-data" with a datetime stamp.');
+  process.exit();
 }
 
 processData();
