@@ -176,7 +176,7 @@ const measureFunctions = {
     };
     return data;
   },
-  newDoubleBoolean: (measure, date) => { // Same init pop and denom, differing numerators.
+  newDoubleBool: (measure, date) => { // Same init pop and denom, differing numerators.
     const { data, id } = scoreTemplate(measure, date);
     const exclusion = randomBool();
     const numerator1 = randomBool();
@@ -417,30 +417,31 @@ const measureFunctions = {
 };
 
 async function generateData() {
+  const measureList = Object.keys(template);
   const newScores = [];
-  for (let i = 0; i < 50; i += 1) {
-    newScores.push(measureFunctions[template.prse.newEntry]('prse', new Date()));
+  let measure;
+  for (let i = 0; i < 300; i += 1) {
+    measure = measureList[i % measureList.length];
+    newScores.push(measureFunctions[template[measure].newEntry](measure, new Date()));
   }
-  // console.log(JSON.stringify(newScores));
-  console.log(newScores);
+  return newScores;
 }
 
 async function processData() {
-  console.log('Starting');
-  // await dao.init();
-  // const newScoresList = await generateData();
-  generateData();
-  // console.log(`\nInfo: ${newScoresList.length} results to be added.`);
-  // const insertResults = await dao.insertMeasures(newScoresList);
-  // if (!insertResults) {
-  //   console.error('\x1b[31mError: Something went wrong during insertion.\x1b[0m');
-  //   process.exit();
-  // }
-  // console.log(`Info: Results are being inserted into DAO. Please wait ${newScoresList.length / 2} seconds for asynchronous completion...`);
-  // setTimeout(() => {
-  //   console.log('\x1b[32mSuccess: Check database for new insertions.\x1b[0m');
-  //   process.exit();
-  // }, newScoresList.length * 500);
+  console.log('\nInfo: Starting test data generation.');
+  await dao.init();
+  const newScoresList = await generateData();
+  console.log(`\nInfo: ${newScoresList.length} results to be added.`);
+  const insertResults = await dao.insertMeasures(newScoresList);
+  if (!insertResults) {
+    console.error('\x1b[31mError: Something went wrong during insertion.\x1b[0m');
+    process.exit();
+  }
+  console.log(`Info: Results are being inserted into DAO. Please wait ${newScoresList.length / 10} seconds for asynchronous completion...`);
+  setTimeout(() => {
+    console.log('\x1b[32mSuccess: Check database for new insertions.\x1b[0m');
+    process.exit();
+  }, newScoresList.length * 10);
 }
 
 processData();
