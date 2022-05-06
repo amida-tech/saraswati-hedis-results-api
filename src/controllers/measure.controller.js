@@ -4,6 +4,9 @@ const dao = require('../config/dao');
 const { calculateTrend } = require('../calculators/TrendCalculator');
 const { setValue, calcLatestNumDen } = require('../calculators/NumDenCalculator');
 
+const dayMiliseconds = 86400000;
+const eodMiliseconds = 84960000;
+
 const getMeasures = async (req, res, next) => {
   try {
     const measures = await dao.findMeasures({});
@@ -24,29 +27,37 @@ const getMeasureResults = async (req, res, next) => {
 };
 
 const getDailyMeasureResults = async (req, res, next) => {
-  let search = await dao.findMeasures({});
+  try {
+    let search = await dao.findMeasures({});
 
-  if (search.length === 0) {
-    res.send([]);
+    if (search.length === 0) {
+      res.send([]);
+    }
+
+    const currentDate = new Date();
+    currentDate.setHours(0);
+    currentDate.setMinutes(0);
+    currentDate.setSeconds(0);
+    currentDate.setMilliseconds(0);
+    let dailyMeasureResults = calcLatestNumDen(search, currentDate);
+
+    // Set the day to 5/5/2022, but compare the times against 5/5/2022 11:59:59 PM
+    let newDate = new Date(currentDate.getTime() - dayMiliseconds);
+    search = search.filter(
+      (element) => new Date(element.timeStamp).getTime() < (newDate.getTime() + eodMiliseconds),
+    );
+    while (search.length !== 0) {
+      dailyMeasureResults = dailyMeasureResults.concat(calcLatestNumDen(search, newDate));
+      newDate = new Date(newDate.getTime() - dayMiliseconds);
+      const compareDateTime = newDate.getTime() + eodMiliseconds;
+      search = search.filter((element) => new Date(element.timeStamp).getTime() < compareDateTime);
+    }
+
+    dailyMeasureResults = dailyMeasureResults.sort((a, b) => a.date - b.date);
+    res.send(dailyMeasureResults);
+  } catch (e) {
+    next(e);
   }
-
-  const currentDate = new Date();
-  currentDate.setHours(0);
-  currentDate.setMinutes(0);
-  currentDate.setSeconds(0);
-  currentDate.setMilliseconds(0);
-  let dailyMeasureResults = calcLatestNumDen(search, currentDate);
-
-  let newDate = new Date(currentDate.getTime() - (24 * 60 * 60 * 1000));
-  search = search.filter((element) => new Date(element.timeStamp).getTime() < newDate.getTime());
-  while (search.length !== 0) {
-    dailyMeasureResults = dailyMeasureResults.concat(calcLatestNumDen(search, newDate));
-    newDate = new Date(newDate.getTime() - (24 * 60 * 60 * 1000));
-    search = search.filter((element) => new Date(element.timeStamp).getTime() < newDate.getTime());
-  }
-
-  dailyMeasureResults = dailyMeasureResults.sort((a, b) => a.date - b.date);
-  res.send(dailyMeasureResults);
 };
 
 const getTrends = async (req, res, next) => {
