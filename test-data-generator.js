@@ -15,70 +15,70 @@ const parseArgs = minimist(process.argv.slice(2), {
 });
 
 const template = {
-  aab: {
+  aab: { // Avoidance of Antibiotic Treatment for Acute Bronchitis/Bronchiolitis
     subs: 1, type: 'date', gap: 31, newEntry: 'newSingleDate', updateEntry: 'updatedSingleDate',
   },
-  adde: {
+  adde: { // Follow-Up Care for Children Prescribed ADHD Medication
     subs: 2, type: 'bool', newEntry: 'newADDE', updateEntry: 'updateADDE',
   },
-  aise: {
+  aise: { // Adult Immunization Status
     subs: 4, type: 'bool', newEntry: 'newAISE', updateEntry: 'updateAISE',
   },
-  apme: {
+  apme: { // Metabolic Monitoring for Children and Adolescents on Antipsychotics
     subs: 3, type: 'bool', newEntry: 'newTripleDependBool', updateEntry: 'updateTripleDependBool',
   },
-  asfe: {
+  asfe: { // Unhealthy Alcohol Use Screening and Follow-Up
     subs: 2, type: 'bool', newEntry: 'newDoubleBool', updateEntry: 'updateDoubleBool',
   },
-  bcse: {
+  bcse: { // Breast Cancer Screening
     subs: 1, type: 'bool', newEntry: 'newSingleBool', updateEntry: 'updateSingleBool',
   },
-  ccs: {
+  ccs: { // Cervical Cancer Screening
     subs: 1, type: 'bool', newEntry: 'newSingleBool', updateEntry: 'updateSingleBool',
   },
-  cise: {
+  cise: { // Childhood Immunization Status
     subs: 13, type: 'bool', newEntry: 'newCISE', updateEntry: 'updateCISE',
   },
-  cole: {
+  cole: { // Colorectal Cancer Screening
     subs: 1, type: 'bool', newEntry: 'newSingleBool', updateEntry: 'updateSingleBool',
   },
-  cou: {
+  cou: { // Risk of Continued Opioid Use
     subs: 1, type: 'bool', newEntry: 'newSingleBool', updateEntry: 'updateSingleBool',
   },
-  cwp: {
+  cwp: { // Appropriate Testing for Pharyngitis
     subs: 1, type: 'date', gap: 31, newEntry: 'newSingleDate', updateEntry: 'updatedSingleDate',
   },
-  dmse: {
+  dmse: { // Utilization of the PHQ-9 to Monitor Depression Symptoms for Adolescents and Adults
     subs: 3, type: 'bool', newEntry: 'newDMSE', updateEntry: 'updateDMSE',
   },
-  drre: {
+  drre: { // Depression Remission or Response for Adolescents and Adults
     subs: 3, type: 'bool', newEntry: 'newDRRE', updateEntry: 'updateDRRE',
   },
-  dsfe: {
+  dsfe: { // Depression Screening and Follow-Up for Adolescents and Adults
     subs: 2, type: 'bool', newEntry: 'newDoubleBool', updateEntry: 'updateDoubleBool',
   },
-  fum: {
+  fum: { // Follow-Up After Emergency Department Visit for Mental Illness
     subs: 2, type: 'date', gap: 31, newEntry: 'newFUM', updateEntry: 'updateFUM',
   },
-  imae: {
+  imae: { // Immunizations for Adolescents
     subs: 5, type: 'bool', newEntry: 'newIMAE', updateEntry: 'updateIMAE',
   },
-  pdse: {
+  pdse: { // Postpartum Depression Screening and Follow-Up
     subs: 2, type: 'object', newEntry: 'newDoubleDeliveries', updateEntry: 'updateDoubleDeliveries',
   },
-  pnde: {
+  pnde: { // Prenatal Depression Screening and Follow-Up
     subs: 2, type: 'object', newEntry: 'newDoubleDeliveries', updateEntry: 'updateDoubleDeliveries',
   },
-  prse: {
+  prse: { // Prenatal Immunization Status
     subs: 3, type: 'object', newEntry: 'newPRSE', updateEntry: 'updatePRSE',
   },
-  psa: {
+  psa: { // Non-Recommended PSA-Based (prostate-specific antigen) Screening in Older Men
     subs: 1, type: 'bool', newEntry: 'newSingleBool', updateEntry: 'updateSingleBool',
   },
-  uop: {
+  uop: { // Use of Opioids From Multiple Providers
     subs: 3, type: 'bool', newEntry: 'newTripleDependBool', updateEntry: 'updateTripleDependBool',
   },
-  uri: {
+  uri: { // Appropriate Treatment for Upper Respiratory Infection
     subs: 1, type: 'date', gap: 31, newEntry: 'newSingleDate', updateEntry: 'updateSingleDate',
   },
 };
@@ -100,12 +100,116 @@ const numeratorCheck = (data, index) => (
   (index > 1) ? data[`Numerator ${index}`] && numeratorCheck(data, index - 1) : data[`Numerator ${index}`]
 );
 
+const coveragePlans = [
+  { code: 'MCPOL', display: 'Managed Care Policy' },
+  { code: 'HMO', display: 'Health Maintenance Organization Policy' },
+  { code: 'PPO', display: 'Preferred Provider Organization Policy' },
+];
+
+const providerOptions = [
+  {
+    measures: ['aab', 'adde', 'aise', 'apme', 'asfe', 'bcse', 'ccs', 'cise', 'cole', 'cou',
+      'cwp', 'dmse', 'drre', 'dsfe', 'fum', 'imae', 'pdse', 'pnde', 'prse', 'psa', 'uop', 'uri'],
+    providers: [{
+      reference: 'Organization?identifier=71533123',
+      display: 'Norton Hill Carecenter',
+    }, {
+      reference: 'Practitioner?identifier=1143',
+      display: 'Doctor Anne Guish',
+    }, {
+      reference: 'Practitioner?identifier=1221',
+      display: 'Nurse Karen Patches',
+    }],
+  },
+  {
+    measures: ['aab', 'adde', 'aise', 'apme', 'asfe', 'cise', 'cwp', 'dmse', 'drre',
+      'dsfe', 'fum', 'pdse', 'pnde', 'prse'],
+    providers: [{
+      reference: 'Organization?identifier=71533123',
+      display: 'Springfield Hospital',
+    }, {
+      reference: 'Practitioner?identifier=1143',
+      display: 'Dr. Marc Weber, General Practitioner',
+    }],
+  },
+  {
+    measures: ['aab', 'aise', 'cise', 'cou', 'imae', 'uop', 'uri'],
+    providers: [{
+      reference: 'Organization?identifier=667531',
+      display: 'Hollifield Clinics',
+    }, {
+      reference: 'Practitioner?identifier=7882499',
+      display: 'Nurse Practitioner Sharon Arthurs',
+    }],
+  },
+  {
+    measures: ['bcse', 'ccs', 'cole', 'psa'],
+    providers: [{
+      reference: 'Organization?identifier=8554',
+      display: 'Cancer Treatment & Care',
+    }, {
+      reference: 'Practitioner?identifier=903321',
+      display: 'Dr. Larry McDaniels',
+    }],
+  },
+  {
+    measures: ['prse', 'pnde', 'pdse'],
+    providers: [{
+      reference: 'Organization?identifier=9911',
+      display: "Anova Women's Birthing Service",
+    }, {
+      reference: 'Practitioner?identifier=8123',
+      display: 'Dr. Colette DeBarge',
+    }],
+  },
+];
+
 const scoreTemplate = (measure, date) => {
   const id = `${measure}-${uuidv4()}`;
+  const coverageChosen = Math.floor(Math.random() * coveragePlans.length);
+
+  const periodDate = new Date(date.toDateString());
+  periodDate.setFullYear(date.getFullYear() - 1);
+  const periodStart = dateFormatter(periodDate);
+  periodDate.setFullYear(date.getFullYear() + 1);
+  const periodEnd = dateFormatter(periodDate);
+
+  const providerChoices = providerOptions.filter((provider) => provider.measures.includes(measure));
+
   const data = {
     measurementType: measure,
     memberId: id,
     timeStamp: date,
+    coverage: [{
+      status: { value: 'active' },
+      type: {
+        coding: [{
+          system: { value: 'http://terminology.hl7.org/CodeSystem/v3-ActCode' },
+          code: { value: coveragePlans[coverageChosen].code },
+          display: { value: coveragePlans[coverageChosen].display },
+        }],
+      },
+      subscriber: {
+        reference: { value: `Patient/${id}` },
+      },
+      beneficiary: {
+        reference: { value: `Patient/${id}` },
+      },
+      relationship: {
+        coding: [{
+          code: { value: 'self' },
+        }],
+      },
+      period: {
+        start: { value: periodStart },
+        end: { value: periodEnd },
+      },
+      payor: [{
+        reference: { value: `Organization/${Math.floor(Math.random() * 3 + 1)}` },
+      }],
+      id: { value: uuidv4() },
+    }],
+    providers: providerChoices[Math.floor(Math.random() * providerChoices.length)].providers,
   };
   return { data, id };
 };
@@ -497,7 +601,7 @@ function outputData(newScoresList) {
   fileTitle += `_${today.getHours()}-${today.getMinutes()}-${today.getSeconds()}.json`;
 
   try {
-    fs.writeFileSync(`${__dirname}/test/gen-data/${fileTitle}`, JSON.stringify(newScoresList, null, 4));
+    fs.writeFileSync(`${__dirname}/test/generated-data/${fileTitle}`, JSON.stringify(newScoresList, null, 4));
   } catch (writeErr) {
     console.error(`\x1b[31mError:\x1b[0m Unable to write to directory:${writeErr}.`);
     process.exit();

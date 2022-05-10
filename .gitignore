@@ -10,4 +10,4 @@
 .config
 .cache
 .vscode
-/test/gen-data
+/test/generated-data/*
