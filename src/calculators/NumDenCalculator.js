@@ -108,11 +108,6 @@ const calcLatestNumDen = (resultList, currentDate) => {
 
   // To store final results
   const valueArray = [];
-  /* const currentDate = new Date();
-  currentDate.setHours(0);
-  currentDate.setMinutes(0);
-  currentDate.setSeconds(0);
-  currentDate.setMilliseconds(0); */
 
   for (let k = 0; k < measurementTypes.length; k += 1) {
     const subScoreArray = [];
