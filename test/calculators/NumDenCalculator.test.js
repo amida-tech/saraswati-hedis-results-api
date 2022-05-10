@@ -9,7 +9,7 @@ describe(' NumDenCalculator test ', () => {
   let resultArray;
 
   beforeAll(() => {
-    resultArray = calcLatestNumDen(data);
+    resultArray = calcLatestNumDen(data, new Date());
   });
 
   test('Should not be null', () => {

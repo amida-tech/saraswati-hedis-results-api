@@ -16,8 +16,14 @@ router.route('/info')
   .get(measureCtrl.getInfo)
   .post(measureCtrl.postInfo);
 
+/**
+ * @deprecated Use dailyMeasureResults instead.
+*/
 router.route('/searchResults')
   .get(validate(paramValidation.searchMeasurements), measureCtrl.getMeasureResults);
+
+router.route('/dailyMeasureResults')
+  .get(measureCtrl.getDailyMeasureResults);
 
 router.route('/storeResults')
   .post(measureCtrl.postMeasureResults);

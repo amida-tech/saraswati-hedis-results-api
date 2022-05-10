@@ -70,7 +70,7 @@ function calculateSubScore(resultHolder, measurementType, date, index) {
   };
 }
 
-const calcLatestNumDen = (resultList) => {
+const calcLatestNumDen = (resultList, currentDate) => {
   const resultMap = new Map();
   const measurementTypes = [];
 
@@ -108,11 +108,6 @@ const calcLatestNumDen = (resultList) => {
 
   // To store final results
   const valueArray = [];
-  const currentDate = new Date();
-  currentDate.setHours(0);
-  currentDate.setMinutes(0);
-  currentDate.setSeconds(0);
-  currentDate.setMilliseconds(0);
 
   for (let k = 0; k < measurementTypes.length; k += 1) {
     const subScoreArray = [];
