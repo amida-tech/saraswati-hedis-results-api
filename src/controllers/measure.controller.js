@@ -6,6 +6,8 @@ const { setValue, calcLatestNumDen } = require('../calculators/NumDenCalculator'
 
 const dayMiliseconds = 86400000;
 const eodMiliseconds = 84960000;
+const { createInfoObject } = require('../utilities/infoUtil');
+const { generateCsv } = require('../utilities/reportsUtil');
 
 const getMeasures = async (req, res, next) => {
   try {
@@ -77,11 +79,7 @@ const getTrends = async (req, res, next) => {
 const getInfo = async (req, res, next) => {
   try {
     const infoList = await dao.findInfo();
-    const fullInfo = {};
-    for (let i = 0; i < infoList.length; i += 1) {
-      const info = infoList[i];
-      fullInfo[info._id] = info[info._id];
-    }
+    const fullInfo = createInfoObject(infoList);
     return res.send(fullInfo);
   } catch (e) {
     return next(e);
@@ -91,28 +89,10 @@ const getInfo = async (req, res, next) => {
 const exportCsv = async (req, res, next) => {
   try {
     res.set({ 'Content-Disposition': 'attachment; filename=results-export.csv' });
-    const search = await dao.findMeasures(req.query);
-    let csv = 'Member ID, Measurement, Time Stamp';
-    search.forEach((result) => {
-      const numeratorArray = [];
-      const denominatorArray = [];
-      const patientResult = result[result.memberId];
-      Object.keys(patientResult).forEach((fieldName) => {
-        if (fieldName.startsWith('Numerator')) {
-          setValue(numeratorArray, 'Numerator', fieldName, patientResult);
-        } else if (fieldName.startsWith('Denominator')) {
-          setValue(denominatorArray, 'Denominator', fieldName, patientResult);
-        }
-      });
-      let index = 0;
-      while (index < numeratorArray.length) {
-        if (numeratorArray[index] !== denominatorArray[index]) {
-          csv += `\n${result.memberId},${result.measurementType},${result.timeStamp},`;
-          break;
-        }
-        index += 1;
-      }
-    });
+    const patientResults = await dao.findMeasures(req.query);
+    const infoList = await dao.findInfo(req.query.measurementType);
+    const measureInfo = createInfoObject(infoList);
+    const csv = generateCsv(patientResults, measureInfo, req.query.measurementType);
     res.send(csv);
   } catch (e) {
     next(e);

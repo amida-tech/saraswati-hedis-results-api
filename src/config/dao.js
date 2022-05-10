@@ -39,8 +39,11 @@ const findPredictions = () => {
   return collection.find({}).toArray();
 };
 
-const findInfo = () => {
+const findInfo = (measure) => {
   const collection = db.collection('hedis_info');
+  if (measure) {
+    return collection.find({ _id: new RegExp(`^${measure}`) }).toArray();
+  }
   return collection.find({}).toArray();
 };
 
