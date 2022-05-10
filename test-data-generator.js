@@ -1,73 +1,84 @@
 /* eslint-disable no-console */
 /* eslint-disable no-underscore-dangle */
 const { v4: uuidv4 } = require('uuid');
+const minimist = require('minimist');
+const fs = require('fs');
 const dao = require('./src/config/dao');
 
+const parseArgs = minimist(process.argv.slice(2), {
+  alias: {
+    h: 'help',
+    i: 'include',
+    s: 'size',
+    o: 'output',
+  },
+});
+
 const template = {
-  aab: {
+  aab: { // Avoidance of Antibiotic Treatment for Acute Bronchitis/Bronchiolitis
     subs: 1, type: 'date', gap: 31, newEntry: 'newSingleDate', updateEntry: 'updatedSingleDate',
   },
-  adde: {
+  adde: { // Follow-Up Care for Children Prescribed ADHD Medication
     subs: 2, type: 'bool', newEntry: 'newADDE', updateEntry: 'updateADDE',
   },
-  aise: {
+  aise: { // Adult Immunization Status
     subs: 4, type: 'bool', newEntry: 'newAISE', updateEntry: 'updateAISE',
   },
-  apme: {
+  apme: { // Metabolic Monitoring for Children and Adolescents on Antipsychotics
     subs: 3, type: 'bool', newEntry: 'newTripleDependBool', updateEntry: 'updateTripleDependBool',
   },
-  asfe: {
+  asfe: { // Unhealthy Alcohol Use Screening and Follow-Up
     subs: 2, type: 'bool', newEntry: 'newDoubleBool', updateEntry: 'updateDoubleBool',
   },
-  bcse: {
+  bcse: { // Breast Cancer Screening
     subs: 1, type: 'bool', newEntry: 'newSingleBool', updateEntry: 'updateSingleBool',
   },
-  ccs: {
+  ccs: { // Cervical Cancer Screening
     subs: 1, type: 'bool', newEntry: 'newSingleBool', updateEntry: 'updateSingleBool',
   },
-  cise: {
+  cise: { // Childhood Immunization Status
     subs: 13, type: 'bool', newEntry: 'newCISE', updateEntry: 'updateCISE',
   },
-  cole: {
+  cole: { // Colorectal Cancer Screening
     subs: 1, type: 'bool', newEntry: 'newSingleBool', updateEntry: 'updateSingleBool',
   },
-  cou: {
+  cou: { // Risk of Continued Opioid Use
     subs: 1, type: 'bool', newEntry: 'newSingleBool', updateEntry: 'updateSingleBool',
   },
-  cwp: {
+  cwp: { // Appropriate Testing for Pharyngitis
     subs: 1, type: 'date', gap: 31, newEntry: 'newSingleDate', updateEntry: 'updatedSingleDate',
   },
-  dmse: {
+  dmse: { // Utilization of the PHQ-9 to Monitor Depression Symptoms for Adolescents and Adults
     subs: 3, type: 'bool', newEntry: 'newDMSE', updateEntry: 'updateDMSE',
   },
-  drre: {
+  drre: { // Depression Remission or Response for Adolescents and Adults
     subs: 3, type: 'bool', newEntry: 'newDRRE', updateEntry: 'updateDRRE',
   },
-  dsfe: {
+  dsfe: { // Depression Screening and Follow-Up for Adolescents and Adults
     subs: 2, type: 'bool', newEntry: 'newDoubleBool', updateEntry: 'updateDoubleBool',
   },
-  fum: {
+  fum: { // Follow-Up After Emergency Department Visit for Mental Illness
     subs: 2, type: 'date', gap: 31, newEntry: 'newFUM', updateEntry: 'updateFUM',
   },
-  imae: {
+  imae: { // Immunizations for Adolescents
     subs: 5, type: 'bool', newEntry: 'newIMAE', updateEntry: 'updateIMAE',
   },
-  pdse: {
+  pdse: { // Postpartum Depression Screening and Follow-Up
     subs: 2, type: 'object', newEntry: 'newDoubleDeliveries', updateEntry: 'updateDoubleDeliveries',
   },
-  pnde: {
+  pnde: { // Prenatal Depression Screening and Follow-Up
     subs: 2, type: 'object', newEntry: 'newDoubleDeliveries', updateEntry: 'updateDoubleDeliveries',
   },
-  prse: {
+  prse: { // Prenatal Immunization Status
     subs: 3, type: 'object', newEntry: 'newPRSE', updateEntry: 'updatePRSE',
   },
-  psa: {
+  psa: { // Non-Recommended PSA-Based (prostate-specific antigen) Screening in Older Men
     subs: 1, type: 'bool', newEntry: 'newSingleBool', updateEntry: 'updateSingleBool',
   },
-  uop: {
+  uop: { // Use of Opioids From Multiple Providers
     subs: 3, type: 'bool', newEntry: 'newTripleDependBool', updateEntry: 'updateTripleDependBool',
   },
-  uri: {
+  uri: { // Appropriate Treatment for Upper Respiratory Infection
     subs: 1, type: 'date', gap: 31, newEntry: 'newSingleDate', updateEntry: 'updateSingleDate',
   },
 };
@@ -76,7 +87,7 @@ const randomBool = () => Math.random() < 0.5;
 const randomTruerBool = () => Math.random() < 0.7;
 const randomTruestBool = () => Math.random() < 0.9;
 const dayOfYear = (date) => Math.floor(
-  (date - new Date(date.getFullYear(), 0, 0)) / 1000 / 60 / 60 / 25,
+  (date - new Date(date.getFullYear(), 0, 0)) / 1000 / 60 / 60 / 24,
 );
 const dateFormatter = (date) => {
   const month = date.getMonth() + 1;
@@ -89,12 +100,116 @@ const numeratorCheck = (data, index) => (
   (index > 1) ? data[`Numerator ${index}`] && numeratorCheck(data, index - 1) : data[`Numerator ${index}`]
 );
 
+const coveragePlans = [
+  { code: 'MCPOL', display: 'Managed Care Policy' },
+  { code: 'HMO', display: 'Health Maintenance Organization Policy' },
+  { code: 'PPO', display: 'Preferred Provider Organization Policy' },
+];
+
+const providerOptions = [
+  {
+    measures: ['aab', 'adde', 'aise', 'apme', 'asfe', 'bcse', 'ccs', 'cise', 'cole', 'cou',
+      'cwp', 'dmse', 'drre', 'dsfe', 'fum', 'imae', 'pdse', 'pnde', 'prse', 'psa', 'uop', 'uri'],
+    providers: [{
+      reference: 'Organization?identifier=71533123',
+      display: 'Norton Hill Carecenter',
+    }, {
+      reference: 'Practitioner?identifier=1143',
+      display: 'Doctor Anne Guish',
+    }, {
+      reference: 'Practitioner?identifier=1221',
+      display: 'Nurse Karen Patches',
+    }],
+  },
+  {
+    measures: ['aab', 'adde', 'aise', 'apme', 'asfe', 'cise', 'cwp', 'dmse', 'drre',
+      'dsfe', 'fum', 'pdse', 'pnde', 'prse'],
+    providers: [{
+      reference: 'Organization?identifier=71533123',
+      display: 'Springfield Hospital',
+    }, {
+      reference: 'Practitioner?identifier=1143',
+      display: 'Dr. Marc Weber, General Practitioner',
+    }],
+  },
+  {
+    measures: ['aab', 'aise', 'cise', 'cou', 'imae', 'uop', 'uri'],
+    providers: [{
+      reference: 'Organization?identifier=667531',
+      display: 'Hollifield Clinics',
+    }, {
+      reference: 'Practitioner?identifier=7882499',
+      display: 'Nurse Practitioner Sharon Arthurs',
+    }],
+  },
+  {
+    measures: ['bcse', 'ccs', 'cole', 'psa'],
+    providers: [{
+      reference: 'Organization?identifier=8554',
+      display: 'Cancer Treatment & Care',
+    }, {
+      reference: 'Practitioner?identifier=903321',
+      display: 'Dr. Larry McDaniels',
+    }],
+  },
+  {
+    measures: ['prse', 'pnde', 'pdse'],
+    providers: [{
+      reference: 'Organization?identifier=9911',
+      display: "Anova Women's Birthing Service",
+    }, {
+      reference: 'Practitioner?identifier=8123',
+      display: 'Dr. Colette DeBarge',
+    }],
+  },
+];
+
 const scoreTemplate = (measure, date) => {
   const id = `${measure}-${uuidv4()}`;
+  const coverageChosen = Math.floor(Math.random() * coveragePlans.length);
+
+  const periodDate = new Date(date.toDateString());
+  periodDate.setFullYear(date.getFullYear() - 1);
+  const periodStart = dateFormatter(periodDate);
+  periodDate.setFullYear(date.getFullYear() + 1);
+  const periodEnd = dateFormatter(periodDate);
+
+  const providerChoices = providerOptions.filter((provider) => provider.measures.includes(measure));
+
   const data = {
     measurementType: measure,
     memberId: id,
     timeStamp: date,
+    coverage: [{
+      status: { value: 'active' },
+      type: {
+        coding: [{
+          system: { value: 'http://terminology.hl7.org/CodeSystem/v3-ActCode' },
+          code: { value: coveragePlans[coverageChosen].code },
+          display: { value: coveragePlans[coverageChosen].display },
+        }],
+      },
+      subscriber: {
+        reference: { value: `Patient/${id}` },
+      },
+      beneficiary: {
+        reference: { value: `Patient/${id}` },
+      },
+      relationship: {
+        coding: [{
+          code: { value: 'self' },
+        }],
+      },
+      period: {
+        start: { value: periodStart },
+        end: { value: periodEnd },
+      },
+      payor: [{
+        reference: { value: `Organization/${Math.floor(Math.random() * 3 + 1)}` },
+      }],
+      id: { value: uuidv4() },
+    }],
+    providers: providerChoices[Math.floor(Math.random() * providerChoices.length)].providers,
   };
   return { data, id };
 };
@@ -416,32 +531,113 @@ const measureFunctions = {
   },
 };
 
+const scoresToUpdate = [];
+
+function saveCompliance(score) {
+  const measure = score.measurementType;
+  const id = Object.keys(score).filter((key) => key.startsWith(measure))[0];
+  if (id === undefined) { // Man, something went wrong here... skip it.
+    return;
+  }
+
+  if (template[measure].type === 'bool') {
+    if (template[measure].subs === 1 && !score[id].Numerator) {
+      scoresToUpdate.push(score);
+      return;
+    }
+    for (let i = 1; i < template[measure].subs; i += 1) {
+      if (!score[id][`Numerator ${i}`]) {
+        scoresToUpdate.push(score);
+        return; // We know it's not compliant.
+      }
+    }
+  }
+  if (template[measure].subs === 1
+     && score[id].Numerator.length !== score[id].Denominator.length) {
+    scoresToUpdate.push(score);
+    return;
+  }
+  for (let i = 1; i < template[measure].subs; i += 1) {
+    if (score[id][`Numerator ${i}`].length !== score[id][`Denominator ${i}`].length) {
+      scoresToUpdate.push(score);
+      return;
+    }
+  }
+}
+
+// function updateCompliance(measure, date) {
+//   for (let i = 0; i < numeratorUpdate.length; i += 1) {
+
+//   }
+// }
+
 async function generateData() {
-  const measureList = Object.keys(template);
+  const scoreAmount = parseArgs.s || 300;
+  let measureList = Object.keys(template);
+  if (parseArgs.i) {
+    console.log('\x1b[33mInfo:\x1b[0m Checking included measures for validity.');
+    const includedList = parseArgs.i.split(',');
+    const checkedList = includedList.filter((measure) => !measureList.includes(measure));
+    if (checkedList.length > 0) {
+      console.error(`\x1b[31mError:\x1b[0m Unknown measures: ${checkedList}. Aborting.`);
+      process.exit();
+    }
+    measureList = includedList;
+  }
+  console.log(`\n\x1b[33mInfo:\x1b[0m Starting test data generation for ${scoreAmount} scores.`);
   const newScores = [];
   let measure;
-  for (let i = 0; i < 300; i += 1) {
+  for (let i = 0; i < scoreAmount; i += 1) {
     measure = measureList[i % measureList.length];
-    newScores.push(measureFunctions[template[measure].newEntry](measure, new Date()));
+    const score = measureFunctions[template[measure].newEntry](measure, new Date());
+    newScores.push(score);
+    saveCompliance(score);
   }
   return newScores;
 }
 
-async function processData() {
-  console.log('\nInfo: Starting test data generation.');
-  await dao.init();
-  const newScoresList = await generateData();
-  console.log(`\nInfo: ${newScoresList.length} results to be added.`);
-  const insertResults = await dao.insertMeasures(newScoresList);
-  if (!insertResults) {
-    console.error('\x1b[31mError: Something went wrong during insertion.\x1b[0m');
+function outputData(newScoresList) {
+  let fileTitle = `saraswati-test-data_${today.getMonth()}-${today.getDate()}-${today.getFullYear()}`;
+  fileTitle += `_${today.getHours()}-${today.getMinutes()}-${today.getSeconds()}.json`;
+
+  try {
+    fs.writeFileSync(`${__dirname}/test/generated-data/${fileTitle}`, JSON.stringify(newScoresList, null, 4));
+  } catch (writeErr) {
+    console.error(`\x1b[31mError:\x1b[0m Unable to write to directory:${writeErr}.`);
     process.exit();
   }
-  console.log(`Info: Results are being inserted into DAO. Please wait ${newScoresList.length / 10} seconds for asynchronous completion...`);
+  console.log(`\x1b[32mSuccess:\x1b[0m Check ${fileTitle} for new data.`);
+  process.exit();
+}
+
+async function processData() {
+  await dao.init();
+  const newScoresList = await generateData();
+  console.log(`\x1b[33mInfo:\x1b[0m ${newScoresList.length} scores to be inserted, ${scoresToUpdate.length} of which are non-compliant.`);
+  if (parseArgs.o) {
+    outputData(newScoresList);
+  }
+  const insertResults = await dao.insertMeasures(newScoresList);
+  if (!insertResults) {
+    console.error('\x1b[31mError:\x1b[0m Something went wrong during insertion.');
+    process.exit();
+  }
+  console.log(`\x1b[33mInfo:\x1b[0m Results are being inserted into DAO. Please wait ${newScoresList.length / 10} seconds for asynchronous completion...`);
   setTimeout(() => {
-    console.log('\x1b[32mSuccess: Check database for new insertions.\x1b[0m');
+    console.log('\x1b[32mSuccess:\x1b[0m Check database for new insertions.');
     process.exit();
   }, newScoresList.length * 10);
+}
+
+if (parseArgs.h === true) {
+  console.log('\n A script for generated fake HEDIS scores for Saraswati.\n\n Options:');
+  // console.log('   -d, --days: How many days back you want generated. Default is 1.\n');
+  console.log('   -h, --help: Help command. What you\'re reading now...\n');
+  console.log('   -i, --include: A spaceless, comma separated of measures to create. Default is to use all. Valid options are: ');
+  console.log(`\t${Object.keys(template).join(', ')}`);
+  console.log('   -s, --size: The number of produced HEDIS measurement scores. Default is 300.');
+  console.log('   -o, --output: Instead of inserting into database, writes output to the file "saraswati-test-data" with a datetime stamp.');
+  process.exit();
 }
 
 processData();
