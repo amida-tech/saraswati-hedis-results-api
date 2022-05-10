@@ -83,8 +83,6 @@ const template = {
   },
 };
 
-const measureList = Object.keys(template);
-
 const randomBool = () => Math.random() < 0.5;
 const randomTruerBool = () => Math.random() < 0.7;
 const randomTruestBool = () => Math.random() < 0.9;
@@ -429,14 +427,67 @@ const measureFunctions = {
   },
 };
 
+const scoresToUpdate = [];
+
+function saveCompliance(score) {
+  const measure = score.measurementType;
+  const id = Object.keys(score).filter((key) => key.startsWith(measure))[0];
+  if (id === undefined) { // Man, something went wrong here... skip it.
+    return;
+  }
+
+  if (template[measure].type === 'bool') {
+    if (template[measure].subs === 1 && !score[id].Numerator) {
+      scoresToUpdate.push(score);
+      return;
+    }
+    for (let i = 1; i < template[measure].subs; i += 1) {
+      if (!score[id][`Numerator ${i}`]) {
+        scoresToUpdate.push(score);
+        return; // We know it's not compliant.
+      }
+    }
+  }
+  if (template[measure].subs === 1
+     && score[id].Numerator.length !== score[id].Denominator.length) {
+    scoresToUpdate.push(score);
+    return;
+  }
+  for (let i = 1; i < template[measure].subs; i += 1) {
+    if (score[id][`Numerator ${i}`].length !== score[id][`Denominator ${i}`].length) {
+      scoresToUpdate.push(score);
+      return;
+    }
+  }
+}
+
+// function updateCompliance(measure, date) {
+//   for (let i = 0; i < numeratorUpdate.length; i += 1) {
+
+//   }
+// }
+
 async function generateData() {
   const scoreAmount = parseArgs.s || 300;
+  let measureList = Object.keys(template);
+  if (parseArgs.i) {
+    console.log('\x1b[33mInfo:\x1b[0m Checking included measures for validity.');
+    const includedList = parseArgs.i.split(',');
+    const checkedList = includedList.filter((measure) => !measureList.includes(measure));
+    if (checkedList.length > 0) {
+      console.error(`\x1b[31mError:\x1b[0m Unknown measures: ${checkedList}. Aborting.`);
+      process.exit();
+    }
+    measureList = includedList;
+  }
   console.log(`\n\x1b[33mInfo:\x1b[0m Starting test data generation for ${scoreAmount} scores.`);
   const newScores = [];
   let measure;
   for (let i = 0; i < scoreAmount; i += 1) {
     measure = measureList[i % measureList.length];
-    newScores.push(measureFunctions[template[measure].newEntry](measure, new Date()));
+    const score = measureFunctions[template[measure].newEntry](measure, new Date());
+    newScores.push(score);
+    saveCompliance(score);
   }
   return newScores;
 }
@@ -446,7 +497,7 @@ function outputData(newScoresList) {
   fileTitle += `_${today.getHours()}-${today.getMinutes()}-${today.getSeconds()}.json`;
 
   try {
-    fs.writeFileSync(fileTitle, JSON.stringify(newScoresList, null, 4));
+    fs.writeFileSync(`${__dirname}/test/gen-data/${fileTitle}`, JSON.stringify(newScoresList, null, 4));
   } catch (writeErr) {
     console.error(`\x1b[31mError:\x1b[0m Unable to write to directory:${writeErr}.`);
     process.exit();
@@ -458,11 +509,11 @@ function outputData(newScoresList) {
 async function processData() {
   await dao.init();
   const newScoresList = await generateData();
-  console.log(`\x1b[33mInfo:\x1b[0m ${newScoresList.length} scores to be inserted.`);
-  const insertResults = await dao.insertMeasures(newScoresList);
+  console.log(`\x1b[33mInfo:\x1b[0m ${newScoresList.length} scores to be inserted, ${scoresToUpdate.length} of which are non-compliant.`);
   if (parseArgs.o) {
     outputData(newScoresList);
   }
+  const insertResults = await dao.insertMeasures(newScoresList);
   if (!insertResults) {
     console.error('\x1b[31mError:\x1b[0m Something went wrong during insertion.');
     process.exit();
@@ -476,9 +527,10 @@ async function processData() {
 
 if (parseArgs.h === true) {
   console.log('\n A script for generated fake HEDIS scores for Saraswati.\n\n Options:');
+  // console.log('   -d, --days: How many days back you want generated. Default is 1.\n');
   console.log('   -h, --help: Help command. What you\'re reading now...\n');
   console.log('   -i, --include: A spaceless, comma separated of measures to create. Default is to use all. Valid options are: ');
-  console.log(`\t${measureList.join(', ')}`);
+  console.log(`\t${Object.keys(template).join(', ')}`);
   console.log('   -s, --size: The number of produced HEDIS measurement scores. Default is 300.');
   console.log('   -o, --output: Instead of inserting into database, writes output to the file "saraswati-test-data" with a datetime stamp.');
   process.exit();
