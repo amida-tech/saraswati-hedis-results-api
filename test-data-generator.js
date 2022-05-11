@@ -166,7 +166,7 @@ const providerOptions = [
   },
 ];
 
-const scoreTemplate = (measure, date) => {
+const newScoreTemplate = (measure, date) => {
   const id = `${measure}-${uuidv4()}`;
   const coverageChosen = Math.floor(Math.random() * coveragePlans.length);
 
@@ -215,11 +215,11 @@ const scoreTemplate = (measure, date) => {
   return { data, id };
 };
 
-const updateTemplate = (measure, date) => {
+const updateScoreTemplate = (measure, date) => {
   const id = Object.keys(measure).filter((key) => key.startsWith(measure.measurementType))[0];
-  const newMeasure = JSON.parse(JSON.stringify(measure));
-  newMeasure.timeStamp = date.toISOString();
-  return { newMeasure, id };
+  const data = JSON.parse(JSON.stringify(measure));
+  data.timeStamp = date.toISOString();
+  return { data, id };
 };
 
 const dateGenerator = (date, gap) => {
@@ -276,8 +276,8 @@ const deliveryGenerator = (measure) => ({
 
 const measureFunctions = {
   newSingleDate: (measure, date) => {
+    const { data, id } = newScoreTemplate(measure, date);
     const { gap } = template[measure];
-    const { data, id } = scoreTemplate(measure, date);
     const { initialPopDates, exclusionDates, numeratorDates } = dateGenerator(date, gap);
     data[id] = {
       'Initial Population': initialPopDates,
@@ -289,12 +289,14 @@ const measureFunctions = {
     return data;
   },
   updateSingleDate: (measure, date) => { // Copy denominator to numerator
-    const { newMeasure, id } = updateTemplate(measure, date);
-    newMeasure[id].Numerator = newMeasure[id].Denominator;
-    return newMeasure;
+    const { data, id } = updateScoreTemplate(measure, date);
+    if (randomTruerBool()) {
+      data[id].Numerator = data[id].Denominator;
+    }
+    return data;
   },
   newSingleBool: (measure, date) => { // Single boolean value, nothing interesting.
-    const { data, id } = scoreTemplate(measure, date);
+    const { data, id } = newScoreTemplate(measure, date);
     data[id] = {
       'Initial Population': true,
       Exclusions: randomBool(),
@@ -305,12 +307,12 @@ const measureFunctions = {
     return data;
   },
   updateSingleBool: (measure, date) => { // Can only flip numerator.
-    const { newMeasure, id } = updateTemplate(measure, date);
-    newMeasure[id].Numerator = true;
-    return newMeasure;
+    const { data, id } = updateScoreTemplate(measure, date);
+    data[id].Numerator = randomTruerBool();
+    return data;
   },
-  newDoubleBool: (measure, date) => { // Same init pop and denom, differing numerators.
-    const { data, id } = scoreTemplate(measure, date);
+  newDoubleBool: (measure, date) => { // Same init pop, differing denom and numerators.
+    const { data, id } = newScoreTemplate(measure, date);
     const exclusion = randomBool();
     const numerator1 = randomBool();
     const denominator2 = randomBool();
@@ -327,8 +329,21 @@ const measureFunctions = {
     };
     return data;
   },
+  updateDoubleBool: (measure, date) => { // Same init pop and denom, differing numerators.
+    const { data, id } = updateScoreTemplate(measure, date);
+    if (!data[id]['Numerator 1']) {
+      data[id]['Numerator 1'] = randomTruerBool();
+    }
+    if (!data[id]['Denominator 1']) {
+      data[id]['Denominator 1'] = randomTruerBool();
+    }
+    if (data[id]['Denominator 1'] && data[id]['Numerator 1']) {
+      data[id]['Numerator 2'] = randomTruerBool();
+    }
+    return data;
+  },
   newTripleDependBool: (measure, date) => { // Same init pop and denom, 3rd num depends on prior 2
-    const { data, id } = scoreTemplate(measure, date);
+    const { data, id } = newScoreTemplate(measure, date);
     const exclusion = randomBool();
     const numerator1 = randomBool();
     const numerator2 = randomBool();
@@ -349,8 +364,21 @@ const measureFunctions = {
     };
     return data;
   },
+  updateTripleDependBool: (measure, date) => {
+    const { data, id } = updateScoreTemplate(measure, date);
+    if (!data[id]['Numerator 1']) {
+      data[id]['Numerator 1'] = randomTruerBool();
+    }
+    if (!data[id]['Numerator 2']) {
+      data[id]['Numerator 2'] = randomTruerBool();
+    }
+    if (data[id]['Numerator 1'] && data[id]['Numerator 2']) {
+      data[id]['Numerator 3'] = true;
+    }
+    return data;
+  },
   newDoubleDeliveries: (measure, date) => {
-    const { data, id } = scoreTemplate(measure, date);
+    const { data, id } = newScoreTemplate(measure, date);
     const initialPop1 = [deliveryGenerator()];
     const exclusion = randomBool() ? initialPop1 : [];
     const denominator2 = randomTruerBool() ? initialPop1 : [];
@@ -368,8 +396,21 @@ const measureFunctions = {
     };
     return data;
   },
+  updateDoubleDeliveries: (measure, date) => {
+    const { data, id } = updateScoreTemplate(measure, date);
+    if (data[id]['Denominator 2'].length !== data[id]['Denominator 1'].length > 0 && randomTruerBool()) {
+      data[id]['Denominator 2'] = data[id]['Denominator 1'];
+    }
+    if (data[id]['Denominator 2'].length !== data[id]['Numerator 1'].length > 0 && randomTruerBool()) {
+      data[id]['Numerator 1'] = data[id]['Denominator 2'];
+    }
+    if (data[id]['Numerator 2'].length !== data[id]['Numerator 1'].length > 0 && randomTruerBool()) {
+      data[id]['Numerator 2'] = data[id]['Numerator 1'];
+    }
+    return data;
+  },
   newADDE: (measure, date) => { // Differing initial populations
-    const { data, id } = scoreTemplate(measure, date);
+    const { data, id } = newScoreTemplate(measure, date);
     const exclusion = randomBool();
     const numerator1 = randomBool();
     const initialPop2 = randomBool();
@@ -387,8 +428,21 @@ const measureFunctions = {
     };
     return data;
   },
+  updateADDE: (measure, date) => {
+    const { data, id } = updateScoreTemplate(measure, date);
+    if (!data[id]['Initial Population 2']) {
+      data[id]['Initial Population 2'] = randomTruerBool();
+    }
+    if (!data[id]['Denominator 2']) {
+      data[id]['Denominator 2'] = randomTruerBool();
+    }
+    if (data[id]['Denominator 2'] && data[id]['Numerator 1']) {
+      data[id]['Numerator 2'] = randomTruerBool();
+    }
+    return data;
+  },
   newAISE: (measure, date) => { // 4 sub measure, depending on vaccines and age ranges
-    const { data, id } = scoreTemplate(measure, date);
+    const { data, id } = newScoreTemplate(measure, date);
     const exclusion = randomBool();
     const initialPop3 = randomBool();
     const initialPop4 = initialPop3 ? randomBool() : false;
@@ -413,8 +467,34 @@ const measureFunctions = {
     };
     return data;
   },
+  updateAISE: (measure, date) => {
+    const { data, id } = updateScoreTemplate(measure, date);
+    if (!data[id]['Numerator 1']) {
+      data[id]['Numerator 1'] = randomTruerBool();
+    }
+    if (!data[id]['Numerator 2']) {
+      data[id]['Numerator 2'] = randomTruerBool();
+    }
+    if (!data[id]['Initial Population 3']) {
+      const updateValue = randomBool() && !randomTruerBool(); // 1/2 * 3/10 15% chance.
+      data[id]['Initial Population 3'] = updateValue;
+      data[id]['Denominator 3'] = updateValue;
+    }
+    if (!data[id]['Initial Population 4'] && data[id]['Initial Population 3']) {
+      const updateValue = randomBool();
+      data[id]['Initial Population 4'] = updateValue;
+      data[id]['Denominator 4'] = updateValue;
+    }
+    if (data[id]['Initial Population 3']) {
+      data[id]['Numerator 3'] = randomBool();
+    }
+    if (data[id]['Initial Population 4']) {
+      data[id]['Numerator 4'] = randomBool();
+    }
+    return data;
+  },
   newCISE: (measure, date) => { // 13 nums, have fun!
-    const { data, id } = scoreTemplate(measure, date);
+    const { data, id } = newScoreTemplate(measure, date);
     const exclusion = !randomTruerBool();
     data[id] = {};
     for (let i = 1; i < 14; i += 1) { // Not as performant but easier to read.
@@ -438,7 +518,7 @@ const measureFunctions = {
     return data;
   },
   newDMSE: (measure, date) => { // Checks 3 times a year, then denom is always true
-    const { data, id } = scoreTemplate(measure, date);
+    const { data, id } = newScoreTemplate(measure, date);
     const exclusion = randomBool();
     const initialPop1 = randomBool();
     const initialPop2 = initialPop1 || randomTruerBool();
@@ -461,7 +541,7 @@ const measureFunctions = {
     return data;
   },
   newDRRE: (measure, date) => { // Checks 3 times a year, then denom is always true
-    const { data, id } = scoreTemplate(measure, date);
+    const { data, id } = newScoreTemplate(measure, date);
     const exclusion = !randomTruerBool();
     const numerator3 = randomBool(); // Numerator 2 is dependent on 3.
     const numerator2 = numerator3 ? randomTruerBool() : false;
@@ -484,7 +564,7 @@ const measureFunctions = {
   },
   newFUM: (measure, date) => { // One for 30 day gap, another for 7.
     const { gap } = template[measure];
-    const { data, id } = scoreTemplate(measure, date);
+    const { data, id } = newScoreTemplate(measure, date);
     const { initialPopDates, exclusionDates, numeratorDates } = dateGenerator(date, gap);
     const numerator2Dates = Array.from(numeratorDates);
     if (!randomTruerBool()) {
@@ -504,7 +584,7 @@ const measureFunctions = {
     return data;
   },
   newIMAE: (measure, date) => { // 4 is based on 1, 2, and 5 on 1, 2, 3
-    const { data, id } = scoreTemplate(measure, date);
+    const { data, id } = newScoreTemplate(measure, date);
     const exclusion = !randomTruerBool();
     data[id] = {};
     for (let i = 1; i < 6; i += 1) { // Not as performant but easier to read.
@@ -525,7 +605,7 @@ const measureFunctions = {
     return data;
   },
   newPRSE: (measure, date) => {
-    const { data, id } = scoreTemplate(measure, date);
+    const { data, id } = newScoreTemplate(measure, date);
     const initialPop1 = [deliveryGenerator()];
     const exclusion = randomBool() ? initialPop1 : [];
     const numerator1 = randomTruestBool() ? initialPop1 : [];
@@ -585,9 +665,8 @@ function saveCompliance(score) {
 }
 
 async function generateData(measureList, scoreAmount, days, range) {
-  const currentDay = new Date();
-  currentDay.setDate(today.getDate() - days);
-  console.log('\n\x1b[33mInfo:\x1b[0m Starting data generation with settings:.');
+  let currentDay = new Date(new Date().setDate(today.getDate() - days));
+  console.log('\n\x1b[33mInfo:\x1b[0m Starting data generation with settings:');
   console.log(`\x1b[33mInfo:\x1b[0m ${scoreAmount} scores for the first day. ${currentDay.toDateString()}.`);
   console.log(`\x1b[33mInfo:\x1b[0m After that, every produces between ${range[0]} and ${range[1]} new scores.`);
   console.log(`\x1b[33mInfo:\x1b[0m Measures will be produced for ${measureList.toString()} will be used.\n`);
@@ -597,19 +676,17 @@ async function generateData(measureList, scoreAmount, days, range) {
     measure = measureList[i % measureList.length];
     const score = measureFunctions[template[measure].newEntry](measure, currentDay);
     newScores.push(score);
-    if (randomBool()) {
-      saveCompliance(score);
-    }
+    saveCompliance(score);
   }
   let daysLeft = days - 1;
   while (daysLeft > 0) {
-    console.log(scoresToUpdate.length);
-    currentDay.setDate(today.getDate() - daysLeft);
+    currentDay = new Date(new Date().setDate(today.getDate() - daysLeft));
     for (let i = 0; i < scoresToUpdate.length; i += 1) {
       if (!randomTruestBool()) {
         const score = measureFunctions[template[scoresToUpdate[i].measurementType]
           .updateEntry](scoresToUpdate[i], currentDay);
         newScores.push(score);
+        saveCompliance(score); // Resaves measure whether it really changed or not.
         scoresToUpdate.splice(i, 1);
         scoresUpdated += 1;
       }
@@ -619,9 +696,7 @@ async function generateData(measureList, scoreAmount, days, range) {
       measure = measureList[i % measureList.length];
       const score = measureFunctions[template[measure].newEntry](measure, currentDay);
       newScores.push(score);
-      if (randomBool()) {
-        saveCompliance(score);
-      }
+      saveCompliance(score);
     }
     daysLeft -= 1;
   }
@@ -659,7 +734,6 @@ async function insertData(newScoresList) {
 async function processData() {
   let measureList = Object.keys(template);
   if (parseArgs.i) {
-    console.log('\x1b[33mInfo:\x1b[0m Checking included measures for validity.');
     const includedList = parseArgs.i.split(',');
     const checkedList = includedList.filter((measure) => !measureList.includes(measure));
     if (checkedList.length > 0) {
