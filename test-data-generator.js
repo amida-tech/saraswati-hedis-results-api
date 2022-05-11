@@ -18,7 +18,7 @@ const parseArgs = minimist(process.argv.slice(2), {
 
 const template = {
   aab: { // Avoidance of Antibiotic Treatment for Acute Bronchitis/Bronchiolitis
-    subs: 1, type: 'date', gap: 31, newEntry: 'newSingleDate', updateEntry: 'updatedSingleDate',
+    subs: 1, type: 'date', gap: 31, newEntry: 'newSingleDate', updateEntry: 'updateSingleDate',
   },
   adde: { // Follow-Up Care for Children Prescribed ADHD Medication
     subs: 2, type: 'bool', newEntry: 'newADDE', updateEntry: 'updateADDE',
@@ -177,11 +177,10 @@ const scoreTemplate = (measure, date) => {
   const periodEnd = dateFormatter(periodDate);
 
   const providerChoices = providerOptions.filter((provider) => provider.measures.includes(measure));
-
   const data = {
     measurementType: measure,
     memberId: id,
-    timeStamp: date,
+    timeStamp: date.toISOString(),
     coverage: [{
       status: { value: 'active' },
       type: {
@@ -216,9 +215,10 @@ const scoreTemplate = (measure, date) => {
   return { data, id };
 };
 
-const updateTemplate = (measure) => {
-  const id = Object.keys(measure).filter((key) => key.startsWith(measure))[0];
+const updateTemplate = (measure, date) => {
+  const id = Object.keys(measure).filter((key) => key.startsWith(measure.measurementType))[0];
   const newMeasure = JSON.parse(JSON.stringify(measure));
+  newMeasure.timeStamp = date.toISOString();
   return { newMeasure, id };
 };
 
@@ -288,6 +288,11 @@ const measureFunctions = {
     };
     return data;
   },
+  updateSingleDate: (measure, date) => { // Copy denominator to numerator
+    const { newMeasure, id } = updateTemplate(measure, date);
+    newMeasure[id].Numerator = newMeasure[id].Denominator;
+    return newMeasure;
+  },
   newSingleBool: (measure, date) => { // Single boolean value, nothing interesting.
     const { data, id } = scoreTemplate(measure, date);
     data[id] = {
@@ -299,10 +304,9 @@ const measureFunctions = {
     };
     return data;
   },
-  updateSingleBool: (measure, date) => { // Single boolean value, nothing interesting.
-    const { newMeasure, id } = updateTemplate(measure);
+  updateSingleBool: (measure, date) => { // Can only flip numerator.
+    const { newMeasure, id } = updateTemplate(measure, date);
     newMeasure[id].Numerator = true;
-    newMeasure[id].timeStamp = date;
     return newMeasure;
   },
   newDoubleBool: (measure, date) => { // Same init pop and denom, differing numerators.
@@ -546,6 +550,7 @@ const measureFunctions = {
 };
 
 const scoresToUpdate = [];
+let scoresUpdated = 0;
 
 function saveCompliance(score) {
   const measure = score.measurementType;
@@ -580,38 +585,41 @@ function saveCompliance(score) {
 }
 
 async function generateData(measureList, scoreAmount, days, range) {
-  let currentDay = new Date().setDate(today.getDate() - days);
+  const currentDay = new Date();
+  currentDay.setDate(today.getDate() - days);
   console.log('\n\x1b[33mInfo:\x1b[0m Starting data generation with settings:.');
-  console.log(`\n\x1b[33mInfo:\x1b[0m ${scoreAmount} scores for the first day. ${currentDay.toDateString()}.`);
-  console.log(`\n\x1b[33mInfo:\x1b[0m After that, every produces between ${range[0]} and ${range[1]} new scores.`);
-  console.log(`\n\x1b[33mInfo:\x1b[0m Measures will be produced for ${measureList.toString()} will be used.`);
+  console.log(`\x1b[33mInfo:\x1b[0m ${scoreAmount} scores for the first day. ${currentDay.toDateString()}.`);
+  console.log(`\x1b[33mInfo:\x1b[0m After that, every produces between ${range[0]} and ${range[1]} new scores.`);
+  console.log(`\x1b[33mInfo:\x1b[0m Measures will be produced for ${measureList.toString()} will be used.\n`);
   const newScores = [];
   let measure;
   for (let i = 0; i < scoreAmount; i += 1) {
     measure = measureList[i % measureList.length];
     const score = measureFunctions[template[measure].newEntry](measure, currentDay);
     newScores.push(score);
-    if (!randomTruerBool) {
+    if (randomBool()) {
       saveCompliance(score);
     }
   }
   let daysLeft = days - 1;
   while (daysLeft > 0) {
-    currentDay = new Date().setDate(today.getDate() - days);
+    console.log(scoresToUpdate.length);
+    currentDay.setDate(today.getDate() - daysLeft);
     for (let i = 0; i < scoresToUpdate.length; i += 1) {
-      if (!randomTruerBool) {
-        const score = measureFunctions[
-          template[scoresToUpdate[i].measurementType].updateEntry](scoresToUpdate[i], currentDay);
+      if (!randomTruestBool()) {
+        const score = measureFunctions[template[scoresToUpdate[i].measurementType]
+          .updateEntry](scoresToUpdate[i], currentDay);
         newScores.push(score);
         scoresToUpdate.splice(i, 1);
+        scoresUpdated += 1;
       }
     }
-    const rangeSelected = Math.floor(Math.random() - (range[1] - range[0]) + range[0]);
+    const rangeSelected = Math.floor(Math.random() * (range[1] - range[0])) + range[0];
     for (let i = 0; i < rangeSelected; i += 1) {
       measure = measureList[i % measureList.length];
       const score = measureFunctions[template[measure].newEntry](measure, currentDay);
       newScores.push(score);
-      if (!randomTruerBool) {
+      if (randomBool()) {
         saveCompliance(score);
       }
     }
@@ -681,9 +689,9 @@ async function processData() {
   }
 
   const scoreAmount = parseArgs.s || 300;
-  const days = parseArgs.d || 1;
+  const days = parseArgs.d || 0;
   const newScoresList = await generateData(measureList, scoreAmount, days, range);
-  console.log(`\x1b[33mInfo:\x1b[0m ${newScoresList.length} scores to be inserted, ${scoresToUpdate.length} of which are non-compliant.`);
+  console.log(`\x1b[33mInfo:\x1b[0m ${newScoresList.length} scores to be inserted. ${scoresToUpdate.length} are non-compliant, and ${scoresUpdated} became compliant.`);
   if (parseArgs.o) {
     outputData(newScoresList);
   }
@@ -692,7 +700,7 @@ async function processData() {
 
 if (parseArgs.h === true) {
   console.log('\n A script for generated fake HEDIS scores for Saraswati.\n\n Options:');
-  console.log('   -d, --days: How many days back you want generated. Default is 1.\n');
+  console.log('   -d, --days: How many days back you want generated. Default is 0, today.\n');
   console.log('   -h, --help: Help command. What you\'re reading now...\n');
   console.log('   -i, --include: A spaceless, comma-separated list of measures to create. Default is to use all. Valid options are: ');
   console.log(`\t${Object.keys(template).join(', ')}`);
