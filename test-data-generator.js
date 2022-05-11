@@ -7,8 +7,10 @@ const dao = require('./src/config/dao');
 
 const parseArgs = minimist(process.argv.slice(2), {
   alias: {
+    d: 'days',
     h: 'help',
     i: 'include',
+    r: 'range',
     s: 'size',
     o: 'output',
   },
@@ -214,6 +216,12 @@ const scoreTemplate = (measure, date) => {
   return { data, id };
 };
 
+const updateTemplate = (measure) => {
+  const id = Object.keys(measure).filter((key) => key.startsWith(measure))[0];
+  const newMeasure = JSON.parse(JSON.stringify(measure));
+  return { newMeasure, id };
+};
+
 const dateGenerator = (date, gap) => {
   const days = dayOfYear(date);
   const initialPopDates = [];
@@ -290,6 +298,12 @@ const measureFunctions = {
       id,
     };
     return data;
+  },
+  updateSingleBool: (measure, date) => { // Single boolean value, nothing interesting.
+    const { newMeasure, id } = updateTemplate(measure);
+    newMeasure[id].Numerator = true;
+    newMeasure[id].timeStamp = date;
+    return newMeasure;
   },
   newDoubleBool: (measure, date) => { // Same init pop and denom, differing numerators.
     const { data, id } = scoreTemplate(measure, date);
@@ -565,39 +579,49 @@ function saveCompliance(score) {
   }
 }
 
-// function updateCompliance(measure, date) {
-//   for (let i = 0; i < numeratorUpdate.length; i += 1) {
-
-//   }
-// }
-
-async function generateData() {
-  const scoreAmount = parseArgs.s || 300;
-  let measureList = Object.keys(template);
-  if (parseArgs.i) {
-    console.log('\x1b[33mInfo:\x1b[0m Checking included measures for validity.');
-    const includedList = parseArgs.i.split(',');
-    const checkedList = includedList.filter((measure) => !measureList.includes(measure));
-    if (checkedList.length > 0) {
-      console.error(`\x1b[31mError:\x1b[0m Unknown measures: ${checkedList}. Aborting.`);
-      process.exit();
-    }
-    measureList = includedList;
-  }
-  console.log(`\n\x1b[33mInfo:\x1b[0m Starting test data generation for ${scoreAmount} scores.`);
+async function generateData(measureList, scoreAmount, days, range) {
+  let currentDay = new Date().setDate(today.getDate() - days);
+  console.log('\n\x1b[33mInfo:\x1b[0m Starting data generation with settings:.');
+  console.log(`\n\x1b[33mInfo:\x1b[0m ${scoreAmount} scores for the first day. ${currentDay.toDateString()}.`);
+  console.log(`\n\x1b[33mInfo:\x1b[0m After that, every produces between ${range[0]} and ${range[1]} new scores.`);
+  console.log(`\n\x1b[33mInfo:\x1b[0m Measures will be produced for ${measureList.toString()} will be used.`);
   const newScores = [];
   let measure;
   for (let i = 0; i < scoreAmount; i += 1) {
     measure = measureList[i % measureList.length];
-    const score = measureFunctions[template[measure].newEntry](measure, new Date());
+    const score = measureFunctions[template[measure].newEntry](measure, currentDay);
     newScores.push(score);
-    saveCompliance(score);
+    if (!randomTruerBool) {
+      saveCompliance(score);
+    }
+  }
+  let daysLeft = days - 1;
+  while (daysLeft > 0) {
+    currentDay = new Date().setDate(today.getDate() - days);
+    for (let i = 0; i < scoresToUpdate.length; i += 1) {
+      if (!randomTruerBool) {
+        const score = measureFunctions[
+          template[scoresToUpdate[i].measurementType].updateEntry](scoresToUpdate[i], currentDay);
+        newScores.push(score);
+        scoresToUpdate.splice(i, 1);
+      }
+    }
+    const rangeSelected = Math.floor(Math.random() - (range[1] - range[0]) + range[0]);
+    for (let i = 0; i < rangeSelected; i += 1) {
+      measure = measureList[i % measureList.length];
+      const score = measureFunctions[template[measure].newEntry](measure, currentDay);
+      newScores.push(score);
+      if (!randomTruerBool) {
+        saveCompliance(score);
+      }
+    }
+    daysLeft -= 1;
   }
   return newScores;
 }
 
 function outputData(newScoresList) {
-  let fileTitle = `saraswati-test-data_${today.getMonth()}-${today.getDate()}-${today.getFullYear()}`;
+  let fileTitle = `saraswati-test-data_${dateFormatter(today)}`;
   fileTitle += `_${today.getHours()}-${today.getMinutes()}-${today.getSeconds()}.json`;
 
   try {
@@ -610,13 +634,8 @@ function outputData(newScoresList) {
   process.exit();
 }
 
-async function processData() {
+async function insertData(newScoresList) {
   await dao.init();
-  const newScoresList = await generateData();
-  console.log(`\x1b[33mInfo:\x1b[0m ${newScoresList.length} scores to be inserted, ${scoresToUpdate.length} of which are non-compliant.`);
-  if (parseArgs.o) {
-    outputData(newScoresList);
-  }
   const insertResults = await dao.insertMeasures(newScoresList);
   if (!insertResults) {
     console.error('\x1b[31mError:\x1b[0m Something went wrong during insertion.');
@@ -629,12 +648,55 @@ async function processData() {
   }, newScoresList.length * 10);
 }
 
+async function processData() {
+  let measureList = Object.keys(template);
+  if (parseArgs.i) {
+    console.log('\x1b[33mInfo:\x1b[0m Checking included measures for validity.');
+    const includedList = parseArgs.i.split(',');
+    const checkedList = includedList.filter((measure) => !measureList.includes(measure));
+    if (checkedList.length > 0) {
+      console.error(`\x1b[31mError:\x1b[0m Unknown measures: ${checkedList}. Aborting.`);
+      process.exit();
+    }
+    measureList = includedList;
+  }
+
+  if (parseArgs.d && typeof parseArgs.d !== 'number') {
+    console.error('\x1b[31mError:\x1b[0m The "days" argument must be a number. Aborting.');
+    process.exit();
+  }
+
+  if (parseArgs.s && typeof parseArgs.s !== 'number') {
+    console.error('\x1b[31mError:\x1b[0m The "size" argument must be a number. Aborting.');
+    process.exit();
+  }
+
+  let range = [100, 200];
+  if (parseArgs.r) {
+    range = parseArgs.r.split(',').map((entry) => parseInt(entry, 10)).sort();
+    if (range.length !== 2 || Number.isNaN(range[0]) || Number.isNaN(range[1])) {
+      console.error(`\x1b[31mError:\x1b[0m You must provide two numbers for "range" argument. You provided "${range}". Aborting.`);
+      process.exit();
+    }
+  }
+
+  const scoreAmount = parseArgs.s || 300;
+  const days = parseArgs.d || 1;
+  const newScoresList = await generateData(measureList, scoreAmount, days, range);
+  console.log(`\x1b[33mInfo:\x1b[0m ${newScoresList.length} scores to be inserted, ${scoresToUpdate.length} of which are non-compliant.`);
+  if (parseArgs.o) {
+    outputData(newScoresList);
+  }
+  insertData(newScoresList);
+}
+
 if (parseArgs.h === true) {
   console.log('\n A script for generated fake HEDIS scores for Saraswati.\n\n Options:');
-  // console.log('   -d, --days: How many days back you want generated. Default is 1.\n');
+  console.log('   -d, --days: How many days back you want generated. Default is 1.\n');
   console.log('   -h, --help: Help command. What you\'re reading now...\n');
-  console.log('   -i, --include: A spaceless, comma separated of measures to create. Default is to use all. Valid options are: ');
+  console.log('   -i, --include: A spaceless, comma-separated list of measures to create. Default is to use all. Valid options are: ');
   console.log(`\t${Object.keys(template).join(', ')}`);
+  console.log('   -r, --range: A comma-separated list of two numbers, for the amount produced after the first day. Defaults are 100 to 200.');
   console.log('   -s, --size: The number of produced HEDIS measurement scores. Default is 300.');
   console.log('   -o, --output: Instead of inserting into database, writes output to the file "saraswati-test-data" with a datetime stamp.');
   process.exit();
