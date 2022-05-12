@@ -749,7 +749,8 @@ async function generateData(measureList, scoreAmount, days, range) {
     newScores.push(score);
     saveCompliance(score);
   }
-  console.log(`TESTING: Initial non-compliance is ${scoresToUpdate.length}.`);
+  console.log(`TESTING: Start at day ${days}:`);
+  console.log(`TESTING: ${scoreAmount} records generated, ${scoresToUpdate.length} are non-compliant.\n`);
   let daysLeft = days - 1;
   while (daysLeft > 0) {
     currentDay = new Date(new Date().setDate(today.getDate() - daysLeft));
@@ -763,15 +764,19 @@ async function generateData(measureList, scoreAmount, days, range) {
         scoresUpdated += 1;
       }
     }
-    console.log(`TESTING: On ${daysLeft} days back, non-compliance is ${scoresToUpdate.length} and ${scoresUpdated} were updated.`);
+    console.log(`TESTING: Day ${days}:`);
+    console.log(`TESTING: Compliance update: ${scoresToUpdate.length} non-compliant, ${scoresUpdated} now compliant.`);
+    console.log(`TESTING: Running total: ${newScores.length}.`);
     const rangeSelected = Math.floor(Math.random() * (range[1] - range[0])) + range[0];
+    console.log(`TESTING: Generating ${rangeSelected} new records, compliance unknown.`);
     for (let i = 0; i < rangeSelected; i += 1) {
       measure = measureList[i % measureList.length];
       const score = measureFunctions[template[measure].newEntry](measure, currentDay);
       newScores.push(score);
       saveCompliance(score);
     }
-    console.log(`TESTING: At the end ${daysLeft} days, there are ${newScores.length} added total.`);
+    console.log(`TESTING: Day ${daysLeft} final report:`);
+    console.log(`${newScores.length} total records. ${scoresToUpdate.length} non-compliant.\n`);
     daysLeft -= 1;
   }
   return newScores;
