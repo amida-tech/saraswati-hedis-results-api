@@ -1,11 +1,12 @@
 /* eslint-disable no-underscore-dangle */
 const dao = require('../config/dao');
 
-// Access predictions made by time series
+// Get all records with the memberId, sort and get the latest one
 const getMemberInfo = async (req, res, next) => {
   try {
-    const memberResults = await dao.findMeasures(req.query);
-    return res.send(memberResults);
+    let memberResults = await dao.findMeasures(req.query);
+    memberResults = memberResults.sort((a, b) => new Date(b.date) - new Date(a.date));
+    return res.send(memberResults[0]);
   } catch (e) {
     return next(e);
   }
