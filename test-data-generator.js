@@ -48,7 +48,7 @@ const template = {
     subs: 1, type: 'bool', newEntry: 'newSingleBool', updateEntry: 'updateSingleBool',
   },
   cwp: { // Appropriate Testing for Pharyngitis
-    subs: 1, type: 'date', gap: 31, newEntry: 'newSingleDate', updateEntry: 'updatedSingleDate',
+    subs: 1, type: 'date', gap: 31, newEntry: 'newSingleDate', updateEntry: 'updateSingleDate',
   },
   dmse: { // Utilization of the PHQ-9 to Monitor Depression Symptoms for Adolescents and Adults
     subs: 3, type: 'bool', newEntry: 'newDMSE', updateEntry: 'updateDMSE',
@@ -334,10 +334,10 @@ const measureFunctions = {
     if (!data[id]['Numerator 1']) {
       data[id]['Numerator 1'] = randomTruerBool();
     }
-    if (!data[id]['Denominator 1']) {
-      data[id]['Denominator 1'] = randomTruerBool();
+    if (!data[id]['Denominator 2']) {
+      data[id]['Denominator 2'] = randomTruerBool();
     }
-    if (data[id]['Denominator 1'] && data[id]['Numerator 1']) {
+    if (data[id]['Denominator 2'] && data[id]['Numerator 1'] && !data[id]['Numerator 2']) {
       data[id]['Numerator 2'] = randomTruerBool();
     }
     return data;
@@ -436,7 +436,7 @@ const measureFunctions = {
     if (!data[id]['Denominator 2']) {
       data[id]['Denominator 2'] = randomTruerBool();
     }
-    if (data[id]['Denominator 2'] && data[id]['Numerator 1']) {
+    if (data[id]['Denominator 2'] && data[id]['Numerator 1'] && !data[id]['Numerator 2']) {
       data[id]['Numerator 2'] = randomTruerBool();
     }
     return data;
@@ -485,10 +485,10 @@ const measureFunctions = {
       data[id]['Initial Population 4'] = updateValue;
       data[id]['Denominator 4'] = updateValue;
     }
-    if (data[id]['Initial Population 3']) {
+    if (data[id]['Initial Population 3'] && !data[id]['Numerator 3']) {
       data[id]['Numerator 3'] = randomBool();
     }
-    if (data[id]['Initial Population 4']) {
+    if (data[id]['Initial Population 4'] && !data[id]['Numerator 4']) {
       data[id]['Numerator 4'] = randomBool();
     }
     return data;
@@ -511,10 +511,23 @@ const measureFunctions = {
     }
     const numerator11 = numeratorCheck(data[id], 7);
     const numerator12 = numerator11 && data[id]['Numerator 8'] && data[id]['Numerator 9'];
-    const numerator13 = numerator12 && data[id]['Numerator 10'];
     data[id]['Numerator 11'] = numerator11;
     data[id]['Numerator 12'] = numerator12;
-    data[id]['Numerator 13'] = numerator13;
+    data[id]['Numerator 13'] = numerator12 && data[id]['Numerator 10'];
+    return data;
+  },
+  updateCISE: (measure, date) => {
+    const { data, id } = updateScoreTemplate(measure, date);
+    for (let i = 1; i < 11; i += 1) {
+      if (!data[id][`Numerator ${i}`]) {
+        data[id][`Numerator ${i}`] = randomTruerBool();
+      }
+    }
+    const numerator11 = numeratorCheck(data[id], 7);
+    const numerator12 = numerator11 && data[id]['Numerator 8'] && data[id]['Numerator 9'];
+    data[id]['Numerator 11'] = numerator11;
+    data[id]['Numerator 12'] = numerator12;
+    data[id]['Numerator 13'] = numerator12 && data[id]['Numerator 10'];
     return data;
   },
   newDMSE: (measure, date) => { // Checks 3 times a year, then denom is always true
@@ -540,6 +553,23 @@ const measureFunctions = {
     };
     return data;
   },
+  updateDMSE: (measure, date) => { // Checks 3 times a year, then denom is always true
+    const { data, id } = updateScoreTemplate(measure, date);
+    for (let i = 1; i < 3; i += 1) {
+      if (!data[id][`Initial Population ${i}`]) {
+        const updateValue = randomBool();
+        data[id][`Initial Population ${i}`] = updateValue;
+        data[id][`Denominator ${i}`] = updateValue;
+      }
+      if (data[id][`Initial Population ${i}`] && !data[id][`Numerator ${i}`]) {
+        data[id][`Numerator ${i}`] = randomBool();
+      }
+    }
+    if (data[id]['Initial Population 3'] && !data[id]['Numerator 3']) {
+      data[id]['Numerator 3'] = randomBool();
+    }
+    return data;
+  },
   newDRRE: (measure, date) => { // Checks 3 times a year, then denom is always true
     const { data, id } = newScoreTemplate(measure, date);
     const exclusion = !randomTruerBool();
@@ -562,9 +592,19 @@ const measureFunctions = {
     };
     return data;
   },
+  updateDRRE: (measure, date) => { // Checks 3 times a year, then denom is always true
+    const { data, id } = updateScoreTemplate(measure, date);
+    if (!data[id]['Numerator 3']) {
+      data[id]['Numerator 3'] = randomBool();
+    }
+    if (data[id]['Numerator 3'] && !data[id]['Numerator 2']) {
+      data[id]['Numerator 2'] = randomBool();
+    }
+    return data;
+  },
   newFUM: (measure, date) => { // One for 30 day gap, another for 7.
-    const { gap } = template[measure];
     const { data, id } = newScoreTemplate(measure, date);
+    const { gap } = template[measure];
     const { initialPopDates, exclusionDates, numeratorDates } = dateGenerator(date, gap);
     const numerator2Dates = Array.from(numeratorDates);
     if (!randomTruerBool()) {
@@ -583,6 +623,16 @@ const measureFunctions = {
     };
     return data;
   },
+  updateFUM: (measure, date) => { // One for 30 day gap, another for 7.
+    const { data, id } = updateScoreTemplate(measure, date);
+    if (data[id]['Numerator 1'].length !== data[id]['Denominator 1'].length && !randomTruerBool()) {
+      data[id]['Numerator 1'] = data[id]['Denominator 1'];
+    }
+    if (data[id]['Numerator 2'].length !== data[id]['Denominator 2'].length && !randomTruestBool() && !randomTruestBool()) {
+      data[id]['Numerator 2'] = data[id]['Denominator 2'];
+    }
+    return data;
+  },
   newIMAE: (measure, date) => { // 4 is based on 1, 2, and 5 on 1, 2, 3
     const { data, id } = newScoreTemplate(measure, date);
     const exclusion = !randomTruerBool();
@@ -598,6 +648,18 @@ const measureFunctions = {
     }
     for (let i = 1; i < 4; i += 1) {
       data[id][`Numerator ${i}`] = randomTruerBool();
+    }
+    const numerator4 = data[id]['Numerator 1'] && data[id]['Numerator 2'];
+    data[id]['Numerator 4'] = numerator4;
+    data[id]['Numerator 5'] = numerator4 && data[id]['Numerator 3'];
+    return data;
+  },
+  updateIMAE: (measure, date) => { // 4 is based on 1, 2, and 5 on 1, 2, 3
+    const { data, id } = updateScoreTemplate(measure, date);
+    for (let i = 1; i < 4; i += 1) {
+      if (!data[id][`Numerator ${i}`]) {
+        data[id][`Numerator ${i}`] = randomBool();
+      }
     }
     const numerator4 = data[id]['Numerator 1'] && data[id]['Numerator 2'];
     data[id]['Numerator 4'] = numerator4;
@@ -625,6 +687,15 @@ const measureFunctions = {
       'Numerator 3': numerator1.length === numerator2.length ? initialPop1 : [],
       id,
     };
+    return data;
+  },
+  updatePRSE: (measure, date) => {
+    const { data, id } = updateScoreTemplate(measure, date);
+    for (let i = 1; i < 3; i += 1) {
+      if (data[id][`Numerator ${i}`].length !== data[id][`Denominator ${i}`].length && !randomTruestBool() && !randomTruestBool()) {
+        data[id][`Numerator ${i}`] = data[id][`Denominator ${i}`];
+      }
+    }
     return data;
   },
 };
@@ -667,8 +738,8 @@ function saveCompliance(score) {
 async function generateData(measureList, scoreAmount, days, range) {
   let currentDay = new Date(new Date().setDate(today.getDate() - days));
   console.log('\n\x1b[33mInfo:\x1b[0m Starting data generation with settings:');
-  console.log(`\x1b[33mInfo:\x1b[0m ${scoreAmount} scores for the first day. ${currentDay.toDateString()}.`);
-  console.log(`\x1b[33mInfo:\x1b[0m After that, every produces between ${range[0]} and ${range[1]} new scores.`);
+  console.log(`\x1b[33mInfo:\x1b[0m ${scoreAmount} scores for the first day of ${currentDay.toDateString()}.`);
+  console.log(`\x1b[33mInfo:\x1b[0m After that, every day produces between ${range[0]} and ${range[1]} new scores.`);
   console.log(`\x1b[33mInfo:\x1b[0m Measures will be produced for ${measureList.toString()} will be used.\n`);
   const newScores = [];
   let measure;
@@ -678,11 +749,12 @@ async function generateData(measureList, scoreAmount, days, range) {
     newScores.push(score);
     saveCompliance(score);
   }
+  console.log(`TESTING: Initial non-compliance is ${scoresToUpdate.length}.`);
   let daysLeft = days - 1;
   while (daysLeft > 0) {
     currentDay = new Date(new Date().setDate(today.getDate() - daysLeft));
     for (let i = 0; i < scoresToUpdate.length; i += 1) {
-      if (!randomTruestBool()) {
+      if (!randomTruerBool()) {
         const score = measureFunctions[template[scoresToUpdate[i].measurementType]
           .updateEntry](scoresToUpdate[i], currentDay);
         newScores.push(score);
@@ -691,6 +763,7 @@ async function generateData(measureList, scoreAmount, days, range) {
         scoresUpdated += 1;
       }
     }
+    console.log(`TESTING: On ${daysLeft} days back, non-compliance is ${scoresToUpdate.length} and ${scoresUpdated} were updated.`);
     const rangeSelected = Math.floor(Math.random() * (range[1] - range[0])) + range[0];
     for (let i = 0; i < rangeSelected; i += 1) {
       measure = measureList[i % measureList.length];
@@ -698,6 +771,7 @@ async function generateData(measureList, scoreAmount, days, range) {
       newScores.push(score);
       saveCompliance(score);
     }
+    console.log(`TESTING: At the end ${daysLeft} days, there are ${newScores.length} added total.`);
     daysLeft -= 1;
   }
   return newScores;
@@ -774,8 +848,8 @@ async function processData() {
 
 if (parseArgs.h === true) {
   console.log('\n A script for generated fake HEDIS scores for Saraswati.\n\n Options:');
-  console.log('   -d, --days: How many days back you want generated. Default is 0, today.\n');
-  console.log('   -h, --help: Help command. What you\'re reading now...\n');
+  console.log('   -d, --days: How many days back you want generated. Default is 0, today.');
+  console.log('   -h, --help: Help command. What you\'re reading now...');
   console.log('   -i, --include: A spaceless, comma-separated list of measures to create. Default is to use all. Valid options are: ');
   console.log(`\t${Object.keys(template).join(', ')}`);
   console.log('   -r, --range: A comma-separated list of two numbers, for the amount produced after the first day. Defaults are 100 to 200.');
