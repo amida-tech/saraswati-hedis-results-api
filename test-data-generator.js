@@ -764,7 +764,7 @@ async function generateData(measureList, scoreAmount, days, range) {
         scoresUpdated += 1;
       }
     }
-    console.log(`TESTING: Day ${days}:`);
+    console.log(`TESTING: Day ${daysLeft}:`);
     console.log(`TESTING: Compliance update: ${scoresToUpdate.length} non-compliant, ${scoresUpdated} now compliant.`);
     console.log(`TESTING: Running total: ${newScores.length}.`);
     const rangeSelected = Math.floor(Math.random() * (range[1] - range[0])) + range[0];
