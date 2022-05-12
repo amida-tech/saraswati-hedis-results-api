@@ -775,8 +775,7 @@ async function generateData(measureList, scoreAmount, days, range) {
       newScores.push(score);
       saveCompliance(score);
     }
-    console.log(`TESTING: Day ${daysLeft} final report:`);
-    console.log(`${newScores.length} total records. ${scoresToUpdate.length} non-compliant.\n`);
+    console.log(`TESTING: Day ${daysLeft} final report: ${newScores.length} total records, ${scoresToUpdate.length} non-compliant.\n`);
     daysLeft -= 1;
   }
   return newScores;
