@@ -5,7 +5,7 @@ const dao = require('../config/dao');
 const getMemberInfo = async (req, res, next) => {
   try {
     let memberResults = await dao.findMeasures(req.query);
-    memberResults = memberResults.sort((a, b) => new Date(b.date) - new Date(a.date));
+    memberResults = memberResults.sort((a, b) => new Date(b.timeStamp) - new Date(a.timeStamp));
     return res.send(memberResults[0]);
   } catch (e) {
     return next(e);
