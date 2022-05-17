@@ -749,7 +749,8 @@ async function generateData(measureList, scoreAmount, days, range) {
     newScores.push(score);
     saveCompliance(score);
   }
-  console.log(`TESTING: Initial non-compliance is ${scoresToUpdate.length}.`);
+  console.log(`TESTING: Start at day ${days}:`);
+  console.log(`TESTING: ${scoreAmount} records generated, ${scoresToUpdate.length} are non-compliant.\n`);
   let daysLeft = days - 1;
   while (daysLeft > 0) {
     currentDay = new Date(new Date().setDate(today.getDate() - daysLeft));
@@ -763,23 +764,26 @@ async function generateData(measureList, scoreAmount, days, range) {
         scoresUpdated += 1;
       }
     }
-    console.log(`TESTING: On ${daysLeft} days back, non-compliance is ${scoresToUpdate.length} and ${scoresUpdated} were updated.`);
-    const rangeSelected = Math.floor(Math.random() * (range[1] - range[0])) + range[0];
+    console.log(`TESTING: Day ${daysLeft}, ${currentDay.toISOString()}:`);
+    console.log(`TESTING: Compliance update: ${scoresToUpdate.length} non-compliant, ${scoresUpdated} now compliant.`);
+    console.log(`TESTING: Running total: ${newScores.length}.`);
+    const rangeSelected = Math.floor(Math.random() * (range[1] - range[0] + 1)) + range[0];
+    console.log(`TESTING: Generating ${rangeSelected} new records, compliance unknown.`);
     for (let i = 0; i < rangeSelected; i += 1) {
       measure = measureList[i % measureList.length];
       const score = measureFunctions[template[measure].newEntry](measure, currentDay);
       newScores.push(score);
       saveCompliance(score);
     }
-    console.log(`TESTING: At the end ${daysLeft} days, there are ${newScores.length} added total.`);
+    console.log(`TESTING: Day ${daysLeft} final report: ${newScores.length} total records, ${scoresToUpdate.length} non-compliant.\n`);
     daysLeft -= 1;
   }
   return newScores;
 }
 
-function outputData(newScoresList) {
-  let fileTitle = `saraswati-test-data_${dateFormatter(today)}`;
-  fileTitle += `_${today.getHours()}-${today.getMinutes()}-${today.getSeconds()}.json`;
+function outputData(newScoresList, measureList, scoreAmount, days, range) {
+  let fileTitle = `data_measures-${measureList}_size-${scoreAmount}_days-${days}_range-${range[0]}-${range[1]}`;
+  fileTitle += `_${dateFormatter(today)}_${today.getHours()}-${today.getMinutes()}-${today.getSeconds()}.json`;
 
   try {
     fs.writeFileSync(`${__dirname}/test/generated-data/${fileTitle}`, JSON.stringify(newScoresList, null, 4));
@@ -841,7 +845,7 @@ async function processData() {
   const newScoresList = await generateData(measureList, scoreAmount, days, range);
   console.log(`\x1b[33mInfo:\x1b[0m ${newScoresList.length} scores to be inserted. ${scoresToUpdate.length} are non-compliant, and ${scoresUpdated} became compliant.`);
   if (parseArgs.o) {
-    outputData(newScoresList);
+    outputData(newScoresList, measureList, scoreAmount, days, range);
   }
   insertData(newScoresList);
 }
