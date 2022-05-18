@@ -193,5 +193,137 @@
             "weight": 3,
             "hasSubMeasures": false
         }
+    },
+    { 
+        "_id" : "prse", 
+        "prse" : {
+            "domainOfCare" : "ECDS", 
+            "title" : "Prenatal Immunization Status", 
+            "displayLabel" : "PRS-E", 
+            "measureType" : "process", 
+            "weight" : 1, 
+            "hasSubMeasures" : true
+        }
+    },
+    { 
+        "_id" : "prse-1", 
+        "prse-1" : {
+            "domainOfCare" : "ECDS", 
+            "title" : "Immunization Status: Influenza", 
+            "displayLabel" : "PRS-E: Influenza", 
+            "measureType" : "process", 
+            "weight" : 1, 
+            "hasSubMeasures" : false
+        }
+    },
+    { 
+        "_id" : "prse-2", 
+        "prse-2" : {
+            "domainOfCare" : "ECDS", 
+            "title" : "Immunization Status: Tdap", 
+            "displayLabel" : "PRS-E: Tdap", 
+            "measureType" : "process", 
+            "weight" : 1, 
+            "hasSubMeasures" : false
+        }
+    },
+    { 
+        "_id" : "prse-3", 
+        "prse-3" : {
+            "domainOfCare" : "ECDS", 
+            "title" : "Immunization Status: Influenza and Tdap", 
+            "displayLabel" : "PRS-E: Combination", 
+            "measureType" : "process", 
+            "weight" : 1, 
+            "hasSubMeasures" : false
+        }
+    },
+    { 
+        "_id" : "cou", 
+        "cou" : {
+            "domainOfCare" : "EOC", 
+            "title" : "Risk of Continued Opioid Use", 
+            "displayLabel" : "COU", 
+            "measureType" : "process", 
+            "weight" : 1, 
+            "hasSubMeasures" : true
+        }
+    },
+    { 
+        "_id" : "cou-1", 
+        "cou-1" : {
+            "domainOfCare" : "EOC", 
+            "title" : "15 or More Days of Opioid Medications in 30 Day Period", 
+            "displayLabel" : "COU: 15 Days Opioid Medications", 
+            "measureType" : "process", 
+            "weight" : 1, 
+            "hasSubMeasures" : false
+        }
+    },
+    { 
+        "_id" : "cou-2", 
+        "cou-2" : {
+            "domainOfCare" : "EOC", 
+            "title" : "31 or More Days of Opioid Medications in 62 Day Period", 
+            "displayLabel" : "COU: 31 Days Opioid Medications", 
+            "measureType" : "process", 
+            "weight" : 1, 
+            "hasSubMeasures" : false
+        }
+    },
+    { 
+        "_id" : "uri", 
+        "uri" : {
+            "domainOfCare" : "EOC", 
+            "title" : "Appropriate Treatment for Children With Upper Respiratory Infection", 
+            "displayLabel" : "URI", 
+            "measureType" : "process", 
+            "weight" : 1, 
+            "hasSubMeasures" : false
+        }
+    },
+    { 
+        "_id" : "dmse", 
+        "dmse" : {
+            "domainOfCare" : "ECDS", 
+            "title" : "Monitor Depression Symptoms for Adolescents and Adults", 
+            "displayLabel" : "DMS-E", 
+            "measureType" : "process", 
+            "weight" : 1, 
+            "hasSubMeasures" : true
+        }
+    },
+    { 
+        "_id" : "dmse-1", 
+        "dmse-1" : {
+            "domainOfCare" : "ECDS", 
+            "title" : "Assessment Period 1: January 1 - April 30", 
+            "displayLabel" : "DMS-E: Assessment Period 1", 
+            "measureType" : "process", 
+            "weight" : 1, 
+            "hasSubMeasures" : false
+        }
+    },
+    { 
+        "_id" : "dmse-2", 
+        "dmse-2" : {
+            "domainOfCare" : "ECDS", 
+            "title" : "Assessment Period 2: May 1 - August 31", 
+            "displayLabel" : "DMS-E: Assessment Period 2", 
+            "measureType" : "process", 
+            "weight" : 1, 
+            "hasSubMeasures" : false
+        }
+    },
+    { 
+        "_id" : "dmse-3", 
+        "dmse-3" : {
+            "domainOfCare" : "ECDS", 
+            "title" : "Assessment Period 3: September 1 - December 31", 
+            "displayLabel" : "DMS-E: Assessment Period 3", 
+            "measureType" : "process", 
+            "weight" : 1, 
+            "hasSubMeasures" : false
+        }
     }
 ]
