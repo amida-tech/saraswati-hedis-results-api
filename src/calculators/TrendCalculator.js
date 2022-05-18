@@ -1,4 +1,6 @@
-const calculateTrend = (resultData, predictionData, days) => {
+const { calcLatestNumDen } = require('./NumDenCalculator');
+
+const calculateTrendLegacy = (resultData, predictionData, days) => {
   const resultList = resultData.sort((a, b) => b.date - a.date);
   const latestDate = resultList[0].date;
   const baseDate = new Date(latestDate.getTime() - (days * 24 * 60 * 60 * 1000));
@@ -70,6 +72,76 @@ const calculateTrend = (resultData, predictionData, days) => {
   return finalResult;
 };
 
+function getOverAllPercentChange(latestResult, baseResult) {
+  if (baseResult !== undefined) {
+    return Math.round(latestResult.value - baseResult.value);
+  }
+  return 'NA';
+}
+
+function getSubScoreTrends(latestResult, baseResult) {
+  const subScoreTrends = [];
+
+  for (let k = 0; k < latestResult.subScores.length; k += 1) {
+    const latestSubScore = latestResult.subScores[k];
+    if (baseResult !== undefined) {
+      const baseSubScore = baseResult.subScores[k];
+      const subScoreChange = Math.round(latestSubScore.value - baseSubScore.value);
+      subScoreTrends.push({ measure: latestSubScore.measure, percentChange: subScoreChange });
+    } else {
+      subScoreTrends.push({ measure: latestSubScore.measure });
+    }
+  }
+  return subScoreTrends;
+}
+
+const calculateTrend = (memberResults, predictionData, days) => {
+  const currentDate = new Date();
+  currentDate.setHours(0);
+  currentDate.setMinutes(0);
+  currentDate.setSeconds(0);
+  currentDate.setMilliseconds(0);
+  const compareDate = new Date(currentDate - ((days - 1) * 24 * 60 * 60 * 1000));
+
+  const latestResults = calcLatestNumDen(memberResults, currentDate);
+  if (latestResults.length === 0) {
+    return [];
+  }
+
+  const compareMemberResults = memberResults.filter(
+    (result) => new Date(result.timeStamp).getTime() < (compareDate.getTime()),
+  );
+
+  const baseResults = calcLatestNumDen(compareMemberResults, compareDate);
+
+  const finalResults = [];
+  latestResults.forEach((latestResult) => {
+    const { measure } = latestResult;
+    const baseResult = baseResults.find((base) => base.measure === measure);
+    const percentChange = getOverAllPercentChange(latestResult, baseResult);
+
+    let subScoreTrends = [];
+    if (measure !== 'composite') {
+      subScoreTrends = getSubScoreTrends(latestResult, baseResult);
+    }
+
+    const futurePrediction = predictionData.find(
+      (prediction) => prediction.measure === measure && prediction.Prophet_Predictions,
+    );
+
+    if (percentChange !== 'NA') {
+      finalResults.push({
+        measure, percentChange, subScoreTrends, futurePrediction,
+      });
+    } else {
+      finalResults.push({ measure, subScoreTrends, futurePrediction });
+    }
+  });
+
+  return finalResults;
+};
+
 module.exports = {
   calculateTrend,
+  calculateTrendLegacy,
 };
