@@ -2,7 +2,7 @@
 const dao = require('../config/dao');
 
 const { calculateTrend, calculateTrendLegacy } = require('../calculators/TrendCalculator');
-const { setValue, calcLatestNumDen } = require('../calculators/NumDenCalculator');
+const { calcLatestNumDen } = require('../calculators/NumDenCalculator');
 
 const dayMiliseconds = 86400000;
 const eodMiliseconds = 84960000;

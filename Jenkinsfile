@@ -79,6 +79,20 @@ spec:
                 }
             }
         }
+        stage('Build Tagged Production with Kaniko') { 
+            when {
+                anyOf {
+                    tag "*"
+                }
+            }
+            steps {
+                container(name: 'kaniko', shell: '/busybox/sh') {
+                sh '''#!/busybox/sh
+                    /kaniko/executor --context `pwd` --verbosity debug --destination=amidatech/saraswati-hedis-results-api:$TAG_NAME
+                '''
+                }
+            }
+        }
         stage('Build Develop with Kaniko') {
             when { 
                 expression {env.GIT_BRANCH == 'origin/develop'} 
@@ -92,4 +106,4 @@ spec:
             }
         }
     }
-}
+} 
