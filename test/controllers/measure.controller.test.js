@@ -6,6 +6,7 @@ const path = require('path');
 const {
   getMeasures,
   getMeasureResults,
+  getDailyMeasureResults,
   getTrends,
   getInfo,
   postBulkMeasures,
@@ -50,6 +51,7 @@ jest.mock('../../src/calculators/TrendCalculator', () => {
   return {
     ...originalModule,
     calculateTrend: jest.fn(() => []),
+    calculateTrendLegacy: jest.fn(() => []),
   };
 });
 
@@ -70,10 +72,18 @@ describe('## measure.controller.js', () => {
     });
   });
 
+  describe('Test getDailyMeasureResults', () => {
+    it('Should call response.send', async () => {
+      const response = { send: jest.fn().mockReturnValue(Promise.resolve()) };
+      await getDailyMeasureResults({ query: queryOrParams }, response, jest.fn());
+      expect(response.send).toHaveBeenCalled();
+    });
+  });
+
   describe('Test getTrends function', () => {
     it('Should call response.send', async () => {
       const response = { send: jest.fn().mockReturnValue(Promise.resolve()) };
-      await getTrends({}, response, jest.fn());
+      await getTrends({ query: {} }, response, jest.fn());
       expect(response.send).toHaveBeenCalled();
     });
   });

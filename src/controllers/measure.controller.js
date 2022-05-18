@@ -1,7 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 const dao = require('../config/dao');
 
-const { calculateTrend } = require('../calculators/TrendCalculator');
+const { calculateTrend, calculateTrendLegacy } = require('../calculators/TrendCalculator');
 const { calcLatestNumDen } = require('../calculators/NumDenCalculator');
 
 const dayMiliseconds = 86400000;
@@ -64,11 +64,15 @@ const getDailyMeasureResults = async (req, res, next) => {
 
 const getTrends = async (req, res, next) => {
   try {
-    const results = await dao.findMeasureResults({});
     const predictions = await dao.findPredictions();
+    if (req.query.legacyResults === 'true') {
+      const results = await dao.findMeasureResults({});
 
-    const trendData = calculateTrend(results, predictions, 7);
-
+      const trendData = calculateTrendLegacy(results, predictions, 7);
+      return res.send(trendData);
+    }
+    const memberResults = await dao.findMeasures({});
+    const trendData = calculateTrend(memberResults, predictions, 7);
     return res.send(trendData);
   } catch (e) {
     return next(e);

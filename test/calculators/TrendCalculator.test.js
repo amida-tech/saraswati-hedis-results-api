@@ -1,11 +1,15 @@
 /* eslint-disable no-undef */
 const fs = require('fs');
 const path = require('path');
-const { calculateTrend } = require('../../src/calculators/TrendCalculator');
+const { calculateTrend, calculateTrendLegacy } = require('../../src/calculators/TrendCalculator');
 
 const data = JSON.parse(fs.readFileSync(`${path.resolve()}/test/result-data/measure-results.json`));
 
-describe(' Trend Calculation test ', () => {
+const mockAabPatientResults = JSON.parse(fs.readFileSync(`${path.resolve()}/test/seed-data/aab.json`));
+const mockDrrePatientResults = JSON.parse(fs.readFileSync(`${path.resolve()}/test/seed-data/drre.json`));
+const mockImaePatientResults = JSON.parse(fs.readFileSync(`${path.resolve()}/test/seed-data/imae.json`));
+
+describe('Legacy Trend Calculation test ', () => {
   let resultArray;
 
   beforeAll(() => {
@@ -16,7 +20,7 @@ describe(' Trend Calculation test ', () => {
       newObject.date = dateObject;
       correctData.push(newObject);
     }
-    resultArray = calculateTrend(correctData, {}, 7);
+    resultArray = calculateTrendLegacy(correctData, {}, 7);
   });
 
   test('Should not be null', () => {
@@ -27,9 +31,36 @@ describe(' Trend Calculation test ', () => {
     expect(resultArray.length).toEqual(5);
   });
 
-  test('Check calculations', () => {
+  test('Check legacy calculations', () => {
     expect(resultArray[0].percentChange).toEqual(-21);
     expect(resultArray[2].percentChange).toEqual(-8);
     expect(resultArray[4].percentChange).toEqual(11);
+  });
+});
+
+describe('Trend Calculation test ', () => {
+  let resultArray;
+
+  beforeAll(() => {
+    const allData = mockAabPatientResults.concat(
+      mockDrrePatientResults,
+      mockImaePatientResults,
+    );
+    resultArray = calculateTrend(allData, [], 3);
+  });
+
+  test('Should not be null', () => {
+    expect(resultArray).toBeTruthy();
+  });
+
+  test('Check measurement type sorting', () => {
+    expect(resultArray.length).toEqual(4);
+  });
+
+  test('Check calculations', () => {
+    expect(resultArray[0].percentChange).toEqual(0);
+    expect(resultArray[1].percentChange).toEqual(0);
+    expect(resultArray[2].percentChange).toEqual(0);
+    expect(resultArray[3].percentChange).toEqual(0);
   });
 });
