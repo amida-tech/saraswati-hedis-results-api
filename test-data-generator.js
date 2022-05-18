@@ -45,7 +45,7 @@ const template = {
     subs: 1, type: 'bool', newEntry: 'newSingleBool', updateEntry: 'updateSingleBool',
   },
   cou: { // Risk of Continued Opioid Use
-    subs: 1, type: 'bool', newEntry: 'newSingleBool', updateEntry: 'updateSingleBool',
+    subs: 2, type: 'bool', newEntry: 'newDoubleBool', updateEntry: 'updateDoubleBool',
   },
   cwp: { // Appropriate Testing for Pharyngitis
     subs: 1, type: 'date', gap: 31, newEntry: 'newSingleDate', updateEntry: 'updateSingleDate',
@@ -641,7 +641,7 @@ const measureFunctions = {
       data[id][`Initial Population ${i}`] = true;
     }
     for (let i = 1; i < 6; i += 1) {
-      data[id][`Exclusion ${i}`] = exclusion;
+      data[id][`Exclusions ${i}`] = exclusion;
     }
     for (let i = 1; i < 6; i += 1) {
       data[id][`Denominator ${i}`] = true;
