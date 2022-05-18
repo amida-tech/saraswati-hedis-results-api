@@ -45,7 +45,7 @@ const template = {
     subs: 1, type: 'bool', newEntry: 'newSingleBool', updateEntry: 'updateSingleBool',
   },
   cou: { // Risk of Continued Opioid Use
-    subs: 2, type: 'bool', newEntry: 'newDoubleBool', updateEntry: 'updateDoubleBool',
+    subs: 2, type: 'bool', newEntry: 'newCOU', updateEntry: 'updateCOU',
   },
   cwp: { // Appropriate Testing for Pharyngitis
     subs: 1, type: 'date', gap: 31, newEntry: 'newSingleDate', updateEntry: 'updateSingleDate',
@@ -530,6 +530,33 @@ const measureFunctions = {
     data[id]['Numerator 13'] = numerator12 && data[id]['Numerator 10'];
     return data;
   },
+  newCOU: (measure, date) => { // Same init pop, differing denom and numerators.
+    const { data, id } = newScoreTemplate(measure, date);
+    const exclusion = randomBool();
+    const numerator1 = randomBool();
+    data[id] = {
+      'Initial Population 1': true,
+      'Initial Population 2': true,
+      'Exclusions 1': exclusion,
+      'Exclusions 2': exclusion,
+      'Denominator 1': true,
+      'Denominator 2': true,
+      'Numerator 1': numerator1,
+      'Numerator 2': numerator1 ? randomBool() : false,
+      id,
+    };
+    return data;
+  },
+  updateCOU: (measure, date) => {
+    const { data, id } = updateScoreTemplate(measure, date);
+    if (!data[id]['Numerator 1']) {
+      data[id]['Numerator 1'] = randomTruerBool();
+    }
+    if (data[id]['Numerator 1'] && !data[id]['Numerator 2']) {
+      data[id]['Numerator 2'] = randomTruerBool();
+    }
+    return data;
+  },
   newDMSE: (measure, date) => { // Checks 3 times a year, then denom is always true
     const { data, id } = newScoreTemplate(measure, date);
     const exclusion = randomBool();
@@ -811,7 +838,7 @@ async function insertData(newScoresList) {
 
 async function processData() {
   let measureList = Object.keys(template);
-  if (parseArgs.i) {
+  if (parseArgs.i !== undefined) {
     const includedList = parseArgs.i.split(',');
     const checkedList = includedList.filter((measure) => !measureList.includes(measure));
     if (checkedList.length > 0) {
