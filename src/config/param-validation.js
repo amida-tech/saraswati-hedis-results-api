@@ -22,6 +22,12 @@ const exportCsv = {
   }),
 };
 
+const memberInfo = {
+  query: Joi.object({
+    memberId: Joi.string().required(),
+  }),
+};
+
 module.exports = {
   createMeasure: measure,
   createMeasureBulk: {
@@ -29,4 +35,5 @@ module.exports = {
   },
   searchMeasurements: measurementQuery,
   exportCsv,
+  memberInfo,
 };
