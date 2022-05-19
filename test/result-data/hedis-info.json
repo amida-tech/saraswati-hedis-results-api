@@ -8,6 +8,127 @@
         }
     },
     {
+        "_id": "aab",
+        "aab": {
+            "domainOfCare": "EOC",
+            "title": "Avoidance of Antibiotic Treatment in Adults with Acute Bronchitis",
+            "displayLabel": "AAB",
+            "measureType": "process",
+            "weight": 1,
+            "hasSubMeasures": false
+        }
+    },
+    {
+        "_id" : "adde", 
+        "adde" : {
+            "domainOfCare" : "ECDS", 
+            "title" : "Follow-Up Care for Children Prescribed ADHD Medication", 
+            "displayLabel" : "ADD-E", 
+            "measureType" : "process", 
+            "weight" : 1, 
+            "hasSubMeasures" : true
+        }
+    },
+    {
+        "_id" : "adde-1", 
+        "adde-1" : {
+            "domainOfCare" : "ECDS", 
+            "title" : "Follow-Up Care After Initiation of Treatment", 
+            "displayLabel" : "ADD-E: Follow-Up After Initiation", 
+            "measureType" : "process", 
+            "weight" : 1, 
+            "hasSubMeasures" : true
+        }
+    },
+    {
+        "_id" : "adde-2", 
+        "adde-2" : {
+            "domainOfCare" : "ECDS", 
+            "title" : "Follow-Up Care After Initiation of Treatment", 
+            "displayLabel" : "ADD-E: Follow-Up During Continuation", 
+            "measureType" : "process", 
+            "weight" : 1, 
+            "hasSubMeasures" : true
+        }
+    },
+    {
+        "_id" : "apme", 
+        "apme" : {
+            "domainOfCare" : "ECDS", 
+            "title" : "Metabolic Monitoring for Children and Adolescents on Antipsychotics", 
+            "displayLabel" : "APM-E", 
+            "measureType" : "process", 
+            "weight" : 1, 
+            "hasSubMeasures" : true
+        }
+    },
+    {
+        "_id" : "apme-1", 
+        "apme-1" : {
+            "domainOfCare" : "ECDS", 
+            "title" : "Blood Glucose Monitoring for Children and Adolescents on Antipsychotics", 
+            "displayLabel" : "APM-E: Blood Glucose Monitoring", 
+            "measureType" : "process", 
+            "weight" : 1, 
+            "hasSubMeasures" : false
+        }
+    },
+    {
+        "_id" : "apme-2", 
+        "apme-2" : {
+            "domainOfCare" : "ECDS", 
+            "title" : "Cholesterol Monitoring for Children and Adolescents on Antipsychotics", 
+            "displayLabel" : "APM-E: Cholesterol Monitoring", 
+            "measureType" : "process", 
+            "weight" : 1, 
+            "hasSubMeasures" : false
+        }
+    },
+    {
+        "_id" : "apme-3", 
+        "apme-3" : {
+            "domainOfCare" : "ECDS", 
+            "title" : "Blood Glucose and Cholesterol Monitoring for Children and Adolescents on Antipsychotics", 
+            "displayLabel" : "APM-E: Blood Glucose and Cholesterol Monitoring", 
+            "measureType" : "process", 
+            "weight" : 1, 
+            "hasSubMeasures" : false
+        }
+    },
+    {
+        "_id" : "asfe", 
+        "asfe" : {
+            "domainOfCare" : "ECDS", 
+            "title" : "Unhealthy Alcohol Use Screening and Follow-Up", 
+            "displayLabel" : "ASF-E", 
+            "measureType" : "process", 
+            "weight" : 1, 
+            "hasSubMeasures" : true
+        }
+    },
+    {
+        "_id" : "asfe-1", 
+        "asfe-1" : {
+            "domainOfCare" : "ECDS", 
+            "title" : "Unhealthy Alcohol Use Screening", 
+            "displayLabel" : "ASF-E: Unhealthy Alcohol Use Screening", 
+            "measureType" : "process", 
+            "weight" : 1, 
+            "hasSubMeasures" : false
+        }
+    },
+    {
+        "_id" : "asfe-2", 
+        "asfe-2" : {
+            "domainOfCare" : "ECDS", 
+            "title" : "Counseling or Other Follow-Up on Positive Screen for Unhealthy Alcohol Use", 
+            "displayLabel" : "ASF-E: Follow-Up", 
+            "measureType" : "process", 
+            "weight" : 1, 
+            "hasSubMeasures" : false
+        }
+    },
+    {
         "_id": "aise",
         "aise": {
             "domainOfCare": "ECDS",
@@ -63,25 +184,113 @@
         }
     },
     {
-        "_id": "aab",
-        "aab": {
-            "domainOfCare": "EOC",
-            "title": "Avoidance of Antibiotic Treatment in Adults with Acute Bronchitis",
-            "displayLabel": "AAB",
-            "measureType": "process",
-            "weight": 1,
-            "hasSubMeasures": false
+        "_id" : "bcse",
+        "bcse" : {
+            "domainOfCare" : "ECDS",
+            "title" : "Breast Cancer Screening Rate",
+            "displayLabel" : "BCS-E",
+            "measureType" : "process",
+            "weight" : 1,
+            "hasSubMeasures" : false
         }
     },
     {
-        "_id": "aab-1",
-        "aab-1": {
-            "domainOfCare": "EOC",
-            "title": "Avoidance of Antibiotic Treatment in Adults with Acute Bronchitis",
-            "displayLabel": "AAB",
-            "measureType": "process",
-            "weight": 1,
-            "hasSubMeasures": false
+        "_id" : "ccs",
+        "ccs" : {
+            "domainOfCare" : "EOF",
+            "title" : "Cervical Cancer Screening Rate",
+            "displayLabel" : "CCS",
+            "measureType" : "process",
+            "weight" : 1,
+            "hasSubMeasures" : false
+        }
+    },
+    {
+        "_id" : "cole",
+        "cole" : {
+            "domainOfCare" : "ECDS",
+            "title" : "Colorectal Cancer Screening Rate",
+            "displayLabel" : "CCS",
+            "measureType" : "process",
+            "weight" : 1,
+            "hasSubMeasures" : false
+        }
+    },
+    {
+        "_id" : "cou", 
+        "cou" : {
+            "domainOfCare" : "EOC", 
+            "title" : "Risk of Continued Opioid Use", 
+            "displayLabel" : "COU", 
+            "measureType" : "process", 
+            "weight" : 1, 
+            "hasSubMeasures" : true
+        }
+    },
+    {
+        "_id" : "cou-1", 
+        "cou-1" : {
+            "domainOfCare" : "EOC", 
+            "title" : "15 or More Days of Opioid Medications in 30 Day Period", 
+            "displayLabel" : "COU: 15 Days Opioid Medications", 
+            "measureType" : "process", 
+            "weight" : 1, 
+            "hasSubMeasures" : false
+        }
+    },
+    {
+        "_id" : "cou-2", 
+        "cou-2" : {
+            "domainOfCare" : "EOC", 
+            "title" : "31 or More Days of Opioid Medications in 62 Day Period", 
+            "displayLabel" : "COU: 31 Days Opioid Medications", 
+            "measureType" : "process", 
+            "weight" : 1, 
+            "hasSubMeasures" : false
+        }
+    },
+    {
+        "_id" : "dmse", 
+        "dmse" : {
+            "domainOfCare" : "ECDS", 
+            "title" : "Monitor Depression Symptoms for Adolescents and Adults", 
+            "displayLabel" : "DMS-E", 
+            "measureType" : "process", 
+            "weight" : 1, 
+            "hasSubMeasures" : true
+        }
+    },
+    {
+        "_id" : "dmse-1", 
+        "dmse-1" : {
+            "domainOfCare" : "ECDS", 
+            "title" : "Assessment Period 1: January 1 - April 30", 
+            "displayLabel" : "DMS-E: Assessment Period 1", 
+            "measureType" : "process", 
+            "weight" : 1, 
+            "hasSubMeasures" : false
+        }
+    },
+    {
+        "_id" : "dmse-2", 
+        "dmse-2" : {
+            "domainOfCare" : "ECDS", 
+            "title" : "Assessment Period 2: May 1 - August 31", 
+            "displayLabel" : "DMS-E: Assessment Period 2", 
+            "measureType" : "process", 
+            "weight" : 1, 
+            "hasSubMeasures" : false
+        }
+    },
+    {
+        "_id" : "dmse-3", 
+        "dmse-3" : {
+            "domainOfCare" : "ECDS", 
+            "title" : "Assessment Period 3: September 1 - December 31", 
+            "displayLabel" : "DMS-E: Assessment Period 3", 
+            "measureType" : "process", 
+            "weight" : 1, 
+            "hasSubMeasures" : false
         }
     },
     {
@@ -194,7 +403,7 @@
             "hasSubMeasures": false
         }
     },
-    { 
+    {
         "_id" : "prse", 
         "prse" : {
             "domainOfCare" : "ECDS", 
@@ -205,7 +414,7 @@
             "hasSubMeasures" : true
         }
     },
-    { 
+    {
         "_id" : "prse-1", 
         "prse-1" : {
             "domainOfCare" : "ECDS", 
@@ -216,7 +425,7 @@
             "hasSubMeasures" : false
         }
     },
-    { 
+    {
         "_id" : "prse-2", 
         "prse-2" : {
             "domainOfCare" : "ECDS", 
@@ -227,7 +436,7 @@
             "hasSubMeasures" : false
         }
     },
-    { 
+    {
         "_id" : "prse-3", 
         "prse-3" : {
             "domainOfCare" : "ECDS", 
@@ -238,89 +447,12 @@
             "hasSubMeasures" : false
         }
     },
-    { 
-        "_id" : "cou", 
-        "cou" : {
-            "domainOfCare" : "EOC", 
-            "title" : "Risk of Continued Opioid Use", 
-            "displayLabel" : "COU", 
-            "measureType" : "process", 
-            "weight" : 1, 
-            "hasSubMeasures" : true
-        }
-    },
-    { 
-        "_id" : "cou-1", 
-        "cou-1" : {
-            "domainOfCare" : "EOC", 
-            "title" : "15 or More Days of Opioid Medications in 30 Day Period", 
-            "displayLabel" : "COU: 15 Days Opioid Medications", 
-            "measureType" : "process", 
-            "weight" : 1, 
-            "hasSubMeasures" : false
-        }
-    },
-    { 
-        "_id" : "cou-2", 
-        "cou-2" : {
-            "domainOfCare" : "EOC", 
-            "title" : "31 or More Days of Opioid Medications in 62 Day Period", 
-            "displayLabel" : "COU: 31 Days Opioid Medications", 
-            "measureType" : "process", 
-            "weight" : 1, 
-            "hasSubMeasures" : false
-        }
-    },
-    { 
+    {
         "_id" : "uri", 
         "uri" : {
             "domainOfCare" : "EOC", 
             "title" : "Appropriate Treatment for Children With Upper Respiratory Infection", 
             "displayLabel" : "URI", 
-            "measureType" : "process", 
-            "weight" : 1, 
-            "hasSubMeasures" : false
-        }
-    },
-    { 
-        "_id" : "dmse", 
-        "dmse" : {
-            "domainOfCare" : "ECDS", 
-            "title" : "Monitor Depression Symptoms for Adolescents and Adults", 
-            "displayLabel" : "DMS-E", 
-            "measureType" : "process", 
-            "weight" : 1, 
-            "hasSubMeasures" : true
-        }
-    },
-    { 
-        "_id" : "dmse-1", 
-        "dmse-1" : {
-            "domainOfCare" : "ECDS", 
-            "title" : "Assessment Period 1: January 1 - April 30", 
-            "displayLabel" : "DMS-E: Assessment Period 1", 
-            "measureType" : "process", 
-            "weight" : 1, 
-            "hasSubMeasures" : false
-        }
-    },
-    { 
-        "_id" : "dmse-2", 
-        "dmse-2" : {
-            "domainOfCare" : "ECDS", 
-            "title" : "Assessment Period 2: May 1 - August 31", 
-            "displayLabel" : "DMS-E: Assessment Period 2", 
-            "measureType" : "process", 
-            "weight" : 1, 
-            "hasSubMeasures" : false
-        }
-    },
-    { 
-        "_id" : "dmse-3", 
-        "dmse-3" : {
-            "domainOfCare" : "ECDS", 
-            "title" : "Assessment Period 3: September 1 - December 31", 
-            "displayLabel" : "DMS-E: Assessment Period 3", 
             "measureType" : "process", 
             "weight" : 1, 
             "hasSubMeasures" : false
