@@ -10,21 +10,43 @@ const parseArgs = minimist(process.argv.slice(2), {
     d: 'days',
     h: 'help',
     i: 'include',
-    r: 'range',
-    s: 'size',
     o: 'output',
   },
 });
 
 const template = {
   aab: { // Avoidance of Antibiotic Treatment for Acute Bronchitis/Bronchiolitis
-    subs: 1, type: 'date', gap: 31, newEntry: 'newSingleDate', updateEntry: 'updateSingleDate',
+    subs: 1,
+    type: 'date',
+    ranges: [
+      { day: 0, popRange: [3, 5], compRange: [60, 80] },
+      { day: 3, popRange: [7, 8], compRange: [10, 15] },
+      { day: 8, popRange: [15, 18], compRange: [70, 95] },
+      { day: 9, popRange: [5, 15], compRange: [15, 25] },
+      { day: 10, popRange: [12, 17], compRange: [5, 10] },
+      { day: 26, popRange: [46, 57], compRange: [90, 95] },
+    ],
+    updateChance: 15,
+    gap: 31,
+    newEntry: 'newSingleDate',
+    updateEntry: 'updateSingleDate',
   },
   adde: { // Follow-Up Care for Children Prescribed ADHD Medication
     subs: 2, type: 'bool', newEntry: 'newADDE', updateEntry: 'updateADDE',
   },
   aise: { // Adult Immunization Status
-    subs: 4, type: 'bool', newEntry: 'newAISE', updateEntry: 'updateAISE',
+    subs: 4,
+    type: 'bool',
+    ranges: [
+      { day: 0, popRange: [20, 30], compRange: [10, 20] },
+      { day: 11, popRange: [5, 13], compRange: [80, 90] },
+      { day: 13, popRange: [35, 53], compRange: [20, 25] },
+      { day: 26, popRange: [115, 130], compRange: [90, 98] },
+      { day: 27, popRange: [255, 280], compRange: [5, 7] },
+    ],
+    updateChance: 90,
+    newEntry: 'newAISE',
+    updateEntry: 'updateAISE',
   },
   apme: { // Metabolic Monitoring for Children and Adolescents on Antipsychotics
     subs: 3, type: 'bool', newEntry: 'newTripleDependBool', updateEntry: 'updateTripleDependBool',
@@ -54,7 +76,19 @@ const template = {
     subs: 3, type: 'bool', newEntry: 'newDMSE', updateEntry: 'updateDMSE',
   },
   drre: { // Depression Remission or Response for Adolescents and Adults
-    subs: 3, type: 'bool', newEntry: 'newDRRE', updateEntry: 'updateDRRE',
+    subs: 3,
+    type: 'bool',
+    ranges: [
+      { day: 0, popRange: [5, 10], compRange: [15, 25] },
+      { day: 8, popRange: [2, 5], compRange: [60, 80] },
+      { day: 10, popRange: [50, 60], compRange: [5, 10] },
+      { day: 16, popRange: [5, 13], compRange: [10, 60] },
+      { day: 18, popRange: [180, 200], compRange: [90, 95] },
+      { day: 22, popRange: [200, 230], compRange: [0, 5] },
+    ],
+    updateChance: 30,
+    newEntry: 'newDRRE',
+    updateEntry: 'updateDRRE',
   },
   dsfe: { // Depression Screening and Follow-Up for Adolescents and Adults
     subs: 2, type: 'bool', newEntry: 'newDoubleBool', updateEntry: 'updateDoubleBool',
@@ -63,7 +97,22 @@ const template = {
     subs: 2, type: 'date', gap: 31, newEntry: 'newFUM', updateEntry: 'updateFUM',
   },
   imae: { // Immunizations for Adolescents
-    subs: 5, type: 'bool', newEntry: 'newIMAE', updateEntry: 'updateIMAE',
+    subs: 5,
+    type: 'bool',
+    ranges: [
+      { day: 0, popRange: [5, 10], compRange: [90, 95] },
+      { day: 2, popRange: [3, 7], compRange: [10, 20] },
+      { day: 5, popRange: [4, 8], compRange: [40, 60] },
+      { day: 6, popRange: [1, 2], compRange: [5, 10] },
+      { day: 9, popRange: [26, 32], compRange: [15, 80] },
+      { day: 14, popRange: [1, 3], compRange: [25, 40] },
+      { day: 18, popRange: [3, 5], compRange: [25, 80] },
+      { day: 25, popRange: [26, 42], compRange: [15, 18] },
+      { day: 27, popRange: [10, 22], compRange: [85, 90] },
+    ],
+    updateChance: 35,
+    newEntry: 'newIMAE',
+    updateEntry: 'updateIMAE',
   },
   pdse: { // Postpartum Depression Screening and Follow-Up
     subs: 2, type: 'object', newEntry: 'newDoubleDeliveries', updateEntry: 'updateDoubleDeliveries',
@@ -85,6 +134,7 @@ const template = {
   },
 };
 
+const randomOf100 = () => Math.random() * 100;
 const randomBool = () => Math.random() < 0.5;
 const randomTruerBool = () => Math.random() < 0.7;
 const randomTruestBool = () => Math.random() < 0.9;
@@ -222,7 +272,7 @@ const updateScoreTemplate = (measure, date) => {
   return { data, id };
 };
 
-const dateGenerator = (date, gap) => {
+const dateGenerator = (date, gap, complyChance) => {
   const days = dayOfYear(date);
   const initialPopDates = [];
   const numeratorDates = [];
@@ -233,12 +283,12 @@ const dateGenerator = (date, gap) => {
       new Date(today.getFullYear(), 0, 1 + Math.floor(Math.random() * todayOfYear)),
     );
     initialPopDates.push(randomDay);
-    if (randomBool()) {
+    if (randomOf100() < complyChance) {
       numeratorDates.push(randomDay);
     }
   } else { // Multiple days.
     let previousDays = 0;
-    let doctorInformed = randomBool();
+    let doctorInformed = randomOf100() < complyChance;
     for (let i = 0; i < totalGaps; i += 1) {
       if (previousDays + gap > todayOfYear) {
         break;
@@ -255,7 +305,7 @@ const dateGenerator = (date, gap) => {
       if (doctorInformed) {
         numeratorDates.push(gapDate);
       } else {
-        doctorInformed = randomBool();
+        doctorInformed = randomOf100() < complyChance;
       }
       if (!randomTruerBool()) {
         exclusionDates.push(gapDate);
@@ -275,10 +325,12 @@ const deliveryGenerator = (measure) => ({
 });
 
 const measureFunctions = {
-  newSingleDate: (measure, date) => {
+  newSingleDate: (measure, date, compliance) => {
     const { data, id } = newScoreTemplate(measure, date);
     const { gap } = template[measure];
-    const { initialPopDates, exclusionDates, numeratorDates } = dateGenerator(date, gap);
+    const { initialPopDates, exclusionDates, numeratorDates } = dateGenerator(
+      date, gap, compliance,
+    );
     data[id] = {
       'Initial Population': initialPopDates,
       Exclusions: exclusionDates,
@@ -290,9 +342,7 @@ const measureFunctions = {
   },
   updateSingleDate: (measure, date) => { // Copy denominator to numerator
     const { data, id } = updateScoreTemplate(measure, date);
-    if (randomTruerBool()) {
-      data[id].Numerator = data[id].Denominator;
-    }
+    data[id].Numerator = data[id].Denominator;
     return data;
   },
   newSingleBool: (measure, date) => { // Single boolean value, nothing interesting.
@@ -441,7 +491,7 @@ const measureFunctions = {
     }
     return data;
   },
-  newAISE: (measure, date) => { // 4 sub measure, depending on vaccines and age ranges
+  newAISE: (measure, date, compliance) => { // 4 sub measure, depending on vaccines and age ranges
     const { data, id } = newScoreTemplate(measure, date);
     const exclusion = randomBool();
     const initialPop3 = randomBool();
@@ -459,10 +509,10 @@ const measureFunctions = {
       'Denominator 2': true,
       'Denominator 3': initialPop3,
       'Denominator 4': initialPop4,
-      'Numerator 1': randomBool(),
-      'Numerator 2': randomBool(),
-      'Numerator 3': initialPop3 ? randomBool() : false,
-      'Numerator 4': initialPop4 ? randomBool() : false,
+      'Numerator 1': randomOf100() < compliance,
+      'Numerator 2': randomOf100() < compliance,
+      'Numerator 3': initialPop3 ? randomOf100() < compliance : false,
+      'Numerator 4': initialPop4 ? randomOf100() < compliance : false,
       id,
     };
     return data;
@@ -597,11 +647,11 @@ const measureFunctions = {
     }
     return data;
   },
-  newDRRE: (measure, date) => { // Checks 3 times a year, then denom is always true
+  newDRRE: (measure, date, compliance) => { // Checks 3 times a year, then denom is always true
     const { data, id } = newScoreTemplate(measure, date);
     const exclusion = !randomTruerBool();
-    const numerator3 = randomBool(); // Numerator 2 is dependent on 3.
-    const numerator2 = numerator3 ? randomTruerBool() : false;
+    const numerator3 = randomOf100() < compliance; // Numerator 2 is dependent on 3.
+    const numerator2 = numerator3 ? randomOf100() < compliance : false;
     data[id] = {
       'Initial Population 1': true,
       'Initial Population 2': true,
@@ -622,10 +672,10 @@ const measureFunctions = {
   updateDRRE: (measure, date) => { // Checks 3 times a year, then denom is always true
     const { data, id } = updateScoreTemplate(measure, date);
     if (!data[id]['Numerator 3']) {
-      data[id]['Numerator 3'] = randomBool();
+      data[id]['Numerator 3'] = randomTruerBool();
     }
     if (data[id]['Numerator 3'] && !data[id]['Numerator 2']) {
-      data[id]['Numerator 2'] = randomBool();
+      data[id]['Numerator 2'] = randomTruerBool();
     }
     return data;
   },
@@ -660,7 +710,7 @@ const measureFunctions = {
     }
     return data;
   },
-  newIMAE: (measure, date) => { // 4 is based on 1, 2, and 5 on 1, 2, 3
+  newIMAE: (measure, date, compliance) => { // 4 is based on 1, 2, and 5 on 1, 2, 3
     const { data, id } = newScoreTemplate(measure, date);
     const exclusion = !randomTruerBool();
     data[id] = {};
@@ -674,7 +724,7 @@ const measureFunctions = {
       data[id][`Denominator ${i}`] = true;
     }
     for (let i = 1; i < 4; i += 1) {
-      data[id][`Numerator ${i}`] = randomTruerBool();
+      data[id][`Numerator ${i}`] = randomOf100() < compliance;
     }
     const numerator4 = data[id]['Numerator 1'] && data[id]['Numerator 2'];
     data[id]['Numerator 4'] = numerator4;
@@ -728,79 +778,117 @@ const measureFunctions = {
 };
 
 const scoresToUpdate = [];
+let finalNoncompliant = 0;
 let scoresUpdated = 0;
 
-function saveCompliance(score) {
+function isCompliant(score) {
   const measure = score.measurementType;
   const id = Object.keys(score).filter((key) => key.startsWith(measure))[0];
   if (id === undefined) { // Man, something went wrong here... skip it.
-    return;
+    return true;
   }
 
   if (template[measure].type === 'bool') {
     if (template[measure].subs === 1 && !score[id].Numerator) {
-      scoresToUpdate.push(score);
-      return;
+      return false;
     }
     for (let i = 1; i < template[measure].subs; i += 1) {
       if (!score[id][`Numerator ${i}`]) {
-        scoresToUpdate.push(score);
-        return; // We know it's not compliant.
+        return false;
       }
     }
   }
   if (template[measure].subs === 1
      && score[id].Numerator.length !== score[id].Denominator.length) {
-    scoresToUpdate.push(score);
-    return;
+    return false;
   }
   for (let i = 1; i < template[measure].subs; i += 1) {
     if (score[id][`Numerator ${i}`].length !== score[id][`Denominator ${i}`].length) {
-      scoresToUpdate.push(score);
-      return;
+      return false;
     }
   }
+  return true;
 }
 
-async function generateData(measureList, scoreAmount, days, range) {
+async function generateData(measureList, days) {
   let currentDay = new Date(new Date().setDate(today.getDate() - days));
   console.log('\n\x1b[33mInfo:\x1b[0m Starting data generation with settings:');
-  console.log(`\x1b[33mInfo:\x1b[0m ${scoreAmount} scores for the first day of ${currentDay.toDateString()}.`);
-  console.log(`\x1b[33mInfo:\x1b[0m After that, every day produces between ${range[0]} and ${range[1]} new scores.`);
   console.log(`\x1b[33mInfo:\x1b[0m Measures will be produced for ${measureList.toString()} will be used.\n`);
   const newScores = [];
   let measure;
-  for (let i = 0; i < scoreAmount; i += 1) {
-    measure = measureList[i % measureList.length];
-    const score = measureFunctions[template[measure].newEntry](measure, currentDay);
-    newScores.push(score);
-    saveCompliance(score);
-  }
-  console.log(`TESTING: Start at day ${days}:`);
-  console.log(`TESTING: ${scoreAmount} records generated, ${scoresToUpdate.length} are non-compliant.\n`);
-  let daysLeft = days - 1;
+  const dayTracker = {}; // Manages how many records are created and when rates changes.
+
+  let daysLeft = days;
   while (daysLeft > 0) {
     currentDay = new Date(new Date().setDate(today.getDate() - daysLeft));
+    console.log(`TESTING: On day ${daysLeft}, ${currentDay.toISOString()}:`);
     for (let i = 0; i < scoresToUpdate.length; i += 1) {
-      if (!randomTruerBool()) {
-        const score = measureFunctions[template[scoresToUpdate[i].measurementType]
-          .updateEntry](scoresToUpdate[i], currentDay);
-        newScores.push(score);
-        saveCompliance(score); // Resaves measure whether it really changed or not.
-        scoresToUpdate.splice(i, 1);
-        scoresUpdated += 1;
-      }
-    }
-    console.log(`TESTING: Day ${daysLeft}, ${currentDay.toISOString()}:`);
-    console.log(`TESTING: Compliance update: ${scoresToUpdate.length} non-compliant, ${scoresUpdated} now compliant.`);
-    console.log(`TESTING: Running total: ${newScores.length}.`);
-    const rangeSelected = Math.floor(Math.random() * (range[1] - range[0] + 1)) + range[0];
-    console.log(`TESTING: Generating ${rangeSelected} new records, compliance unknown.`);
-    for (let i = 0; i < rangeSelected; i += 1) {
-      measure = measureList[i % measureList.length];
-      const score = measureFunctions[template[measure].newEntry](measure, currentDay);
+      const score = measureFunctions[template[scoresToUpdate[i].measurementType]
+        .updateEntry](scoresToUpdate[i], currentDay);
       newScores.push(score);
-      saveCompliance(score);
+      if (!isCompliant(score)) {
+        if (randomOf100() < template[scoresToUpdate[i].measurementType].updateChance) {
+          scoresToUpdate.push(score);
+          scoresUpdated += 1;
+        } else {
+          finalNoncompliant += 1;
+        }
+      }
+      scoresToUpdate.splice(i, 1);
+    }
+
+    console.log(`TESTING: Compliance update: ${scoresToUpdate.length} non-compliant, ${scoresUpdated} now compliant, ${finalNoncompliant} will never be.`);
+    console.log(`TESTING: Running total: ${newScores.length}.`);
+    for (let i = 0; i < measureList.length; i += 1) {
+      measure = measureList[i % measureList.length];
+      if (dayTracker[measure] === undefined) {
+        dayTracker[measure] = {};
+      }
+
+      // Checks for rate updates.
+      if (dayTracker[measure].nextDay === undefined) {
+        dayTracker[measure].complyRange = template[measure].ranges[0].compRange;
+        dayTracker[measure].popRange = template[measure].ranges[0].popRange;
+        dayTracker[measure].nextDay = template[measure].ranges.find(
+          (templateRange) => templateRange.day > 0,
+        )?.day || 0;
+      } else if (dayTracker[measure].nextDay > 0
+        && days - daysLeft >= dayTracker[measure].nextDay) {
+        const compareDay = dayTracker[measure].nextDay;
+        const rangeIndex = template[measure].ranges.findIndex(
+          (newRange) => newRange.day === compareDay,
+        );
+        dayTracker[measure].complyRange = template[measure].ranges[rangeIndex].compRange;
+        dayTracker[measure].popRange = template[measure].ranges[rangeIndex].popRange;
+        dayTracker[measure].nextDay = (rangeIndex < template[measure].ranges.length - 1)
+          ? template[measure].ranges[rangeIndex + 1].day : 0;
+      }
+
+      // Generates today's compliance rates and population.
+      dayTracker[measure].complyRate = Math.floor(Math.random() * (
+        dayTracker[measure].complyRange[1] - dayTracker[measure].complyRange[0]))
+        + dayTracker[measure].complyRange[0];
+      dayTracker[measure].amount = Math.floor(
+        Math.random() * (dayTracker[measure].popRange[1] - dayTracker[measure].popRange[0] + 1),
+      ) + dayTracker[measure].popRange[0];
+    }
+    console.log(JSON.stringify(dayTracker));
+
+    for (let i = 0; i < measureList.length; i += 1) {
+      measure = measureList[i % measureList.length];
+      for (let j = 0; j < dayTracker[measure].amount; j += 1) {
+        const score = measureFunctions[template[measure].newEntry](
+          measure, currentDay, dayTracker[measure].complyRate,
+        );
+        newScores.push(score);
+        if (!isCompliant(score)) {
+          if (randomOf100() < template[measure].updateChance) {
+            scoresToUpdate.push(score);
+          } else {
+            finalNoncompliant += 1;
+          }
+        }
+      }
     }
     console.log(`TESTING: Day ${daysLeft} final report: ${newScores.length} total records, ${scoresToUpdate.length} non-compliant.\n`);
     daysLeft -= 1;
@@ -808,8 +896,8 @@ async function generateData(measureList, scoreAmount, days, range) {
   return newScores;
 }
 
-function outputData(newScoresList, measureList, scoreAmount, days, range) {
-  let fileTitle = `data_measures-${measureList}_size-${scoreAmount}_days-${days}_range-${range[0]}-${range[1]}`;
+function outputData(newScoresList, measureList, days) {
+  let fileTitle = `data_measures-${measureList}_days-${days}}`;
   fileTitle += `_${dateFormatter(today)}_${today.getHours()}-${today.getMinutes()}-${today.getSeconds()}.json`;
 
   try {
@@ -829,11 +917,12 @@ async function insertData(newScoresList) {
     console.error('\x1b[31mError:\x1b[0m Something went wrong during insertion.');
     process.exit();
   }
-  console.log(`\x1b[33mInfo:\x1b[0m Results are being inserted into DAO. Please wait ${newScoresList.length / 10} seconds for asynchronous completion...`);
+  const waitTime = 1000 + newScoresList.length * 2;
+  console.log(`\x1b[33mInfo:\x1b[0m Results are being inserted into DAO. Please wait ${waitTime} seconds for asynchronous completion...`);
   setTimeout(() => {
     console.log('\x1b[32mSuccess:\x1b[0m Check database for new insertions.');
     process.exit();
-  }, newScoresList.length * 10);
+  }, waitTime);
 }
 
 async function processData() {
@@ -858,21 +947,11 @@ async function processData() {
     process.exit();
   }
 
-  let range = [100, 200];
-  if (parseArgs.r) {
-    range = parseArgs.r.split(',').map((entry) => parseInt(entry, 10)).sort();
-    if (range.length !== 2 || Number.isNaN(range[0]) || Number.isNaN(range[1])) {
-      console.error(`\x1b[31mError:\x1b[0m You must provide two numbers for "range" argument. You provided "${range}". Aborting.`);
-      process.exit();
-    }
-  }
-
-  const scoreAmount = parseArgs.s || 300;
   const days = parseArgs.d || 0;
-  const newScoresList = await generateData(measureList, scoreAmount, days, range);
+  const newScoresList = await generateData(measureList, days);
   console.log(`\x1b[33mInfo:\x1b[0m ${newScoresList.length} scores to be inserted. ${scoresToUpdate.length} are non-compliant, and ${scoresUpdated} became compliant.`);
   if (parseArgs.o) {
-    outputData(newScoresList, measureList, scoreAmount, days, range);
+    outputData(newScoresList, measureList, days);
   }
   insertData(newScoresList);
 }
@@ -883,8 +962,6 @@ if (parseArgs.h === true) {
   console.log('   -h, --help: Help command. What you\'re reading now...');
   console.log('   -i, --include: A spaceless, comma-separated list of measures to create. Default is to use all. Valid options are: ');
   console.log(`\t${Object.keys(template).join(', ')}`);
-  console.log('   -r, --range: A comma-separated list of two numbers, for the amount produced after the first day. Defaults are 100 to 200.');
-  console.log('   -s, --size: The number of produced HEDIS measurement scores. Default is 300.');
   console.log('   -o, --output: Instead of inserting into database, writes output to the file "saraswati-test-data" with a datetime stamp.');
   process.exit();
 }
