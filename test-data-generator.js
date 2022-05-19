@@ -4,6 +4,7 @@ const { v4: uuidv4 } = require('uuid');
 const minimist = require('minimist');
 const fs = require('fs');
 const dao = require('./src/config/dao');
+const { template, coveragePlans, providerOptions } = require('./test-data-settings');
 
 const parseArgs = minimist(process.argv.slice(2), {
   alias: {
@@ -13,126 +14,6 @@ const parseArgs = minimist(process.argv.slice(2), {
     o: 'output',
   },
 });
-
-const template = {
-  aab: { // Avoidance of Antibiotic Treatment for Acute Bronchitis/Bronchiolitis
-    subs: 1,
-    type: 'date',
-    ranges: [
-      { day: 0, popRange: [3, 5], compRange: [60, 80] },
-      { day: 3, popRange: [7, 8], compRange: [10, 15] },
-      { day: 8, popRange: [15, 18], compRange: [70, 95] },
-      { day: 9, popRange: [5, 15], compRange: [15, 25] },
-      { day: 10, popRange: [12, 17], compRange: [5, 10] },
-      { day: 26, popRange: [46, 57], compRange: [90, 95] },
-    ],
-    updateChance: 15,
-    gap: 31,
-    newEntry: 'newSingleDate',
-    updateEntry: 'updateSingleDate',
-  },
-  adde: { // Follow-Up Care for Children Prescribed ADHD Medication
-    subs: 2, type: 'bool', newEntry: 'newADDE', updateEntry: 'updateADDE',
-  },
-  aise: { // Adult Immunization Status
-    subs: 4,
-    type: 'bool',
-    ranges: [
-      { day: 0, popRange: [20, 30], compRange: [10, 20] },
-      { day: 11, popRange: [5, 13], compRange: [80, 90] },
-      { day: 13, popRange: [35, 53], compRange: [20, 25] },
-      { day: 26, popRange: [115, 130], compRange: [90, 98] },
-      { day: 27, popRange: [255, 280], compRange: [5, 7] },
-    ],
-    updateChance: 90,
-    newEntry: 'newAISE',
-    updateEntry: 'updateAISE',
-  },
-  apme: { // Metabolic Monitoring for Children and Adolescents on Antipsychotics
-    subs: 3, type: 'bool', newEntry: 'newTripleDependBool', updateEntry: 'updateTripleDependBool',
-  },
-  asfe: { // Unhealthy Alcohol Use Screening and Follow-Up
-    subs: 2, type: 'bool', newEntry: 'newDoubleBool', updateEntry: 'updateDoubleBool',
-  },
-  bcse: { // Breast Cancer Screening
-    subs: 1, type: 'bool', newEntry: 'newSingleBool', updateEntry: 'updateSingleBool',
-  },
-  ccs: { // Cervical Cancer Screening
-    subs: 1, type: 'bool', newEntry: 'newSingleBool', updateEntry: 'updateSingleBool',
-  },
-  cise: { // Childhood Immunization Status
-    subs: 13, type: 'bool', newEntry: 'newCISE', updateEntry: 'updateCISE',
-  },
-  cole: { // Colorectal Cancer Screening
-    subs: 1, type: 'bool', newEntry: 'newSingleBool', updateEntry: 'updateSingleBool',
-  },
-  cou: { // Risk of Continued Opioid Use
-    subs: 2, type: 'bool', newEntry: 'newCOU', updateEntry: 'updateCOU',
-  },
-  cwp: { // Appropriate Testing for Pharyngitis
-    subs: 1, type: 'date', gap: 31, newEntry: 'newSingleDate', updateEntry: 'updateSingleDate',
-  },
-  dmse: { // Utilization of the PHQ-9 to Monitor Depression Symptoms for Adolescents and Adults
-    subs: 3, type: 'bool', newEntry: 'newDMSE', updateEntry: 'updateDMSE',
-  },
-  drre: { // Depression Remission or Response for Adolescents and Adults
-    subs: 3,
-    type: 'bool',
-    ranges: [
-      { day: 0, popRange: [5, 10], compRange: [15, 25] },
-      { day: 8, popRange: [2, 5], compRange: [60, 80] },
-      { day: 10, popRange: [50, 60], compRange: [5, 10] },
-      { day: 16, popRange: [5, 13], compRange: [10, 60] },
-      { day: 18, popRange: [180, 200], compRange: [90, 95] },
-      { day: 22, popRange: [200, 230], compRange: [0, 5] },
-    ],
-    updateChance: 30,
-    newEntry: 'newDRRE',
-    updateEntry: 'updateDRRE',
-  },
-  dsfe: { // Depression Screening and Follow-Up for Adolescents and Adults
-    subs: 2, type: 'bool', newEntry: 'newDoubleBool', updateEntry: 'updateDoubleBool',
-  },
-  fum: { // Follow-Up After Emergency Department Visit for Mental Illness
-    subs: 2, type: 'date', gap: 31, newEntry: 'newFUM', updateEntry: 'updateFUM',
-  },
-  imae: { // Immunizations for Adolescents
-    subs: 5,
-    type: 'bool',
-    ranges: [
-      { day: 0, popRange: [5, 10], compRange: [90, 95] },
-      { day: 2, popRange: [3, 7], compRange: [10, 20] },
-      { day: 5, popRange: [4, 8], compRange: [40, 60] },
-      { day: 6, popRange: [1, 2], compRange: [5, 10] },
-      { day: 9, popRange: [26, 32], compRange: [15, 80] },
-      { day: 14, popRange: [1, 3], compRange: [25, 40] },
-      { day: 18, popRange: [3, 5], compRange: [25, 80] },
-      { day: 25, popRange: [26, 42], compRange: [15, 18] },
-      { day: 27, popRange: [10, 22], compRange: [85, 90] },
-    ],
-    updateChance: 35,
-    newEntry: 'newIMAE',
-    updateEntry: 'updateIMAE',
-  },
-  pdse: { // Postpartum Depression Screening and Follow-Up
-    subs: 2, type: 'object', newEntry: 'newDoubleDeliveries', updateEntry: 'updateDoubleDeliveries',
-  },
-  pnde: { // Prenatal Depression Screening and Follow-Up
-    subs: 2, type: 'object', newEntry: 'newDoubleDeliveries', updateEntry: 'updateDoubleDeliveries',
-  },
-  prse: { // Prenatal Immunization Status
-    subs: 3, type: 'object', newEntry: 'newPRSE', updateEntry: 'updatePRSE',
-  },
-  psa: { // Non-Recommended PSA-Based (prostate-specific antigen) Screening in Older Men
-    subs: 1, type: 'bool', newEntry: 'newSingleBool', updateEntry: 'updateSingleBool',
-  },
-  uop: { // Use of Opioids From Multiple Providers
-    subs: 3, type: 'bool', newEntry: 'newTripleDependBool', updateEntry: 'updateTripleDependBool',
-  },
-  uri: { // Appropriate Treatment for Upper Respiratory Infection
-    subs: 1, type: 'date', gap: 31, newEntry: 'newSingleDate', updateEntry: 'updateSingleDate',
-  },
-};
 
 const randomOf100 = () => Math.random() * 100;
 const randomBool = () => Math.random() < 0.5;
@@ -151,70 +32,6 @@ const todayOfYear = dayOfYear(today);
 const numeratorCheck = (data, index) => (
   (index > 1) ? data[`Numerator ${index}`] && numeratorCheck(data, index - 1) : data[`Numerator ${index}`]
 );
-
-const coveragePlans = [
-  { code: 'MCPOL', display: 'Managed Care Policy' },
-  { code: 'HMO', display: 'Health Maintenance Organization Policy' },
-  { code: 'PPO', display: 'Preferred Provider Organization Policy' },
-];
-
-const providerOptions = [
-  {
-    measures: ['aab', 'adde', 'aise', 'apme', 'asfe', 'bcse', 'ccs', 'cise', 'cole', 'cou',
-      'cwp', 'dmse', 'drre', 'dsfe', 'fum', 'imae', 'pdse', 'pnde', 'prse', 'psa', 'uop', 'uri'],
-    providers: [{
-      reference: 'Organization?identifier=71533123',
-      display: 'Norton Hill Carecenter',
-    }, {
-      reference: 'Practitioner?identifier=1143',
-      display: 'Doctor Anne Guish',
-    }, {
-      reference: 'Practitioner?identifier=1221',
-      display: 'Nurse Karen Patches',
-    }],
-  },
-  {
-    measures: ['aab', 'adde', 'aise', 'apme', 'asfe', 'cise', 'cwp', 'dmse', 'drre',
-      'dsfe', 'fum', 'pdse', 'pnde', 'prse'],
-    providers: [{
-      reference: 'Organization?identifier=71533123',
-      display: 'Springfield Hospital',
-    }, {
-      reference: 'Practitioner?identifier=1143',
-      display: 'Dr. Marc Weber, General Practitioner',
-    }],
-  },
-  {
-    measures: ['aab', 'aise', 'cise', 'cou', 'imae', 'uop', 'uri'],
-    providers: [{
-      reference: 'Organization?identifier=667531',
-      display: 'Hollifield Clinics',
-    }, {
-      reference: 'Practitioner?identifier=7882499',
-      display: 'Nurse Practitioner Sharon Arthurs',
-    }],
-  },
-  {
-    measures: ['bcse', 'ccs', 'cole', 'psa'],
-    providers: [{
-      reference: 'Organization?identifier=8554',
-      display: 'Cancer Treatment & Care',
-    }, {
-      reference: 'Practitioner?identifier=903321',
-      display: 'Dr. Larry McDaniels',
-    }],
-  },
-  {
-    measures: ['prse', 'pnde', 'pdse'],
-    providers: [{
-      reference: 'Organization?identifier=9911',
-      display: "Anova Women's Birthing Service",
-    }, {
-      reference: 'Practitioner?identifier=8123',
-      display: 'Dr. Colette DeBarge',
-    }],
-  },
-];
 
 const newScoreTemplate = (measure, date) => {
   const id = `${measure}-${uuidv4()}`;
@@ -272,7 +89,7 @@ const updateScoreTemplate = (measure, date) => {
   return { data, id };
 };
 
-const dateGenerator = (date, gap, complyChance) => {
+const dateGenerator = (date, gap, compliance) => {
   const days = dayOfYear(date);
   const initialPopDates = [];
   const numeratorDates = [];
@@ -283,12 +100,12 @@ const dateGenerator = (date, gap, complyChance) => {
       new Date(today.getFullYear(), 0, 1 + Math.floor(Math.random() * todayOfYear)),
     );
     initialPopDates.push(randomDay);
-    if (randomOf100() < complyChance) {
+    if (randomOf100() < compliance) {
       numeratorDates.push(randomDay);
     }
   } else { // Multiple days.
     let previousDays = 0;
-    let doctorInformed = randomOf100() < complyChance;
+    let doctorInformed = randomOf100() < compliance;
     for (let i = 0; i < totalGaps; i += 1) {
       if (previousDays + gap > todayOfYear) {
         break;
@@ -305,7 +122,7 @@ const dateGenerator = (date, gap, complyChance) => {
       if (doctorInformed) {
         numeratorDates.push(gapDate);
       } else {
-        doctorInformed = randomOf100() < complyChance;
+        doctorInformed = randomOf100() < compliance;
       }
       if (!randomTruerBool()) {
         exclusionDates.push(gapDate);
@@ -345,13 +162,13 @@ const measureFunctions = {
     data[id].Numerator = data[id].Denominator;
     return data;
   },
-  newSingleBool: (measure, date) => { // Single boolean value, nothing interesting.
+  newSingleBool: (measure, date, compliance) => { // Single boolean value, nothing interesting.
     const { data, id } = newScoreTemplate(measure, date);
     data[id] = {
       'Initial Population': true,
       Exclusions: randomBool(),
       Denominator: true,
-      Numerator: randomBool(),
+      Numerator: randomOf100() < compliance,
       id,
     };
     return data;
@@ -361,10 +178,10 @@ const measureFunctions = {
     data[id].Numerator = randomTruerBool();
     return data;
   },
-  newDoubleBool: (measure, date) => { // Same init pop, differing denom and numerators.
+  newDoubleBool: (measure, date, compliance) => { // Same init pop, differing denom and numerators.
     const { data, id } = newScoreTemplate(measure, date);
     const exclusion = randomBool();
-    const numerator1 = randomBool();
+    const numerator1 = randomOf100() < compliance;
     const denominator2 = randomBool();
     data[id] = {
       'Initial Population 1': true,
@@ -374,7 +191,7 @@ const measureFunctions = {
       'Denominator 1': true,
       'Denominator 2': denominator2,
       'Numerator 1': numerator1,
-      'Numerator 2': denominator2 && numerator1 ? randomBool() : false,
+      'Numerator 2': denominator2 && numerator1 ? randomOf100() < compliance : false,
       id,
     };
     return data;
@@ -391,12 +208,12 @@ const measureFunctions = {
       data[id]['Numerator 2'] = randomTruerBool();
     }
     return data;
-  },
-  newTripleDependBool: (measure, date) => { // Same init pop and denom, 3rd num depends on prior 2
+  }, // Same init pop and denom, 3rd num depends on prior 2
+  newTripleDependBool: (measure, date, compliance) => {
     const { data, id } = newScoreTemplate(measure, date);
     const exclusion = randomBool();
-    const numerator1 = randomBool();
-    const numerator2 = randomBool();
+    const numerator1 = randomOf100() < compliance;
+    const numerator2 = randomOf100() < compliance;
     data[id] = {
       'Initial Population 1': true,
       'Initial Population 2': true,
@@ -459,10 +276,10 @@ const measureFunctions = {
     }
     return data;
   },
-  newADDE: (measure, date) => { // Differing initial populations
+  newADDE: (measure, date, compliance) => { // Differing initial populations
     const { data, id } = newScoreTemplate(measure, date);
     const exclusion = randomBool();
-    const numerator1 = randomBool();
+    const numerator1 = randomOf100() < compliance;
     const initialPop2 = randomBool();
     const denominator2 = initialPop2 ? randomBool() : false;
     data[id] = {
@@ -473,7 +290,7 @@ const measureFunctions = {
       'Denominator 1': true,
       'Denominator 2': denominator2,
       'Numerator 1': numerator1,
-      'Numerator 2': denominator2 && numerator1 ? randomBool() : false,
+      'Numerator 2': denominator2 && numerator1 ? randomOf100() < compliance : false,
       id,
     };
     return data;
@@ -543,7 +360,7 @@ const measureFunctions = {
     }
     return data;
   },
-  newCISE: (measure, date) => { // 13 nums, have fun!
+  newCISE: (measure, date, compliance) => { // 13 nums, have fun!
     const { data, id } = newScoreTemplate(measure, date);
     const exclusion = !randomTruerBool();
     data[id] = {};
@@ -557,7 +374,7 @@ const measureFunctions = {
       data[id][`Denominator ${i}`] = true;
     }
     for (let i = 1; i < 11; i += 1) {
-      data[id][`Numerator ${i}`] = randomTruerBool();
+      data[id][`Numerator ${i}`] = randomOf100() < compliance;
     }
     const numerator11 = numeratorCheck(data[id], 7);
     const numerator12 = numerator11 && data[id]['Numerator 8'] && data[id]['Numerator 9'];
@@ -580,10 +397,10 @@ const measureFunctions = {
     data[id]['Numerator 13'] = numerator12 && data[id]['Numerator 10'];
     return data;
   },
-  newCOU: (measure, date) => { // Same init pop, differing denom and numerators.
+  newCOU: (measure, date, compliance) => { // Same init pop, differing denom and numerators.
     const { data, id } = newScoreTemplate(measure, date);
     const exclusion = randomBool();
-    const numerator1 = randomBool();
+    const numerator1 = randomOf100() < compliance;
     data[id] = {
       'Initial Population 1': true,
       'Initial Population 2': true,
@@ -592,7 +409,7 @@ const measureFunctions = {
       'Denominator 1': true,
       'Denominator 2': true,
       'Numerator 1': numerator1,
-      'Numerator 2': numerator1 ? randomBool() : false,
+      'Numerator 2': numerator1 ? randomOf100() < compliance : false,
       id,
     };
     return data;
@@ -607,7 +424,7 @@ const measureFunctions = {
     }
     return data;
   },
-  newDMSE: (measure, date) => { // Checks 3 times a year, then denom is always true
+  newDMSE: (measure, date, compliance) => { // Checks 3 times a year, then denom is always true
     const { data, id } = newScoreTemplate(measure, date);
     const exclusion = randomBool();
     const initialPop1 = randomBool();
@@ -623,9 +440,9 @@ const measureFunctions = {
       'Denominator 1': initialPop1,
       'Denominator 2': initialPop2,
       'Denominator 3': initialPop3,
-      'Numerator 1': initialPop1 ? randomTruerBool() : false,
-      'Numerator 2': initialPop2 ? randomTruerBool() : false,
-      'Numerator 3': initialPop3 ? randomTruerBool() : false,
+      'Numerator 1': initialPop1 ? randomOf100() < compliance : false,
+      'Numerator 2': initialPop2 ? randomOf100() < compliance : false,
+      'Numerator 3': initialPop3 ? randomOf100() < compliance : false,
       id,
     };
     return data;
@@ -679,10 +496,12 @@ const measureFunctions = {
     }
     return data;
   },
-  newFUM: (measure, date) => { // One for 30 day gap, another for 7.
+  newFUM: (measure, date, compliance) => { // One for 30 day gap, another for 7.
     const { data, id } = newScoreTemplate(measure, date);
     const { gap } = template[measure];
-    const { initialPopDates, exclusionDates, numeratorDates } = dateGenerator(date, gap);
+    const { initialPopDates, exclusionDates, numeratorDates } = dateGenerator(
+      date, gap, compliance,
+    );
     const numerator2Dates = Array.from(numeratorDates);
     if (!randomTruerBool()) {
       numerator2Dates.splice(Math.floor(Math.random(numeratorDates.length) * numeratorDates), 1);
@@ -743,12 +562,12 @@ const measureFunctions = {
     data[id]['Numerator 5'] = numerator4 && data[id]['Numerator 3'];
     return data;
   },
-  newPRSE: (measure, date) => {
+  newPRSE: (measure, date, compliance) => {
     const { data, id } = newScoreTemplate(measure, date);
     const initialPop1 = [deliveryGenerator()];
     const exclusion = randomBool() ? initialPop1 : [];
-    const numerator1 = randomTruestBool() ? initialPop1 : [];
-    const numerator2 = randomTruestBool() ? initialPop1 : [];
+    const numerator1 = randomOf100() < compliance ? initialPop1 : [];
+    const numerator2 = randomOf100() < compliance ? initialPop1 : [];
     data[id] = {
       'Initial Population 1': initialPop1,
       'Initial Population 2': initialPop1,
@@ -917,7 +736,7 @@ async function insertData(newScoresList) {
     console.error('\x1b[31mError:\x1b[0m Something went wrong during insertion.');
     process.exit();
   }
-  const waitTime = 1000 + newScoresList.length * 2;
+  const waitTime = 1000 + newScoresList.length * 3;
   console.log(`\x1b[33mInfo:\x1b[0m Results are being inserted into DAO. Please wait ${waitTime} seconds for asynchronous completion...`);
   setTimeout(() => {
     console.log('\x1b[32mSuccess:\x1b[0m Check database for new insertions.');
