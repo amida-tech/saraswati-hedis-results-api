@@ -716,7 +716,7 @@ async function generateData(measureList, days) {
 }
 
 function outputData(newScoresList, measureList, days) {
-  let fileTitle = `data_measures-${measureList}_days-${days}}`;
+  let fileTitle = `data_measures-${measureList.toString().replace(/,/g, '-')}_days-${days}`;
   fileTitle += `_${dateFormatter(today)}_${today.getHours()}-${today.getMinutes()}-${today.getSeconds()}.json`;
 
   try {

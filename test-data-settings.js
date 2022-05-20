@@ -20,7 +20,7 @@ const template = {
     type: 'bool',
     ranges: [
       { day: 0, popRange: [5, 8], compRange: [10, 80] },
-      { day: 5, popRange: [7, 8], compRange: [5, 15] },
+      { day: 5, popRange: [0, 0], compRange: [10, 100] },
       { day: 11, popRange: [15, 18], compRange: [50, 75] },
       { day: 19, popRange: [5, 15], compRange: [85, 95] },
       { day: 25, popRange: [90, 100], compRange: [5, 10] },
