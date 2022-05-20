@@ -8,6 +8,127 @@
         }
     },
     {
+        "_id": "aab",
+        "aab": {
+            "domainOfCare": "EOC",
+            "title": "Avoidance of Antibiotic Treatment in Adults with Acute Bronchitis",
+            "displayLabel": "AAB",
+            "measureType": "process",
+            "weight": 1,
+            "hasSubMeasures": false
+        }
+    },
+    {
+        "_id" : "adde", 
+        "adde" : {
+            "domainOfCare" : "ECDS", 
+            "title" : "Follow-Up Care for Children Prescribed ADHD Medication", 
+            "displayLabel" : "ADD-E", 
+            "measureType" : "process", 
+            "weight" : 1, 
+            "hasSubMeasures" : true
+        }
+    },
+    {
+        "_id" : "adde-1", 
+        "adde-1" : {
+            "domainOfCare" : "ECDS", 
+            "title" : "Follow-Up Care After Initiation of Treatment", 
+            "displayLabel" : "ADD-E: Follow-Up After Initiation", 
+            "measureType" : "process", 
+            "weight" : 1, 
+            "hasSubMeasures" : true
+        }
+    },
+    {
+        "_id" : "adde-2", 
+        "adde-2" : {
+            "domainOfCare" : "ECDS", 
+            "title" : "Follow-Up Care After Initiation of Treatment", 
+            "displayLabel" : "ADD-E: Follow-Up During Continuation", 
+            "measureType" : "process", 
+            "weight" : 1, 
+            "hasSubMeasures" : true
+        }
+    },
+    {
+        "_id" : "apme", 
+        "apme" : {
+            "domainOfCare" : "ECDS", 
+            "title" : "Metabolic Monitoring for Children and Adolescents on Antipsychotics", 
+            "displayLabel" : "APM-E", 
+            "measureType" : "process", 
+            "weight" : 1, 
+            "hasSubMeasures" : true
+        }
+    },
+    {
+        "_id" : "apme-1", 
+        "apme-1" : {
+            "domainOfCare" : "ECDS", 
+            "title" : "Blood Glucose Monitoring for Children and Adolescents on Antipsychotics", 
+            "displayLabel" : "APM-E: Blood Glucose Monitoring", 
+            "measureType" : "process", 
+            "weight" : 1, 
+            "hasSubMeasures" : false
+        }
+    },
+    {
+        "_id" : "apme-2", 
+        "apme-2" : {
+            "domainOfCare" : "ECDS", 
+            "title" : "Cholesterol Monitoring for Children and Adolescents on Antipsychotics", 
+            "displayLabel" : "APM-E: Cholesterol Monitoring", 
+            "measureType" : "process", 
+            "weight" : 1, 
+            "hasSubMeasures" : false
+        }
+    },
+    {
+        "_id" : "apme-3", 
+        "apme-3" : {
+            "domainOfCare" : "ECDS", 
+            "title" : "Blood Glucose and Cholesterol Monitoring for Children and Adolescents on Antipsychotics", 
+            "displayLabel" : "APM-E: Blood Glucose and Cholesterol Monitoring", 
+            "measureType" : "process", 
+            "weight" : 1, 
+            "hasSubMeasures" : false
+        }
+    },
+    {
+        "_id" : "asfe", 
+        "asfe" : {
+            "domainOfCare" : "ECDS", 
+            "title" : "Unhealthy Alcohol Use Screening and Follow-Up", 
+            "displayLabel" : "ASF-E", 
+            "measureType" : "process", 
+            "weight" : 1, 
+            "hasSubMeasures" : true
+        }
+    },
+    {
+        "_id" : "asfe-1", 
+        "asfe-1" : {
+            "domainOfCare" : "ECDS", 
+            "title" : "Unhealthy Alcohol Use Screening", 
+            "displayLabel" : "ASF-E: Unhealthy Alcohol Use Screening", 
+            "measureType" : "process", 
+            "weight" : 1, 
+            "hasSubMeasures" : false
+        }
+    },
+    {
+        "_id" : "asfe-2", 
+        "asfe-2" : {
+            "domainOfCare" : "ECDS", 
+            "title" : "Counseling or Other Follow-Up on Positive Screen for Unhealthy Alcohol Use", 
+            "displayLabel" : "ASF-E: Follow-Up", 
+            "measureType" : "process", 
+            "weight" : 1, 
+            "hasSubMeasures" : false
+        }
+    },
+    {
         "_id": "aise",
         "aise": {
             "domainOfCare": "ECDS",
@@ -63,25 +184,278 @@
         }
     },
     {
-        "_id": "aab",
-        "aab": {
-            "domainOfCare": "EOC",
-            "title": "Avoidance of Antibiotic Treatment in Adults with Acute Bronchitis",
-            "displayLabel": "AAB",
-            "measureType": "process",
-            "weight": 1,
-            "hasSubMeasures": false
+        "_id" : "bcse",
+        "bcse" : {
+            "domainOfCare" : "ECDS",
+            "title" : "Breast Cancer Screening Rate",
+            "displayLabel" : "BCS-E",
+            "measureType" : "process",
+            "weight" : 1,
+            "hasSubMeasures" : false
         }
     },
     {
-        "_id": "aab-1",
-        "aab-1": {
-            "domainOfCare": "EOC",
-            "title": "Avoidance of Antibiotic Treatment in Adults with Acute Bronchitis",
-            "displayLabel": "AAB",
-            "measureType": "process",
-            "weight": 1,
-            "hasSubMeasures": false
+        "_id" : "ccs",
+        "ccs" : {
+            "domainOfCare" : "EOF",
+            "title" : "Cervical Cancer Screening Rate",
+            "displayLabel" : "CCS",
+            "measureType" : "process",
+            "weight" : 1,
+            "hasSubMeasures" : false
+        }
+    },
+    {
+        "_id" : "cise",
+        "cise" : {
+            "domainOfCare" : "ECDS",
+            "title" : "Childhood Immunization Status",
+            "displayLabel" : "CIS-E",
+            "measureType" : "process",
+            "weight" : 3,
+            "hasSubMeasures" : true
+        }
+    },
+    {
+        "_id" : "cise-1",
+        "cise-1" : {
+            "domainOfCare" : "ECDS",
+            "title" : "Childhood Immunization Status: Influenza",
+            "displayLabel" : "CIS-E: Influenza",
+            "measureType" : "process",
+            "weight" : 3,
+            "hasSubMeasures" : false
+        }
+    },
+    {
+        "_id" : "cise-2",
+        "cise-2" : {
+            "domainOfCare" : "ECDS",
+            "title" : "Childhood Immunization Status: IPV",
+            "displayLabel" : "CIS-E: IPV",
+            "measureType" : "process",
+            "weight" : 3,
+            "hasSubMeasures" : false
+        }
+    },
+    {
+        "_id" : "cise-3",
+        "cise-3" : {
+            "domainOfCare" : "ECDS",
+            "title" : "Childhood Immunization Status: MMR",
+            "displayLabel" : "CIS-E: MMR",
+            "measureType" : "process",
+            "weight" : 3,
+            "hasSubMeasures" : false
+        }
+    },
+    {
+        "_id" : "cise-4",
+        "cise-4" : {
+            "domainOfCare" : "ECDS",
+            "title" : "Childhood Immunization Status: HiB",
+            "displayLabel" : "CIS-E: HiB",
+            "measureType" : "process",
+            "weight" : 3,
+            "hasSubMeasures" : false
+        }
+    },
+    {
+        "_id" : "cise-5",
+        "cise-5" : {
+            "domainOfCare" : "ECDS",
+            "title" : "Childhood Immunization Status: Hepatitus B",
+            "displayLabel" : "CIS-E: Hepatitus B",
+            "measureType" : "process",
+            "weight" : 3,
+            "hasSubMeasures" : false
+        }
+    },
+    {
+        "_id" : "cise-6",
+        "cise-6" : {
+            "domainOfCare" : "ECDS",
+            "title" : "Childhood Immunization Status: VZV",
+            "displayLabel" : "CIS-E: VZV",
+            "measureType" : "process",
+            "weight" : 3,
+            "hasSubMeasures" : false
+        }
+    },
+    {
+        "_id" : "cise-7",
+        "cise-7" : {
+            "domainOfCare" : "ECDS",
+            "title" : "Childhood Immunization Status: Pneumococcal Conjugate",
+            "displayLabel" : "CIS-E: Pneumococcal Conjugate",
+            "measureType" : "process",
+            "weight" : 3,
+            "hasSubMeasures" : false
+        }
+    },
+    {
+        "_id" : "cise-8",
+        "cise-8" : {
+            "domainOfCare" : "ECDS",
+            "title" : "Childhood Immunization Status: Hepatitus A",
+            "displayLabel" : "CIS-E: Hepatitus A",
+            "measureType" : "process",
+            "weight" : 3,
+            "hasSubMeasures" : false
+        }
+    },
+    {
+        "_id" : "cise-9",
+        "cise-9" : {
+            "domainOfCare" : "ECDS",
+            "title" : "Childhood Immunization Status: Rotavirus",
+            "displayLabel" : "CIS-E: Rotavirus",
+            "measureType" : "process",
+            "weight" : 3,
+            "hasSubMeasures" : false
+        }
+    },
+    {
+        "_id" : "cise-10",
+        "cise-10" : {
+            "domainOfCare" : "ECDS",
+            "title" : "Childhood Immunization Status: Influenza",
+            "displayLabel" : "CIS-E: Influenza",
+            "measureType" : "process",
+            "weight" : 3,
+            "hasSubMeasures" : false
+        }
+    },
+    {
+        "_id" : "cise-11",
+        "cise-11" : {
+            "domainOfCare" : "ECDS",
+            "title" : "Childhood Immunization Status: Combination 3",
+            "displayLabel" : "CIS-E: Combination 3",
+            "measureType" : "process",
+            "weight" : 3,
+            "hasSubMeasures" : false
+        }
+    },
+    {
+        "_id" : "cise-12",
+        "cise-12" : {
+            "domainOfCare" : "ECDS",
+            "title" : "Childhood Immunization Status: Combination 7",
+            "displayLabel" : "CIS-E: Combination 7",
+            "measureType" : "process",
+            "weight" : 3,
+            "hasSubMeasures" : false
+        }
+    },
+    {
+        "_id" : "cise-13",
+        "cise-13" : {
+            "domainOfCare" : "ECDS",
+            "title" : "Childhood Immunization Status: Combination 10",
+            "displayLabel" : "CIS-E: Combination 10",
+            "measureType" : "process",
+            "weight" : 3,
+            "hasSubMeasures" : false
+        }
+    },
+    {
+        "_id" : "cole",
+        "cole" : {
+            "domainOfCare" : "ECDS",
+            "title" : "Colorectal Cancer Screening Rate",
+            "displayLabel" : "CCS",
+            "measureType" : "process",
+            "weight" : 1,
+            "hasSubMeasures" : false
+        }
+    },
+    {
+        "_id" : "cou", 
+        "cou" : {
+            "domainOfCare" : "EOC", 
+            "title" : "Risk of Continued Opioid Use", 
+            "displayLabel" : "COU", 
+            "measureType" : "process", 
+            "weight" : 1, 
+            "hasSubMeasures" : true
+        }
+    },
+    {
+        "_id" : "cou-1", 
+        "cou-1" : {
+            "domainOfCare" : "EOC", 
+            "title" : "15 or More Days of Opioid Medications in 30 Day Period", 
+            "displayLabel" : "COU: 15 Days Opioid Medications", 
+            "measureType" : "process", 
+            "weight" : 1, 
+            "hasSubMeasures" : false
+        }
+    },
+    {
+        "_id" : "cou-2", 
+        "cou-2" : {
+            "domainOfCare" : "EOC", 
+            "title" : "31 or More Days of Opioid Medications in 62 Day Period", 
+            "displayLabel" : "COU: 31 Days Opioid Medications", 
+            "measureType" : "process", 
+            "weight" : 1, 
+            "hasSubMeasures" : false
+        }
+    },
+    {
+        "_id" : "cwp", 
+        "cwp" : {
+            "domainOfCare" : "EOC", 
+            "title" : "Appropriate Testing for Children with Pharyngitis", 
+            "displayLabel" : "CWP", 
+            "measureType" : "process", 
+            "weight" : 1, 
+            "hasSubMeasures" : false
+        }
+    },
+    {
+        "_id" : "dmse", 
+        "dmse" : {
+            "domainOfCare" : "ECDS", 
+            "title" : "Monitor Depression Symptoms for Adolescents and Adults", 
+            "displayLabel" : "DMS-E", 
+            "measureType" : "process", 
+            "weight" : 1, 
+            "hasSubMeasures" : true
+        }
+    },
+    {
+        "_id" : "dmse-1", 
+        "dmse-1" : {
+            "domainOfCare" : "ECDS", 
+            "title" : "Assessment Period 1: January 1 - April 30", 
+            "displayLabel" : "DMS-E: Assessment Period 1", 
+            "measureType" : "process", 
+            "weight" : 1, 
+            "hasSubMeasures" : false
+        }
+    },
+    {
+        "_id" : "dmse-2", 
+        "dmse-2" : {
+            "domainOfCare" : "ECDS", 
+            "title" : "Assessment Period 2: May 1 - August 31", 
+            "displayLabel" : "DMS-E: Assessment Period 2", 
+            "measureType" : "process", 
+            "weight" : 1, 
+            "hasSubMeasures" : false
+        }
+    },
+    {
+        "_id" : "dmse-3", 
+        "dmse-3" : {
+            "domainOfCare" : "ECDS", 
+            "title" : "Assessment Period 3: September 1 - December 31", 
+            "displayLabel" : "DMS-E: Assessment Period 3", 
+            "measureType" : "process", 
+            "weight" : 1, 
+            "hasSubMeasures" : false
         }
     },
     {
@@ -99,7 +473,7 @@
         "_id": "drre-1",
         "drre-1": {
             "domainOfCare": "ECDS",
-            "title": "Depression Follow-Up",
+            "title": "Depression Follow-Up for Adolescents and Adults",
             "displayLabel": "DRR-E: Follow-Up",
             "measureType": "outcome",
             "weight": 1,
@@ -110,7 +484,7 @@
         "_id": "drre-2",
         "drre-2": {
             "domainOfCare": "ECDS",
-            "title": "Depression Remission",
+            "title": "Depression Remission for Adolescents and Adults",
             "displayLabel": "DRR-E: Remission",
             "measureType": "outcome",
             "weight": 1,
@@ -121,10 +495,76 @@
         "_id": "drre-3",
         "drre-3": {
             "domainOfCare": "ECDS",
-            "title": "Depression Response",
+            "title": "Depression Response for Adolescents and Adults",
             "displayLabel": "DRR-E: Response",
             "measureType": "outcome",
             "weight": 1,
+            "hasSubMeasures": false
+        }
+    },
+    {
+        "_id": "dsfe",
+        "dsfe": {
+            "domainOfCare": "ECDS",
+            "title": "Depression Screening and Follow-Up for Adolescents and Adults",
+            "displayLabel": "DSF-E",
+            "measureType": "process",
+            "weight": 1,
+            "hasSubMeasures": true
+        }
+    },
+    {
+        "_id": "dsfe-1",
+        "dsfe-1": {
+            "domainOfCare": "ECDS",
+            "title": "Depression Screening for Adolescents and Adults",
+            "displayLabel": "DSF-E: Depression Screening",
+            "measureType": "process",
+            "weight": 1,
+            "hasSubMeasures": false
+        }
+    },
+    {
+        "_id": "dsfe-2",
+        "dsfe-2": {
+            "domainOfCare": "ECDS",
+            "title": "Follow-Up on Positive Depression Screen for Adolescents and Adults",
+            "displayLabel": "DSF-E: Follow-Up on Positive Screen",
+            "measureType": "process",
+            "weight": 1,
+            "hasSubMeasures": false
+        }
+    },
+    {
+        "_id": "fum",
+        "fum": {
+            "domainOfCare": "EOC",
+            "title": "Follow-Up After Emergency Department Visit for Mental Illness",
+            "displayLabel": "FUM",
+            "measureType": "process",
+            "weight": 3,
+            "hasSubMeasures": true
+        }
+    },
+    {
+        "_id": "fum-1",
+        "fum-1": {
+            "domainOfCare": "EOC",
+            "title": "Follow-Up Within 7 Days of Emergancy Department Visit",
+            "displayLabel": "FUM: Follow-Up Within 7 Days",
+            "measureType": "process",
+            "weight": 3,
+            "hasSubMeasures": false
+        }
+    },
+    {
+        "_id": "fum-2",
+        "fum-2": {
+            "domainOfCare": "EOC",
+            "title": "Follow-Up Within 30 Days of Emergancy Department Visit",
+            "displayLabel": "FUM: Follow-Up Within 30 Days",
+            "measureType": "process",
+            "weight": 3,
             "hasSubMeasures": false
         }
     },
@@ -192,6 +632,182 @@
             "measureType": "outcome",
             "weight": 3,
             "hasSubMeasures": false
+        }
+    },
+    {
+        "_id" : "pdse", 
+        "pdse" : {
+            "domainOfCare" : "ECDS", 
+            "title" : "Postpartum Depression Screening and Follow-up", 
+            "displayLabel" : "PDS-E", 
+            "measureType" : "process", 
+            "weight" : 1, 
+            "hasSubMeasures" : true
+        }
+    },
+    {
+        "_id" : "pdse-1", 
+        "pdse-1" : {
+            "domainOfCare" : "ECDS", 
+            "title" : "Postpartum Depression Screening", 
+            "displayLabel" : "PDS-E: Depression Screening", 
+            "measureType" : "process", 
+            "weight" : 1, 
+            "hasSubMeasures" : false
+        }
+    },
+    {
+        "_id" : "pdse-2", 
+        "pdse-2" : {
+            "domainOfCare" : "ECDS", 
+            "title" : "Follow-Up on Positive Postpartum Depression Screen", 
+            "displayLabel" : "PDS-E: Follow-Up on Positive Screen", 
+            "measureType" : "process", 
+            "weight" : 1, 
+            "hasSubMeasures" : false
+        }
+    },
+    {
+        "_id" : "pnde", 
+        "pnde" : {
+            "domainOfCare" : "ECDS", 
+            "title" : "Prenatal Depression Screening and Follow-up", 
+            "displayLabel" : "PND-E", 
+            "measureType" : "process", 
+            "weight" : 1, 
+            "hasSubMeasures" : true
+        }
+    },
+    {
+        "_id" : "pnde-1", 
+        "pnde-1" : {
+            "domainOfCare" : "ECDS", 
+            "title" : "Prenatal Depression Screening", 
+            "displayLabel" : "PND-E: Depression Screening", 
+            "measureType" : "process", 
+            "weight" : 1, 
+            "hasSubMeasures" : false
+        }
+    },
+    {
+        "_id" : "pnde-2", 
+        "pnde-2" : {
+            "domainOfCare" : "ECDS", 
+            "title" : "Follow-Up on Positive Prenatal Depression Screen", 
+            "displayLabel" : "PND-E: Follow-Up on Positive Screen", 
+            "measureType" : "process", 
+            "weight" : 1, 
+            "hasSubMeasures" : false
+        }
+    },
+    {
+        "_id" : "prse", 
+        "prse" : {
+            "domainOfCare" : "ECDS", 
+            "title" : "Prenatal Immunization Status", 
+            "displayLabel" : "PRS-E", 
+            "measureType" : "process", 
+            "weight" : 1, 
+            "hasSubMeasures" : true
+        }
+    },
+    {
+        "_id" : "prse-1", 
+        "prse-1" : {
+            "domainOfCare" : "ECDS", 
+            "title" : "Immunization Status: Influenza", 
+            "displayLabel" : "PRS-E: Influenza", 
+            "measureType" : "process", 
+            "weight" : 1, 
+            "hasSubMeasures" : false
+        }
+    },
+    {
+        "_id" : "prse-2", 
+        "prse-2" : {
+            "domainOfCare" : "ECDS", 
+            "title" : "Immunization Status: Tdap", 
+            "displayLabel" : "PRS-E: Tdap", 
+            "measureType" : "process", 
+            "weight" : 1, 
+            "hasSubMeasures" : false
+        }
+    },
+    {
+        "_id" : "prse-3", 
+        "prse-3" : {
+            "domainOfCare" : "ECDS", 
+            "title" : "Immunization Status: Influenza and Tdap", 
+            "displayLabel" : "PRS-E: Combination", 
+            "measureType" : "process", 
+            "weight" : 1, 
+            "hasSubMeasures" : false
+        }
+    },
+    {
+        "_id" : "psa", 
+        "psa" : {
+            "domainOfCare" : "EOC", 
+            "title" : "Non-Recommended PSA-Based Screening in Older Men", 
+            "displayLabel" : "PSA", 
+            "measureType" : "process", 
+            "weight" : 1, 
+            "hasSubMeasures" : false
+        }
+    },
+    {
+        "_id" : "uop", 
+        "uop" : {
+            "domainOfCare" : "EOC", 
+            "title" : "Use of Opioids from Multiple Providers", 
+            "displayLabel" : "UOP", 
+            "measureType" : "process", 
+            "weight" : 1, 
+            "hasSubMeasures" : true
+        }
+    },
+    {
+        "_id" : "uop-1", 
+        "uop-1" : {
+            "domainOfCare" : "EOC", 
+            "title" : "Use of Opioids from Multiple Prescribers", 
+            "displayLabel" : "UOP: Multiple Prescribers", 
+            "measureType" : "process", 
+            "weight" : 1, 
+            "hasSubMeasures" : false
+        }
+    },
+    {
+        "_id" : "uop-2", 
+        "uop-2" : {
+            "domainOfCare" : "EOC", 
+            "title" : "Use of Opioids from Multiple Pharmacies", 
+            "displayLabel" : "UOP: Multiple Pharmacies", 
+            "measureType" : "process", 
+            "weight" : 1, 
+            "hasSubMeasures" : false
+        }
+    },
+    {
+        "_id" : "uop-3", 
+        "uop-3" : {
+            "domainOfCare" : "EOC", 
+            "title" : "Use of Opioids from Multiple Prescribers and Pharmacies", 
+            "displayLabel" : "UOP: Multiple Prescribers and Pharmacies", 
+            "measureType" : "process", 
+            "weight" : 1, 
+            "hasSubMeasures" : false
+        }
+    },
+    {
+        "_id" : "uri", 
+        "uri" : {
+            "domainOfCare" : "EOC", 
+            "title" : "Appropriate Treatment for Children With Upper Respiratory Infection", 
+            "displayLabel" : "URI", 
+            "measureType" : "process", 
+            "weight" : 1, 
+            "hasSubMeasures" : false
         }
     }
 ]
