@@ -2,10 +2,8 @@
 const dao = require('../config/dao');
 
 const { calculateTrend, calculateTrendLegacy } = require('../calculators/TrendCalculator');
-const { calcLatestNumDen } = require('../calculators/NumDenCalculator');
+const { calculateDailyMeasureResults } = require('../calculators/DailyResultsCalculator');
 
-const dayMiliseconds = 86400000;
-const eodMiliseconds = 84960000;
 const { createInfoObject } = require('../utilities/infoUtil');
 const { generateCsv } = require('../utilities/reportsUtil');
 
@@ -30,32 +28,16 @@ const getMeasureResults = async (req, res, next) => {
 
 const getDailyMeasureResults = async (req, res, next) => {
   try {
-    let search = await dao.findMeasures({});
+    const patientResults = await dao.findMeasures({});
 
-    if (search.length === 0) {
+    if (patientResults.length === 0) {
       res.send([]);
     }
 
-    const currentDate = new Date();
-    currentDate.setHours(0);
-    currentDate.setMinutes(0);
-    currentDate.setSeconds(0);
-    currentDate.setMilliseconds(0);
-    let dailyMeasureResults = calcLatestNumDen(search, currentDate);
+    const infoList = await dao.findInfo();
+    const measureInfo = createInfoObject(infoList);
 
-    // Set the day to 5/5/2022, but compare the times against 5/5/2022 11:59:59 PM
-    let newDate = new Date(currentDate.getTime() - dayMiliseconds);
-    search = search.filter(
-      (element) => new Date(element.timeStamp).getTime() < (newDate.getTime() + eodMiliseconds),
-    );
-    while (search.length !== 0) {
-      dailyMeasureResults = dailyMeasureResults.concat(calcLatestNumDen(search, newDate));
-      newDate = new Date(newDate.getTime() - dayMiliseconds);
-      const compareDateTime = newDate.getTime() + eodMiliseconds;
-      search = search.filter((element) => new Date(element.timeStamp).getTime() < compareDateTime);
-    }
-
-    dailyMeasureResults = dailyMeasureResults.sort((a, b) => a.date - b.date);
+    const dailyMeasureResults = calculateDailyMeasureResults(patientResults, measureInfo);
     res.send(dailyMeasureResults);
   } catch (e) {
     next(e);
@@ -72,7 +54,9 @@ const getTrends = async (req, res, next) => {
       return res.send(trendData);
     }
     const memberResults = await dao.findMeasures({});
-    const trendData = calculateTrend(memberResults, predictions, 7);
+    const infoList = await dao.findInfo();
+    const measureInfo = createInfoObject(infoList);
+    const trendData = calculateTrend(memberResults, measureInfo, predictions, 7);
     return res.send(trendData);
   } catch (e) {
     return next(e);

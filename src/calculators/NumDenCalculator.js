@@ -25,7 +25,26 @@ function setValue(valueArray, valueName, fieldName, patient) {
   }
 }
 
-function calculateMeasureScore(subScoreArray, measurementType, date) {
+function calculateMeasureScore(subScoreArray, measurementType, measureInfo, date) {
+  if (subScoreArray.length === 1) {
+    const { starRating } = calculateMeasureStarRating({
+      measure: measurementType,
+      denominator: subScoreArray[0].denominator,
+      numerator: subScoreArray[0].numerator,
+      inverted: measureInfo[measurementType].inverted,
+    });
+    return {
+      measure: measurementType,
+      date: subScoreArray[0].date,
+      value: subScoreArray[0].value,
+      starRating,
+      denominator: subScoreArray[0].denominator,
+      numerator: subScoreArray[0].numerator,
+      initialPopulation: subScoreArray[0].initialPopulation,
+      exclusions: subScoreArray[0].exclusions,
+    };
+  }
+
   let numerator = 0;
   let denominator = 0;
   let initialPopulation = 0;
@@ -41,6 +60,7 @@ function calculateMeasureScore(subScoreArray, measurementType, date) {
     measure: measurementType,
     numerator,
     denominator,
+    inverted: measureInfo[measurementType].inverted,
   });
   return {
     measure: measurementType,
@@ -55,10 +75,15 @@ function calculateMeasureScore(subScoreArray, measurementType, date) {
   };
 }
 
-function calculateSubScore(resultHolder, measurementType, date, index) {
+function calculateSubScore(resultHolder, measurementType, measureInfo, date, index) {
   const numerator = resultHolder.numeratorValues[index];
   const denominator = resultHolder.denominatorValues[index];
-  const percentValue = denominator === 0 ? 0 : numerator / denominator;
+  let percentValue = 0;
+  if (denominator !== 0) {
+    percentValue = measureInfo[measurementType].inverted
+      ? 1 - (numerator / denominator)
+      : numerator / denominator;
+  }
   return {
     measure: `${measurementType}-${index + 1}`,
     date,
@@ -70,7 +95,7 @@ function calculateSubScore(resultHolder, measurementType, date, index) {
   };
 }
 
-const calcLatestNumDen = (resultList, currentDate) => {
+const calcLatestNumDen = (resultList, measureInfo, currentDate) => {
   const resultMap = new Map();
   const measurementTypes = [];
 
@@ -119,10 +144,14 @@ const calcLatestNumDen = (resultList, currentDate) => {
 
     for (let i = 0; i < measureSize; i += 1) {
       // calculate scores for each subscore
-      subScoreArray.push(calculateSubScore(resultHolder, measurementType, currentDate, i));
+      subScoreArray.push(
+        calculateSubScore(resultHolder, measurementType, measureInfo, currentDate, i),
+      );
     }
-    // use subscores to calculate aggregate measure score (also storing subscore)
-    valueArray.push(calculateMeasureScore(subScoreArray, measurementType, currentDate));
+    // use subscores to calculate aggregate measure score (also storing subscores if >1)
+    valueArray.push(
+      calculateMeasureScore(subScoreArray, measurementType, measureInfo, currentDate),
+    );
   }
 
   // calculate the total overall score and star rating
@@ -133,8 +162,10 @@ const calcLatestNumDen = (resultList, currentDate) => {
   let denominator = 0;
   let initialPopulation = 0;
   let exclusions = 0;
+  let totalWeight = 0;
   valueArray.forEach((result) => {
-    compositeValue += result.value;
+    const { weight } = measureInfo[result.measure];
+    compositeValue += (result.value * weight);
     if (result.starRating >= 0) {
       starValueCount += 1;
       compositeStarRating += result.starRating;
@@ -143,9 +174,11 @@ const calcLatestNumDen = (resultList, currentDate) => {
     denominator += result.denominator;
     initialPopulation += result.initialPopulation;
     exclusions += result.exclusions;
+
+    totalWeight += weight;
   });
   compositeStarRating = starValueCount === 0 ? 0 : compositeStarRating / starValueCount;
-  compositeValue /= valueArray.length;
+  compositeValue /= totalWeight;
 
   valueArray.push({
     measure: 'composite',

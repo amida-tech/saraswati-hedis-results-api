@@ -15,7 +15,8 @@
             "displayLabel": "AAB",
             "measureType": "process",
             "weight": 1,
-            "hasSubMeasures": false
+            "hasSubMeasures": false,
+            "inverted": true
         }
     },
     {
@@ -807,7 +808,8 @@
             "displayLabel" : "URI", 
             "measureType" : "process", 
             "weight" : 1, 
-            "hasSubMeasures" : false
+            "hasSubMeasures" : false,
+            "inverted": true
         }
     }
 ]
