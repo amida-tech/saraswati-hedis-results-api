@@ -25,6 +25,15 @@ function setValue(valueArray, valueName, fieldName, patient) {
   }
 }
 
+function getComplianceValue(numerator, denominator, inverted) {
+  if (denominator !== 0) {
+    return inverted
+      ? 1 - (numerator / denominator)
+      : numerator / denominator;
+  }
+  return 0;
+}
+
 function calculateMeasureScore(subScoreArray, measurementType, measureInfo, date) {
   if (subScoreArray.length === 1) {
     const { starRating } = calculateMeasureStarRating({
@@ -55,7 +64,8 @@ function calculateMeasureScore(subScoreArray, measurementType, measureInfo, date
     initialPopulation += subScoreArray[i].initialPopulation;
     exclusions += subScoreArray[i].exclusions;
   }
-  const value = (denominator === 0 ? 0 : numerator / denominator) * 100;
+
+  const value = getComplianceValue(numerator, denominator, measureInfo[measurementType].inverted);
   const { starRating } = calculateMeasureStarRating({
     measure: measurementType,
     numerator,
@@ -78,12 +88,9 @@ function calculateMeasureScore(subScoreArray, measurementType, measureInfo, date
 function calculateSubScore(resultHolder, measurementType, measureInfo, date, index) {
   const numerator = resultHolder.numeratorValues[index];
   const denominator = resultHolder.denominatorValues[index];
-  let percentValue = 0;
-  if (denominator !== 0) {
-    percentValue = measureInfo[measurementType].inverted
-      ? 1 - (numerator / denominator)
-      : numerator / denominator;
-  }
+  const percentValue = getComplianceValue(
+    numerator, denominator, measureInfo[measurementType].inverted,
+  );
   return {
     measure: `${measurementType}-${index + 1}`,
     date,
