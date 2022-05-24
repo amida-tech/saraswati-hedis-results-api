@@ -23,6 +23,8 @@ async function kafkaRunner() {
     eachMessage: async ({ topic, partition, message }) => {
       logger.info('Kafka message has arrived to HERA');
       const jsonObject = JSON.parse(message.value.toString());
+      logger.info(`Date: ${new Date()}`);
+      logger.info(`Member Id: ${jsonObject.memberId}`);
       if (jsonObject !== undefined && Array.isArray(jsonObject)) {
         insertMeasures(jsonObject);
       } else {
