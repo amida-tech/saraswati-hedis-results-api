@@ -29,7 +29,7 @@ async function calculateData() {
     latestDate = new Date(currentDate.getTime() - (24 * 60 * 60 * 1000));
   }
 
-  const patientResults = await dao.findMeasures();
+  const patientResults = await dao.findMembers();
   const hedisResults = calcLatestNumDen(patientResults, currentDate);
   const fullResultList = [];
   // Store results for each day until it's caught up to today

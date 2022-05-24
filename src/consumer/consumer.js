@@ -3,7 +3,7 @@ const config = require('../config/config');
 const paramValidation = require('../config/param-validation');
 
 const {
-  insertMeasure, insertMeasures,
+  insertMember, insertMembers,
 } = require('../config/dao');
 
 const kafka = new Kafka({
@@ -22,9 +22,9 @@ async function kafkaRunner() {
     eachMessage: async ({ topic, partition, message }) => {
       const jsonObject = JSON.parse(message.value.toString());
       if (jsonObject !== undefined && Array.isArray(jsonObject)) {
-        insertMeasures(jsonObject);
+        insertMembers(jsonObject);
       } else {
-        insertMeasure(jsonObject);
+        insertMember(jsonObject);
       }
     },
   });

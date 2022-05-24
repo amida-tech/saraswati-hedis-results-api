@@ -731,7 +731,7 @@ function outputData(newScoresList, measureList, days) {
 
 async function insertData(newScoresList) {
   await dao.init();
-  const insertResults = await dao.insertMeasures(newScoresList);
+  const insertResults = await dao.insertMembers(newScoresList);
   if (!insertResults) {
     console.error('\x1b[31mError:\x1b[0m Something went wrong during insertion.');
     process.exit();

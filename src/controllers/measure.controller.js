@@ -9,15 +9,6 @@ const eodMiliseconds = 84960000;
 const { createInfoObject } = require('../utilities/infoUtil');
 const { generateCsv } = require('../utilities/reportsUtil');
 
-const getMeasures = async (req, res, next) => {
-  try {
-    const measures = await dao.findMeasures({});
-    return res.send(measures);
-  } catch (e) {
-    return next(e);
-  }
-};
-
 const getMeasureResults = async (req, res, next) => {
   try {
     const search = await dao.findMeasureResults(req.query);
@@ -30,7 +21,7 @@ const getMeasureResults = async (req, res, next) => {
 
 const getDailyMeasureResults = async (req, res, next) => {
   try {
-    let search = await dao.findMeasures({});
+    let search = await dao.findMembers({});
 
     if (search.length === 0) {
       res.send([]);
@@ -71,7 +62,7 @@ const getTrends = async (req, res, next) => {
       const trendData = calculateTrendLegacy(results, predictions, 7);
       return res.send(trendData);
     }
-    const memberResults = await dao.findMeasures({});
+    const memberResults = await dao.findMembers({});
     const trendData = calculateTrend(memberResults, predictions, 7);
     return res.send(trendData);
   } catch (e) {
@@ -93,32 +84,13 @@ const getInfo = async (req, res, next) => {
 const exportCsv = async (req, res, next) => {
   try {
     res.set({ 'Content-Disposition': 'attachment; filename=results-export.csv' });
-    const patientResults = await dao.findMeasures(req.query);
+    const patientResults = await dao.findMembers(req.query);
     const infoList = await dao.findInfo(req.query.measurementType);
     const measureInfo = createInfoObject(infoList);
     const csv = generateCsv(patientResults, measureInfo, req.query.measurementType);
     res.send(csv);
   } catch (e) {
     next(e);
-  }
-};
-
-const postBulkMeasures = async (req, res, next) => {
-  try {
-    const options = { ordered: true };
-    const measures = await dao.insertMeasures(req.body, options);
-    return res.send(measures);
-  } catch (e) {
-    return next(e);
-  }
-};
-
-const postMeasure = async (req, res, next) => {
-  try {
-    const measure = await dao.insertMeasure(req.body);
-    return res.send(measure);
-  } catch (e) {
-    return next(e);
   }
 };
 
@@ -142,14 +114,11 @@ const postInfo = async (req, res, next) => {
 };
 
 module.exports = {
-  getMeasures,
   getMeasureResults,
   getDailyMeasureResults,
   getTrends,
   getInfo,
   exportCsv,
-  postBulkMeasures,
-  postMeasure,
   postMeasureResults,
   postInfo,
 };

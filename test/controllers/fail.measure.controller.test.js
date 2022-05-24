@@ -4,11 +4,8 @@ const fs = require('fs');
 const path = require('path');
 
 const {
-  getMeasures,
   getMeasureResults,
   getTrends,
-  postBulkMeasures,
-  postMeasure,
   postMeasureResults,
   exportCsv,
 } = require('../../src/controllers/measure.controller');
@@ -22,16 +19,16 @@ jest.mock('../../src/config/dao', () => {
   return {
     __esModule: true,
     ...originalModule,
-    findMeasures: jest.fn().mockImplementation(() => {
+    findMembers: jest.fn().mockImplementation(() => {
       throw new Error();
     }),
     findMeasureResults: jest.fn().mockImplementation(() => {
       throw new Error();
     }),
-    insertMeasure: jest.fn().mockImplementation(() => {
+    insertMember: jest.fn().mockImplementation(() => {
       throw new Error();
     }),
-    insertMeasures: jest.fn().mockImplementation(() => {
+    insertMembers: jest.fn().mockImplementation(() => {
       throw new Error();
     }),
     insertMeasureResults: jest.fn().mockImplementation(() => {
@@ -41,14 +38,6 @@ jest.mock('../../src/config/dao', () => {
 });
 
 describe('## measure.controller.js exceptions', () => {
-  describe('Test getMeasures function', () => {
-    it('Should catch error and call next', async () => {
-      const next = jest.fn();
-      await getMeasures({}, jest.fn(), next);
-      expect(next).toHaveBeenCalled();
-    });
-  });
-
   describe('Test getMeasureResults', () => {
     it('Should catch error and call next', async () => {
       const next = jest.fn();
@@ -69,22 +58,6 @@ describe('## measure.controller.js exceptions', () => {
     it('Should catch error and call next', async () => {
       const next = jest.fn();
       await exportCsv({ }, jest.fn(), next);
-      expect(next).toHaveBeenCalled();
-    });
-  });
-
-  describe('Test postBulkMeasures upload', () => {
-    it('Should catch error and call next', async () => {
-      const next = jest.fn();
-      await postBulkMeasures({ body: data }, jest.fn(), next);
-      expect(next).toHaveBeenCalled();
-    });
-  });
-
-  describe('Test postMeasure function', () => {
-    it('Should catch error and call next', async () => {
-      const next = jest.fn();
-      await postMeasure({ body: data }, jest.fn(), next);
       expect(next).toHaveBeenCalled();
     });
   });

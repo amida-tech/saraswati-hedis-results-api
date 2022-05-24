@@ -5,13 +5,6 @@ const measureCtrl = require('../controllers/measure.controller');
 
 const router = express.Router(); // eslint-disable-line new-cap
 
-router.route('/')
-  .get(measureCtrl.getMeasures)
-  .post(measureCtrl.postMeasure);
-
-router.route('/bulk')
-  .post(measureCtrl.postBulkMeasures);
-
 router.route('/info')
   .get(measureCtrl.getInfo)
   .post(measureCtrl.postInfo);
