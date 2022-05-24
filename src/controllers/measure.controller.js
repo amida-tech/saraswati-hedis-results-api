@@ -9,7 +9,7 @@ const { generateCsv } = require('../utilities/reportsUtil');
 
 const getMeasures = async (req, res, next) => {
   try {
-    const measures = await dao.findMeasures({});
+    const measures = await dao.findMeasures(req.query);
     return res.send(measures);
   } catch (e) {
     return next(e);
