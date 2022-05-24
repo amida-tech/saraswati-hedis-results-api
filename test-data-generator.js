@@ -368,7 +368,7 @@ const measureFunctions = {
       data[id][`Initial Population ${i}`] = true;
     }
     for (let i = 1; i < 14; i += 1) {
-      data[id][`Exclusion ${i}`] = exclusion;
+      data[id][`Exclusions ${i}`] = exclusion;
     }
     for (let i = 1; i < 14; i += 1) {
       data[id][`Denominator ${i}`] = true;
@@ -508,7 +508,7 @@ const measureFunctions = {
     }
     data[id] = {
       'Initial Population': initialPopDates,
-      'Initial Population2': initialPopDates,
+      'Initial Population 2': initialPopDates,
       'Exclusions 1': exclusionDates,
       'Exclusions 2': exclusionDates,
       'Denominator 1': initialPopDates,

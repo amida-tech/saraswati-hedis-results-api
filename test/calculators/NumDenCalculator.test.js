@@ -2,14 +2,17 @@
 const fs = require('fs');
 const path = require('path');
 const { calcLatestNumDen } = require('../../src/calculators/NumDenCalculator');
+const { createInfoObject } = require('../../src/utilities/infoUtil');
 
 const data = JSON.parse(fs.readFileSync(`${path.resolve()}/test/resources/search-data.json`));
+const infoList = JSON.parse(fs.readFileSync(`${path.resolve()}/test/result-data/hedis-info.json`));
 
 describe(' NumDenCalculator test ', () => {
   let resultArray;
 
   beforeAll(() => {
-    resultArray = calcLatestNumDen(data, new Date());
+    const measureInfo = createInfoObject(infoList);
+    resultArray = calcLatestNumDen(data, measureInfo, new Date());
   });
 
   test('Should not be null', () => {

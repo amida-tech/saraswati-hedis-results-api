@@ -5,6 +5,7 @@ const app = require('./config/express.js');
 const dao = require('./config/dao');
 const { calcLatestNumDen } = require('./calculators/NumDenCalculator');
 const consumer = require('./consumer/consumer');
+const { createInfoObject } = require('./utilities/infoUtil');
 
 async function calculateData() {
   let measureResults = await dao.findMeasureResults();
@@ -30,7 +31,11 @@ async function calculateData() {
   }
 
   const patientResults = await dao.findMembers();
-  const hedisResults = calcLatestNumDen(patientResults, currentDate);
+  const infoList = await dao.findInfo();
+  const measureInfo = createInfoObject(infoList);
+
+  const hedisResults = calcLatestNumDen(patientResults, measureInfo, currentDate);
+
   const fullResultList = [];
   // Store results for each day until it's caught up to today
   while (latestDate.getTime() < currentDate.getTime()) {
