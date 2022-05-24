@@ -2,12 +2,14 @@
 const fs = require('fs');
 const path = require('path');
 const { calculateTrend, calculateTrendLegacy } = require('../../src/calculators/TrendCalculator');
+const { createInfoObject } = require('../../src/utilities/infoUtil');
 
 const data = JSON.parse(fs.readFileSync(`${path.resolve()}/test/result-data/measure-results.json`));
 
 const mockAabPatientResults = JSON.parse(fs.readFileSync(`${path.resolve()}/test/seed-data/aab.json`));
 const mockDrrePatientResults = JSON.parse(fs.readFileSync(`${path.resolve()}/test/seed-data/drre.json`));
 const mockImaePatientResults = JSON.parse(fs.readFileSync(`${path.resolve()}/test/seed-data/imae.json`));
+const infoList = JSON.parse(fs.readFileSync(`${path.resolve()}/test/result-data/hedis-info.json`));
 
 describe('Legacy Trend Calculation test ', () => {
   let resultArray;
@@ -46,7 +48,8 @@ describe('Trend Calculation test ', () => {
       mockDrrePatientResults,
       mockImaePatientResults,
     );
-    resultArray = calculateTrend(allData, [], 3);
+    const measureInfo = createInfoObject(infoList);
+    resultArray = calculateTrend(allData, measureInfo, [], 3);
   });
 
   test('Should not be null', () => {

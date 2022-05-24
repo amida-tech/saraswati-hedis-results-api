@@ -75,7 +75,7 @@ function calculateMeasureScore(subScoreArray, measurementType, measureInfo, date
   return {
     measure: measurementType,
     date,
-    value,
+    value: value * 100,
     starRating,
     denominator,
     numerator,
