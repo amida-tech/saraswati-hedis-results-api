@@ -19,7 +19,7 @@ const getMeasureResults = async (req, res, next) => {
 
 const getDailyMeasureResults = async (req, res, next) => {
   try {
-    let search = await dao.findMembers({});
+    const patientResults = await dao.findMembers({});
 
     if (patientResults.length === 0) {
       res.send([]);
