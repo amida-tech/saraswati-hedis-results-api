@@ -95,7 +95,7 @@ function getSubScoreTrends(latestResult, baseResult) {
   return subScoreTrends;
 }
 
-const calculateTrend = (memberResults, predictionData, days) => {
+const calculateTrend = (memberResults, measureInfo, predictionData, days) => {
   const currentDate = new Date();
   currentDate.setHours(0);
   currentDate.setMinutes(0);
@@ -103,7 +103,7 @@ const calculateTrend = (memberResults, predictionData, days) => {
   currentDate.setMilliseconds(0);
   const compareDate = new Date(currentDate - ((days - 1) * 24 * 60 * 60 * 1000));
 
-  const latestResults = calcLatestNumDen(memberResults, currentDate);
+  const latestResults = calcLatestNumDen(memberResults, measureInfo, currentDate);
   if (latestResults.length === 0) {
     return [];
   }
@@ -112,7 +112,7 @@ const calculateTrend = (memberResults, predictionData, days) => {
     (result) => new Date(result.timeStamp).getTime() < (compareDate.getTime()),
   );
 
-  const baseResults = calcLatestNumDen(compareMemberResults, compareDate);
+  const baseResults = calcLatestNumDen(compareMemberResults, measureInfo, compareDate);
 
   const finalResults = [];
   latestResults.forEach((latestResult) => {
@@ -121,7 +121,7 @@ const calculateTrend = (memberResults, predictionData, days) => {
     const percentChange = getOverAllPercentChange(latestResult, baseResult);
 
     let subScoreTrends = [];
-    if (measure !== 'composite') {
+    if (measureInfo[measure].hasSubMeasures) {
       subScoreTrends = getSubScoreTrends(latestResult, baseResult);
     }
 

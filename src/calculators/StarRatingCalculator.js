@@ -6,7 +6,9 @@ const calculateMeasureStarRating = (rating) => {
     measurementStarRating.starRating = -1;
     return measurementStarRating;
   }
-  const starBase = (rating.numerator / rating.denominator) * 5;
+  const starBase = (rating.inverted
+    ? (1 - (rating.numerator / rating.denominator))
+    : (rating.numerator / rating.denominator)) * 5;
   const starDecimal = starBase % 1;
   const star = Math.trunc(starBase);
   if (starDecimal >= 0.75) {

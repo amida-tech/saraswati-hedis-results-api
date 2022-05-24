@@ -15,7 +15,8 @@
             "displayLabel": "AAB",
             "measureType": "process",
             "weight": 1,
-            "hasSubMeasures": false
+            "hasSubMeasures": false,
+            "inverted": true
         }
     },
     {
@@ -26,7 +27,8 @@
             "displayLabel" : "ADD-E", 
             "measureType" : "process", 
             "weight" : 1, 
-            "hasSubMeasures" : true
+            "hasSubMeasures" : true,
+            "inverted": false
         }
     },
     {
@@ -37,7 +39,8 @@
             "displayLabel" : "ADD-E: Follow-Up After Initiation", 
             "measureType" : "process", 
             "weight" : 1, 
-            "hasSubMeasures" : true
+            "hasSubMeasures" : true,
+            "inverted": false
         }
     },
     {
@@ -48,7 +51,8 @@
             "displayLabel" : "ADD-E: Follow-Up During Continuation", 
             "measureType" : "process", 
             "weight" : 1, 
-            "hasSubMeasures" : true
+            "hasSubMeasures" : true,
+            "inverted": false
         }
     },
     {
@@ -59,7 +63,8 @@
             "displayLabel" : "APM-E", 
             "measureType" : "process", 
             "weight" : 1, 
-            "hasSubMeasures" : true
+            "hasSubMeasures" : true,
+            "inverted": false
         }
     },
     {
@@ -70,7 +75,8 @@
             "displayLabel" : "APM-E: Blood Glucose Monitoring", 
             "measureType" : "process", 
             "weight" : 1, 
-            "hasSubMeasures" : false
+            "hasSubMeasures" : false,
+            "inverted": false
         }
     },
     {
@@ -81,7 +87,8 @@
             "displayLabel" : "APM-E: Cholesterol Monitoring", 
             "measureType" : "process", 
             "weight" : 1, 
-            "hasSubMeasures" : false
+            "hasSubMeasures" : false,
+            "inverted": false
         }
     },
     {
@@ -92,7 +99,8 @@
             "displayLabel" : "APM-E: Blood Glucose and Cholesterol Monitoring", 
             "measureType" : "process", 
             "weight" : 1, 
-            "hasSubMeasures" : false
+            "hasSubMeasures" : false,
+            "inverted": false
         }
     },
     {
@@ -103,7 +111,8 @@
             "displayLabel" : "ASF-E", 
             "measureType" : "process", 
             "weight" : 1, 
-            "hasSubMeasures" : true
+            "hasSubMeasures" : true,
+            "inverted": false
         }
     },
     {
@@ -114,7 +123,8 @@
             "displayLabel" : "ASF-E: Unhealthy Alcohol Use Screening", 
             "measureType" : "process", 
             "weight" : 1, 
-            "hasSubMeasures" : false
+            "hasSubMeasures" : false,
+            "inverted": false
         }
     },
     {
@@ -125,7 +135,8 @@
             "displayLabel" : "ASF-E: Follow-Up", 
             "measureType" : "process", 
             "weight" : 1, 
-            "hasSubMeasures" : false
+            "hasSubMeasures" : false,
+            "inverted": false
         }
     },
     {
@@ -136,7 +147,8 @@
             "displayLabel": "AIS-E",
             "measureType": "process",
             "weight": 1,
-            "hasSubMeasures": true
+            "hasSubMeasures": true,
+            "inverted": false
         }
     },
     {
@@ -147,7 +159,8 @@
             "displayLabel": "AIS-E: Influenza",
             "measureType": "process",
             "weight": 1,
-            "hasSubMeasures": false
+            "hasSubMeasures": false,
+            "inverted": false
         }
     },
     {
@@ -158,7 +171,8 @@
             "displayLabel": "AIS-E: Td/Tdap",
             "measureType": "process",
             "weight": 1,
-            "hasSubMeasures": false
+            "hasSubMeasures": false,
+            "inverted": false
         }
     },
     {
@@ -169,7 +183,8 @@
             "displayLabel": "AIS-E: Zoster",
             "measureType": "process",
             "weight": 1,
-            "hasSubMeasures": false
+            "hasSubMeasures": false,
+            "inverted": false
         }
     },
     {
@@ -180,7 +195,8 @@
             "displayLabel": "AIS-E: Pneumococcal",
             "measureType": "process",
             "weight": 1,
-            "hasSubMeasures": false
+            "hasSubMeasures": false,
+            "inverted": false
         }
     },
     {
@@ -191,7 +207,8 @@
             "displayLabel" : "BCS-E",
             "measureType" : "process",
             "weight" : 1,
-            "hasSubMeasures" : false
+            "hasSubMeasures" : false,
+            "inverted": false
         }
     },
     {
@@ -202,7 +219,8 @@
             "displayLabel" : "CCS",
             "measureType" : "process",
             "weight" : 1,
-            "hasSubMeasures" : false
+            "hasSubMeasures" : false,
+            "inverted": false
         }
     },
     {
@@ -213,7 +231,8 @@
             "displayLabel" : "CIS-E",
             "measureType" : "process",
             "weight" : 3,
-            "hasSubMeasures" : true
+            "hasSubMeasures" : true,
+            "inverted": false
         }
     },
     {
@@ -224,7 +243,8 @@
             "displayLabel" : "CIS-E: Influenza",
             "measureType" : "process",
             "weight" : 3,
-            "hasSubMeasures" : false
+            "hasSubMeasures" : false,
+            "inverted": false
         }
     },
     {
@@ -235,7 +255,8 @@
             "displayLabel" : "CIS-E: IPV",
             "measureType" : "process",
             "weight" : 3,
-            "hasSubMeasures" : false
+            "hasSubMeasures" : false,
+            "inverted": false
         }
     },
     {
@@ -246,7 +267,8 @@
             "displayLabel" : "CIS-E: MMR",
             "measureType" : "process",
             "weight" : 3,
-            "hasSubMeasures" : false
+            "hasSubMeasures" : false,
+            "inverted": false
         }
     },
     {
@@ -257,7 +279,8 @@
             "displayLabel" : "CIS-E: HiB",
             "measureType" : "process",
             "weight" : 3,
-            "hasSubMeasures" : false
+            "hasSubMeasures" : false,
+            "inverted": false
         }
     },
     {
@@ -268,7 +291,8 @@
             "displayLabel" : "CIS-E: Hepatitus B",
             "measureType" : "process",
             "weight" : 3,
-            "hasSubMeasures" : false
+            "hasSubMeasures" : false,
+            "inverted": false
         }
     },
     {
@@ -279,7 +303,8 @@
             "displayLabel" : "CIS-E: VZV",
             "measureType" : "process",
             "weight" : 3,
-            "hasSubMeasures" : false
+            "hasSubMeasures" : false,
+            "inverted": false
         }
     },
     {
@@ -290,7 +315,8 @@
             "displayLabel" : "CIS-E: Pneumococcal Conjugate",
             "measureType" : "process",
             "weight" : 3,
-            "hasSubMeasures" : false
+            "hasSubMeasures" : false,
+            "inverted": false
         }
     },
     {
@@ -301,7 +327,8 @@
             "displayLabel" : "CIS-E: Hepatitus A",
             "measureType" : "process",
             "weight" : 3,
-            "hasSubMeasures" : false
+            "hasSubMeasures" : false,
+            "inverted": false
         }
     },
     {
@@ -312,7 +339,8 @@
             "displayLabel" : "CIS-E: Rotavirus",
             "measureType" : "process",
             "weight" : 3,
-            "hasSubMeasures" : false
+            "hasSubMeasures" : false,
+            "inverted": false
         }
     },
     {
@@ -323,7 +351,8 @@
             "displayLabel" : "CIS-E: Influenza",
             "measureType" : "process",
             "weight" : 3,
-            "hasSubMeasures" : false
+            "hasSubMeasures" : false,
+            "inverted": false
         }
     },
     {
@@ -334,7 +363,8 @@
             "displayLabel" : "CIS-E: Combination 3",
             "measureType" : "process",
             "weight" : 3,
-            "hasSubMeasures" : false
+            "hasSubMeasures" : false,
+            "inverted": false
         }
     },
     {
@@ -345,7 +375,8 @@
             "displayLabel" : "CIS-E: Combination 7",
             "measureType" : "process",
             "weight" : 3,
-            "hasSubMeasures" : false
+            "hasSubMeasures" : false,
+            "inverted": false
         }
     },
     {
@@ -356,7 +387,8 @@
             "displayLabel" : "CIS-E: Combination 10",
             "measureType" : "process",
             "weight" : 3,
-            "hasSubMeasures" : false
+            "hasSubMeasures" : false,
+            "inverted": false
         }
     },
     {
@@ -367,7 +399,8 @@
             "displayLabel" : "CCS",
             "measureType" : "process",
             "weight" : 1,
-            "hasSubMeasures" : false
+            "hasSubMeasures" : false,
+            "inverted": false
         }
     },
     {
@@ -378,7 +411,8 @@
             "displayLabel" : "COU", 
             "measureType" : "process", 
             "weight" : 1, 
-            "hasSubMeasures" : true
+            "hasSubMeasures" : true,
+            "inverted": false
         }
     },
     {
@@ -389,7 +423,8 @@
             "displayLabel" : "COU: 15 Days Opioid Medications", 
             "measureType" : "process", 
             "weight" : 1, 
-            "hasSubMeasures" : false
+            "hasSubMeasures" : false,
+            "inverted": false
         }
     },
     {
@@ -400,7 +435,8 @@
             "displayLabel" : "COU: 31 Days Opioid Medications", 
             "measureType" : "process", 
             "weight" : 1, 
-            "hasSubMeasures" : false
+            "hasSubMeasures" : false,
+            "inverted": false
         }
     },
     {
@@ -411,7 +447,8 @@
             "displayLabel" : "CWP", 
             "measureType" : "process", 
             "weight" : 1, 
-            "hasSubMeasures" : false
+            "hasSubMeasures" : false,
+            "inverted": false
         }
     },
     {
@@ -422,7 +459,8 @@
             "displayLabel" : "DMS-E", 
             "measureType" : "process", 
             "weight" : 1, 
-            "hasSubMeasures" : true
+            "hasSubMeasures" : true,
+            "inverted": false
         }
     },
     {
@@ -433,7 +471,8 @@
             "displayLabel" : "DMS-E: Assessment Period 1", 
             "measureType" : "process", 
             "weight" : 1, 
-            "hasSubMeasures" : false
+            "hasSubMeasures" : false,
+            "inverted": false
         }
     },
     {
@@ -444,7 +483,8 @@
             "displayLabel" : "DMS-E: Assessment Period 2", 
             "measureType" : "process", 
             "weight" : 1, 
-            "hasSubMeasures" : false
+            "hasSubMeasures" : false,
+            "inverted": false
         }
     },
     {
@@ -455,7 +495,8 @@
             "displayLabel" : "DMS-E: Assessment Period 3", 
             "measureType" : "process", 
             "weight" : 1, 
-            "hasSubMeasures" : false
+            "hasSubMeasures" : false,
+            "inverted": false
         }
     },
     {
@@ -466,7 +507,8 @@
             "displayLabel": "DRR-E",
             "measureType": "outcome",
             "weight": 1,
-            "hasSubMeasures": true
+            "hasSubMeasures": true,
+            "inverted": false
         }
     },
     {
@@ -477,7 +519,8 @@
             "displayLabel": "DRR-E: Follow-Up",
             "measureType": "outcome",
             "weight": 1,
-            "hasSubMeasures": false
+            "hasSubMeasures": false,
+            "inverted": false
         }
     },
     {
@@ -488,7 +531,8 @@
             "displayLabel": "DRR-E: Remission",
             "measureType": "outcome",
             "weight": 1,
-            "hasSubMeasures": false
+            "hasSubMeasures": false,
+            "inverted": false
         }
     },
     {
@@ -499,7 +543,8 @@
             "displayLabel": "DRR-E: Response",
             "measureType": "outcome",
             "weight": 1,
-            "hasSubMeasures": false
+            "hasSubMeasures": false,
+            "inverted": false
         }
     },
     {
@@ -510,7 +555,8 @@
             "displayLabel": "DSF-E",
             "measureType": "process",
             "weight": 1,
-            "hasSubMeasures": true
+            "hasSubMeasures": true,
+            "inverted": false
         }
     },
     {
@@ -521,7 +567,8 @@
             "displayLabel": "DSF-E: Depression Screening",
             "measureType": "process",
             "weight": 1,
-            "hasSubMeasures": false
+            "hasSubMeasures": false,
+            "inverted": false
         }
     },
     {
@@ -532,7 +579,8 @@
             "displayLabel": "DSF-E: Follow-Up on Positive Screen",
             "measureType": "process",
             "weight": 1,
-            "hasSubMeasures": false
+            "hasSubMeasures": false,
+            "inverted": false
         }
     },
     {
@@ -543,7 +591,8 @@
             "displayLabel": "FUM",
             "measureType": "process",
             "weight": 3,
-            "hasSubMeasures": true
+            "hasSubMeasures": true,
+            "inverted": false
         }
     },
     {
@@ -554,7 +603,8 @@
             "displayLabel": "FUM: Follow-Up Within 7 Days",
             "measureType": "process",
             "weight": 3,
-            "hasSubMeasures": false
+            "hasSubMeasures": false,
+            "inverted": false
         }
     },
     {
@@ -565,7 +615,8 @@
             "displayLabel": "FUM: Follow-Up Within 30 Days",
             "measureType": "process",
             "weight": 3,
-            "hasSubMeasures": false
+            "hasSubMeasures": false,
+            "inverted": false
         }
     },
     {
@@ -576,7 +627,8 @@
             "displayLabel": "IMA-E",
             "measureType": "outcome",
             "weight": 3,
-            "hasSubMeasures": true
+            "hasSubMeasures": true,
+            "inverted": false
         }
     },
     {
@@ -587,7 +639,8 @@
             "displayLabel": "IMA-E: Meningococcal",
             "measureType": "outcome",
             "weight": 3,
-            "hasSubMeasures": false
+            "hasSubMeasures": false,
+            "inverted": false
         }
     },
     {
@@ -598,7 +651,8 @@
             "displayLabel": "IMA-E: Tdap",
             "measureType": "outcome",
             "weight": 3,
-            "hasSubMeasures": false
+            "hasSubMeasures": false,
+            "inverted": false
         }
     },
     {
@@ -609,7 +663,8 @@
             "displayLabel": "IMA-E: HPV",
             "measureType": "outcome",
             "weight": 3,
-            "hasSubMeasures": false
+            "hasSubMeasures": false,
+            "inverted": false
         }
     },
     {
@@ -620,7 +675,8 @@
             "displayLabel": "IMA-E: Combination 1",
             "measureType": "outcome",
             "weight": 3,
-            "hasSubMeasures": false
+            "hasSubMeasures": false,
+            "inverted": false
         }
     },
     {
@@ -631,7 +687,8 @@
             "displayLabel": "IMA-E: Combination 2",
             "measureType": "outcome",
             "weight": 3,
-            "hasSubMeasures": false
+            "hasSubMeasures": false,
+            "inverted": false
         }
     },
     {
@@ -642,7 +699,8 @@
             "displayLabel" : "PDS-E", 
             "measureType" : "process", 
             "weight" : 1, 
-            "hasSubMeasures" : true
+            "hasSubMeasures" : true,
+            "inverted": false
         }
     },
     {
@@ -653,7 +711,8 @@
             "displayLabel" : "PDS-E: Depression Screening", 
             "measureType" : "process", 
             "weight" : 1, 
-            "hasSubMeasures" : false
+            "hasSubMeasures" : false,
+            "inverted": false
         }
     },
     {
@@ -664,7 +723,8 @@
             "displayLabel" : "PDS-E: Follow-Up on Positive Screen", 
             "measureType" : "process", 
             "weight" : 1, 
-            "hasSubMeasures" : false
+            "hasSubMeasures" : false,
+            "inverted": false
         }
     },
     {
@@ -675,7 +735,8 @@
             "displayLabel" : "PND-E", 
             "measureType" : "process", 
             "weight" : 1, 
-            "hasSubMeasures" : true
+            "hasSubMeasures" : true,
+            "inverted": false
         }
     },
     {
@@ -686,7 +747,8 @@
             "displayLabel" : "PND-E: Depression Screening", 
             "measureType" : "process", 
             "weight" : 1, 
-            "hasSubMeasures" : false
+            "hasSubMeasures" : false,
+            "inverted": false
         }
     },
     {
@@ -697,7 +759,8 @@
             "displayLabel" : "PND-E: Follow-Up on Positive Screen", 
             "measureType" : "process", 
             "weight" : 1, 
-            "hasSubMeasures" : false
+            "hasSubMeasures" : false,
+            "inverted": false
         }
     },
     {
@@ -708,7 +771,8 @@
             "displayLabel" : "PRS-E", 
             "measureType" : "process", 
             "weight" : 1, 
-            "hasSubMeasures" : true
+            "hasSubMeasures" : true,
+            "inverted": false
         }
     },
     {
@@ -719,7 +783,8 @@
             "displayLabel" : "PRS-E: Influenza", 
             "measureType" : "process", 
             "weight" : 1, 
-            "hasSubMeasures" : false
+            "hasSubMeasures" : false,
+            "inverted": false
         }
     },
     {
@@ -730,7 +795,8 @@
             "displayLabel" : "PRS-E: Tdap", 
             "measureType" : "process", 
             "weight" : 1, 
-            "hasSubMeasures" : false
+            "hasSubMeasures" : false,
+            "inverted": false
         }
     },
     {
@@ -741,7 +807,8 @@
             "displayLabel" : "PRS-E: Combination", 
             "measureType" : "process", 
             "weight" : 1, 
-            "hasSubMeasures" : false
+            "hasSubMeasures" : false,
+            "inverted": false
         }
     },
     {
@@ -752,7 +819,8 @@
             "displayLabel" : "PSA", 
             "measureType" : "process", 
             "weight" : 1, 
-            "hasSubMeasures" : false
+            "hasSubMeasures" : false,
+            "inverted": false
         }
     },
     {
@@ -763,7 +831,8 @@
             "displayLabel" : "UOP", 
             "measureType" : "process", 
             "weight" : 1, 
-            "hasSubMeasures" : true
+            "hasSubMeasures" : true,
+            "inverted": false
         }
     },
     {
@@ -774,7 +843,8 @@
             "displayLabel" : "UOP: Multiple Prescribers", 
             "measureType" : "process", 
             "weight" : 1, 
-            "hasSubMeasures" : false
+            "hasSubMeasures" : false,
+            "inverted": false
         }
     },
     {
@@ -785,7 +855,8 @@
             "displayLabel" : "UOP: Multiple Pharmacies", 
             "measureType" : "process", 
             "weight" : 1, 
-            "hasSubMeasures" : false
+            "hasSubMeasures" : false,
+            "inverted": false
         }
     },
     {
@@ -796,7 +867,8 @@
             "displayLabel" : "UOP: Multiple Prescribers and Pharmacies", 
             "measureType" : "process", 
             "weight" : 1, 
-            "hasSubMeasures" : false
+            "hasSubMeasures" : false,
+            "inverted": false
         }
     },
     {
@@ -807,7 +879,8 @@
             "displayLabel" : "URI", 
             "measureType" : "process", 
             "weight" : 1, 
-            "hasSubMeasures" : false
+            "hasSubMeasures" : false,
+            "inverted": true
         }
     }
 ]
