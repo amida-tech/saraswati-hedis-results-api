@@ -1,4 +1,6 @@
 const cron = require('node-cron');
+const fs = require('fs');
+const path = require('path');
 const config = require('./config/config');
 const winstonInstance = require('./config/winston');
 const app = require('./config/express.js');
@@ -57,6 +59,29 @@ async function calculateData() {
   dao.insertMeasureResults(fullResultList);
 }
 
+async function initHedisInfo() {
+  let infoList = await dao.findInfo();
+  if (infoList.length === 0) {
+    const hedisInfoLocation = `${path.resolve()}/${config.infoLocation}`;
+    try {
+      infoList = JSON.parse(fs.readFileSync(hedisInfoLocation));
+      await dao.insertInfo(infoList);
+    } catch (e) {
+      winstonInstance.error(`Unable to upload data from ${hedisInfoLocation}`);
+    }
+  }
+}
+
+async function prepareDatabase() {
+  await initHedisInfo();
+  if (config.calculation.active) {
+    calculateData();
+    cron.schedule(config.calculation.schedule, () => {
+      calculateData();
+    });
+  }
+}
+
 dao.init().then(() => {
   if (config.kafkaConfig.active) {
     consumer.kafkaRunner();
@@ -66,12 +91,7 @@ dao.init().then(() => {
       port: config.port,
       node_env: config.env,
     });
-    if (config.calculation.active) {
-      calculateData();
-      cron.schedule(config.calculation.schedule, () => {
-        calculateData();
-      });
-    }
+    prepareDatabase();
   });
 });
 
