@@ -19,7 +19,7 @@ const initTest = (mockDb) => {
   db = mockDb;
 };
 
-const findMeasures = (query) => {
+const findMembers = (query) => {
   const collection = db.collection('measures');
   return collection.find(query).toArray();
 };
@@ -47,13 +47,13 @@ const findInfo = (measure) => {
   return collection.find({}).toArray();
 };
 
-const insertMeasure = async (measure) => {
+const insertMember = async (member) => {
   const collection = db.collection('measures');
   try {
-    const countOfRecords = await collection.countDocuments({ memberId: measure.memberId });
-    const recordId = `${measure.memberId}-${measure.measurementType}-${countOfRecords}`;
+    const countOfRecords = await collection.countDocuments({ memberId: member.memberId });
+    const recordId = `${member.memberId}-${member.measurementType}-${countOfRecords}`;
     logger.info(`Upserting new record with Id: ${recordId}`);
-    return collection.replaceOne({ _id: recordId }, measure, {
+    return collection.replaceOne({ _id: recordId }, member, {
       upsert: true,
     });
   } catch (e) {
@@ -62,7 +62,7 @@ const insertMeasure = async (measure) => {
   }
 };
 
-const insertMeasures = (measures) => measures.map((measure) => insertMeasure(measure));
+const insertMembers = (measures) => measures.map((measure) => insertMember(measure));
 
 // create collection for results
 const insertMeasureResults = (results) => {
@@ -132,12 +132,12 @@ const insertInfo = (info) => {
 module.exports = {
   init,
   initTest,
-  findMeasures,
+  findMembers,
   findMeasureResults,
   findPredictions,
   findInfo,
-  insertMeasure,
-  insertMeasures,
+  insertMember,
+  insertMembers,
   insertMeasureResults,
   insertPredictions,
   insertInfo,

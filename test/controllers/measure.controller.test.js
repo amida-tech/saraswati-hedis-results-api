@@ -4,13 +4,10 @@ const fs = require('fs');
 const path = require('path');
 
 const {
-  getMeasures,
   getMeasureResults,
   getDailyMeasureResults,
   getTrends,
   getInfo,
-  postBulkMeasures,
-  postMeasure,
   postMeasureResults,
   postInfo,
   exportCsv,
@@ -27,12 +24,12 @@ jest.mock('../../src/config/dao', () => {
   return {
     __esModule: true,
     ...originalModule,
-    findMeasures: jest.fn(() => mockDrrePatientResults),
+    findMembers: jest.fn(() => mockDrrePatientResults),
     findMeasureResults: jest.fn(() => []),
     findPredictions: jest.fn(() => {}),
     findInfo: jest.fn(() => mockMeasureInfo),
-    insertMeasure: jest.fn(() => {}),
-    insertMeasures: jest.fn(() => []),
+    insertMember: jest.fn(() => {}),
+    insertMembers: jest.fn(() => []),
     insertMeasureResults: jest.fn(() => []),
     insertInfo: jest.fn(() => {}),
   };
@@ -56,14 +53,6 @@ jest.mock('../../src/calculators/TrendCalculator', () => {
 });
 
 describe('## measure.controller.js', () => {
-  describe('Test getMeasures function', () => {
-    it('Should call response.send', async () => {
-      const response = { send: jest.fn().mockReturnValue(Promise.resolve()) };
-      await getMeasures({}, response, jest.fn());
-      expect(response.send).toHaveBeenCalled();
-    });
-  });
-
   describe('Test getMeasureResults', () => {
     it('Should call response.send', async () => {
       const response = { send: jest.fn().mockReturnValue(Promise.resolve()) };
@@ -103,22 +92,6 @@ describe('## measure.controller.js', () => {
         set: jest.fn().mockReturnValue({}),
       };
       await exportCsv({ query: { measurementType: 'drre' } }, response, jest.fn());
-      expect(response.send).toHaveBeenCalled();
-    });
-  });
-
-  describe('Test postBulkMeasures upload', () => {
-    it('Should call response.send', async () => {
-      const response = { send: jest.fn().mockReturnValue(Promise.resolve()) };
-      await postBulkMeasures({ body: data }, response, jest.fn());
-      expect(response.send).toHaveBeenCalled();
-    });
-  });
-
-  describe('Test postMeasure function', () => {
-    it('Should call response.send', async () => {
-      const response = { send: jest.fn().mockReturnValue(Promise.resolve()) };
-      await postMeasure({ body: data }, response, jest.fn());
       expect(response.send).toHaveBeenCalled();
     });
   });

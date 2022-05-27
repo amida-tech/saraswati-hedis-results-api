@@ -37,7 +37,7 @@ describe('## db.js', () => {
 
   describe('Test getMeasures function', () => {
     test('Should not throw an error', async () => {
-      const success = dao.findMeasures();
+      const success = dao.findMembers();
       expect(success).toBeTruthy();
     });
   });
@@ -63,10 +63,10 @@ describe('## db.js', () => {
     });
   });
 
-  describe('Test insertMeasure function', () => {
+  describe('Test insertMember function', () => {
     test('Should not throw an error', async (done) => {
       try {
-        const test = dao.insertMeasure(drreData);
+        const test = dao.insertMember(drreData);
         expect(test).toBeTruthy();
       } finally {
         done();
@@ -74,10 +74,10 @@ describe('## db.js', () => {
     });
   });
 
-  describe('Test insertMeasures function', () => {
+  describe('Test insertMembers function', () => {
     test('Should not throw an error', async (done) => {
       try {
-        const test = dao.insertMeasures(data);
+        const test = dao.insertMembers(data);
         expect(test).toBeTruthy();
       } finally {
         done();

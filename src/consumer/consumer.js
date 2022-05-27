@@ -4,7 +4,7 @@ const paramValidation = require('../config/param-validation');
 const logger = require('../config/winston');
 
 const {
-  insertMeasure, insertMeasures,
+  insertMember, insertMembers,
 } = require('../config/dao');
 
 const kafka = new Kafka({
@@ -26,9 +26,9 @@ async function kafkaRunner() {
       logger.info(`Date: ${new Date()}`);
       logger.info(`Member Id: ${jsonObject.memberId}`);
       if (jsonObject !== undefined && Array.isArray(jsonObject)) {
-        insertMeasures(jsonObject);
+        insertMembers(jsonObject);
       } else {
-        insertMeasure(jsonObject);
+        insertMember(jsonObject);
       }
     },
   });
