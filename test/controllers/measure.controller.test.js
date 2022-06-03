@@ -2,6 +2,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const config = require('../../src/config/config');
 
 const {
   getMeasureResults,
@@ -17,7 +18,7 @@ const data = JSON.parse(fs.readFileSync(`${path.resolve()}/test/resources/bulk-d
 const queryOrParams = { measure: 'drre' };
 
 const mockDrrePatientResults = JSON.parse(fs.readFileSync(`${path.resolve()}/test/seed-data/drre.json`));
-const mockMeasureInfo = JSON.parse(fs.readFileSync(`${path.resolve()}/test/result-data/hedis-info.json`));
+const mockMeasureInfo = JSON.parse(fs.readFileSync(`${path.resolve()}/${config.infoLocation}`));
 
 jest.mock('../../src/config/dao', () => {
   const originalModule = jest.requireActual('../../src/config/dao');

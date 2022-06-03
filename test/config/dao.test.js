@@ -1,12 +1,13 @@
 /* eslint-env jest */
 const fs = require('fs');
 const path = require('path');
+const config = require('../../src/config/config');
 const dao = require('../../src/config/dao');
 
 const data = JSON.parse(fs.readFileSync(`${path.resolve()}/test/resources/bulk-data.json`));
 const resultData = JSON.parse(fs.readFileSync(`${path.resolve()}/test/result-data/measure-results.json`));
 const drreData = JSON.parse(fs.readFileSync(`${path.resolve()}/test/resources/drre-data.json`));
-const infoData = JSON.parse(fs.readFileSync(`${path.resolve()}/test/result-data/hedis-info.json`));
+const infoData = JSON.parse(fs.readFileSync(`${path.resolve()}/${config.infoLocation}`));
 
 const found = {
   toArray: jest.fn(() => 'test'),

@@ -17,7 +17,7 @@ Or, using postman, hit `POST localhost:4000/api/v1/measures/bulk` with the data 
 7. You can search for individual results using any combination of the parameters for `GET localhost:4000/api/v1/measures/search?measurementType=<type>&memberId=<id>`
 8. To add the measure results, copy the JSON from `test/result-data/measure-results.json` place in the body for `POST http://localhost:4000/api/v1/measures/storeResults`
 9. After measure results are created predicition data can be created through `saraswati-time-series` with `GET http://localhost:5050/get_predictions/<measure>`
-10. Metadata will be automatically pushed to the mongo collection on start-up.  To refresh your data stop HeRA, drop the `hedis_info` collection, and then restart HeRA. To do that manually go to `test/result-data/hedis-info.json` for the body and `POST http://localhost:4000/api/v1/measures/info`
+10. Metadata will be automatically pushed to the mongo collection on start-up.  To refresh your data stop HeRA, drop the `hedis_info` collection, and then restart HeRA. To do that manually go to `init_data/hedis-info.json` for the body and `POST http://localhost:4000/api/v1/measures/info`
 
 ## Red Panda or Kafka
 Due to recent changes, you need to run this event streaming.
