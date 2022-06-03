@@ -35,7 +35,7 @@ const envVarsSchema = Joi.object({
   CALCULATION_SCHEDULE: Joi.string()
     .default('0 * * * *'),
   HEDIS_INFO_RELATIVE_PATH: Joi.string()
-    .default('init_data/hedis-info.json')
+    .default('initialize/hedis-info.json')
     .description('Location of data to autoload hedis_info collection'),
 }).unknown();
 

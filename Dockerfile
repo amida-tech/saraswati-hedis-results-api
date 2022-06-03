@@ -6,8 +6,7 @@ COPY ./package.json .
 COPY ./yarn.lock .
 COPY .env.example /app/.env 
 COPY ./src ./src
-COPY ./randomizer.js .
-COPY ./init_data ./init_data
+COPY ./initialize ./initialize
 
 RUN yarn
 EXPOSE 4000
