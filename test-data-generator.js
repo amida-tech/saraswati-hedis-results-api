@@ -507,7 +507,7 @@ const measureFunctions = {
       numerator2Dates.splice(Math.floor(Math.random(numeratorDates.length) * numeratorDates), 1);
     }
     data[id] = {
-      'Initial Population': initialPopDates,
+      'Initial Population 1': initialPopDates,
       'Initial Population 2': initialPopDates,
       'Exclusions 1': exclusionDates,
       'Exclusions 2': exclusionDates,
@@ -548,6 +548,7 @@ const measureFunctions = {
     const numerator4 = data[id]['Numerator 1'] && data[id]['Numerator 2'];
     data[id]['Numerator 4'] = numerator4;
     data[id]['Numerator 5'] = numerator4 && data[id]['Numerator 3'];
+    data[id].id = id;
     return data;
   },
   updateIMAE: (measure, date) => { // 4 is based on 1, 2, and 5 on 1, 2, 3
