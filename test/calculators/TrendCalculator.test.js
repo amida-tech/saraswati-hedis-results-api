@@ -1,6 +1,7 @@
 /* eslint-disable no-undef */
 const fs = require('fs');
 const path = require('path');
+const config = require('../../src/config/config');
 const { calculateTrend, calculateTrendLegacy } = require('../../src/calculators/TrendCalculator');
 const { createInfoObject } = require('../../src/utilities/infoUtil');
 
@@ -9,7 +10,7 @@ const data = JSON.parse(fs.readFileSync(`${path.resolve()}/test/result-data/meas
 const mockAabPatientResults = JSON.parse(fs.readFileSync(`${path.resolve()}/test/seed-data/aab.json`));
 const mockDrrePatientResults = JSON.parse(fs.readFileSync(`${path.resolve()}/test/seed-data/drre.json`));
 const mockImaePatientResults = JSON.parse(fs.readFileSync(`${path.resolve()}/test/seed-data/imae.json`));
-const infoList = JSON.parse(fs.readFileSync(`${path.resolve()}/test/result-data/hedis-info.json`));
+const infoList = JSON.parse(fs.readFileSync(`${path.resolve()}/${config.infoLocation}`));
 
 describe('Legacy Trend Calculation test ', () => {
   let resultArray;

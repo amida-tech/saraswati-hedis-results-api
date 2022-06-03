@@ -1,11 +1,12 @@
 /* eslint-disable no-undef */
 const fs = require('fs');
 const path = require('path');
+const config = require('../../src/config/config');
 const { calcLatestNumDen } = require('../../src/calculators/NumDenCalculator');
 const { createInfoObject } = require('../../src/utilities/infoUtil');
 
 const data = JSON.parse(fs.readFileSync(`${path.resolve()}/test/resources/search-data.json`));
-const infoList = JSON.parse(fs.readFileSync(`${path.resolve()}/test/result-data/hedis-info.json`));
+const infoList = JSON.parse(fs.readFileSync(`${path.resolve()}/${config.infoLocation}`));
 
 describe(' NumDenCalculator test ', () => {
   let resultArray;
