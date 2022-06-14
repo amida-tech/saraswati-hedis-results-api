@@ -18,6 +18,14 @@ async function kafkaRunner() {
 
   await consumer.connect();
 
+  const admin = kafka.admin();
+  await admin.connect();
+  await admin.createTopics({
+    topics: [{
+      topic: config.kafkaConfig.queue,
+    }],
+  });
+  await admin.disconnect();
   await consumer.subscribe({ topic: config.kafkaConfig.queue, fromBeginning: false });
   await consumer.run({
     eachMessage: async ({ topic, partition, message }) => {
