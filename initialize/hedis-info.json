@@ -239,8 +239,8 @@
         "_id" : "cise-1",
         "cise-1" : {
             "domainOfCare" : "ECDS",
-            "title" : "Childhood Immunization Status: Influenza",
-            "displayLabel" : "CIS-E: Influenza",
+            "title" : "Childhood Immunization Status: DTaP",
+            "displayLabel" : "CIS-E: DTaP",
             "measureType" : "process",
             "weight" : 3,
             "hasSubMeasures" : false,
