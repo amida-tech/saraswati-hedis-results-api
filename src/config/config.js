@@ -65,6 +65,10 @@ const config = {
     active: envVars.CALCULATION_ACTIVE,
     schedule: envVars.CALCULATION_SCHEDULE,
   },
+  providers_payors:{
+    active: envVars.PROVIDER_PAYORS_ACTIVE,
+    schedule: envVars.PROVIDER_PAYORS_SCHEDULE,
+  },
   infoLocation: envVars.HEDIS_INFO_RELATIVE_PATH,
 };
 

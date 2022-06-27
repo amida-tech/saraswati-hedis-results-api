@@ -11,7 +11,6 @@ const { createInfoObject } = require('./utilities/infoUtil');
 
 async function calculateData() {
   let measureResults = await dao.findMeasureResults();
-
   const currentDate = new Date();
   currentDate.setHours(0);
   currentDate.setMinutes(0);
@@ -32,7 +31,6 @@ async function calculateData() {
     latestDate = new Date(currentDate.getTime() - (24 * 60 * 60 * 1000));
   }
 
-  const patientResults = await dao.findMembers();
   const infoList = await dao.findInfo();
   const measureInfo = createInfoObject(infoList);
 
@@ -60,6 +58,29 @@ async function calculateData() {
   dao.insertMeasureResults(fullResultList);
 }
 
+async function healthcareProvidersPayorsGenerator() {
+  const patientResults = await dao.findMembers();
+  // PROVIDERS
+  // console.log('patientResults', patientResults.forEach((patient) => console.log(patient.providers)));
+  // console.log('patientResults', patientResults.forEach((patient) => console.log(patient)));
+
+  // THIS GIVES US RESULTS LIKE PPO and MANAGED CARE POLICY
+  // console.log("patientResults",patientResults.forEach((patient)=> {
+  //   if(patient.coverage && patient.coverage.length > 0){
+  //    patient.coverage[0].type.coding.forEach((item)=>console.log(item.display))
+  //   }
+  // }))
+
+  // PAYORS
+  console.log("patientResults", patientResults.forEach((patient)=> {
+    if(patient.coverage && patient.coverage.length > 0){
+      //  console.log(patient.coverage[0].payor)
+       console.log(patient.coverage[0].payor[0]['reference']["value"])
+      }})
+  )
+
+  // dao.insertMeasureResults(fullResultList);
+}
 async function initHedisInfo() {
   let infoList = await dao.findInfo();
   if (infoList.length === 0) {
@@ -72,14 +93,13 @@ async function initHedisInfo() {
     }
   }
 }
-
 async function prepareDatabase() {
   await initHedisInfo();
-  if (config.calculation.active) {
-    calculateData();
-    cron.schedule(config.calculation.schedule, () => {
-      calculateData();
-    });
+  if (config.providers_payors.active) {
+    healthcareProvidersPayorsGenerator();
+    // cron.schedule(config.providers_payors.schedule, () => {
+    //   healthcareProvidersPayorsGenerator();
+    // });
   }
 }
 

@@ -10,5 +10,7 @@ router.get('/health-check', (req, res) => res.send('OK'));
 router.use('/measures', measureRoutes);
 router.use('/members', memberRoutes);
 router.use('/predictions', predictionRoutes);
+// router.use('/plans-payors', predictionRoutes);
+// router.use('/providers', predictionRoutes);
 
 module.exports = router;
