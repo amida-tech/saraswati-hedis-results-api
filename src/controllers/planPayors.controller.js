@@ -2,7 +2,7 @@
 const dao = require('../config/dao');
 
 // Get Providers
-const getProviders = async (req, res, next) => {
+const getPlansPayors = async (req, res, next) => {
   try {
     const providers = await dao.findProviders();
     return res.send(providers);
@@ -11,8 +11,6 @@ const getProviders = async (req, res, next) => {
   }
 };
 
-
-
 module.exports = {
-  getProviders,
+  getPlansPayors,
 };
