@@ -1,4 +1,4 @@
-import { generateTestReport } from '../exports/member-report';
+const { generateTestReport } = require('../exports/member-report');
 
 const generateTest = async () => {
   try {

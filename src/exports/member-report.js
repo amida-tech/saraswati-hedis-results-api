@@ -1,7 +1,7 @@
 /* eslint-disable import/prefer-default-export */
-import ExcelJS from 'exceljs';
+const ExcelJS = require('exceljs');
 
-export async function generateTestReport() {
+async function generateTestReport() {
   const workbook = new ExcelJS.Workbook();
   const fileName = 'thisIsaTest';
 
@@ -24,3 +24,7 @@ export async function generateTestReport() {
 
   await workbook.xlsx.writeFile(fileName);
 }
+
+module.exports = {
+  generateTestReport,
+};
