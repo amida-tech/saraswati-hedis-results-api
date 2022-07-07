@@ -3,7 +3,7 @@ const ExcelJS = require('exceljs');
 
 async function generateTestReport() {
   const workbook = new ExcelJS.Workbook();
-  const fileName = 'thisIsaTest';
+  const fileName = 'thisIsaTest.xlsx';
 
   workbook.creator = 'Saraswati Automatic Export';
   workbook.lastModifiedBy = 'Saraswati Automatic Export';
@@ -18,11 +18,13 @@ async function generateTestReport() {
     { header: 'Date', key: 'date' },
     { header: 'Name', key: 'name' },
   ];
-  const row1 = worksheet1.getRow(1);
-  row1.values = ['Today', 'Revolver Ocelot'];
-  worksheet1.addRow({ id: 2, name: 'Solid Snake', date: 'Tomorrow' });
+  worksheet1.addRow({ id: 3, name: 'Solid Snake', date: 'Today' });
+  worksheet1.addRow({ id: 2, name: 'Revolver Ocelot', date: 'Yesterday' });
+  worksheet1.addRow({ id: 4, name: 'Jack Raiden', date: 'Tomorrow' });
 
-  await workbook.xlsx.writeFile(fileName);
+  await workbook.xlsx.writeFile(`./test/export-test-data/${fileName}`);
+
+  return true;
 }
 
 module.exports = {
