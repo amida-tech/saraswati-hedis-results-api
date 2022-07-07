@@ -5,3 +5,5 @@ const router = express.Router(); // eslint-disable-line new-cap
 
 router.route('/generateTest')
   .get(exportCtrl.generateTest);
+
+module.exports = router;
