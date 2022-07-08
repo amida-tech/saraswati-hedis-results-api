@@ -17,21 +17,21 @@ const getMeasureResults = async (req, res, next) => {
   }
 };
 
-const getDailyMeasureResults = async (req, res, next) => {
+const getDailyMeasureResults = async (_req, res, next) => {
   try {
     const patientResults = await dao.findMembers({});
 
     if (patientResults.length === 0) {
-      res.send([]);
+      return res.send([]);
     }
 
     const infoList = await dao.findInfo();
     const measureInfo = createInfoObject(infoList);
 
     const dailyMeasureResults = calculateDailyMeasureResults(patientResults, measureInfo);
-    res.send(dailyMeasureResults);
+    return res.send(dailyMeasureResults);
   } catch (e) {
-    next(e);
+    return next(e);
   }
 };
 
@@ -41,8 +41,8 @@ const getTrends = async (req, res, next) => {
     if (req.query.legacyResults === 'true') {
       const results = await dao.findMeasureResults({});
 
-      const trendData = calculateTrendLegacy(results, predictions, 7);
-      return res.send(trendData);
+      const legacyTrendData = calculateTrendLegacy(results, predictions, 7);
+      return res.send(legacyTrendData);
     }
     const memberResults = await dao.findMembers({});
     const infoList = await dao.findInfo();
@@ -56,7 +56,7 @@ const getTrends = async (req, res, next) => {
 };
 
 // Compiles individual info records into one JSON object
-const getInfo = async (req, res, next) => {
+const getInfo = async (_req, res, next) => {
   try {
     const infoList = await dao.findInfo();
     const fullInfo = createInfoObject(infoList);
@@ -73,9 +73,9 @@ const exportCsv = async (req, res, next) => {
     const infoList = await dao.findInfo(req.query.measurementType);
     const measureInfo = createInfoObject(infoList);
     const csv = generateCsv(patientResults, measureInfo, req.query.measurementType);
-    res.send(csv);
+    return res.send(csv);
   } catch (e) {
-    next(e);
+    return next(e);
   }
 };
 
