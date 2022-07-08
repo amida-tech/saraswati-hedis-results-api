@@ -25,6 +25,7 @@ const findMembers = (query) => {
 };
 
 const findMeasureResults = (query) => {
+
   const collection = db.collection('measure_results');
   try {
     return collection.find(query).toArray();
@@ -129,6 +130,76 @@ const insertInfo = (info) => {
   }
 };
 
+
+const getPayors = () => {
+  const collection = db.collection('payors');
+  return collection.find({}).toArray();
+};
+
+const insertPayors = async (payor) => {
+  const collection = db.collection('payors');
+  const foundPayors = await collection.find({}).toArray();
+  const filteredPayors = foundPayors.filter((payer)=> payer.payor === payor.payor)
+  if(filteredPayors.length < 1){
+    try {
+      return await collection.insertMany([payor]);
+    } catch (e) {
+      logger.error(e);
+      return e;
+    }
+  }
+};
+const getPractitioners = () => {
+  const collection = db.collection('practitioners');
+  return collection.find({}).toArray();
+}
+const insertPractitioner = async (practitioner) => {
+  const collection = db.collection('practitioners');
+  const foundPayors = await collection.find({}).toArray();
+  const filteredPayors = foundPayors.filter((prac)=> prac.practitioner === practitioner.practitioner)
+  if(filteredPayors.length < 1){
+    try {
+      return await collection.insertMany([practitioner]);
+    } catch (e) {
+      logger.error(e);
+      return e;
+    }
+  }
+}
+const getHealthcareProviders = () => {
+  const collection = db.collection('healthcareProviders');
+  return collection.find({}).toArray();
+}
+const insertHealthcareProviders = async (provider) => {
+  const collection = db.collection('healthcareProviders');
+  const foundHCProvider = await collection.find({}).toArray();
+  const filteredHCProvider = foundHCProvider.filter((prov) => prov.provider === provider.provider)
+  if(filteredHCProvider.length < 1){
+    try {
+      return await collection.insertMany([provider]);
+    } catch (e) {
+      logger.error(e);
+      return e;
+    }
+  }
+}
+const getHealthcareCoverages = () => {
+  const collection = db.collection('healthcareCoverage');
+  return collection.find({}).toArray();
+}
+const insertHealthcareCoverage = async (coverage) => {
+  const collection = db.collection('healthcareCoverage');
+  const foundHCCoverage = await collection.find({}).toArray();
+  const filteredHCCoverage = foundHCCoverage.filter((cover) => cover.coverage === coverage.coverage)
+  if(filteredHCCoverage.length < 1){
+    try {
+      return await collection.insertMany([coverage]);
+    } catch (e) {
+      logger.error(e);
+      return e;
+    }
+  }
+}
 module.exports = {
   init,
   initTest,
@@ -141,4 +212,12 @@ module.exports = {
   insertMeasureResults,
   insertPredictions,
   insertInfo,
+  getPayors,
+  insertPayors,
+  getPractitioners,
+  insertPractitioner,
+  getHealthcareProviders,
+  insertHealthcareProviders,
+  getHealthcareCoverages,
+  insertHealthcareCoverage,
 };
