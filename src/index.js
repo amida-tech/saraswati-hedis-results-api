@@ -55,31 +55,84 @@ async function calculateData() {
     latestDate = new Date(newLatestDate);
   }
 
-  dao.insertMeasureResults(fullResultList);
+  // dao.insertMeasureResults(fullResultList);
 }
 
 async function healthcareProvidersPayorsGenerator() {
   const patientResults = await dao.findMembers();
   // PROVIDERS
-  // console.log('patientResults', patientResults.forEach((patient) => console.log(patient.providers)));
-  // console.log('patientResults', patientResults.forEach((patient) => console.log(patient)));
+  const healthcareProviderOptions = []
+  const practitionerOptions = []
+  const coverageOptions = []
+  const payorOptions = []
 
+  patientResults.forEach((patient) => {
+    const foundhealthcareProviderOptions = patient.providers
+    const foundPatientCoverage = patient.coverage
+    if(foundhealthcareProviderOptions && foundhealthcareProviderOptions.length > 0){
+      foundhealthcareProviderOptions.forEach((foundOption) => {
+        const reference = foundOption.reference
+        const display = foundOption.display
+        if(reference.includes("Organization")){
+          const filteredHealthcareProviderOptions = healthcareProviderOptions.filter((provider) => provider.display === display)
+          if(filteredHealthcareProviderOptions.length < 1){
+            healthcareProviderOptions.push({display,reference})
+          }
+        } else if(reference.includes("Practitioner")){
+          const filteredPractitionerOptions = practitionerOptions.filter((practitioner) => practitioner.display === display)
+          if(filteredPractitionerOptions.length < 1){
+            practitionerOptions.push({display,reference})
+          }
+        }
+      })
+    }
   // THIS GIVES US RESULTS LIKE PPO and MANAGED CARE POLICY
-  // console.log("patientResults",patientResults.forEach((patient)=> {
-  //   if(patient.coverage && patient.coverage.length > 0){
-  //    patient.coverage[0].type.coding.forEach((item)=>console.log(item.display))
-  //   }
-  // }))
+    if(foundPatientCoverage && foundPatientCoverage.length > 0){
+      foundPatientCoverage[0].type.coding.forEach((item) => {
+        const foundCoverage = item.display.value;
+        const foundValue = item.code.value;
+        const filteredOptions = coverageOptions.filter((coverage) => coverage.foundCoverage === foundCoverage)
+        if(filteredOptions.length < 1){
 
-  // PAYORS
-  console.log("patientResults", patientResults.forEach((patient)=> {
-    if(patient.coverage && patient.coverage.length > 0){
-      //  console.log(patient.coverage[0].payor)
-       console.log(patient.coverage[0].payor[0]['reference']["value"])
-      }})
-  )
-
-  // dao.insertMeasureResults(fullResultList);
+          coverageOptions.push({foundCoverage, foundValue})
+        }
+      })
+      const foundPayors = foundPatientCoverage[0].payor[0]['reference']["value"]
+      const filteredOptions = payorOptions.filter((payors) => payors === foundPayors)
+        if(filteredOptions.length < 1){
+          payorOptions.push(foundPayors)
+        }
+    }
+  })
+  for (let i = 0; i < payorOptions.length; i++){
+    try {
+      dao.insertPayors({ payor: payorOptions[i], value: payorOptions[i], timestamp: new Date(Date.now())})
+    } catch (e) {
+      console.log(e)
+    }
+  }
+  for (let i = 0; i < practitionerOptions.length; i++){
+    try {
+      dao.insertPractitioner({ practitioner: practitionerOptions[i].display, value: practitionerOptions[i].reference, timestamp: new Date(Date.now())})
+    } catch (e) {
+      console.log(e)
+    }
+  }
+  for (let i = 0; i < healthcareProviderOptions.length; i++){
+    try {
+      dao.insertHealthcareProviders({ provider: healthcareProviderOptions[i].display, value: healthcareProviderOptions[i].reference, timestamp: new Date(Date.now())})
+    } catch (e) {
+      console.log(e)
+    }
+  }
+  for (let i = 0; i < coverageOptions.length; i++){
+    try {
+      dao.insertHealthcareCoverage({ coverage: coverageOptions[i].foundCoverage, value: coverageOptions[i].foundValue, timestamp: new Date(Date.now())});
+    } catch (e) {
+      console.log(e)
+    }
+  }
+  
 }
 async function initHedisInfo() {
   let infoList = await dao.findInfo();
@@ -97,9 +150,9 @@ async function prepareDatabase() {
   await initHedisInfo();
   if (config.providers_payors.active) {
     healthcareProvidersPayorsGenerator();
-    // cron.schedule(config.providers_payors.schedule, () => {
-    //   healthcareProvidersPayorsGenerator();
-    // });
+    cron.schedule(config.providers_payors.schedule, () => {
+      healthcareProvidersPayorsGenerator();
+    });
   }
 }
 

@@ -2,15 +2,26 @@
 const dao = require('../config/dao');
 
 // Get Providers
-const getPlansPayors = async (req, res, next) => {
+const getPayors = async (req, res, next) => {
   try {
-    const providers = await dao.findProviders();
-    return res.send(providers);
+    const payors = await dao.getPayors();
+    return res.send({ payors : payors});
+
   } catch (e) {
     return next(e);
   }
 };
-
+// Add (POST) Payor/Payer
+const postPayor = async (req, res, next) => {
+  try {
+    const jsonObject = req.body;
+    dao.insertPayors(jsonObject);
+    return res.send(jsonObject);
+  } catch (e) {
+    return next(e);
+  }
+};
 module.exports = {
-  getPlansPayors,
+  getPayors,
+  postPayor,
 };
