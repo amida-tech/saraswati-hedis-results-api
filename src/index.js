@@ -102,8 +102,16 @@ async function healthcareProvidersPayorsGenerator() {
         if(filteredOptions.length < 1){
           payorOptions.push(foundPayors)
         }
-    }
-  })
+    }else{
+      const foundPatientPayor = patient[patient.memberId]['Member Coverage'][0].payor[0]['reference']["value"];
+        if(foundPatientPayor){
+          const modifiedFilteredOptions = payorOptions.filter((payors) => payors === foundPatientPayor)
+          if(modifiedFilteredOptions.length < 1){
+            payorOptions.push(foundPatientPayor)
+          }
+        }
+      }
+    })
   for (let i = 0; i < payorOptions.length; i++){
     try {
       dao.insertPayors({ payor: payorOptions[i], value: payorOptions[i], timestamp: new Date(Date.now())})

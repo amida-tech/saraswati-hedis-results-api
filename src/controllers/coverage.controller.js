@@ -1,6 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 const dao = require('../config/dao');
-
+const { findCoverageByQuery } = require('../utilities/filterDrawerUtil')
 // Get Healthcare Coverages
 const getHealthcareCoverages = async (req, res, next) => {
   try {
@@ -21,7 +21,35 @@ const postHealthcareCoverage = async (req, res, next) => {
     return next(e);
   }
 };
+const filterSearch = async (req, res, next) => {
+  const {subMeasure, healthcareCoverages, isComposite } = req.body;
+  try {
+    const foundMembers = await findCoverageByQuery(subMeasure, healthcareCoverages, isComposite)
+    if(foundMembers.length > 0 ){
+      res.send({
+        status:"Success",
+        subMeasure,
+        healthcareCoverages: healthcareCoverages,
+        isComposite,
+        foundMembersCount: foundMembers.length,
+        foundMembers: foundMembers 
+      })
+    } else {
+      res.send({
+        status:"Fail",
+        subMeasure,
+        healthcareCoverages: healthcareCoverages,
+        isComposite,
+        foundMembersCount: foundMembers.length,
+        foundMembers: foundMembers 
+      })
+    }
+  } catch (e) {
+    return next(e);
+  }
+}
 module.exports = {
     getHealthcareCoverages,
-    postHealthcareCoverage,
+    postHealthcareCoverage,  
+    filterSearch,
 };

@@ -1,5 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 const dao = require('../config/dao');
+const { findPayorByQuery } = require('../utilities/filterDrawerUtil');
 
 // Get Providers
 const getPayors = async (req, res, next) => {
@@ -21,7 +22,36 @@ const postPayor = async (req, res, next) => {
     return next(e);
   }
 };
+// Filter Search payorSearch
+const filterSearch = async (req, res, next) => {
+  const {subMeasure, payor, isComposite } = req.body;
+  try {
+    const foundMembers = await findPayorByQuery(subMeasure, payor, isComposite)
+    if(foundMembers.length > 0 ){
+      res.send({
+        status:"Success",
+        subMeasure,
+        payor: payor,
+        isComposite,
+        foundMembersCount: foundMembers.length,
+        foundMembers: foundMembers 
+      })
+    } else {
+      res.send({
+        status:"Fail",
+        subMeasure,
+        payor: payor,
+        isComposite,
+        foundMembersCount: foundMembers.length,
+        foundMembers: foundMembers 
+      })
+    }
+  } catch (e) {
+    return next(e);
+  }
+}
 module.exports = {
   getPayors,
   postPayor,
+  filterSearch,
 };
