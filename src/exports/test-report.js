@@ -1,10 +1,9 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable import/prefer-default-export */
 const ExcelJS = require('exceljs');
 
-async function generateMemberReport(memberObj) {
+async function generateTestReport() {
   const workbook = new ExcelJS.Workbook();
-  const fileName = `${memberObj.memberId}.xlsx`;
+  const fileName = 'thisIsaTest.xlsx';
 
   workbook.creator = 'Saraswati Automatic Export';
   workbook.lastModifiedBy = 'Saraswati Automatic Export';
@@ -29,5 +28,5 @@ async function generateMemberReport(memberObj) {
 }
 
 module.exports = {
-  generateMemberReport,
+  generateTestReport,
 };
