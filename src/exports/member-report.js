@@ -41,7 +41,7 @@ async function generateMemberReport(memberObj) {
   dataWorksheet.addRow({ id: 6, Key: 'Coverage Status', Value: coverageObj.status.value });
   dataWorksheet.addRow({ id: 7, Key: 'Participation Period', Value: planDates });
   //   TODO: Will need to be changed once we have multi-measure users in data.
-  dataWorksheet.addRow({ id: 8, key: 'Applicable Measures', Value: '1' });
+  dataWorksheet.addRow({ id: 8, Key: 'Applicable Measures', Value: '1' });
 
   //   Policy Info
   dataWorksheet.addRow({ id: 9, Key: 'Policy ID', Value: coverageObj.id.value });
@@ -59,7 +59,7 @@ async function generateMemberReport(memberObj) {
   const dataValues = dataWorksheet.getColumn(3).values;
 
   displayWorksheet.addRow(['SARASAWTI', `Updated: ${now}`]);
-  displayWorksheet.lastRow.font = {
+  displayWorksheet.getColumn(1).font = {
     bold: true,
   };
   displayWorksheet.addRow();
@@ -120,6 +120,12 @@ async function generateMemberReport(memberObj) {
   displayWorksheet.addRow(['', dataKeys[13], dataValues[13]]);
   displayWorksheet.addRow(['', dataKeys[14], dataValues[14]]);
   displayWorksheet.addRow();
+  displayWorksheet.getColumn(1).width = 19;
+  displayWorksheet.getColumn(2).width = 19;
+  displayWorksheet.getColumn(2).font = {
+    bold: true,
+  };
+  displayWorksheet.getColumn(3).width = 19;
 
   // Table Worksheet
   measureWorksheet.addRow(['AAB - Avoidance of Antibiotic Treatment for Acute Bronchitis/Bronchiolitis']);
@@ -130,8 +136,8 @@ async function generateMemberReport(memberObj) {
   };
   measureWorksheet.addRow();
   measureWorksheet.addRow(['Assesses the percentage of episodes for members 3 months of age and older with a diagnosis of'
-  + 'acute bronchitis/bronchiolitis that did not result in an antibiotic dispensing event. A higher rate indicates appropriate'
-  + ' treatment for bronchitis/bronchiolitis (i.e., the percentage of episodes that were not prescribed an antibiotic).']);
+    + 'acute bronchitis/bronchiolitis that did not result in an antibiotic dispensing event. A higher rate indicates appropriate'
+    + ' treatment for bronchitis/bronchiolitis (i.e., the percentage of episodes that were not prescribed an antibiotic).']);
   measureWorksheet.addRow();
   measureWorksheet.addRow(['Measure', 'Type', 'Status', 'Exclusions', 'Practitioner', 'Dates', 'Criteria', 'Recommendations']);
   measureWorksheet.lastRow.fill = {
@@ -147,7 +153,10 @@ async function generateMemberReport(memberObj) {
   const exclusions = memberInfo.Exclusions.length > 0 ? '\u2713' : '\u2716';
   measureWorksheet.addRow([memberObj.measurementType.toUpperCase(), 'Measure', compliance, exclusions, 'Practitioners', 'Dates', 'Criteria', 'Explosivo']);
   measureWorksheet.lastRow.height = 64;
-  displayWorksheet.lastRow.alignment = { vertical: 'middle', horizontal: 'center' };
+  measureWorksheet.lastRow.alignment = { vertical: 'middle', horizontal: 'center' };
+  measureWorksheet.getColumn(1).width = 19;
+  measureWorksheet.getColumn(2).width = 19;
+  measureWorksheet.getColumn(3).width = 19;
 
   await workbook.xlsx.writeFile(`./test/export-test-data/${fileName}`);
 
