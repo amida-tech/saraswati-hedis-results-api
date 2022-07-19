@@ -62,6 +62,7 @@ async function generateMemberReport(memberObj) {
   displayWorksheet.getColumn(1).font = {
     bold: true,
   };
+
   displayWorksheet.addRow();
   displayWorksheet.addRow([`Member ${memberObj.memberId} Measure Analysis Report ${planDates}`]);
   displayWorksheet.lastRow.font = {
@@ -74,6 +75,9 @@ async function generateMemberReport(memberObj) {
   };
   displayWorksheet.addRow();
   displayWorksheet.addRow([`This report is a summary of member ${memberObj.memberId}'s measure records and analysis of data from ${planDates} as pulled froom the Saraswati platform. `]);
+  displayWorksheet.lastRow.font = {
+    bold: false,
+  };
   displayWorksheet.addRow();
   displayWorksheet.addRow(['Member Info']);
   displayWorksheet.lastRow.fill = {
@@ -90,18 +94,20 @@ async function generateMemberReport(memberObj) {
   displayWorksheet.addRow(['', dataKeys[4], dataValues[4]]);
   displayWorksheet.addRow(['', dataKeys[5], dataValues[5]]);
   displayWorksheet.addRow(['', dataKeys[6], dataValues[6].toUpperCase()]);
-  if (dataValues[6] === 'ACTIVE') {
-    displayWorksheet.getCell('C13').font = {
-      color: { argb: '11fc00' },
+  if (dataValues[6] === 'active') {
+    displayWorksheet.getCell('C12').font = {
+      color: { argb: '1ac93d' },
+      bold: true,
     };
-  } else if (dataValues[6] === 'INACTIVE') {
-    displayWorksheet.getCell('C13').font = {
-      color: { argb: '#fc0000' },
+  } else if (dataValues[6] === 'inactive') {
+    displayWorksheet.getCell('C12').font = {
+      color: { argb: 'c91a1a' },
+      bold: true,
     };
   }
   displayWorksheet.addRow(['', dataKeys[7], dataValues[7]]);
   displayWorksheet.addRow(['', dataKeys[8], dataValues[8]]);
-  displayWorksheet.lastRow.height = 32;
+  displayWorksheet.lastRow.height = 50;
   displayWorksheet.addRow();
   displayWorksheet.addRow(['Policy Info']);
   displayWorksheet.lastRow.fill = {
@@ -129,6 +135,9 @@ async function generateMemberReport(memberObj) {
     bold: true,
   };
   displayWorksheet.getColumn(3).width = 19;
+  displayWorksheet.getCell('B1').font = {
+    bold: false,
+  };
 
   // Table Worksheet
   measureWorksheet.addRow(['AAB - Avoidance of Antibiotic Treatment for Acute Bronchitis/Bronchiolitis']);
@@ -137,10 +146,19 @@ async function generateMemberReport(memberObj) {
     pattern: 'solid',
     fgColor: { argb: 'D7E1E2' },
   };
+  measureWorksheet.lastRow.font = {
+    size: 20,
+  };
+  measureWorksheet.getColumn(1).font = {
+    bold: true,
+  };
   measureWorksheet.addRow();
   measureWorksheet.addRow(['Assesses the percentage of episodes for members 3 months of age and older with a diagnosis of'
     + 'acute bronchitis/bronchiolitis that did not result in an antibiotic dispensing event. A higher rate indicates appropriate'
     + ' treatment for bronchitis/bronchiolitis (i.e., the percentage of episodes that were not prescribed an antibiotic).']);
+  measureWorksheet.lastRow.font = {
+    bold: false,
+  };
   measureWorksheet.addRow();
   measureWorksheet.addRow(['Measure', 'Type', 'Status', 'Exclusions', 'Practitioner', 'Dates', 'Criteria', 'Recommendations']);
   measureWorksheet.lastRow.fill = {
@@ -152,16 +170,47 @@ async function generateMemberReport(memberObj) {
     color: { argb: 'FFFFFF' },
     bold: true,
   };
-  const compliance = compliant ? 'Compliant ' : 'Non-Compliant';
+  const compliance = compliant ? '\u2713 \n Compliant' : '\u2716 \n Non-Compliant';
   const exclusions = memberInfo.Exclusions.length > 0 ? '\u2713' : '\u2716';
-  measureWorksheet.addRow([memberObj.measurementType.toUpperCase(), 'Measure', compliance, exclusions, 'Practitioners', 'Dates', 'Criteria', 'Explosivo']);
+  const dates = memberInfo['Initial Population'].join(', \n');
+  const practitioners = [];
+  const criteria = 'Diagnosis of acute bronchitis/ bronchiolitis with no Antibiotic';
+  memberObj.providers.forEach((provider) => {
+    practitioners.push(provider.display);
+  });
+  measureWorksheet.addRow([memberObj.measurementType.toUpperCase(), 'Measure', compliance, exclusions, practitioners.join(', \n'), dates, criteria]);
   measureWorksheet.lastRow.height = 64;
   measureWorksheet.lastRow.alignment = { vertical: 'middle', horizontal: 'center' };
+  if (exclusions === '\u2713') {
+    measureWorksheet.getCell('D6').font = {
+      color: { argb: '1ac93d' },
+      bold: true,
+    };
+  } else if (exclusions === '\u2716') {
+    measureWorksheet.getCell('D6').font = {
+      color: { argb: 'c91a1a' },
+      bold: true,
+    };
+  }
+  if (compliant) {
+    measureWorksheet.getCell('C6').font = {
+      color: { argb: '1ac93d' },
+      bold: true,
+    };
+  } else {
+    measureWorksheet.getCell('C6').font = {
+      color: { argb: 'c91a1a' },
+      bold: true,
+    };
+  }
+  measureWorksheet.getCell('E6').alignment = { vertical: 'middle', horizontal: 'justify' };
+  measureWorksheet.getCell('F6').alignment = { vertical: 'middle', horizontal: 'justify' };
+  measureWorksheet.getCell('G6').alignment = { vertical: 'middle', horizontal: 'left' };
   measureWorksheet.getColumn(1).width = 19;
   measureWorksheet.getColumn(2).width = 19;
   measureWorksheet.getColumn(3).width = 19;
   measureWorksheet.getColumn(4).width = 19;
-  measureWorksheet.getColumn(5).width = 19;
+  measureWorksheet.getColumn(5).width = 32;
   measureWorksheet.getColumn(6).width = 19;
   measureWorksheet.getColumn(7).width = 19;
   measureWorksheet.getColumn(8).width = 19;
