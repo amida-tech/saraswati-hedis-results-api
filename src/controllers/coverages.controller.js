@@ -1,34 +1,34 @@
 /* eslint-disable no-underscore-dangle */
 const dao = require('../config/dao');
-const { findProviderByQuery } = require('../utilities/filterDrawerUtil');
-// Get Healthcar Providers
-const getHealthcareProviders = async (req, res, next) => {
+const { findCoverageByQuery } = require('../utilities/filterDrawerUtil');
+// Get Healthcare Coverages
+const getHealthcareCoverages = async (req, res, next) => {
   try {
-    const healthcareProviders = await dao.getHealthcareProviders();
-    return res.send({ healthcareProviders });
+    const healthcareCoverages = await dao.getHealthcareCoverages();
+    return res.send({ healthcareCoverages });
   } catch (e) {
     return next(e);
   }
 };
-// Add (POST) Providers
-const postHealthcareProvider = async (req, res, next) => {
+// Add (POST) Coverages
+const postHealthcareCoverage = async (req, res, next) => {
   try {
     const jsonObject = req.body;
-    dao.insertHealthcarProvider(jsonObject);
+    dao.insertHealthcareCoverage(jsonObject);
     return res.send(jsonObject);
   } catch (e) {
     return next(e);
   }
 };
 const filterSearch = async (req, res, next) => {
-  const { submeasure, healthcareProviders, isComposite } = req.body;
+  const { submeasure, healthcareCoverages, isComposite } = req.body;
   try {
-    const foundMembers = await findProviderByQuery(submeasure, healthcareProviders, isComposite);
+    const foundMembers = await findCoverageByQuery(submeasure, healthcareCoverages, isComposite);
     const message = foundMembers.length > 0 ? 'Success' : 'Failed to find members from the given filter options';
     const response = {
       message,
       submeasure,
-      healthcareProviders,
+      healthcareCoverages,
       isComposite,
       foundMembersCount: foundMembers.length,
       foundMembers,
@@ -39,7 +39,7 @@ const filterSearch = async (req, res, next) => {
   }
 };
 module.exports = {
-  getHealthcareProviders,
-  postHealthcareProvider,
+  getHealthcareCoverages,
+  postHealthcareCoverage,
   filterSearch,
 };

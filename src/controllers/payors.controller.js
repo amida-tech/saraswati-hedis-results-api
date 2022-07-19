@@ -6,8 +6,7 @@ const { findPayorByQuery } = require('../utilities/filterDrawerUtil');
 const getPayors = async (req, res, next) => {
   try {
     const payors = await dao.getPayors();
-    return res.send({ payors : payors});
-
+    return res.send({ payors });
   } catch (e) {
     return next(e);
   }
@@ -24,32 +23,23 @@ const postPayor = async (req, res, next) => {
 };
 // Filter Search payorSearch
 const filterSearch = async (req, res, next) => {
-  const {subMeasure, payor, isComposite } = req.body;
+  const { submeasure, payors, isComposite } = req.body;
   try {
-    const foundMembers = await findPayorByQuery(subMeasure, payor, isComposite)
-    if(foundMembers.length > 0 ){
-      res.send({
-        status:"Success",
-        subMeasure,
-        payor: payor,
-        isComposite,
-        foundMembersCount: foundMembers.length,
-        foundMembers: foundMembers 
-      })
-    } else {
-      res.send({
-        status:"Fail",
-        subMeasure,
-        payor: payor,
-        isComposite,
-        foundMembersCount: foundMembers.length,
-        foundMembers: foundMembers 
-      })
-    }
+    const foundMembers = await findPayorByQuery(submeasure, payors, isComposite);
+    const message = foundMembers.length > 0 ? 'Success' : 'Failed to find members from the given filter options';
+    const response = {
+      message,
+      submeasure,
+      payors,
+      isComposite,
+      foundMembersCount: foundMembers.length,
+      foundMembers,
+    };
+    return res.send(response);
   } catch (e) {
     return next(e);
   }
-}
+};
 module.exports = {
   getPayors,
   postPayor,
