@@ -28,7 +28,7 @@ async function generateMemberReport(memberObj) {
 
   const placeHolderString = 'N/A in current version';
   const coverageObj = memberObj.coverage[0];
-  const planDates = `${coverageObj.period.start.value} to ${coverageObj.period.end.value}`;
+  const planDates = `${coverageObj.period.start.value} \n to \n ${coverageObj.period.end.value}`;
   const memberInfo = memberObj[memberObj.memberId];
   const compliant = memberInfo.Numerator.length > memberInfo.Exclusions.length;
 
@@ -85,22 +85,23 @@ async function generateMemberReport(memberObj) {
     color: { argb: 'FFFFFF' },
     bold: true,
   };
-  displayWorksheet.addRow(['', dataKeys[1], dataValues[1]]);
   displayWorksheet.addRow(['', dataKeys[2], dataValues[2]]);
   displayWorksheet.addRow(['', dataKeys[3], dataValues[3]]);
   displayWorksheet.addRow(['', dataKeys[4], dataValues[4]]);
   displayWorksheet.addRow(['', dataKeys[5], dataValues[5]]);
   displayWorksheet.addRow(['', dataKeys[6], dataValues[6].toUpperCase()]);
-  if (dataValues[6] === 'active') {
+  if (dataValues[6] === 'ACTIVE') {
     displayWorksheet.getCell('C13').font = {
       color: { argb: '11fc00' },
     };
-  } else if (dataValues[6] === 'inactive') {
+  } else if (dataValues[6] === 'INACTIVE') {
     displayWorksheet.getCell('C13').font = {
       color: { argb: '#fc0000' },
     };
   }
   displayWorksheet.addRow(['', dataKeys[7], dataValues[7]]);
+  displayWorksheet.addRow(['', dataKeys[8], dataValues[8]]);
+  displayWorksheet.lastRow.height = 32;
   displayWorksheet.addRow();
   displayWorksheet.addRow(['Policy Info']);
   displayWorksheet.lastRow.fill = {
@@ -112,13 +113,15 @@ async function generateMemberReport(memberObj) {
     color: { argb: 'FFFFFF' },
     bold: true,
   };
-  displayWorksheet.addRow(['', dataKeys[8], dataValues[8]]);
   displayWorksheet.addRow(['', dataKeys[9], dataValues[9]]);
   displayWorksheet.addRow(['', dataKeys[10], dataValues[10]]);
   displayWorksheet.addRow(['', dataKeys[11], dataValues[11]]);
   displayWorksheet.addRow(['', dataKeys[12], dataValues[12]]);
   displayWorksheet.addRow(['', dataKeys[13], dataValues[13]]);
   displayWorksheet.addRow(['', dataKeys[14], dataValues[14]]);
+  displayWorksheet.addRow(['', dataKeys[15], dataValues[15]]);
+  displayWorksheet.addRow(['', dataKeys[16], dataValues[16]]);
+  displayWorksheet.lastRow.height = 32;
   displayWorksheet.addRow();
   displayWorksheet.getColumn(1).width = 19;
   displayWorksheet.getColumn(2).width = 19;
@@ -145,7 +148,7 @@ async function generateMemberReport(memberObj) {
     pattern: 'solid',
     fgColor: { argb: '546E7A' },
   };
-  displayWorksheet.lastRow.font = {
+  measureWorksheet.lastRow.font = {
     color: { argb: 'FFFFFF' },
     bold: true,
   };
@@ -157,6 +160,11 @@ async function generateMemberReport(memberObj) {
   measureWorksheet.getColumn(1).width = 19;
   measureWorksheet.getColumn(2).width = 19;
   measureWorksheet.getColumn(3).width = 19;
+  measureWorksheet.getColumn(4).width = 19;
+  measureWorksheet.getColumn(5).width = 19;
+  measureWorksheet.getColumn(6).width = 19;
+  measureWorksheet.getColumn(7).width = 19;
+  measureWorksheet.getColumn(8).width = 19;
 
   await workbook.xlsx.writeFile(`./test/export-test-data/${fileName}`);
 
