@@ -3,9 +3,8 @@
 const moment = require('moment');
 const ExcelJS = require('exceljs');
 
-async function generateMemberReport(memberObj) {
+async function generateMemberReport(memberObj, fileName) {
   const workbook = new ExcelJS.Workbook();
-  const fileName = `${memberObj.memberId}.xlsx`;
 
   workbook.creator = 'Saraswati Automatic Export';
   workbook.lastModifiedBy = 'Saraswati Automatic Export';
@@ -215,7 +214,7 @@ async function generateMemberReport(memberObj) {
   measureWorksheet.getColumn(7).width = 19;
   measureWorksheet.getColumn(8).width = 19;
 
-  await workbook.xlsx.writeFile(`./test/export-test-data/${fileName}`);
+  await workbook.xlsx.writeFile(`./reports/member/aab/${fileName}`);
 
   return true;
 }
