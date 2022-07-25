@@ -22,7 +22,8 @@ const generateMemberById = async (req, res, next) => {
     memberResults = memberResults.sort((a, b) => new Date(b.timeStamp) - new Date(a.timeStamp));
     const fileName = `${memberResults[0].memberId}.xlsx`;
     const folderPath = `./reports/member/${memberResults[0].measurementType}`;
-    console.log(`../${__dirname}`);
+    console.log(folderPath);
+    // console.log(`${__dirname}\\..\\..\\`);
     console.log(1);
     fs.stat(folderPath, (error, stats) => {
       console.log(2);
@@ -38,7 +39,7 @@ const generateMemberById = async (req, res, next) => {
       return true;
     });
     console.log(6);
-    return res.sendFile(`${folderPath}/${fileName}`, { root: __dirname });
+    return res.sendFile(`${folderPath}/../../${fileName}`, { root: __dirname });
   } catch (e) {
     return next(e);
   }
