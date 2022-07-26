@@ -12,4 +12,5 @@
 .vscode
 /test/generated-data/*
 /test/export-test-data/*
-/reports/member/*/*
+/reports/member/aab
+/reports/member/imae
