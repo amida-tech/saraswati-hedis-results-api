@@ -24,6 +24,7 @@ const findMembers = (query) => {
   return collection.find(query).toArray();
 };
 
+
 const findMeasureResults = (query) => {
   const collection = db.collection('measure_results');
   try {

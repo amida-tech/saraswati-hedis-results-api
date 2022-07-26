@@ -1,12 +1,11 @@
 const dao = require('../config/dao');
 
-const findPayorByQuery = async (submeasure, payor, isComposite) => {
-  const Members = isComposite
-    ? await dao.findMembers()
-    : await dao.findMembers({ measurementType: submeasure });
+const findPayorByQuery = async (payor, MembersGiven) => {
+  const Members = MembersGiven;
   const foundMemberMatch = [];
   for (let i = 0; i < Members.length; i += 1) {
     const foundPatientCoverage = Members[i].coverage;
+
     if (foundPatientCoverage && foundPatientCoverage.length > 0) {
       const foundPayors = foundPatientCoverage[0].payor[0].reference.value;
       const lowercaseItem = foundPayors.toLowerCase();
@@ -21,33 +20,15 @@ const findPayorByQuery = async (submeasure, payor, isComposite) => {
           }
         });
       }
-    } else {
-      const foundPatientPayor = Members[i][Members[i].memberId]['Member Coverage'][0].payor[0].reference.value;
-      const lowercaseItem = foundPatientPayor.toLowerCase();
-
-      if (payor.length === 1) {
-        if (foundPatientPayor && lowercaseItem === payor[0].toLowerCase()) {
-          foundMemberMatch.push(Members[i]);
-        }
-      } else {
-        payor.forEach((payer) => {
-          if (foundPatientPayor && lowercaseItem === payer.toLowerCase()) {
-            foundMemberMatch.push(Members[i]);
-          }
-        });
-      }
     }
   }
-
   if (foundMemberMatch.length > 0) {
     return foundMemberMatch;
   }
   return foundMemberMatch;
 };
-const findPractitionersByQuery = async (submeasure, practitioners, isComposite) => {
-  const Members = isComposite
-    ? await dao.findMembers()
-    : await dao.findMembers({ measurementType: submeasure });
+const findPractitionersByQuery = async (practitioners, MembersGiven) => {
+  const Members = MembersGiven
   const foundMemberMatch = [];
   for (let i = 0; i < Members.length; i += 1) {
     const foundhealthcareProviderOptions = Members[i].providers;
@@ -55,7 +36,6 @@ const findPractitionersByQuery = async (submeasure, practitioners, isComposite) 
       foundhealthcareProviderOptions.forEach((provider) => {
         const foundPractitionersValue = provider.display;
         const lowercaseItem = foundPractitionersValue.toLowerCase();
-
         if (practitioners.length === 1) {
           if (lowercaseItem === practitioners[0].toLowerCase()) {
             foundMemberMatch.push(Members[i]);
@@ -72,9 +52,6 @@ const findPractitionersByQuery = async (submeasure, practitioners, isComposite) 
           });
         }
       });
-    } else {
-      // Waiting for New Data Mapping
-      // FIX ME
     }
   }
   if (foundMemberMatch.length > 0) {
@@ -82,10 +59,8 @@ const findPractitionersByQuery = async (submeasure, practitioners, isComposite) 
   }
   return foundMemberMatch;
 };
-const findProviderByQuery = async (submeasure, providers, isComposite) => {
-  const Members = isComposite
-    ? await dao.findMembers()
-    : await dao.findMembers({ measurementType: submeasure });
+const findProviderByQuery = async (providers, MembersGiven) => {
+  const Members = MembersGiven;
   const foundMemberMatch = [];
   for (let i = 0; i < Members.length; i += 1) {
     const foundhealthcareProviderOptions = Members[i].providers;
@@ -110,9 +85,6 @@ const findProviderByQuery = async (submeasure, providers, isComposite) => {
           });
         }
       });
-    } else {
-      // Waiting for New Data Mapping
-      // FIX ME
     }
   }
   if (foundMemberMatch.length > 0) {
@@ -120,10 +92,8 @@ const findProviderByQuery = async (submeasure, providers, isComposite) => {
   }
   return foundMemberMatch;
 };
-const findCoverageByQuery = async (submeasure, coverages, isComposite) => {
-  const Members = isComposite
-    ? await dao.findMembers()
-    : await dao.findMembers({ measurementType: submeasure });
+const findCoverageByQuery = async (coverages, MembersGiven) => {
+  const Members = MembersGiven
   const foundMemberMatch = [];
   for (let i = 0; i < Members.length; i += 1) {
     const foundPatientCoverage = Members[i].coverage;
@@ -139,20 +109,6 @@ const findCoverageByQuery = async (submeasure, coverages, isComposite) => {
       } else {
         coverages.forEach((cover) => {
           if (lowercaseItem === cover.toLowerCase()) {
-            foundMemberMatch.push(Members[i]);
-          }
-        });
-      }
-    } else {
-      const foundPatientCoverage2 = Members[i][Members[i].memberId]['Member Coverage'][0].type.coding[0].display.value;
-      const lowercaseItem = foundPatientCoverage2.toLowerCase();
-      if (coverages.length === 1) {
-        if (foundPatientCoverage2 && lowercaseItem === coverages[0].toLowerCase()) {
-          foundMemberMatch.push(Members[i]);
-        }
-      } else {
-        coverages.forEach((cover) => {
-          if (foundPatientCoverage2 && lowercaseItem === cover.toLowerCase()) {
             foundMemberMatch.push(Members[i]);
           }
         });
