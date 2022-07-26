@@ -4,6 +4,7 @@ const moment = require('moment');
 
 const { generateTestReport } = require('../exports/test-report');
 const { generateMemberReport } = require('../exports/member-report');
+const { generateAabReport } = require('../exports/aab-report');
 const dao = require('../config/dao');
 const __root = process.cwd();
 
@@ -29,7 +30,7 @@ async function generateMemberById(req, res, next) {
   }
 
   async function populateData() {
-    generateMemberReport(memberResults[0], fileName);
+    generateAabReport(memberResults[0], fileName);
     res.sendFile(`.${folderPath}/${fileName}`, { root: __root });
   }
 
