@@ -30,7 +30,7 @@ async function generateMemberById(req, res, next) {
   }
 
   async function populateData() {
-    generateMemberReport(memberResults[0], fileName);
+    memberType === "aab" ? generateAabReport(memberResults[0], fileName) : generateMemberReport(memberResults[0], fileName);
     res.sendFile(`.${folderPath}/${fileName}`, { root: __root });
   }
 

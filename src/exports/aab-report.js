@@ -4,6 +4,7 @@ const moment = require('moment');
 const ExcelJS = require('exceljs');
 
 async function generateAabReport(memberObj, fileName) {
+  console.log('aab')
   const workbook = new ExcelJS.Workbook();
 
   workbook.creator = 'Saraswati Automatic Export';
