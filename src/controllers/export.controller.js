@@ -30,7 +30,7 @@ async function generateMemberById(req, res, next) {
   }
 
   async function populateData() {
-    memberType === "aab" ? generateAabReport(memberResults[0], fileName) : generateMemberReport(memberResults[0], fileName);
+    memberType === "aab" ? generateAabReport(memberResults[0], fileName) : generateMemberReport(memberResults[0], fileName, folderPath);
     res.sendFile(`.${folderPath}/${fileName}`, { root: __root });
   }
 
@@ -38,7 +38,6 @@ async function generateMemberById(req, res, next) {
     if (!fs.existsSync(`${__root}${folderPath}`)) {
       fs.mkdirSync(`${__root}${folderPath}`)
       await injectTemplate()
-      populateData()
       return next(`Report generated. New report located at: ${__root}${folderPath}/${fileName}`)
     } else if (!fs.existsSync(`${__root}${folderPath}/${fileName}`)) {
       await injectTemplate()
