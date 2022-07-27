@@ -21,5 +21,4 @@ router.use('/healthcareproviders', providersRoutes);
 router.use('/healthcarecoverages', coverageRoutes);
 router.use('/practitioners', practitionerRoutes);
 
-
 module.exports = router;

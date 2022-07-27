@@ -80,7 +80,8 @@ async function healthcareProvidersPayorsGenerator() {
             healthcareProviderOptions.push({ display, reference });
           }
         } else if (reference.includes('Practitioner')) {
-          const filteredPractitionerOptions = practitionerOptions.filter((practitioner) => practitioner.display === display);
+          const filteredPractitionerOptions = practitionerOptions
+            .filter((practitioner) => practitioner.display === display);
           if (filteredPractitionerOptions.length < 1) {
             practitionerOptions.push({ display, reference });
           }
@@ -92,7 +93,8 @@ async function healthcareProvidersPayorsGenerator() {
       foundPatientCoverage[0].type.coding.forEach((item) => {
         const foundCoverage = item.display.value;
         const foundValue = item.code.value;
-        const filteredOptions = coverageOptions.filter((coverage) => coverage.foundCoverage === foundCoverage);
+        const filteredOptions = coverageOptions
+          .filter((coverage) => coverage.foundCoverage === foundCoverage);
         if (filteredOptions.length < 1) {
           coverageOptions.push({ foundCoverage, foundValue });
         }
@@ -105,37 +107,54 @@ async function healthcareProvidersPayorsGenerator() {
     } else {
       const foundPatientPayor = patient[patient.memberId]['Member Coverage'][0].payor[0].reference.value;
       if (foundPatientPayor) {
-        const modifiedFilteredOptions = payorOptions.filter((payors) => payors === foundPatientPayor);
+        const modifiedFilteredOptions = payorOptions
+          .filter((payors) => payors === foundPatientPayor);
         if (modifiedFilteredOptions.length < 1) {
           payorOptions.push(foundPatientPayor);
         }
       }
     }
   });
-  for (let i = 0; i < payorOptions.length; i++) {
+  for (let i = 0; i < payorOptions.length; i += 1) {
     try {
-      dao.insertPayors({ payor: payorOptions[i], value: payorOptions[i], timestamp: new Date(Date.now()) });
+      dao.insertPayors({
+        payor: payorOptions[i],
+        value: payorOptions[i],
+        timestamp: new Date(Date.now()),
+      });
     } catch (e) {
       console.log(e);
     }
   }
-  for (let i = 0; i < practitionerOptions.length; i++) {
+  for (let i = 0; i < practitionerOptions.length; i += 1) {
     try {
-      dao.insertPractitioner({ practitioner: practitionerOptions[i].display, value: practitionerOptions[i].reference, timestamp: new Date(Date.now()) });
+      dao.insertPractitioner({
+        practitioner: practitionerOptions[i].display,
+        value: practitionerOptions[i].reference,
+        timestamp: new Date(Date.now()),
+      });
     } catch (e) {
       console.log(e);
     }
   }
-  for (let i = 0; i < healthcareProviderOptions.length; i++) {
+  for (let i = 0; i < healthcareProviderOptions.length; i += 1) {
     try {
-      dao.insertHealthcareProviders({ provider: healthcareProviderOptions[i].display, value: healthcareProviderOptions[i].reference, timestamp: new Date(Date.now()) });
+      dao.insertHealthcareProviders({
+        provider: healthcareProviderOptions[i].display,
+        value: healthcareProviderOptions[i].reference,
+        timestamp: new Date(Date.now()),
+      });
     } catch (e) {
       console.log(e);
     }
   }
-  for (let i = 0; i < coverageOptions.length; i++) {
+  for (let i = 0; i < coverageOptions.length; i += 1) {
     try {
-      dao.insertHealthcareCoverage({ coverage: coverageOptions[i].foundCoverage, value: coverageOptions[i].foundValue, timestamp: new Date(Date.now()) });
+      dao.insertHealthcareCoverage({
+        coverage: coverageOptions[i].foundCoverage,
+        value: coverageOptions[i].foundValue,
+        timestamp: new Date(Date.now()),
+      });
     } catch (e) {
       console.log(e);
     }
