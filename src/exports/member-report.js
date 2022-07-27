@@ -1,11 +1,12 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable import/prefer-default-export */
 const moment = require('moment');
 const ExcelJS = require('exceljs');
 
 async function generateMemberReport(memberObj, fileName) {
+  // Create workbook
   const workbook = new ExcelJS.Workbook();
 
+  // Set Metadata
   workbook.creator = 'Saraswati Automatic Export';
   workbook.lastModifiedBy = 'Saraswati Automatic Export';
   workbook.created = new Date();
@@ -15,16 +16,12 @@ async function generateMemberReport(memberObj, fileName) {
   workbook.addWorksheet(memberObj.measurementType.toUpperCase());
   workbook.addWorksheet('Data');
 
+  // Define sheets
   const measureWorksheet = workbook.getWorksheet(memberObj.measurementType.toUpperCase());
   const dataWorksheet = workbook.getWorksheet('Data');
   const displayWorksheet = workbook.getWorksheet('General');
 
-  dataWorksheet.columns = [
-    { header: 'Id', key: 'id', width: 5 },
-    { header: 'Key', key: 'Key', width: 32 },
-    { header: 'Value', key: 'Value', width: 32 },
-  ];
-
+  // Useful Data objects
   const placeHolderString = 'N/A in current version';
   const coverageObj = memberObj.coverage[0];
   const planDates = `${coverageObj.period.start.value} \n to \n ${coverageObj.period.end.value}`;
@@ -32,6 +29,14 @@ async function generateMemberReport(memberObj, fileName) {
   const compliant = memberInfo.Numerator.length > memberInfo.Exclusions.length;
 
   //  Data Sheet
+
+  // Define data sheet columns
+  dataWorksheet.columns = [
+    { header: 'Id', key: 'id', width: 5 },
+    { header: 'Key', key: 'Key', width: 32 },
+    { header: 'Value', key: 'Value', width: 32 },
+  ];
+
   //    Member Info
   dataWorksheet.addRow({ id: 2, Key: 'Member ID', Value: memberObj.memberId });
   dataWorksheet.addRow({ id: 3, Key: 'Date of Birth', Value: placeHolderString });
@@ -169,6 +174,7 @@ async function generateMemberReport(memberObj, fileName) {
     color: { argb: 'FFFFFF' },
     bold: true,
   };
+  // String construction
   const compliance = compliant ? '\u2713 \n Compliant' : '\u2716 \n Non-Compliant';
   const exclusions = memberInfo.Exclusions.length > 0 ? '\u2713' : '\u2716';
   const dates = memberInfo['Initial Population'].join(', \n');
@@ -178,6 +184,7 @@ async function generateMemberReport(memberObj, fileName) {
     practitioners.push(provider.display);
   });
   measureWorksheet.addRow([memberObj.measurementType.toUpperCase(), 'Measure', compliance, exclusions, practitioners.join(', \n'), dates, criteria]);
+  // Not-in-line Styling
   measureWorksheet.lastRow.height = 64;
   measureWorksheet.lastRow.alignment = { vertical: 'middle', horizontal: 'center' };
   if (exclusions === '\u2713') {
