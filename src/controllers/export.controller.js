@@ -36,13 +36,11 @@ async function generateMemberById(req, res, next) {
       await injectTemplate()
       await generateMemberReport(memberResults[0], fileName, folderPath);
       res.download(`${__root}${folderPath}/${fileName}`)
-      return true
     // IF FILE DOESN'T EXIST
     } else if (!fs.existsSync(`${__root}${folderPath}/${fileName}`)) {
       await injectTemplate()
       await generateMemberReport(memberResults[0], fileName, folderPath);
       res.download(`${__root}${folderPath}/${fileName}`)
-      return true
     // IF FILE STRUCTURE ALREADY EXISTS
     } else {
       const status = await fs.promises.stat(`${__root}${folderPath}/${fileName}`)
@@ -50,12 +48,10 @@ async function generateMemberById(req, res, next) {
       if (moment(status.mtime).isSameOrBefore(moment().subtract(1, 'd'))) {
         await generateMemberReport(memberResults[0], fileName, folderPath); 
         res.download(`${__root}${folderPath}/${fileName}`)
-        return true
       } else {
         // IF REPORT IS CURRENT
         console.info(`Report already current/exists. Current report located at: ${__root}${folderPath}/${fileName}`)
         res.download(`${__root}${folderPath}/${fileName}`)
-        return true
       }
     }
   } catch (error) {
