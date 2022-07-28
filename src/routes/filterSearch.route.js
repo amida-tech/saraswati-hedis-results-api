@@ -1,12 +1,16 @@
 const express = require('express');
 
 const router = express(); // eslint-disable-line new-cap
-const { filterMembersDBStyle } = require('../controllers/filterSearch.controller');
+const { filterMembers, getDailyMeasureResults } = require('../controllers/filterSearch.controller');
+const { calculateDailyMeasureResults } = require('../calculators/DailyResultsCalculator');
+const { createInfoObject } = require('../utilities/infoUtil');
 
-router.post('/', filterMembersDBStyle, (req, res) => {
+router.post('/', filterMembers, getDailyMeasureResults, (req, res) => {
   const { submeasure, filters, isComposite } = req.body;
 
   const MemberResults = req.FoundMembers;
+
+  const dailyMeasureResults = req.dailyMeasureResults ? req.dailyMeasureResults : [];
 
   const MemberResultsCount = req.FoundMembers.length;
 
@@ -19,6 +23,7 @@ router.post('/', filterMembersDBStyle, (req, res) => {
       filters,
       isComposite,
       members: MemberResults,
+      dailyMeasureResults,
     });
   } else {
     res.status(200).json({
@@ -29,6 +34,7 @@ router.post('/', filterMembersDBStyle, (req, res) => {
       filters,
       isComposite,
       members: MemberResults,
+      dailyMeasureResults,
     });
   }
 });

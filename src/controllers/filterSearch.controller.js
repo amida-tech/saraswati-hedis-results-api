@@ -1,7 +1,9 @@
 const dao = require('../config/dao');
 const { queryBuilder } = require('../utilities/filterDrawerUtils');
+const { calculateDailyMeasureResults } = require('../calculators/DailyResultsCalculator');
+const { createInfoObject } = require('../utilities/infoUtil');
 
-const filterMembersDBStyle = async (req, res, next) => {
+const filterMembers = async (req, res, next) => {
   const { submeasure, filters, isComposite } = req.body;
   const { searchQuery } = queryBuilder(submeasure, filters, isComposite);
 
@@ -14,6 +16,26 @@ const filterMembersDBStyle = async (req, res, next) => {
   }
 };
 
+const getDailyMeasureResults = async (req, res, next) => {
+  try {
+    const patientResults = req.FoundMembers
+
+    if (patientResults.length === 0) {
+      return res.send([]);
+    }
+
+    const infoList = await dao.findInfo();
+    const measureInfo = createInfoObject(infoList);
+
+    const dailyMeasureResults = calculateDailyMeasureResults(patientResults, measureInfo);
+    
+    req.dailyMeasureResults = dailyMeasureResults
+    next()
+  } catch (e) {
+    next(e);
+  }
+};
 module.exports = {
-  filterMembersDBStyle,
+  filterMembers,
+  getDailyMeasureResults
 };
