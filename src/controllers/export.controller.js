@@ -1,4 +1,3 @@
-/* eslint-disable no-else-return */
 const fs = require('fs');
 const process = require('process');
 const moment = require('moment');
@@ -13,19 +12,12 @@ const generateTest = async () => {
   try {
     generateTestReport();
   } catch (error) {
-    return error;
+    return next("ERROR: Member report failed to generate within test", error);
   }
-  return true;
 };
 
-// Finds member by ID and returns the Excel file via express.
-// Conditionally generates new doc if file is from a different day.
-// eslint-disable-next-line consistent-return
 async function generateMemberById(req, res, next) {
-
-  // Query for member
   let memberResults = await dao.findMembers(req.query);
-  // Determine file nomenclature
   memberResults = memberResults.sort((a, b) => new Date(b.timeStamp) - new Date(a.timeStamp));
   const fileName = `${memberResults[0].memberId}.xlsx`;
   const folderPath = `/reports/member/${memberResults[0].measurementType}`;
@@ -78,10 +70,6 @@ async function generateMemberById(req, res, next) {
     } else {
       res.end()
     }
-    // If the file can't be found, generate a new one and serve.
-  } catch (error) {
-    console.log(8);
-    next('GENERATION ERROR:', error);
   }
 };
 
