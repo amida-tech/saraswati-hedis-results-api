@@ -25,7 +25,7 @@ async function generateMemberById(req, res, next) {
 
   async function injectTemplate() {
     return fs.copyFile(`${__root}/reports/member/templates/${memberType}.xlsx`,
-      `${__root}${folderPath}/${fileName}`, (error) => {if (error) {console.log('lmao', error)}}
+      `${__root}${folderPath}/${fileName}`, (error) => {if (error) {console.error('data injection error:', error)}}
     )
   }
 
@@ -35,14 +35,12 @@ async function generateMemberById(req, res, next) {
       fs.mkdirSync(`${__root}${folderPath}`)
       await injectTemplate()
       await generateMemberReport(memberResults[0], fileName, folderPath);
-      console.log(1)
       res.download(`${__root}${folderPath}/${fileName}`)
       return true
     // IF FILE DOESN'T EXIST
     } else if (!fs.existsSync(`${__root}${folderPath}/${fileName}`)) {
       await injectTemplate()
       await generateMemberReport(memberResults[0], fileName, folderPath);
-      console.log(2)
       res.download(`${__root}${folderPath}/${fileName}`)
       return true
     // IF FILE STRUCTURE ALREADY EXISTS
@@ -50,14 +48,12 @@ async function generateMemberById(req, res, next) {
       const status = await fs.promises.stat(`${__root}${folderPath}/${fileName}`)
       // IF REPORT IS NOT CURRENT
       if (moment(status.mtime).isSameOrBefore(moment().subtract(1, 'd'))) {
-        await generateMemberReport(memberResults[0], fileName, folderPath);
-        console.log(4)
+        await generateMemberReport(memberResults[0], fileName, folderPath); 
         res.download(`${__root}${folderPath}/${fileName}`)
         return true
       } else {
         // IF REPORT IS CURRENT
         console.info(`Report already current/exists. Current report located at: ${__root}${folderPath}/${fileName}`)
-        console.log(5)
         res.download(`${__root}${folderPath}/${fileName}`)
         return true
       }
