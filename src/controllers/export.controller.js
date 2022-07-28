@@ -32,34 +32,39 @@ async function generateMemberById(req, res, next) {
   const filePath = `${__root}${folderPath}/${fileName}`;
 
   // Set header to force download
-  res.set('Content-Disposition', `attachment; filename="${fileName}"`);
+  // res.set('Content-Disposition', `attachment; filename="${fileName}"`);
   try {
     // Get existing file metadata
+    console.log(1);
+    console.log(filePath);
     const status = await fs.promises.stat(filePath, (error) => {
+      console.log(2);
       // If file has error return, error.
       if (error instanceof ReferenceError) {
+        console.log(3);
         console.error('ERROR: Member report has error, regenerating file...', error);
         return false;
       }
+      console.log(4);
       return true;
     });
     // Time check
-    const validTime = moment().isSame(moment(status.ctime), 'day');
+    console.log(5);
+    const validTime = moment().isSame(moment(status.mtime), 'day');
     if (validTime) {
+      console.log(6);
       res.download(filePath);
+      return true;
     } else {
+      console.log(7);
       generateMemberReport(memberResults[0], fileName);
       res.download(filePath);
+      return true;
     }
     // If the file can't be found, generate a new one and serve.
   } catch (error) {
-    if (error instanceof ReferenceError) {
-      next('GENERATION ERROR:', error);
-    } else {
-      generateMemberReport(memberResults[0], fileName);
-      res.download(filePath);
-      return next(`SUCCESS: Member report generated in location: ${folderPath}/${fileName}`);
-    }
+    console.log(8);
+    next('GENERATION ERROR:', error);
   }
 }
 
