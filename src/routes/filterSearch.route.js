@@ -2,8 +2,6 @@ const express = require('express');
 
 const router = express(); // eslint-disable-line new-cap
 const { filterMembers, getDailyMeasureResults } = require('../controllers/filterSearch.controller');
-const { calculateDailyMeasureResults } = require('../calculators/DailyResultsCalculator');
-const { createInfoObject } = require('../utilities/infoUtil');
 
 router.post('/', filterMembers, getDailyMeasureResults, (req, res) => {
   const { submeasure, filters, isComposite } = req.body;
