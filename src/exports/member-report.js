@@ -5,7 +5,7 @@ const process = require('process');
 const moment = require('moment');
 const excel = require('exceljs');
 
-async function generateMemberReport(memberObj, fileName, folderPath) {
+async function generateMemberReport(memberObj, fileName, folderPath, next) {
   const __root = process.cwd();
   const workbook = new excel.Workbook();
   const measure = memberObj.measurementType
@@ -56,9 +56,9 @@ async function generateMemberReport(memberObj, fileName, folderPath) {
 
     // ACTIVE AND INACTIVE STYLING
     if (coverageStatus.value === "active") {
-      coverageStatus.font = { color: "1AC93D", bold: true }
+      coverageStatus.font = { color: {argb: '1AC93D'}, bold: true }
     } else {
-      coverageStatus.font = { color: "C91A1A", bold: true }
+      coverageStatus.font = { color: {argb: "C91A1A"}, bold: true }
     }
 
     const applicableMeasures = generalWorksheet.getCell('F9')

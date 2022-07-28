@@ -4,7 +4,6 @@ const moment = require('moment');
 
 const { generateTestReport } = require('../exports/test-report');
 const { generateMemberReport } = require('../exports/member-report');
-const { generateAabReport } = require('../exports/aab-report');
 const dao = require('../config/dao');
 const { response } = require('express');
 const __root = process.cwd();
@@ -30,32 +29,37 @@ async function generateMemberById(req, res, next) {
     )
   }
 
-  async function populateData() {
-    memberType === "aab" ? generateAabReport(memberResults[0], fileName) : generateMemberReport(memberResults[0], fileName, folderPath);
-    res.sendFile(`.${folderPath}/${fileName}`, { root: __root });
-  }
-
   try {
+    // IF FOLDER DOESN'T EXIST
     if (!fs.existsSync(`${__root}${folderPath}`)) {
       fs.mkdirSync(`${__root}${folderPath}`)
       await injectTemplate()
-      await populateData()
-      console.info(`Report generated. New report located at: ${__root}${folderPath}/${fileName}`)
-      res.end()
+      await generateMemberReport(memberResults[0], fileName, folderPath);
+      console.log(1)
+      res.download(`${__root}${folderPath}/${fileName}`)
+      return true
+    // IF FILE DOESN'T EXIST
     } else if (!fs.existsSync(`${__root}${folderPath}/${fileName}`)) {
       await injectTemplate()
-      await populateData()
-      console.info(`Report generated. New report located at: ${__root}${folderPath}/${fileName}`)
-      res.end()
+      await generateMemberReport(memberResults[0], fileName, folderPath);
+      console.log(2)
+      res.download(`${__root}${folderPath}/${fileName}`)
+      return true
+    // IF FILE STRUCTURE ALREADY EXISTS
     } else {
       const status = await fs.promises.stat(`${__root}${folderPath}/${fileName}`)
+      // IF REPORT IS NOT CURRENT
       if (moment(status.mtime).isSameOrBefore(moment().subtract(1, 'd'))) {
-        await populateData()
-        console.info(`Report generated. New report located at: ${__root}${folderPath}/${fileName}`)
-        res.end()
+        await generateMemberReport(memberResults[0], fileName, folderPath);
+        console.log(4)
+        res.download(`${__root}${folderPath}/${fileName}`)
+        return true
       } else {
+        // IF REPORT IS CURRENT
         console.info(`Report already current/exists. Current report located at: ${__root}${folderPath}/${fileName}`)
-        res.end()
+        console.log(5)
+        res.download(`${__root}${folderPath}/${fileName}`)
+        return true
       }
     }
   } catch (error) {
