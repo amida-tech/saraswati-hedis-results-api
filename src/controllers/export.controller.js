@@ -40,7 +40,7 @@ async function generateMemberById(req, res, next) {
       fs.mkdirSync(`${__root}${folderPath}`)
       await injectTemplate()
       await populateData()
-      return console.info(`Report generated. New report located at: ${__root}${folderPath}/${fileName}`)
+      console.info(`Report generated. New report located at: ${__root}${folderPath}/${fileName}`)
       res.end()
     } else if (!fs.existsSync(`${__root}${folderPath}/${fileName}`)) {
       await injectTemplate()
