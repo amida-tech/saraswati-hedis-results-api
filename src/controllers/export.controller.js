@@ -6,6 +6,7 @@ const { generateTestReport } = require('../exports/test-report');
 const { generateMemberReport } = require('../exports/member-report');
 const { generateAabReport } = require('../exports/aab-report');
 const dao = require('../config/dao');
+const { response } = require('express');
 const __root = process.cwd();
 
 const generateTest = async () => {
@@ -25,7 +26,7 @@ async function generateMemberById(req, res, next) {
 
   async function injectTemplate() {
     return fs.copyFile(`${__root}/reports/member/templates/${memberType}.xlsx`,
-      `${__root}${folderPath}/${fileName}`, (error) => {if (error) {throw error}}
+      `${__root}${folderPath}/${fileName}`, (error) => {if (error) {console.log('lmao', error)}}
     )
   }
 
@@ -38,29 +39,32 @@ async function generateMemberById(req, res, next) {
     if (!fs.existsSync(`${__root}${folderPath}`)) {
       fs.mkdirSync(`${__root}${folderPath}`)
       await injectTemplate()
-      return next(`Report generated. New report located at: ${__root}${folderPath}/${fileName}`)
+      await populateData()
+      return console.info(`Report generated. New report located at: ${__root}${folderPath}/${fileName}`)
+      res.end()
     } else if (!fs.existsSync(`${__root}${folderPath}/${fileName}`)) {
       await injectTemplate()
-      populateData()
-      return next(`Report generated. New report located at: ${__root}${folderPath}/${fileName}`)
+      await populateData()
+      console.info(`Report generated. New report located at: ${__root}${folderPath}/${fileName}`)
+      res.end()
     } else {
-      const status = await fs.promises.stat(`${__root}${folderPath}/${fileName}`, (error) => {
-        if (error) {throw error}
-      })
+      const status = await fs.promises.stat(`${__root}${folderPath}/${fileName}`)
       if (moment(status.mtime).isSameOrBefore(moment().subtract(1, 'd'))) {
-        populateData()
-        return next(`Report generated. New report located at: ${__root}${folderPath}/${fileName}`)
+        await populateData()
+        console.info(`Report generated. New report located at: ${__root}${folderPath}/${fileName}`)
+        res.end()
       } else {
-        return next(`Report already current/exists. Current report located at: ${__root}${folderPath}/${fileName}`)
+        console.info(`Report already current/exists. Current report located at: ${__root}${folderPath}/${fileName}`)
+        res.end()
       }
     }
   } catch (error) {
     if (error instanceof ReferenceError) {
-      next("Member data generation failed via Reference Error:", error)
+      console.info("Member data generation failed via Reference Error:", error)
     } else if (error) {
-      next("Member data had unexpected error:", error)
+      console.info("Member data had unexpected error:", error)
     } else {
-      next()
+      res.end()
     }
   }
 
