@@ -31,8 +31,6 @@ async function generateMemberById(req, res, next) {
   const folderPath = `/reports/member/${memberResults[0].measurementType}`;
   const filePath = `${__root}${folderPath}/${fileName}`;
 
-  // Set header to force download
-  // res.set('Content-Disposition', `attachment; filename="${fileName}"`);
   try {
     // Get existing file metadata
     console.log(1);
