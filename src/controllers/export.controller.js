@@ -52,15 +52,13 @@ async function generateMemberById(req, res) {
         
         // IF REPORT IS CURRENT
       } else {
-        console.info(`Report already current/exists. Current report located at: ${__root}${folderPath}/${fileName}`)
         res.download(`${__root}${folderPath}/${fileName}`)
       }
     }
   } catch (error) {
     if (error instanceof ReferenceError) {
-      console.info("Member data generation failed via Reference Error:", error)
     } else if (error) {
-      console.info("Member data had unexpected error:", error)
+      return next(error)
     } else {
       res.end()
     }
