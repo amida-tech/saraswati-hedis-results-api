@@ -4,13 +4,14 @@ const process = require('process');
 const moment = require('moment');
 const excel = require('exceljs');
 
-async function generateMemberReport(memberObj, fileName, folderPath, next) {
+async function generateMemberReport(memberObj, fileName, folderPath) {
   const __root = process.cwd();
   const workbook = new excel.Workbook();
   const measure = memberObj.measurementType
 
   try {
     // GET WORKBOOK
+    // CANNOT FIND WORKBOOK?
     await workbook.xlsx.readFile(`${__root}${folderPath}/${fileName}`)
 
     // DEFINING WORKSHEETS

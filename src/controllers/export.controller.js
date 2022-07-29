@@ -24,9 +24,13 @@ async function generateMemberById(req, res, next) {
   const memberType = memberResults[0].measurementType
 
   async function injectTemplate() {
-    return fs.copyFile(`${__root}/reports/member/templates/${memberType}.xlsx`,
-      `${__root}${folderPath}/${fileName}`, (error) => {if (error) {console.error('data injection error:', error)}}
+    fs.copyFile(`${__root}/reports/member/templates/${memberType}.xlsx`,
+      `${__root}${folderPath}/${fileName}`, (error) => {
+        if (error) {console.log('data injection error:', error)}}
     )
+    console.log('copied!')
+    await generateMemberReport(memberResults[0], fileName, folderPath);
+    console.log('generated!')
   }
 
   try {
@@ -34,19 +38,20 @@ async function generateMemberById(req, res, next) {
     if (!fs.existsSync(`${__root}${folderPath}`)) {
       fs.mkdirSync(`${__root}${folderPath}`)
       await injectTemplate()
-      await generateMemberReport(memberResults[0], fileName, folderPath);
+      console.log('preparing to download!')
       res.download(`${__root}${folderPath}/${fileName}`)
     // IF FILE DOESN'T EXIST
     } else if (!fs.existsSync(`${__root}${folderPath}/${fileName}`)) {
       await injectTemplate()
-      await generateMemberReport(memberResults[0], fileName, folderPath);
+      console.log('preparing to download!')
       res.download(`${__root}${folderPath}/${fileName}`)
     // IF FILE STRUCTURE ALREADY EXISTS
     } else {
       const status = await fs.promises.stat(`${__root}${folderPath}/${fileName}`)
       // IF REPORT IS NOT CURRENT
-      if (moment(status.mtime).isSameOrBefore(moment().subtract(1, 'd'))) {
-        await generateMemberReport(memberResults[0], fileName, folderPath); 
+      if (moment(status.ctime).isSameOrBefore(moment().subtract(1, 'd'))) {
+        await generateMemberReport(memberResults[0], fileName, folderPath);
+        console.log('preparing to download!')
         res.download(`${__root}${folderPath}/${fileName}`)
       } else {
         // IF REPORT IS CURRENT
