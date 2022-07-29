@@ -24,37 +24,41 @@ async function generateMemberById(req, res, next) {
   const memberType = memberResults[0].measurementType
 
   async function injectTemplate() {
-    fs.copyFile(`${__root}/reports/member/templates/${memberType}.xlsx`,
-      `${__root}${folderPath}/${fileName}`, (error) => {
-        if (error) {console.log('data injection error:', error)}}
-    )
-    console.log('copied!')
-    await generateMemberReport(memberResults[0], fileName, folderPath);
-    console.log('generated!')
+    console.log('starting copying...')
+      await fs.promises.copyFile(`${__root}/reports/member/templates/${memberType}.xlsx`,
+        `${__root}${folderPath}/${fileName}`)
+      console.log('copied!')
+      await generateMemberReport(memberResults[0], fileName, folderPath);
+      console.log('generated!')
   }
 
   try {
-    // IF FOLDER DOESN'T EXIST
+    // IF FOLDER DOESN'T EXIST -- THIS WORKS
     if (!fs.existsSync(`${__root}${folderPath}`)) {
       fs.mkdirSync(`${__root}${folderPath}`)
+      console.log('madefolder!')
       await injectTemplate()
       console.log('preparing to download!')
       res.download(`${__root}${folderPath}/${fileName}`)
-    // IF FILE DOESN'T EXIST
+
+    // IF FILE DOESN'T EXIST -- THIS DOESN'T WORK NOW
     } else if (!fs.existsSync(`${__root}${folderPath}/${fileName}`)) {
-      await injectTemplate()
+      injectTemplate()
       console.log('preparing to download!')
       res.download(`${__root}${folderPath}/${fileName}`)
+
     // IF FILE STRUCTURE ALREADY EXISTS
     } else {
       const status = await fs.promises.stat(`${__root}${folderPath}/${fileName}`)
+
       // IF REPORT IS NOT CURRENT
       if (moment(status.ctime).isSameOrBefore(moment().subtract(1, 'd'))) {
         await generateMemberReport(memberResults[0], fileName, folderPath);
         console.log('preparing to download!')
         res.download(`${__root}${folderPath}/${fileName}`)
+        
+        // IF REPORT IS CURRENT -- THIS WORKS
       } else {
-        // IF REPORT IS CURRENT
         console.info(`Report already current/exists. Current report located at: ${__root}${folderPath}/${fileName}`)
         res.download(`${__root}${folderPath}/${fileName}`)
       }
