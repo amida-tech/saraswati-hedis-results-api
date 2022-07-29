@@ -1,12 +1,10 @@
 /* eslint-disable no-underscore-dangle */
 const dao = require('../config/dao');
-
 // Get Healthcar Providers
 const getHealthcareProviders = async (req, res, next) => {
   try {
     const healthcareProviders = await dao.getHealthcareProviders();
-    return res.send({ healthcareProviders : healthcareProviders});
-
+    return res.send({ healthcareProviders });
   } catch (e) {
     return next(e);
   }
@@ -21,7 +19,8 @@ const postHealthcareProvider = async (req, res, next) => {
     return next(e);
   }
 };
+
 module.exports = {
-    getHealthcareProviders,
-    postHealthcareProvider,
+  getHealthcareProviders,
+  postHealthcareProvider,
 };
