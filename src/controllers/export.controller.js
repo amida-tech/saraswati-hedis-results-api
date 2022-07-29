@@ -16,7 +16,7 @@ const generateTest = async () => {
   }
 };
 
-async function generateMemberById(req, res, next) {
+async function generateMemberById(req, res) {
   let memberResults = await dao.findMembers(req.query);
   memberResults = memberResults.sort((a, b) => new Date(b.timeStamp) - new Date(a.timeStamp));
   const fileName = `${memberResults[0].memberId}.xlsx`;
@@ -24,19 +24,19 @@ async function generateMemberById(req, res, next) {
   const memberType = memberResults[0].measurementType
 
   async function injectTemplate() {
-      await fs.promises.copyFile(`${__root}/reports/member/templates/${memberType}.xlsx`,
+      await fs.promises.copyFile(`${__root}/reports/templates/${memberType}.xlsx`,
         `${__root}${folderPath}/${fileName}`)
       await generateMemberReport(memberResults[0], fileName, folderPath);
   }
 
   try {
-    // IF FOLDER DOESN'T EXIST -- THIS WORKS
+    // IF FOLDER DOESN'T EXIST
     if (!fs.existsSync(`${__root}${folderPath}`)) {
       fs.mkdirSync(`${__root}${folderPath}`)
       await injectTemplate()
       res.download(`${__root}${folderPath}/${fileName}`)
 
-    // IF FILE DOESN'T EXIST -- THIS DOESN'T WORK NOW
+    // IF FILE DOESN'T EXIST
     } else if (!fs.existsSync(`${__root}${folderPath}/${fileName}`)) {
       injectTemplate()
       res.download(`${__root}${folderPath}/${fileName}`)
@@ -50,7 +50,7 @@ async function generateMemberById(req, res, next) {
         await generateMemberReport(memberResults[0], fileName, folderPath);
         res.download(`${__root}${folderPath}/${fileName}`)
         
-        // IF REPORT IS CURRENT -- THIS WORKS
+        // IF REPORT IS CURRENT
       } else {
         console.info(`Report already current/exists. Current report located at: ${__root}${folderPath}/${fileName}`)
         res.download(`${__root}${folderPath}/${fileName}`)

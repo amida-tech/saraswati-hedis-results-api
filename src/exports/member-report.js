@@ -11,7 +11,6 @@ async function generateMemberReport(memberObj, fileName, folderPath) {
 
   try {
     // GET WORKBOOK
-    // CANNOT FIND WORKBOOK?
     await workbook.xlsx.readFile(`${__root}${folderPath}/${fileName}`)
 
     // DEFINING WORKSHEETS
@@ -19,7 +18,6 @@ async function generateMemberReport(memberObj, fileName, folderPath) {
     const measureWorksheet = workbook.getWorksheet(measure)
 
     // MEMBER DATA TO INSERT
-    const placeholderMemberId = '#00000000'
     const coverageObj = memberObj.coverage[0];
     const planDates = `${coverageObj.period.start.value} to ${coverageObj.period.end.value}`;
     const memberInfo = memberObj[memberObj.memberId];
@@ -39,12 +37,12 @@ async function generateMemberReport(memberObj, fileName, folderPath) {
     const lastUpdated = generalWorksheet.getCell('C1');
     lastUpdated.value = moment(new Date()).format("MM/DD/YYYY")
     const header = generalWorksheet.getCell('A3')
-    header.value = `Member ${placeholderMemberId} Analysis Report ${planDates}`
+    header.value = `Member ${coverageObj.id.value} Analysis Report ${planDates}`
     const subheader = generalWorksheet.getCell('A5')
-    subheader.value = `This report is a summary of member ${placeholderMemberId}'s measure records and analysis of data from ${planDates} as pulled from the Saraswati platform.`
+    subheader.value = `This report is a summary of member ${coverageObj.id.value}'s measure records and analysis of data from ${planDates} as pulled from the Saraswati platform.`
 
     const memberId = generalWorksheet.getCell('A9')
-    memberId.value = placeholderMemberId
+    memberId.value = coverageObj.id.value
     const dob = generalWorksheet.getCell('B9')
     dob.value = "undefined"
     const age = generalWorksheet.getCell('C9')
