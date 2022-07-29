@@ -9,55 +9,6 @@ const { calcLatestNumDen } = require('./calculators/NumDenCalculator');
 const consumer = require('./consumer/consumer');
 const { createInfoObject } = require('./utilities/infoUtil');
 
-async function calculateData() {
-  let measureResults = await dao.findMeasureResults();
-  const currentDate = new Date();
-  currentDate.setHours(0);
-  currentDate.setMinutes(0);
-  currentDate.setSeconds(0);
-  currentDate.setMilliseconds(0);
-
-  let latestDate;
-  // If there are records, use the latest one to get the date.
-  // If there are no records, set the latest date as yesterday to calculate today
-  if (measureResults.length !== 0) {
-    measureResults = measureResults.sort((a, b) => b.date - a.date);
-    latestDate = measureResults[0].date;
-    // If the latestDate is today, push this back one day to force a recalculation of today
-    if (latestDate.getTime() === currentDate.getTime()) {
-      latestDate = new Date(currentDate.getTime() - (24 * 60 * 60 * 1000));
-    }
-  } else {
-    latestDate = new Date(currentDate.getTime() - (24 * 60 * 60 * 1000));
-  }
-
-  const infoList = await dao.findInfo();
-  const measureInfo = createInfoObject(infoList);
-
-  const hedisResults = calcLatestNumDen(patientResults, measureInfo, currentDate);
-
-  const fullResultList = [];
-  // Store results for each day until it's caught up to today
-  while (latestDate.getTime() < currentDate.getTime()) {
-    const newLatestDate = new Date(latestDate.getTime() + (24 * 60 * 60 * 1000));
-    hedisResults.forEach((result) => {
-      const newResult = { ...result };
-      newResult.date = newLatestDate;
-      if (newResult.subScores) {
-        newResult.subScores.forEach((subscore, index) => {
-          const newSubScore = { ...subscore };
-          newSubScore.date = newLatestDate;
-          newResult.subScores[index] = newSubScore;
-        });
-      }
-      fullResultList.push(JSON.parse(JSON.stringify(newResult)));
-    });
-    latestDate = new Date(newLatestDate);
-  }
-
-  // dao.insertMeasureResults(fullResultList);
-}
-
 async function healthcareProvidersPayorsGenerator() {
   const patientResults = await dao.findMembers();
   // PROVIDERS
@@ -123,7 +74,7 @@ async function healthcareProvidersPayorsGenerator() {
         timestamp: new Date(Date.now()),
       });
     } catch (e) {
-      console.log(e);
+      winstonInstance.error(e)
     }
   }
   for (let i = 0; i < practitionerOptions.length; i += 1) {
@@ -134,7 +85,7 @@ async function healthcareProvidersPayorsGenerator() {
         timestamp: new Date(Date.now()),
       });
     } catch (e) {
-      console.log(e);
+      winstonInstance.error(e)
     }
   }
   for (let i = 0; i < healthcareProviderOptions.length; i += 1) {
@@ -145,7 +96,7 @@ async function healthcareProvidersPayorsGenerator() {
         timestamp: new Date(Date.now()),
       });
     } catch (e) {
-      console.log(e);
+      winstonInstance.error(e)
     }
   }
   for (let i = 0; i < coverageOptions.length; i += 1) {
@@ -156,7 +107,7 @@ async function healthcareProvidersPayorsGenerator() {
         timestamp: new Date(Date.now()),
       });
     } catch (e) {
-      console.log(e);
+      winstonInstance.error(e)
     }
   }
 }
