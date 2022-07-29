@@ -24,27 +24,21 @@ async function generateMemberById(req, res, next) {
   const memberType = memberResults[0].measurementType
 
   async function injectTemplate() {
-    console.log('starting copying...')
       await fs.promises.copyFile(`${__root}/reports/member/templates/${memberType}.xlsx`,
         `${__root}${folderPath}/${fileName}`)
-      console.log('copied!')
       await generateMemberReport(memberResults[0], fileName, folderPath);
-      console.log('generated!')
   }
 
   try {
     // IF FOLDER DOESN'T EXIST -- THIS WORKS
     if (!fs.existsSync(`${__root}${folderPath}`)) {
       fs.mkdirSync(`${__root}${folderPath}`)
-      console.log('madefolder!')
       await injectTemplate()
-      console.log('preparing to download!')
       res.download(`${__root}${folderPath}/${fileName}`)
 
     // IF FILE DOESN'T EXIST -- THIS DOESN'T WORK NOW
     } else if (!fs.existsSync(`${__root}${folderPath}/${fileName}`)) {
       injectTemplate()
-      console.log('preparing to download!')
       res.download(`${__root}${folderPath}/${fileName}`)
 
     // IF FILE STRUCTURE ALREADY EXISTS
@@ -54,7 +48,6 @@ async function generateMemberById(req, res, next) {
       // IF REPORT IS NOT CURRENT
       if (moment(status.ctime).isSameOrBefore(moment().subtract(1, 'd'))) {
         await generateMemberReport(memberResults[0], fileName, folderPath);
-        console.log('preparing to download!')
         res.download(`${__root}${folderPath}/${fileName}`)
         
         // IF REPORT IS CURRENT -- THIS WORKS
