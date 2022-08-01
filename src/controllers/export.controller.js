@@ -5,7 +5,6 @@ const moment = require('moment');
 const { generateTestReport } = require('../exports/test-report');
 const { generateMemberReport } = require('../exports/member-report');
 const dao = require('../config/dao');
-const { response } = require('express');
 const __root = process.cwd();
 
 const generateTest = async () => {
@@ -16,7 +15,7 @@ const generateTest = async () => {
   }
 };
 
-async function generateMemberById(req, res) {
+async function generateMemberById(req, res, next) {
   let memberResults = await dao.findMembers(req.query);
   memberResults = memberResults.sort((a, b) => new Date(b.timeStamp) - new Date(a.timeStamp));
   const fileName = `${memberResults[0].memberId}.xlsx`;
@@ -24,7 +23,7 @@ async function generateMemberById(req, res) {
   const memberType = memberResults[0].measurementType
 
   async function injectTemplate() {
-      await fs.promises.copyFile(`${__root}/reports/templates/${memberType}.xlsx`,
+      await fs.promises.copyFile(`${__root}/src/templates/measure.xlsx`,
         `${__root}${folderPath}/${fileName}`)
       await generateMemberReport(memberResults[0], fileName, folderPath);
   }
@@ -58,7 +57,7 @@ async function generateMemberById(req, res) {
   } catch (error) {
     if (error instanceof ReferenceError) {
     } else if (error) {
-      return next(error)
+      res.send(error)
     } else {
       res.end()
     }
