@@ -1,229 +1,107 @@
 /* eslint-disable import/prefer-default-export */
+const fs = require('fs');
+const process = require('process');
 const moment = require('moment');
-const ExcelJS = require('exceljs');
+const excel = require('exceljs');
 
-async function generateMemberReport(memberObj, fileName) {
-  // Create workbook
-  const workbook = new ExcelJS.Workbook();
+async function generateMemberReport(memberObj, fileName, folderPath) {
+  const __root = process.cwd();
+  const workbook = new excel.Workbook();
+  const measure = memberObj.measurementType
 
-  // Set Metadata
-  workbook.creator = 'Saraswati Automatic Export';
-  workbook.lastModifiedBy = 'Saraswati Automatic Export';
-  workbook.created = new Date();
-  workbook.modified = new Date();
+  try {
+    // GET WORKBOOK
+    await workbook.xlsx.readFile(`${__root}${folderPath}/${fileName}`)
 
-  workbook.addWorksheet('General');
-  workbook.addWorksheet(memberObj.measurementType.toUpperCase());
-  workbook.addWorksheet('Data');
+    // DEFINING WORKSHEETS
+    const generalWorksheet = workbook.getWorksheet('General')
+    const measureWorksheet = workbook.getWorksheet(measure)
 
-  // Define sheets
-  const measureWorksheet = workbook.getWorksheet(memberObj.measurementType.toUpperCase());
-  const dataWorksheet = workbook.getWorksheet('Data');
-  const displayWorksheet = workbook.getWorksheet('General');
+    // MEMBER DATA TO INSERT
+    const coverageObj = memberObj.coverage[0];
+    const planDates = `${coverageObj.period.start.value} to ${coverageObj.period.end.value}`;
+    const memberInfo = memberObj[memberObj.memberId];
 
-  // Useful Data objects
-  const placeHolderString = 'N/A in current version';
-  const coverageObj = memberObj.coverage[0];
-  const planDates = `${coverageObj.period.start.value} \n to \n ${coverageObj.period.end.value}`;
-  const memberInfo = memberObj[memberObj.memberId];
-  const compliant = memberInfo.Numerator.length > memberInfo.Exclusions.length;
+    const dateFormatter = (date) => {
+      const res = date.split("-")
+      return [res[1], res[2], res[0]].join("/")
+    }
 
-  //  Data Sheet
+    // SETTING BASIC WORKBOOK INFO
+    workbook.creator = 'Saraswati Automatic Export';
+    workbook.lastModifiedBy = 'Saraswati Automatic Export';
+    workbook.created = new Date();
+    workbook.modified = new Date();
 
-  // Define data sheet columns
-  dataWorksheet.columns = [
-    { header: 'Id', key: 'id', width: 5 },
-    { header: 'Key', key: 'Key', width: 32 },
-    { header: 'Value', key: 'Value', width: 32 },
-  ];
+    // GENERAL TAB: MEMBER INFO
+    const lastUpdated = generalWorksheet.getCell('C1');
+    lastUpdated.value = moment(new Date()).format("MM/DD/YYYY")
+    const header = generalWorksheet.getCell('A3')
+    header.value = `Member ${coverageObj.id.value} Analysis Report ${planDates}`
+    const subheader = generalWorksheet.getCell('A5')
+    subheader.value = `This report is a summary of member ${coverageObj.id.value}'s measure records and analysis of data from ${planDates} as pulled from the Saraswati platform.`
 
-  //    Member Info
-  dataWorksheet.addRow({ id: 2, Key: 'Member ID', Value: memberObj.memberId });
-  dataWorksheet.addRow({ id: 3, Key: 'Date of Birth', Value: placeHolderString });
-  dataWorksheet.addRow({ id: 4, Key: 'Age', Value: placeHolderString });
-  dataWorksheet.addRow({ id: 5, Key: 'Gender', Value: placeHolderString });
-  dataWorksheet.addRow({ id: 6, Key: 'Coverage Status', Value: coverageObj.status.value });
-  dataWorksheet.addRow({ id: 7, Key: 'Participation Period', Value: planDates });
-  //   TODO: Will need to be changed once we have multi-measure users in data.
-  dataWorksheet.addRow({ id: 8, Key: 'Applicable Measures', Value: '1' });
+    const memberId = generalWorksheet.getCell('A9')
+    memberId.value = coverageObj.id.value
+    const dob = generalWorksheet.getCell('B9')
+    dob.value = "undefined"
+    const age = generalWorksheet.getCell('C9')
+    age.value = "undefined"
+    const gender = generalWorksheet.getCell('D9')
+    gender.value = "undefined"
+    const coverageStatus = generalWorksheet.getCell('E9')
+    coverageStatus.value = coverageObj.status.value
 
-  //   Policy Info
-  dataWorksheet.addRow({ id: 9, Key: 'Policy ID', Value: coverageObj.id.value });
-  dataWorksheet.addRow({ id: 10, Key: 'Payor', Value: coverageObj.payor[0].reference.value });
-  dataWorksheet.addRow({ id: 11, Key: 'Plan', Value: placeHolderString });
-  dataWorksheet.addRow({ id: 12, Key: 'Type', Value: coverageObj.type.coding[0].display.value });
-  dataWorksheet.addRow({ id: 13, Key: 'Subscriber', Value: coverageObj.subscriber.reference.value });
-  dataWorksheet.addRow({ id: 14, Key: 'Beneficiary', Value: coverageObj.beneficiary.reference.value });
-  dataWorksheet.addRow({ id: 15, Key: 'Relationship', Value: coverageObj.relationship.coding[0].code.value });
-  dataWorksheet.addRow({ id: 16, Key: 'Plan Period', Value: planDates });
+    // ACTIVE AND INACTIVE STYLING
+    if (coverageStatus.value === "active") {
+      coverageStatus.font = { color: {argb: '1AC93D'}, bold: true }
+    } else {
+      coverageStatus.font = { color: {argb: "C91A1A"}, bold: true }
+    }
 
-  //  Display Sheet
-  const now = moment().format('MMM Do YYYY, h:mm:ss a');
-  const dataKeys = dataWorksheet.getColumn(2).values;
-  const dataValues = dataWorksheet.getColumn(3).values;
+    const applicableMeasures = generalWorksheet.getCell('F9')
+    applicableMeasures.value = 1 // TODO this needs to be dynamic
+    const participationStart = generalWorksheet.getCell('G9')
+    participationStart.value = dateFormatter(coverageObj.period.start.value)
+    const participationEnd = generalWorksheet.getCell('H9')
+    participationEnd.value = dateFormatter(coverageObj.period.end.value)
 
-  displayWorksheet.addRow(['SARASAWTI', `Updated: ${now}`]);
-  displayWorksheet.getColumn(1).font = {
-    bold: true,
-  };
+    // GENERAL TAB: POLICY INFO: THE DATA
+    const policyId = generalWorksheet.getCell('A13')
+    policyId.value = coverageObj.id.value
+    const payorProvider = generalWorksheet.getCell('B13')
+    payorProvider.value = coverageObj.payor[0].reference.value
+    const planType = generalWorksheet.getCell('C13')
+    planType.value = "undefined"
+    const policyType = generalWorksheet.getCell('D13')
+    policyType.value = coverageObj.type.coding[0].display.value
+    const dependents = generalWorksheet.getCell('E13')
+    dependents.value = coverageObj.beneficiary.reference.value.slice(0,3) //placeholder
+    const relationship = generalWorksheet.getCell('F13')
+    relationship.value = coverageObj.relationship.coding[0].code.value
+    const planStart = generalWorksheet.getCell('G13')
+    planStart.value = dateFormatter(coverageObj.period.start.value)
+    const planEnd = generalWorksheet.getCell('H13')
+    planEnd.value = dateFormatter(coverageObj.period.end.value)
 
-  displayWorksheet.addRow();
-  displayWorksheet.addRow([`Member ${memberObj.memberId} Measure Analysis Report ${planDates}`]);
-  displayWorksheet.lastRow.font = {
-    size: 20,
-  };
-  displayWorksheet.lastRow.fill = {
-    type: 'pattern',
-    pattern: 'solid',
-    fgColor: { argb: 'D7E1E2' },
-  };
-  displayWorksheet.addRow();
-  displayWorksheet.addRow([`This report is a summary of member ${memberObj.memberId}'s measure records and analysis of data from ${planDates} as pulled froom the Saraswati platform. `]);
-  displayWorksheet.lastRow.font = {
-    bold: false,
-  };
-  displayWorksheet.addRow();
-  displayWorksheet.addRow(['Member Info']);
-  displayWorksheet.lastRow.fill = {
-    type: 'pattern',
-    pattern: 'solid',
-    fgColor: { argb: '546E7A' },
-  };
-  displayWorksheet.lastRow.font = {
-    color: { argb: 'FFFFFF' },
-    bold: true,
-  };
-  displayWorksheet.addRow(['', dataKeys[2], dataValues[2]]);
-  displayWorksheet.addRow(['', dataKeys[3], dataValues[3]]);
-  displayWorksheet.addRow(['', dataKeys[4], dataValues[4]]);
-  displayWorksheet.addRow(['', dataKeys[5], dataValues[5]]);
-  displayWorksheet.addRow(['', dataKeys[6], dataValues[6].toUpperCase()]);
-  if (dataValues[6] === 'active') {
-    displayWorksheet.getCell('C12').font = {
-      color: { argb: '1ac93d' },
-      bold: true,
-    };
-  } else if (dataValues[6] === 'inactive') {
-    displayWorksheet.getCell('C12').font = {
-      color: { argb: 'c91a1a' },
-      bold: true,
-    };
+    // MEASURE TAB: HEADERS
+    const lastUpdated2 = measureWorksheet.getCell('C1');
+    lastUpdated2.value = moment(new Date()).format("MM/DD/YYYY")
+    const header2 = measureWorksheet.getCell('A3')
+    header2.value = `${measure.toUpperCase()} - Compliance Results`
+    const subheader2 = measureWorksheet.getCell('A5')
+    subheader2.value = "IMA-E Assesses adolescents 13 years of age who had one dose of meningococcal vaccine, one Tdap vaccine and the complete human papillomavirus vaccine series by their 13th birthday."
+
+    // MEASURE COMPLIANCE RESULTS
+    //console.log(">>>>MEMBER INFO:", memberInfo)
+    // LOOP THROUGH EACH MEASURE - NUMERATORS?
+    // APPLY COLOR STYLE TO STYLE
+
+    await workbook.xlsx.writeFile(`${__root}${folderPath}/${fileName}`)
+
+  } catch (error) {
+    console.log(error)
   }
-  displayWorksheet.addRow(['', dataKeys[7], dataValues[7]]);
-  displayWorksheet.addRow(['', dataKeys[8], dataValues[8]]);
-  displayWorksheet.lastRow.height = 50;
-  displayWorksheet.addRow();
-  displayWorksheet.addRow(['Policy Info']);
-  displayWorksheet.lastRow.fill = {
-    type: 'pattern',
-    pattern: 'solid',
-    fgColor: { argb: '546E7A' },
-  };
-  displayWorksheet.lastRow.font = {
-    color: { argb: 'FFFFFF' },
-    bold: true,
-  };
-  displayWorksheet.addRow(['', dataKeys[9], dataValues[9]]);
-  displayWorksheet.addRow(['', dataKeys[10], dataValues[10]]);
-  displayWorksheet.addRow(['', dataKeys[11], dataValues[11]]);
-  displayWorksheet.addRow(['', dataKeys[12], dataValues[12]]);
-  displayWorksheet.addRow(['', dataKeys[13], dataValues[13]]);
-  displayWorksheet.addRow(['', dataKeys[14], dataValues[14]]);
-  displayWorksheet.addRow(['', dataKeys[15], dataValues[15]]);
-  displayWorksheet.addRow(['', dataKeys[16], dataValues[16]]);
-  displayWorksheet.lastRow.height = 32;
-  displayWorksheet.addRow();
-  displayWorksheet.getColumn(1).width = 19;
-  displayWorksheet.getColumn(2).width = 19;
-  displayWorksheet.getColumn(2).font = {
-    bold: true,
-  };
-  displayWorksheet.getColumn(3).width = 19;
-  displayWorksheet.getCell('B1').font = {
-    bold: false,
-  };
-
-  // Table Worksheet
-  measureWorksheet.addRow(['AAB - Avoidance of Antibiotic Treatment for Acute Bronchitis/Bronchiolitis']);
-  measureWorksheet.lastRow.fill = {
-    type: 'pattern',
-    pattern: 'solid',
-    fgColor: { argb: 'D7E1E2' },
-  };
-  measureWorksheet.lastRow.font = {
-    size: 20,
-  };
-  measureWorksheet.getColumn(1).font = {
-    bold: true,
-  };
-  measureWorksheet.addRow();
-  measureWorksheet.addRow(['Assesses the percentage of episodes for members 3 months of age and older with a diagnosis of'
-    + 'acute bronchitis/bronchiolitis that did not result in an antibiotic dispensing event. A higher rate indicates appropriate'
-    + ' treatment for bronchitis/bronchiolitis (i.e., the percentage of episodes that were not prescribed an antibiotic).']);
-  measureWorksheet.lastRow.font = {
-    bold: false,
-  };
-  measureWorksheet.addRow();
-  measureWorksheet.addRow(['Measure', 'Type', 'Status', 'Exclusions', 'Practitioner', 'Dates', 'Criteria', 'Recommendations']);
-  measureWorksheet.lastRow.fill = {
-    type: 'pattern',
-    pattern: 'solid',
-    fgColor: { argb: '546E7A' },
-  };
-  measureWorksheet.lastRow.font = {
-    color: { argb: 'FFFFFF' },
-    bold: true,
-  };
-  // String construction
-  const compliance = compliant ? '\u2713 \n Compliant' : '\u2716 \n Non-Compliant';
-  const exclusions = memberInfo.Exclusions.length > 0 ? '\u2713' : '\u2716';
-  const dates = memberInfo['Initial Population'].join(', \n');
-  const practitioners = [];
-  const criteria = 'Diagnosis of acute bronchitis/ bronchiolitis with no Antibiotic';
-  memberObj.providers.forEach((provider) => {
-    practitioners.push(provider.display);
-  });
-  measureWorksheet.addRow([memberObj.measurementType.toUpperCase(), 'Measure', compliance, exclusions, practitioners.join(', \n'), dates, criteria]);
-  // Not-in-line Styling
-  measureWorksheet.lastRow.height = 64;
-  measureWorksheet.lastRow.alignment = { vertical: 'middle', horizontal: 'center' };
-  if (exclusions === '\u2713') {
-    measureWorksheet.getCell('D6').font = {
-      color: { argb: '1ac93d' },
-      bold: true,
-    };
-  } else if (exclusions === '\u2716') {
-    measureWorksheet.getCell('D6').font = {
-      color: { argb: 'c91a1a' },
-      bold: true,
-    };
-  }
-  if (compliant) {
-    measureWorksheet.getCell('C6').font = {
-      color: { argb: '1ac93d' },
-      bold: true,
-    };
-  } else {
-    measureWorksheet.getCell('C6').font = {
-      color: { argb: 'c91a1a' },
-      bold: true,
-    };
-  }
-  measureWorksheet.getCell('E6').alignment = { vertical: 'middle', horizontal: 'justify' };
-  measureWorksheet.getCell('F6').alignment = { vertical: 'middle', horizontal: 'justify' };
-  measureWorksheet.getCell('G6').alignment = { vertical: 'middle', horizontal: 'left' };
-  measureWorksheet.getColumn(1).width = 19;
-  measureWorksheet.getColumn(2).width = 19;
-  measureWorksheet.getColumn(3).width = 19;
-  measureWorksheet.getColumn(4).width = 19;
-  measureWorksheet.getColumn(5).width = 32;
-  measureWorksheet.getColumn(6).width = 19;
-  measureWorksheet.getColumn(7).width = 19;
-  measureWorksheet.getColumn(8).width = 19;
-
-  await workbook.xlsx.writeFile(`./reports/member/aab/${fileName}`);
-
-  return true;
 }
 
 module.exports = {

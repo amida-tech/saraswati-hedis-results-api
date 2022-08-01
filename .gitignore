@@ -5,6 +5,7 @@
 .gitconfig
 .bash_history
 .ssh
+.DS_STORE
 /coverage
 .npm
 .config
@@ -12,4 +13,4 @@
 .vscode
 /test/generated-data/*
 /test/export-test-data/*
-/reports/member/*/*
+/reports/member/*

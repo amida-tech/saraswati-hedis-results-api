@@ -1,70 +1,69 @@
-/* eslint-disable no-else-return */
 const fs = require('fs');
-const moment = require('moment');
 const process = require('process');
+const moment = require('moment');
 
 const { generateTestReport } = require('../exports/test-report');
 const { generateMemberReport } = require('../exports/member-report');
 const dao = require('../config/dao');
-
-// eslint-disable-next-line no-underscore-dangle
+const { response } = require('express');
 const __root = process.cwd();
 
 const generateTest = async () => {
   try {
     generateTestReport();
   } catch (error) {
-    return error;
+    return next("ERROR: Member report failed to generate within test", error);
   }
-  return true;
 };
 
-// Finds member by ID and returns the Excel file via express.
-// Conditionally generates new doc if file is from a different day.
-// eslint-disable-next-line consistent-return
-async function generateMemberById(req, res, next) {
-  // Query for member
+async function generateMemberById(req, res) {
   let memberResults = await dao.findMembers(req.query);
-  // Determine file nomenclature
   memberResults = memberResults.sort((a, b) => new Date(b.timeStamp) - new Date(a.timeStamp));
   const fileName = `${memberResults[0].memberId}.xlsx`;
   const folderPath = `/reports/member/${memberResults[0].measurementType}`;
-  const filePath = `${__root}${folderPath}/${fileName}`;
+  const memberType = memberResults[0].measurementType
+
+  async function injectTemplate() {
+      await fs.promises.copyFile(`${__root}/reports/templates/${memberType}.xlsx`,
+        `${__root}${folderPath}/${fileName}`)
+      await generateMemberReport(memberResults[0], fileName, folderPath);
+  }
 
   try {
-    // Get existing file metadata
-    console.log(1);
-    console.log(filePath);
-    const status = await fs.promises.stat(filePath, (error) => {
-      console.log(2);
-      // If file has error return, error.
-      if (error instanceof ReferenceError) {
-        console.log(3);
-        console.error('ERROR: Member report has error, regenerating file...', error);
-        return false;
-      }
-      console.log(4);
-      return true;
-    });
-    // Time check
-    console.log(5);
-    const validTime = moment().isSame(moment(status.mtime), 'day');
-    if (validTime) {
-      console.log(6);
-      res.download(filePath);
-      return true;
+    // IF FOLDER DOESN'T EXIST
+    if (!fs.existsSync(`${__root}${folderPath}`)) {
+      fs.mkdirSync(`${__root}${folderPath}`)
+      await injectTemplate()
+      res.download(`${__root}${folderPath}/${fileName}`)
+
+    // IF FILE DOESN'T EXIST
+    } else if (!fs.existsSync(`${__root}${folderPath}/${fileName}`)) {
+      injectTemplate()
+      res.download(`${__root}${folderPath}/${fileName}`)
+
+    // IF FILE STRUCTURE ALREADY EXISTS
     } else {
-      console.log(7);
-      generateMemberReport(memberResults[0], fileName);
-      res.download(filePath);
-      return true;
+      const status = await fs.promises.stat(`${__root}${folderPath}/${fileName}`)
+
+      // IF REPORT IS NOT CURRENT
+      if (moment(status.ctime).isSameOrBefore(moment().subtract(1, 'd'))) {
+        await generateMemberReport(memberResults[0], fileName, folderPath);
+        res.download(`${__root}${folderPath}/${fileName}`)
+        
+        // IF REPORT IS CURRENT
+      } else {
+        res.download(`${__root}${folderPath}/${fileName}`)
+      }
     }
-    // If the file can't be found, generate a new one and serve.
   } catch (error) {
-    console.log(8);
-    next('GENERATION ERROR:', error);
+    if (error instanceof ReferenceError) {
+    } else if (error) {
+      return next(error)
+    } else {
+      res.end()
+    }
   }
-}
+};
 
 module.exports = {
   generateTest,
