@@ -74,13 +74,13 @@ async function generateMemberReport(memberObj, fileName, folderPath) {
     const payorProvider = generalWorksheet.getCell('B13')
     payorProvider.value = coverageObj.payor[0].reference?.value || undefined
     const planType = generalWorksheet.getCell('C13')
-    planType.value = coverageObj?.planType?.value || undefined
+    planType.value = coverageObj.planType?.value || undefined
     const policyType = generalWorksheet.getCell('D13')
-    policyType.value = coverageObj?.type.coding[0].display?.value || undefined
+    policyType.value = coverageObj.type.coding[0].display?.value || undefined
     const dependents = generalWorksheet.getCell('E13')
     dependents.value = coverageObj.dependents?.value || coverageObj.beneficiary.reference.value.slice(0,3)
     const relationship = generalWorksheet.getCell('F13')
-    relationship.value = coverageObj?.relationship.coding[0].code?.value || undefined
+    relationship.value = coverageObj.relationship.coding[0].code?.value || undefined
     const planStart = generalWorksheet.getCell('G13')
     planStart.value = dateFormatter(coverageObj.period.start?.value) || "0/0/00"
     const planEnd = generalWorksheet.getCell('H13')
