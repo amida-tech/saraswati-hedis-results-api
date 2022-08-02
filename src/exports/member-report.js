@@ -15,7 +15,9 @@ async function generateMemberReport(memberObj, fileName, folderPath) {
 
     // DEFINING WORKSHEETS
     const generalWorksheet = workbook.getWorksheet('General')
-    const measureWorksheet = workbook.getWorksheet(measure)
+
+    let measureWorksheet = workbook.getWorksheet('measure')
+    measureWorksheet.name = measure
 
     // MEMBER DATA TO INSERT
     const coverageObj = memberObj.coverage[0];
@@ -37,20 +39,20 @@ async function generateMemberReport(memberObj, fileName, folderPath) {
     const lastUpdated = generalWorksheet.getCell('C1');
     lastUpdated.value = moment(new Date()).format("MM/DD/YYYY")
     const header = generalWorksheet.getCell('A3')
-    header.value = `Member ${coverageObj.id.value} Analysis Report ${planDates}`
+    header.value = `Member ${coverageObj.id.value || undefined} Analysis Report ${planDates || "undetermined dates"}`
     const subheader = generalWorksheet.getCell('A5')
-    subheader.value = `This report is a summary of member ${coverageObj.id.value}'s measure records and analysis of data from ${planDates} as pulled from the Saraswati platform.`
+    subheader.value = `This report is a summary of member ${coverageObj.id.value || undefined}'s measure records and analysis of data from ${planDates || undefined} as pulled from the Saraswati platform.`
 
     const memberId = generalWorksheet.getCell('A9')
-    memberId.value = coverageObj.id.value
+    memberId.value = coverageObj.id.value || undefined
     const dob = generalWorksheet.getCell('B9')
-    dob.value = "undefined"
+    dob.value = coverageObj.dob || "0/0/00"
     const age = generalWorksheet.getCell('C9')
-    age.value = "undefined"
+    age.value = coverageObj.age || undefined
     const gender = generalWorksheet.getCell('D9')
-    gender.value = "undefined"
+    gender.value = coverageObj.gender || undefined
     const coverageStatus = generalWorksheet.getCell('E9')
-    coverageStatus.value = coverageObj.status.value
+    coverageStatus.value = coverageObj.status.value || undefined
 
     // ACTIVE AND INACTIVE STYLING
     if (coverageStatus.value === "active") {
@@ -60,37 +62,37 @@ async function generateMemberReport(memberObj, fileName, folderPath) {
     }
 
     const applicableMeasures = generalWorksheet.getCell('F9')
-    applicableMeasures.value = 1 // TODO this needs to be dynamic
+    applicableMeasures.value = memberObj.applicableMeasures || 1
     const participationStart = generalWorksheet.getCell('G9')
-    participationStart.value = dateFormatter(coverageObj.period.start.value)
+    participationStart.value = dateFormatter(coverageObj.period.start.value) || undefined
     const participationEnd = generalWorksheet.getCell('H9')
-    participationEnd.value = dateFormatter(coverageObj.period.end.value)
+    participationEnd.value = dateFormatter(coverageObj.period.end.value) || undefined
 
     // GENERAL TAB: POLICY INFO: THE DATA
     const policyId = generalWorksheet.getCell('A13')
-    policyId.value = coverageObj.id.value
+    policyId.value = coverageObj.id?.value || undefined
     const payorProvider = generalWorksheet.getCell('B13')
-    payorProvider.value = coverageObj.payor[0].reference.value
+    payorProvider.value = coverageObj.payor[0].reference?.value || undefined
     const planType = generalWorksheet.getCell('C13')
-    planType.value = "undefined"
+    planType.value = coverageObj.planType?.value || undefined
     const policyType = generalWorksheet.getCell('D13')
-    policyType.value = coverageObj.type.coding[0].display.value
+    policyType.value = coverageObj.type.coding[0].display?.value || undefined
     const dependents = generalWorksheet.getCell('E13')
-    dependents.value = coverageObj.beneficiary.reference.value.slice(0,3) //placeholder
+    dependents.value = coverageObj.dependents?.value || coverageObj.beneficiary.reference.value.slice(0,3)
     const relationship = generalWorksheet.getCell('F13')
-    relationship.value = coverageObj.relationship.coding[0].code.value
+    relationship.value = coverageObj.relationship.coding[0].code?.value || undefined
     const planStart = generalWorksheet.getCell('G13')
-    planStart.value = dateFormatter(coverageObj.period.start.value)
+    planStart.value = dateFormatter(coverageObj.period.start?.value) || "0/0/00"
     const planEnd = generalWorksheet.getCell('H13')
-    planEnd.value = dateFormatter(coverageObj.period.end.value)
+    planEnd.value = dateFormatter(coverageObj.period.end?.value) || "0/0/00"
 
     // MEASURE TAB: HEADERS
     const lastUpdated2 = measureWorksheet.getCell('C1');
     lastUpdated2.value = moment(new Date()).format("MM/DD/YYYY")
     const header2 = measureWorksheet.getCell('A3')
-    header2.value = `${measure.toUpperCase()} - Compliance Results`
+    header2.value = `${measure.toUpperCase()} - Compliance Results` || undefined
     const subheader2 = measureWorksheet.getCell('A5')
-    subheader2.value = "IMA-E Assesses adolescents 13 years of age who had one dose of meningococcal vaccine, one Tdap vaccine and the complete human papillomavirus vaccine series by their 13th birthday."
+    subheader2.value = memberObj.description || undefined
 
     // MEASURE COMPLIANCE RESULTS
     //console.log(">>>>MEMBER INFO:", memberInfo)
