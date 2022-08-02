@@ -5,7 +5,6 @@ const moment = require('moment');
 const { generateTestReport } = require('../exports/test-report');
 const { generateMemberReport } = require('../exports/member-report');
 const dao = require('../config/dao');
-const { response } = require('express');
 const __root = process.cwd();
 
 const generateTest = async () => {
