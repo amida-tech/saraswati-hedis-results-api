@@ -74,7 +74,7 @@ async function healthcareProvidersPayorsGenerator() {
         timestamp: new Date(Date.now()),
       });
     } catch (e) {
-      winstonInstance.error(e)
+      winstonInstance.error(e);
     }
   }
   for (let i = 0; i < practitionerOptions.length; i += 1) {
@@ -85,7 +85,7 @@ async function healthcareProvidersPayorsGenerator() {
         timestamp: new Date(Date.now()),
       });
     } catch (e) {
-      winstonInstance.error(e)
+      winstonInstance.error(e);
     }
   }
   for (let i = 0; i < healthcareProviderOptions.length; i += 1) {
@@ -96,7 +96,7 @@ async function healthcareProvidersPayorsGenerator() {
         timestamp: new Date(Date.now()),
       });
     } catch (e) {
-      winstonInstance.error(e)
+      winstonInstance.error(e);
     }
   }
   for (let i = 0; i < coverageOptions.length; i += 1) {
@@ -107,7 +107,7 @@ async function healthcareProvidersPayorsGenerator() {
         timestamp: new Date(Date.now()),
       });
     } catch (e) {
-      winstonInstance.error(e)
+      winstonInstance.error(e);
     }
   }
 }

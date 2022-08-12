@@ -1,6 +1,5 @@
 /* eslint-disable no-underscore-dangle */
 
-
 const measureLinks = [
   { measure: 'aab', link: 'https://www.ncqa.org/hedis/measures/avoidance-of-antibiotic-treatment-for-acute-bronchitis-bronchiolitis/' },
   { measure: 'adde', link: 'https://www.ncqa.org/hedis/measures/follow-up-care-for-children-prescribed-adhd-medication/' },
@@ -32,10 +31,11 @@ const createInfoObject = (infoList) => {
     const info = infoList[i];
     fullInfo[info._id] = info[info._id];
 
-    const foundLinkObj = measureLinks.filter((measureLink) => info._id.includes(measureLink.measure))
-    if (foundLinkObj.length !== 0){
-      const link = foundLinkObj[0].link
-      fullInfo[info._id] = {...fullInfo[info._id], link}
+    // eslint-disable-next-line max-len
+    const foundLinkObj = measureLinks.filter((measureLink) => info._id.includes(measureLink.measure));
+    if (foundLinkObj.length !== 0) {
+      const { link } = foundLinkObj[0];
+      fullInfo[info._id] = { ...fullInfo[info._id], link };
     }
   }
   return fullInfo;
