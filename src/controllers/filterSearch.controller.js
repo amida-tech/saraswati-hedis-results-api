@@ -18,7 +18,7 @@ const filterMembers = async (req, res, next) => {
 
 const getDailyMeasureResults = async (req, res, next) => {
   try {
-    const patientResults = req.FoundMembers
+    const patientResults = req.FoundMembers;
 
     if (patientResults.length === 0) {
       return res.send([]);
@@ -28,14 +28,14 @@ const getDailyMeasureResults = async (req, res, next) => {
     const measureInfo = createInfoObject(infoList);
 
     const dailyMeasureResults = calculateDailyMeasureResults(patientResults, measureInfo);
-    
-    req.dailyMeasureResults = dailyMeasureResults
-    next()
+
+    req.dailyMeasureResults = dailyMeasureResults;
+    next();
   } catch (e) {
     next(e);
   }
 };
 module.exports = {
   filterMembers,
-  getDailyMeasureResults
+  getDailyMeasureResults,
 };
