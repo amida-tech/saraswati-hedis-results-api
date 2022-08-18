@@ -21,7 +21,10 @@ async function generateMemberById(req, res, next) {
   memberResults = memberResults.sort((a, b) => new Date(b.timeStamp) - new Date(a.timeStamp));
   const fileName = `${memberResults[0].memberId}.xlsx`;
   const folderPath = `/reports/member/${memberResults[0].measurementType}`;
-  const memberType = memberResults[0].measurementType;
+
+  console.log('whales');
+  // console.log(memberResults[0]);
+  console.log(JSON.stringify(memberResults[0]));
 
   async function injectTemplate() {
     await fs.promises.copyFile(`${__root}/src/templates/measure.xlsx`,
