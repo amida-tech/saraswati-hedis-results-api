@@ -24,6 +24,8 @@ async function generateMemberById(req, res, next) {
   const fileName = `${memberResults[0].memberId}.xlsx`;
   const folderPath = `/reports/member/${memberResults[0].measurementType}`;
 
+  console.log(JSON.stringify(memberResults[0]));
+
   try {
     // IF FOLDER DOESN'T EXIST
     if (!fs.existsSync(`${__root}${folderPath}`)) {

@@ -45,7 +45,7 @@ async function generateMemberReport(memberObj, fileName, folderPath) {
     subheader.value = `This report is a summary of member ${coverageObj.id.value || undefined}'s measure records and analysis of data from ${planDates || undefined} as pulled from the Saraswati platform.`;
 
     const memberId = generalWorksheet.getCell('A9');
-    memberId.value = coverageObj.id.value || undefined;
+    memberId.value = memberObj.memberId || undefined;
     const dob = generalWorksheet.getCell('B9');
     dob.value = coverageObj.dob || '0/0/00';
     const age = generalWorksheet.getCell('C9');
