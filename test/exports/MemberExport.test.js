@@ -2,7 +2,8 @@
 /* eslint-disable no-undef */
 const process = require('process');
 const excel = require('exceljs');
-const { generateMemberReport } = require('../../src/exports/member-report');
+const { injectTemplate } = require('../../src/exports/member-report');
+const { mockMemberExportDataObj } = require('../export-test-data/userData');
 
 const __root = process.cwd();
 const staticWorkbook = new excel.Workbook();
@@ -14,8 +15,8 @@ const testFileName = 'test.xlsx';
 describe('Member-Report generation tests', () => {
   beforeAll(async () => {
     await staticWorkbook.xlsx.readFile(`${__root}${folderPath}/${saticFileName}`);
-    await generateMemberReport('Put Data Here', folderPath, testFileName);
-    await staticWorkbook.xlsx.readFile(`${__root}${folderPath}/${testFileName}`);
+    await injectTemplate(mockMemberExportDataObj, __root, folderPath, testFileName);
+    await generatedWorkbook.xlsx.readFile(`${__root}${folderPath}/${testFileName}`);
   });
 
   test('Creator Identicality', () => {

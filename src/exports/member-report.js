@@ -106,6 +106,13 @@ async function generateMemberReport(memberObj, fileName, folderPath) {
   }
 }
 
+async function injectTemplate(results, root, path, name) {
+  await fs.promises.copyFile(`${root}/src/templates/measure.xlsx`,
+    `${root}${path}/${name}`);
+  await generateMemberReport(results, name, path);
+}
+
 module.exports = {
   generateMemberReport,
+  injectTemplate,
 };

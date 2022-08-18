@@ -1,9 +1,11 @@
+/* eslint-disable no-undef */
+/* eslint-disable no-underscore-dangle */
 const fs = require('fs');
 const process = require('process');
 const moment = require('moment');
 
 const { generateTestReport } = require('../exports/test-report');
-const { generateMemberReport } = require('../exports/member-report');
+const { generateMemberReport, injectTemplate } = require('../exports/member-report');
 const dao = require('../config/dao');
 
 const __root = process.cwd();
@@ -22,26 +24,16 @@ async function generateMemberById(req, res, next) {
   const fileName = `${memberResults[0].memberId}.xlsx`;
   const folderPath = `/reports/member/${memberResults[0].measurementType}`;
 
-  console.log('whales');
-  // console.log(memberResults[0]);
-  console.log(JSON.stringify(memberResults[0]));
-
-  async function injectTemplate() {
-    await fs.promises.copyFile(`${__root}/src/templates/measure.xlsx`,
-      `${__root}${folderPath}/${fileName}`);
-    await generateMemberReport(memberResults[0], fileName, folderPath);
-  }
-
   try {
     // IF FOLDER DOESN'T EXIST
     if (!fs.existsSync(`${__root}${folderPath}`)) {
       fs.mkdirSync(`${__root}${folderPath}`);
-      await injectTemplate();
+      await injectTemplate(memberResults[0], __root, folderPath, fileName);
       res.download(`${__root}${folderPath}/${fileName}`);
 
     // IF FILE DOESN'T EXIST
     } else if (!fs.existsSync(`${__root}${folderPath}/${fileName}`)) {
-      injectTemplate();
+      injectTemplate(memberResults[0], __root, folderPath, fileName);
       res.download(`${__root}${folderPath}/${fileName}`);
 
     // IF FILE STRUCTURE ALREADY EXISTS
