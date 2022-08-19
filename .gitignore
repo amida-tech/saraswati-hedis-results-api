@@ -12,6 +12,6 @@
 .cache
 .vscode
 /test/generated-data/*
-/test/export-test-data/*
+/test/export-test-data/test.xlsx
 /reports/member/*
 /reports/logs

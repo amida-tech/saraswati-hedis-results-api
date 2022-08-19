@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable import/prefer-default-export */
 const fs = require('fs');
 const process = require('process');
@@ -44,7 +45,7 @@ async function generateMemberReport(memberObj, fileName, folderPath) {
     subheader.value = `This report is a summary of member ${coverageObj.id.value || undefined}'s measure records and analysis of data from ${planDates || undefined} as pulled from the Saraswati platform.`;
 
     const memberId = generalWorksheet.getCell('A9');
-    memberId.value = coverageObj.id.value || undefined;
+    memberId.value = memberObj.memberId || undefined;
     const dob = generalWorksheet.getCell('B9');
     dob.value = coverageObj.dob || '0/0/00';
     const age = generalWorksheet.getCell('C9');
@@ -105,6 +106,13 @@ async function generateMemberReport(memberObj, fileName, folderPath) {
   }
 }
 
+async function injectTemplate(results, root, path, name) {
+  await fs.promises.copyFile(`${root}/src/templates/measure.xlsx`,
+    `${root}${path}/${name}`);
+  await generateMemberReport(results, name, path);
+}
+
 module.exports = {
   generateMemberReport,
+  injectTemplate,
 };
