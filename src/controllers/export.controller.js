@@ -23,6 +23,7 @@ async function generateMemberById(req, res, next) {
   memberResults = memberResults.sort((a, b) => new Date(b.timeStamp) - new Date(a.timeStamp));
   const fileName = `${memberResults[0].memberId}.xlsx`;
   const folderPath = `/reports/member/${memberResults[0].measurementType}`;
+  const exportType = 'member';
 
   console.log(JSON.stringify(memberResults[0]));
 
@@ -30,12 +31,12 @@ async function generateMemberById(req, res, next) {
     // IF FOLDER DOESN'T EXIST
     if (!fs.existsSync(`${__root}${folderPath}`)) {
       fs.mkdirSync(`${__root}${folderPath}`);
-      await injectTemplate(memberResults[0], __root, folderPath, fileName);
+      await injectTemplate(memberResults[0], __root, folderPath, fileName, exportType);
       res.download(`${__root}${folderPath}/${fileName}`);
 
     // IF FILE DOESN'T EXIST
     } else if (!fs.existsSync(`${__root}${folderPath}/${fileName}`)) {
-      injectTemplate(memberResults[0], __root, folderPath, fileName);
+      injectTemplate(memberResults[0], __root, folderPath, fileName, exportType);
       res.download(`${__root}${folderPath}/${fileName}`);
 
     // IF FILE STRUCTURE ALREADY EXISTS
@@ -54,6 +55,7 @@ async function generateMemberById(req, res, next) {
     }
   } catch (error) {
     if (error instanceof ReferenceError) {
+      res.send(error);
     } else if (error) {
       res.send(error);
     } else {

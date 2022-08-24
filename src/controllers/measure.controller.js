@@ -6,6 +6,7 @@ const { calculateDailyMeasureResults } = require('../calculators/DailyResultsCal
 
 const { createInfoObject } = require('../utilities/infoUtil');
 const { generateCsv } = require('../utilities/reportsUtil');
+const { async } = require('regenerator-runtime');
 
 const getMeasureResults = async (req, res, next) => {
   try {
@@ -98,6 +99,16 @@ const postInfo = async (req, res, next) => {
   }
 };
 
+const exportMeasure = async (req, res, next) => {
+  try {
+    const selectedFilters = req.body;
+    console.log(selectedFilters);
+    return res.send('200');
+  } catch (e) {
+    return next(e);
+  }
+};
+
 module.exports = {
   getMeasureResults,
   getDailyMeasureResults,
@@ -106,4 +117,5 @@ module.exports = {
   exportCsv,
   postMeasureResults,
   postInfo,
+  exportMeasure,
 };
