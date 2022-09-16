@@ -737,7 +737,7 @@ async function insertData(newScoresList) {
     console.error('\x1b[31mError:\x1b[0m Something went wrong during insertion.');
     process.exit();
   }
-  const waitTime = 1000 + newScoresList.length * 3;
+  const waitTime = 100000 + newScoresList.length * 3;
   console.log(`\x1b[33mInfo:\x1b[0m Results are being inserted into DAO. Please wait ${waitTime} seconds for asynchronous completion...`);
   setTimeout(() => {
     console.log('\x1b[32mSuccess:\x1b[0m Check database for new insertions.');

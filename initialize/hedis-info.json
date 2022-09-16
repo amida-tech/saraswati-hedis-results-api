@@ -404,8 +404,8 @@
         "cole" : {
             "domainOfCare" : "ECDS",
             "title" : "Colorectal Cancer Screening Rate",
-            "displayLabel" : "CCS",
-            "description": "COL assesses adults 50-75 who had appropriate screening for colorectal cancer with the appropriate designated tests.", 
+            "displayLabel" : "COL-E",
+            "description": "COL-E assesses adults 50-75 who had appropriate screening for colorectal cancer with the appropriate designated tests.", 
             "measureType" : "process",
             "weight" : 1,
             "hasSubMeasures" : false,
