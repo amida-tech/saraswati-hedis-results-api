@@ -10,6 +10,7 @@ const filterMembers = async (req, res, next) => {
   try {
     const Members = await dao.findMembers(searchQuery);
     req.FoundMembers = Members;
+    console.log(Members.length)
     next();
   } catch (error) {
     next(error);

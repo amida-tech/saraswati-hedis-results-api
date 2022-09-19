@@ -15,6 +15,8 @@ const getMemberInfo = async (req, res, next) => {
   try {
     let memberResults = await dao.findMembers(req.query);
     memberResults = memberResults.sort((a, b) => new Date(b.timeStamp) - new Date(a.timeStamp));
+    console.log({memberResults: memberResults[0]})
+    console.log({providers: memberResults[0].providers})
     return res.send(memberResults[0]);
   } catch (e) {
     return next(e);

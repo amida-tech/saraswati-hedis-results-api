@@ -198,6 +198,10 @@ const insertHealthcareCoverage = async (coverage) => {
     }
   }
 };
+const getRecommendations = (formattedMemberData) => {
+  const { value, measure, type, status, exclusions, dates } = formattedMemberData;
+
+}
 module.exports = {
   init,
   initTest,
@@ -218,4 +222,5 @@ module.exports = {
   insertHealthcareProviders,
   getHealthcareCoverages,
   insertHealthcareCoverage,
+  getRecommendations,
 };

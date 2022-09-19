@@ -8,6 +8,7 @@ const payorsRoutes = require('./payors.route');
 const providersRoutes = require('./healthcareProviders.route');
 const coverageRoutes = require('./healthcareCoverages.route');
 const practitionerRoutes = require('./practitioners.route');
+const recommendationsRoutes = require('./recommendations.route');
 
 const router = express.Router(); // eslint-disable-line new-cap
 
@@ -22,5 +23,6 @@ router.use('/payors', payorsRoutes);
 router.use('/healthcareproviders', providersRoutes);
 router.use('/healthcarecoverages', coverageRoutes);
 router.use('/practitioners', practitionerRoutes);
+router.use('/recommendations', recommendationsRoutes);
 
 module.exports = router;
