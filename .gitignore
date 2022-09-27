@@ -1,7 +1,7 @@
 /node_modules
 .env
 .vscode-server
-.yarn
+.yarn/*
 .yarnrc
 .gitconfig
 .bash_history
