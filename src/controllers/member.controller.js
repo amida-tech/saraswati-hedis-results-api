@@ -6,7 +6,7 @@ const getMembers = async (req, res, next) => {
     const measures = await dao.findMembers(req.query);
     return res.send(measures);
   } catch (e) {
-    logger.error(e)
+    return next(e)
   }
 };
 
@@ -17,7 +17,7 @@ const getMemberInfo = async (req, res, next) => {
     memberResults = memberResults.sort((a, b) => new Date(b.timeStamp) - new Date(a.timeStamp));
     return res.send(memberResults[0]);
   } catch (e) {
-    logger.error(e)
+    return next(e)
   }
 };
 
@@ -27,7 +27,7 @@ const postBulkMembers = async (req, res, next) => {
     const measures = await dao.insertMembers(req.body, options);
     return res.send(measures);
   } catch (e) {
-    logger.error(e)
+    return next(e)
   }
 };
 
@@ -36,7 +36,7 @@ const postMember = async (req, res, next) => {
     const measure = await dao.insertMember(req.body);
     return res.send(measure);
   } catch (e) {
-    logger.error(e)
+    return next(e)
   }
 };
 
