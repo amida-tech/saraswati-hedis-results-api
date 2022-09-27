@@ -1,25 +1,34 @@
-const { createLogger, format, transports } = require('winston');
-const { combine } = format;
+const { createLogger, format, transports, add } = require('winston');
+const config = require('./config');
+
+const logLevels = {
+  emerg: 0,
+  alert: 1,
+  crit: 2,
+  error: 3,
+  warning: 4,
+  notice: 5,
+  info: 6,
+  debug: 7
+}
 
 const logger = createLogger({
-  level: 'info',
-  format: format.combine(
-    format.timestamp({
-      format: 'YYYY-MM-DD HH:mm:ss'
-    }),
-    format.errors({ stack: true }),
-    format.splat(),
-    format.json()
-  ),
-  defaultMeta: { service: 'your-service-name' },
+  levels: logLevels,
+  level: process.env.LOG_LEVEL || 'info',
+  format: format.cli(),
+  defaultMeta: { service: 'HERA' },
+  // the below appears to do nothing but prevent an error
   transports: [
-    new transports.Console({
-      format: format.combine(
-        format.colorize(),
-        format.simple()
-      )
-    })
+    new transports.Console({})
   ]
 });
+
+if (config.env === 'test') {
+  add(new transports.File({ filename: './reports/logs/winston-info.log' }));
+} else {
+  add(new transports.Console({
+    format: format.cli()
+  }))
+}
 
 module.exports = logger;
