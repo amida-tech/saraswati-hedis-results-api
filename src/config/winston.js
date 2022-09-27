@@ -1,22 +1,25 @@
-const { configuredFormatter } = require('winston-json-formatter');
-
-const { createLogger, transports } = require('winston');
-const pjson = require('../../package.json');
-const config = require('./config');
+const { createLogger, format, transports } = require('winston');
+const { combine } = format;
 
 const logger = createLogger({
-  level: config.env === 'test' ? [] : config.logLevel,
+  level: 'info',
+  format: format.combine(
+    format.timestamp({
+      format: 'YYYY-MM-DD HH:mm:ss'
+    }),
+    format.errors({ stack: true }),
+    format.splat(),
+    format.json()
+  ),
+  defaultMeta: { service: 'your-service-name' },
   transports: [
-    new transports.Console(),
-  ],
+    new transports.Console({
+      format: format.combine(
+        format.colorize(),
+        format.simple()
+      )
+    })
+  ]
 });
-
-const options = {
-  service: 'saraswati-hedis-results-api',
-  logger: 'application-logger',
-  version: pjson.version,
-};
-
-logger.format = configuredFormatter(options);
 
 module.exports = logger;
