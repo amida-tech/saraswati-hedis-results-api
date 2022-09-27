@@ -12,17 +12,18 @@ const logLevels = {
   debug: 7
 }
 
+// Handles any log that isn't a request
 const logger = createLogger({
   levels: logLevels,
   level: process.env.LOG_LEVEL || 'info',
   format: format.cli(),
   defaultMeta: { service: 'HERA' },
-  // the below appears to do nothing but prevent an error
   transports: [
     new transports.Console({})
   ]
 });
 
+// Handles request logs
 if (config.env === 'test') {
   add(new transports.File({ filename: './reports/logs/winston-info.log' }));
 } else {

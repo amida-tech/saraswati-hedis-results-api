@@ -1,7 +1,6 @@
 /node_modules
 .env
 .vscode-server
-.yarn/*
 .yarnrc
 .gitconfig
 .bash_history
@@ -15,4 +14,4 @@
 /test/generated-data/*
 /test/export-test-data/test.xlsx
 /reports/member/*
-/reports/logs/*
+/reports/logs
