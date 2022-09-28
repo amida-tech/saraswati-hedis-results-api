@@ -13,7 +13,7 @@ const getHealthcareProviders = async (req, res, next) => {
 const postHealthcareProvider = async (req, res, next) => {
   try {
     const jsonObject = req.body;
-    dao.insertHealthcarProvider(jsonObject);
+    dao.insertHealthcareProviders(jsonObject);
     return res.send(jsonObject);
   } catch (e) {
     return next(e);

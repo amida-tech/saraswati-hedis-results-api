@@ -16,7 +16,7 @@ if (process.env.NODE_ENV !== 'production') {
   if (MemberResultsCount > 0) {
     res.status(200).json({
       status: 'Success',
-      messgae: 'Members found with given search parameters',
+      message: 'Members found with given search parameters',
       memberCount: MemberResults.length,
       submeasure,
       filters,
@@ -27,7 +27,7 @@ if (process.env.NODE_ENV !== 'production') {
   } else {
     res.status(200).json({
       status: 'Failed',
-      messgae: 'No Members found with given search parameters',
+      message: 'No Members found with given search parameters',
       memberCount: MemberResults.length,
       submeasure,
       filters,
