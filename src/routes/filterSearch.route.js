@@ -3,7 +3,8 @@ const express = require('express');
 const router = express(); // eslint-disable-line new-cap
 const { filterMembers, getDailyMeasureResults } = require('../controllers/filterSearch.controller');
 
-router.post('/', filterMembers, getDailyMeasureResults, (req, res) => {
+if (process.env.NODE_ENV !== 'production') {
+  router.post('/', filterMembers, getDailyMeasureResults, (req, res) => {
   const { submeasure, filters, isComposite } = req.body;
 
   const MemberResults = req.FoundMembers;
@@ -35,6 +36,7 @@ router.post('/', filterMembers, getDailyMeasureResults, (req, res) => {
       dailyMeasureResults,
     });
   }
-});
+  });
+}
 
 module.exports = router;

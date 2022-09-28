@@ -20,8 +20,10 @@ router.route('/searchResults')
 router.route('/dailyMeasureResults')
   .get(measureCtrl.getDailyMeasureResults);
 
-router.route('/storeResults')
-  .post(measureCtrl.postMeasureResults);
+if (process.env.NODE_ENV !== 'production') {
+  router.route('/storeResults')
+    .post(measureCtrl.postMeasureResults);
+}
 
 router.route('/trends')
   .get(measureCtrl.getTrends);
