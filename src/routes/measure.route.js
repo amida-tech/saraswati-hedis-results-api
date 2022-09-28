@@ -5,9 +5,11 @@ const measureCtrl = require('../controllers/measure.controller');
 
 const router = express.Router(); // eslint-disable-line new-cap
 
-router.route('/info')
-  .get(measureCtrl.getInfo)
-  .post(measureCtrl.postInfo);
+router.route('/info').get(measureCtrl.getInfo)
+
+if (process.env.NODE_ENV !== 'production') {
+  router.route('/info').post(measureCtrl.postInfo)
+}
 
 /**
  * @deprecated Use dailyMeasureResults instead.
