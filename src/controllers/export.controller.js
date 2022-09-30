@@ -3,6 +3,7 @@
 const fs = require('fs');
 const process = require('process');
 const moment = require('moment');
+const logger = require('../../src/config/winston');
 
 const { generateTestReport } = require('../exports/test-report');
 const { generateMemberReport, injectTemplate } = require('../exports/member-report');
@@ -24,7 +25,7 @@ async function generateMemberById(req, res, next) {
   const fileName = `${memberResults[0].memberId}.xlsx`;
   const folderPath = `/reports/member/${memberResults[0].measurementType}`;
 
-  console.log(JSON.stringify(memberResults[0]));
+  logger.info(JSON.stringify(memberResults[0]));
 
   try {
     // IF FOLDER DOESN'T EXIST

@@ -4,6 +4,7 @@ const fs = require('fs');
 const process = require('process');
 const moment = require('moment');
 const excel = require('exceljs');
+const logger = require('../../src/config/winston');
 
 async function generateMemberReport(memberObj, fileName, folderPath) {
   const __root = process.cwd();
@@ -96,13 +97,13 @@ async function generateMemberReport(memberObj, fileName, folderPath) {
     subheader2.value = memberObj.description || undefined;
 
     // MEASURE COMPLIANCE RESULTS
-    // console.log(">>>>MEMBER INFO:", memberInfo)
+    // logger.info(">>>>MEMBER INFO:", memberInfo)
     // LOOP THROUGH EACH MEASURE - NUMERATORS?
     // APPLY COLOR STYLE TO STYLE
 
     await workbook.xlsx.writeFile(`${__root}${folderPath}/${fileName}`);
   } catch (error) {
-    console.log(error);
+    logger.error(error);
   }
 }
 
