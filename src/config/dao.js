@@ -198,9 +198,28 @@ const insertHealthcareCoverage = async (coverage) => {
     }
   }
 };
-const getRecommendations = (formattedMemberData) => {
-  const { value, measure, type, status, exclusions, dates } = formattedMemberData;
 
+Rate 1 - 30 Day Follow-up
+ 
+Rate 2 - 7 Day Follow-up
+ 
+
+ 
+
+
+
+
+
+
+
+
+const recommendationsGenerator =  async (memberInfo) => {
+  const MeasureInfo = await findInfo()
+  // const memberId = memberInfo.memberId
+  // const memberResults = memberInfo[memberId]
+  const baseMeasure = memberInfo.measurementType
+  // looking at numurators for results
+  return baseMeasure
 }
 module.exports = {
   init,
@@ -222,5 +241,5 @@ module.exports = {
   insertHealthcareProviders,
   getHealthcareCoverages,
   insertHealthcareCoverage,
-  getRecommendations,
+  recommendationsGenerator,
 };

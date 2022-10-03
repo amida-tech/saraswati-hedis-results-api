@@ -1,7 +1,4 @@
 function queryBuilder(submeasure, filters, isComposite) {
-  console.log({submeasure})
-  console.log({filters})
-  console.log({isComposite})
   const payors = [];
   const healthcareProviders = [];
   const healthcareCoverages = [];
