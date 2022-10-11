@@ -5,7 +5,7 @@ const { filterMembers, getDailyMeasureResults } = require('../controllers/filter
 
 if (process.env.NODE_ENV !== 'production') {
   router.post('/', filterMembers, getDailyMeasureResults, (req, res) => {
-  const { submeasure, filters, isComposite } = req.body;
+  const { submeasure, filters } = req.body;
 
   const MemberResults = req.FoundMembers;
 
@@ -20,7 +20,6 @@ if (process.env.NODE_ENV !== 'production') {
       memberCount: MemberResults.length,
       submeasure,
       filters,
-      isComposite,
       members: MemberResults,
       dailyMeasureResults,
     });
@@ -31,7 +30,6 @@ if (process.env.NODE_ENV !== 'production') {
       memberCount: MemberResults.length,
       submeasure,
       filters,
-      isComposite,
       members: MemberResults,
       dailyMeasureResults,
     });
