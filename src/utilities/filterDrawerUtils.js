@@ -1,5 +1,4 @@
 function queryBuilder(submeasure, filters) {
-  console.log({submeasure, filters})
   const payors = [];
   const healthcareProviders = [];
   const healthcareCoverages = [];
@@ -58,7 +57,6 @@ function queryBuilder(submeasure, filters) {
   if ($and.length > 0) {
     searchQuery = { ...searchQuery, $and };
   }
-  console.log({searchQuery})
   return {
     searchQuery,
   };
