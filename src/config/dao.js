@@ -185,6 +185,7 @@ const getHealthcareCoverages = () => {
   const collection = db.collection('healthcareCoverage');
   return collection.find({}).toArray();
 };
+
 const insertHealthcareCoverage = async (coverage) => {
   const collection = db.collection('healthcareCoverage');
   const foundHCCoverage = await collection.find({}).toArray();
@@ -197,7 +198,16 @@ const insertHealthcareCoverage = async (coverage) => {
       return e;
     }
   }
-};
+}; 
+
+const recommendationsGenerator =  async (memberInfo) => {
+  const MeasureInfo = await findInfo()
+  // const memberId = memberInfo.memberId
+  // const memberResults = memberInfo[memberId]
+  const baseMeasure = memberInfo.measurementType
+  // looking at numurators for results
+  return baseMeasure
+}
 module.exports = {
   init,
   initTest,
@@ -218,4 +228,5 @@ module.exports = {
   insertHealthcareProviders,
   getHealthcareCoverages,
   insertHealthcareCoverage,
+  recommendationsGenerator,
 };
