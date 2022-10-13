@@ -3,7 +3,7 @@ const express = require('express');
 const swStats = require('swagger-stats');
 const expressWinston = require('express-winston');
 const config = require('./config');
-const winstonInstance = require('./winston');
+const winstonInstance = require('winston');
 const routes = require('../routes/index.route');
 
 const app = express();

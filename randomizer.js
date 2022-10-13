@@ -1,4 +1,4 @@
-/* eslint-disable no-console */
+const logger = require('./src/config/winston');
 /* eslint-disable no-underscore-dangle */
 const starCalculator = require('./src/calculators/StarRatingCalculator');
 const measureResultsDao = require('./src/config/dao');
@@ -16,7 +16,7 @@ function randomNumber(var1, var2) {
 async function generateData() {
   return measureResultsDao.findMeasureResults().then((value) => {
     if (value.length === 0) {
-      console.error('\x1b[31m',
+      logger.error('\x1b[31m',
         '\nError: No data found.',
         '\x1b[0m');
       process.exit();
@@ -80,15 +80,15 @@ async function generateData() {
 async function processData() {
   await measureResultsDao.init();
   const newResultList = await generateData();
-  console.log(`\nInfo: ${newResultList.length} results to be added.`);
+  logger.info(`\nInfo: ${newResultList.length} results to be added.`);
   const insertResults = await measureResultsDao.insertMeasureResults(newResultList);
   if (!insertResults) {
-    console.error('\x1b[31mError: Something went wrong during insertion.\x1b[0m');
+    logger.error('\x1b[31mError: Something went wrong during insertion.\x1b[0m');
     process.exit();
   }
-  console.log(`Info: Results are being inserted into DAO. Please wait ${newResultList.length / 2} seconds for asynchronous completion...`);
+  logger.info(`Info: Results are being inserted into DAO. Please wait ${newResultList.length / 2} seconds for asynchronous completion...`);
   setTimeout(() => {
-    console.log('\x1b[32mSuccess: Check database for new insertions.\x1b[0m');
+    logger.info('\x1b[32mSuccess: Check database for new insertions.\x1b[0m');
     process.exit();
   }, newResultList.length * 500);
 }

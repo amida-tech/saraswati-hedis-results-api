@@ -1,7 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 const { MongoClient } = require('mongodb');
 const { mongodb } = require('./config');
-const logger = require('./winston');
+const logger = require('winston');
 
 const connectionUrl = `mongodb://${mongodb.host}:${mongodb.port}`;
 
