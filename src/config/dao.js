@@ -2,6 +2,7 @@
 const { MongoClient } = require('mongodb');
 const { mongodb } = require('./config');
 const logger = require('winston');
+const { recommendationInfo } = require('../utilities/recommendationInfo');
 
 const connectionUrl = `mongodb://${mongodb.host}:${mongodb.port}`;
 
@@ -199,28 +200,12 @@ const insertHealthcareCoverage = async (coverage) => {
   }
 };
 
-Rate 1 - 30 Day Follow-up
- 
-Rate 2 - 7 Day Follow-up
- 
-
- 
-
-
-
-
-
-
-
-
 const recommendationsGenerator =  async (memberInfo) => {
-  const MeasureInfo = await findInfo()
-  // const memberId = memberInfo.memberId
-  // const memberResults = memberInfo[memberId]
   const baseMeasure = memberInfo.measurementType
-  // looking at numurators for results
-  return baseMeasure
+  const recommendations = recommendationInfo.filter((rec => rec.measure.includes(baseMeasure)))
+  return recommendations
 }
+
 module.exports = {
   init,
   initTest,

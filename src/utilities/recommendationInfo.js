@@ -1,9 +1,8 @@
-export const recommendationInfo = [
+const recommendationInfo = [
     {
         measure: "aab",
         recommendation:"Avoid treating adults diagnosed with bronchitis or bronchiolitis with antibotics.",
         subMeasures: []
-
     },
     {
         measure: "aise",
@@ -377,22 +376,20 @@ export const recommendationInfo = [
             },
             {
                 measure: "uop-3",
-                recommendation:"To be compliant, avoid opioid dispensing event with ≥15 days to member with 4 or more different prescribers and 4 or more different pharmacies during the measurement year.",
+                recommendation:"To be compliant, avoid opioid dispensing event more than 15 days to member with 4 or more different prescribers and 4 or more different pharmacies during the measurement year.",
                 
             }
         ]
     },
     {
         measure: "uri",
-        recommendation:"",
-       
+        recommendation:"To be compliant, avoid antibiotic dispensing event to members 3 months of age and older with a diagnosis of upper respiratory infection (URI).",
         subMeasures: []
     },
     {
-        measure: "composite",
-        recommendation:"",
-       
-        subMeasures: []
-    }
+        measure: 'composite',
+        recommendation: "",
+        subMeasures: [],
+      },
 ];
-
+module.exports = { recommendationInfo }
