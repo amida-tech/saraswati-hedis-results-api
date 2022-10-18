@@ -3,9 +3,9 @@ const dao = require('../config/dao');
 
 // Get Providers
 const getRecommendations = async (req, res, next) => {
-  const { formattedMemberData } = req.body
+  const { measure } = req.body
   try {
-    const recommendations = await dao.recommendationsGenerator(formattedMemberData);
+    const recommendations = await dao.recommendationsGenerator(measure);
     req.recommendations = recommendations
     next()
   } catch (e) {

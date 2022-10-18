@@ -200,9 +200,8 @@ const insertHealthcareCoverage = async (coverage) => {
   }
 };
 
-const recommendationsGenerator =  async (memberInfo) => {
-  const baseMeasure = memberInfo.measurementType
-  const recommendations = recommendationInfo.filter((rec => rec.measure.includes(baseMeasure)))
+const recommendationsGenerator =  async (measurementType) => {
+  const recommendations = recommendationInfo.filter((rec => rec.measure.includes(measurementType)))
   return recommendations
 }
 

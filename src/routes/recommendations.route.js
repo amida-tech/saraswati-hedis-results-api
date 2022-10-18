@@ -4,7 +4,7 @@ const { getRecommendations } = require('../controllers/recommendations.controlle
 const router = express.Router(); // eslint-disable-line new-cap
 
 router.post('/', getRecommendations, (req, res, next) => {
-    if (req.recommendations.length > 0){
+    if (Object.keys(req.recommendations).length > 0){
         res.status(200).json({
             status: "Success",
             recommendations: req.recommendations ,

@@ -11,20 +11,28 @@ const recommendationInfo = [
             {
                 measure: "aise-1",
                 recommendation:"To be compliant, ensure that the influenza vaccine is administered between July 1(prior measurement year) and June 30(current measurement year).",
+                recommendation_list: []
+
             },
             {
                 measure: "aise-2",
-                recommendation:"To be compliant, either A) At least 1 Td or Tdap vaccine must be administered at least 9 years prior to measurement year or B) member has to have a history of either Anaphylaxis or Encephalitis due to the diphtheria, tetanus or pertussis vaccine.",
+                recommendation:"To be compliant, either: ",
+                recommendation_list: [
+                    "A) At least 1 Td or Tdap vaccine must be administered at least 9 years prior to measurement year or ",
+                    "B) member has to have a history of either Anaphylaxis or Encephalitis due to the diphtheria, tetanus or pertussis vaccine."
+                ]
                 
             },
             {
                 measure: "aise-3",
                 recommendation:"To be compliant, confirm that either 1 dose of herpes zoster live vaccine OR 2 doses of herpes zoster recombinant vaccine was administered at least 28 days apart. Vaccines can be given anytime on or after the 50th birthday.",
+                recommendation_list: []
                 
             },
             {
                 measure: "aise-4",
                 recommendation:"To be compliant, confirm that the 23-valent pneumococcal polysaccharide vaccine was administered on or after the 60th birthday.",
+                recommendation_list: []
                 
             }
         ]
@@ -102,8 +110,12 @@ const recommendationInfo = [
         subMeasures: [
             {
                 measure: "cise-1",
-                recommendation:"To be compliant, confirm that by the child’s 2nd birthday, they have had a) at least 4 DTaP vaccinations (not including the one administered before 42 days after birth, b)  anaphylaxis due to the diphtheria, tetanus or pertussis vaccine and c) encephalitis due to the diphtheria, tetanus or pertussis vaccine.",
-                
+                recommendation:"To be compliant, confirm that by the child’s 2nd birthday, they have had:",
+                listItems: [ 
+                    "a) At least 4 DTaP vaccinations (not including the one administered before 42 days after birth.",
+                    "b) Anaphylaxis due to the diphtheria, tetanus or pertussis vaccine.",
+                    "c) Encephalitis due to the diphtheria, tetanus or pertussis vaccine.",
+                ]
             },
             {
                 measure: "cise-2",
