@@ -42,7 +42,9 @@ const postMember = async (req, res, next) => {
 
 const searchMembers = async (req, res, next) => {
   try {
-    return res.send(req.query)
+    // return res.send(req.query)
+    let memberResults = await dao.searchMembers(req.query);
+    return res.send(memberResults)
   } catch (e) {
     return next(e)
   }

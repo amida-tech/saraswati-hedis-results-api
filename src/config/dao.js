@@ -24,6 +24,12 @@ const findMembers = (query) => {
   return collection.find(query).toArray();
 };
 
+const searchMembers = (query) => {
+  const collection = db.collection('measures')
+  console.log('the query', query.memberId)
+  return collection.find({ memberId: query.memberId }).toArray()
+}
+
 const findMeasureResults = (query) => {
   const collection = db.collection('measure_results');
   try {
@@ -202,6 +208,7 @@ module.exports = {
   init,
   initTest,
   findMembers,
+  searchMembers,
   findMeasureResults,
   findPredictions,
   findInfo,
