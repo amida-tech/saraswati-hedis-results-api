@@ -40,9 +40,18 @@ const postMember = async (req, res, next) => {
   }
 };
 
+const searchMembers = async (req, res, next) => {
+  try {
+    return res.send(req.query)
+  } catch (e) {
+    return next(e)
+  }
+}
+
 module.exports = {
   getMembers,
   getMemberInfo,
   postBulkMembers,
   postMember,
+  searchMembers
 };

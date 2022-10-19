@@ -15,4 +15,7 @@ router.route('/bulk')
 router.route('/info')
   .get(validate(paramValidation.memberInfo), memberCtrl.getMemberInfo);
 
+router.route('/search')
+  .get(memberCtrl.searchMembers);
+
 module.exports = router;
