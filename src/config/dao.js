@@ -26,7 +26,6 @@ const findMembers = (query) => {
 
 const searchMembers = (query) => {
   const collection = db.collection('measures')
-  console.log('the query', query.memberId)
   return collection.find( { 'memberId' : { '$regex' : query.memberId, '$options' : 'i' } } ).toArray()
 }
 
