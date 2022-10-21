@@ -200,11 +200,6 @@ const insertHealthcareCoverage = async (coverage) => {
   }
 };
 
-const recommendationsGenerator =  async (measurementType) => {
-  const recommendations = recommendationInfo.filter((rec => rec.measure.includes(measurementType)))
-  return recommendations
-}
-
 module.exports = {
   init,
   initTest,
@@ -225,5 +220,4 @@ module.exports = {
   insertHealthcareProviders,
   getHealthcareCoverages,
   insertHealthcareCoverage,
-  recommendationsGenerator,
 };
