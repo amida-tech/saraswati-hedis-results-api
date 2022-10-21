@@ -513,7 +513,8 @@
             "weight" : 3,
             "hasSubMeasures" : false,
             "inverted": false,
-            "recommendation" : "Confirm compliance with DTaP, IPV, MMR, HiB, hepatitis B, VZV, pneumococcal, hepatitis A, rotavirus and Influenza vaccinations status."
+            "recommendation" : "Confirm compliance with DTaP, IPV, MMR, HiB, hepatitis B, VZV, pneumococcal, hepatitis A, rotavirus and Influenza vaccinations status.",
+            "recommendation_list": []
         }
     },
     {
