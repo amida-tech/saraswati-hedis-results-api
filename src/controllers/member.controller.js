@@ -40,9 +40,19 @@ const postMember = async (req, res, next) => {
   }
 };
 
+const searchMembers = async (req, res, next) => {
+  try {
+    let memberResults = await dao.searchMembers(req.query);
+    return res.send(memberResults)
+  } catch (e) {
+    return next(e)
+  }
+}
+
 module.exports = {
   getMembers,
   getMemberInfo,
   postBulkMembers,
   postMember,
+  searchMembers
 };
