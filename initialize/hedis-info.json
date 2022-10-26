@@ -13,15 +13,13 @@
             "domainOfCare": "EOC",
             "title": "Avoidance of Antibiotic Treatment in Adults with Acute Bronchitis",
             "displayLabel": "AAB",
-            "description": "AAB assesses the percentage of episodes for members 3 months of age and older with a diagnosis of acute bronchitis/bronchiolitis that did not result in an antibiotic dispensing event. A higher rate indicates appropriate treatment for bronchitis/bronchiolitis (i.e., the percentage of episodes that were not prescribed an antibiotic).",
-            "description_list": [],
+            "description": ["AAB assesses the percentage of episodes for members 3 months of age and older with a diagnosis of acute bronchitis/bronchiolitis that did not result in an antibiotic dispensing event. A higher rate indicates appropriate treatment for bronchitis/bronchiolitis (i.e., the percentage of episodes that were not prescribed an antibiotic)."],
             "link": "https://www.ncqa.org/hedis/measures/avoidance-of-antibiotic-treatment-for-acute-bronchitis-bronchiolitis/",
             "measureType": "process",
             "weight": 1,
             "hasSubMeasures": false,
             "inverted": true,
-            "recommendation": "Avoid treating adults diagnosed with bronchitis or bronchiolitis with antibotics.",
-            "recommendation_list": [],
+            "recommendation": ["Avoid treating adults diagnosed with bronchitis or bronchiolitis with antibotics."],
             "tooltip": "AAB assesses the percentage of episodes for members 3 months of age and older with a diagnosis of acute bronchitis/bronchiolitis that did not result in an antibiotic dispensing event."
         }
     },
@@ -31,16 +29,18 @@
             "domainOfCare" : "ECDS", 
             "title" : "Follow-Up Care for Children Prescribed ADHD Medication", 
             "displayLabel" : "ADD-E",
-            "description": "ADD-E assesses follow-up care for children prescribed an ADHD medication in 2 phases:", 
-            "description_list": ["Initiation Phase which assesses children between 6 and 12 years of age who were diagnosed with ADHD and had one follow-up visit with a practitioner with prescribing authority within 30 days of their first prescription of ADHD medication","Continuation and Maintenance Phase which assesses children between 6 and 12 years of age who had a prescription for ADHD medication and remained on the medication for at least 210 days, and had at least two follow-up visits with a practitioner in the 9 months after the Initiation Phase."],
+            "description": [
+                "ADD-E assesses follow-up care for children prescribed an ADHD medication in 2 phases:",
+                "Initiation Phase which assesses children between 6 and 12 years of age who were diagnosed with ADHD and had one follow-up visit with a practitioner with prescribing authority within 30 days of their first prescription of ADHD medication.",
+                "Continuation and Maintenance Phase which assesses children between 6 and 12 years of age who had a prescription for ADHD medication and remained on the medication for at least 210 days, and had at least two follow-up visits with a practitioner in the 9 months after the Initiation Phase."
+            ],
             "link": "https://www.ncqa.org/hedis/measures/follow-up-care-for-children-prescribed-adhd-medication/",
             "measureType" : "process", 
             "weight" : 1, 
             "hasSubMeasures" : true,
             "inverted": false,
             "tooltip": "ADD-E assesses follow-up care for children prescribed an ADHD medication in the Initiation and Continuation & Maintenance phases.",
-            "recommendation": "",
-            "recommendation_list": []
+            "recommendation": []
         }
     },
     {
@@ -69,8 +69,7 @@
             "weight" : 1, 
             "hasSubMeasures" : true,
             "inverted": false,
-            "recommendation" : "After the initial follow up visit with a practitioner with the authority to prescribe medication, confirm that at least 2 follow up visits have been completed within 9 months after the index prescription start date (IPSD). Only one of the 2 visits can be an e-visit/virtual check-in.",
-            "recommendation_list": []
+            "recommendation" : ["After the initial follow up visit with a practitioner with the authority to prescribe medication, confirm that at least 2 follow up visits have been completed within 9 months after the index prescription start date (IPSD). Only one of the 2 visits can be an e-visit/virtual check-in."]
         }
     },
     {
@@ -79,16 +78,14 @@
             "domainOfCare" : "ECDS", 
             "title" : "Metabolic Monitoring for Children and Adolescents on Antipsychotics", 
             "displayLabel" : "APM-E", 
-            "description": "APM-E assesses the percentage of children and adolescents with ongoing antipsychotic medication use who had metabolic testing during the year.", 
-            "description_list": [],
+            "description": ["APM-E assesses the percentage of children and adolescents with ongoing antipsychotic medication use who had metabolic testing during the year."], 
             "link": "https://www.ncqa.org/hedis/measures/metabolic-monitoring-for-children-and-adolescents-on-antipsychotics/",
             "measureType" : "process", 
             "weight" : 1, 
             "hasSubMeasures" : true,
             "inverted": false,
             "tooltip": "APM-E assesses the percentage of children and adolescents with ongoing antipsychotic medication use who had metabolic testing during the year.",
-            "recommendation": "",
-            "recommendation_list": []
+            "recommendation": []
         }
     },
     {
@@ -102,8 +99,7 @@
             "weight" : 1, 
             "hasSubMeasures" : false,
             "inverted" : false,
-            "recommendation" : "To be compliant, ensure members are tested at least once for HbA1c.",
-            "recommendation_list": []
+            "recommendation" : ["To be compliant, ensure members are tested at least once for HbA1c."]
         }
     },
     {
@@ -117,8 +113,7 @@
             "weight" : 1, 
             "hasSubMeasures" : false,
             "inverted" : false,
-            "recommendation" : "To be compliant, ensure members are tested at least once for LDL-C or cholesterol.",
-            "recommendation_list": []
+            "recommendation" : ["To be compliant, ensure members are tested at least once for LDL-C or cholesterol."]
         }
     },
     {
@@ -132,8 +127,7 @@
             "weight" : 1, 
             "hasSubMeasures" : false,
             "inverted" : false,
-            "recommendation" : "To be compliant, ensure members are tested at least once for both blood glucose or HbA1c AND LDL-C or cholesterol.",
-            "recommendation_list": []
+            "recommendation" : ["To be compliant, ensure members are tested at least once for both blood glucose or HbA1c AND LDL-C or cholesterol."]
         }
     },
     {
@@ -142,15 +136,13 @@
             "domainOfCare" : "ECDS", 
             "title" : "Unhealthy Alcohol Use Screening and Follow-Up", 
             "displayLabel" : "ASF-E", 
-            "description": "ASF-E assesses the percentage of members 18 years of age and older who were screened for unhealthy alcohol use using a standardized tool and received appropriate follow-up care if they screened positive. Two rates are reported.", 
-            "description_list": [],
+            "description": ["ASF-E assesses the percentage of members 18 years of age and older who were screened for unhealthy alcohol use using a standardized tool and received appropriate follow-up care if they screened positive. Two rates are reported."], 
             "link": "https://www.ncqa.org/hedis/measures/unhealthy-alcohol-use-screening-and-follow-up/",
             "measureType" : "process", 
             "weight" : 1, 
             "hasSubMeasures" : true,
             "inverted": false,
-            "recommendation": "",
-            "recommendation_list": [],
+            "recommendation": [],
             "tooltip": "ASF-E assesses the percentage of members 18 years and older who were screened for unhealthy alcohol use and received appropriate follow-up care if they screened positive."
         }
     },
@@ -165,7 +157,7 @@
             "weight" : 1, 
             "hasSubMeasures" : false,
             "inverted": false,
-            "recommendation" : "To be compliant, ensure that  members 18 and over with a documented unhealthy alcohol use are screened between January 1 - November 1 of the measurement year."
+            "recommendation" : ["To be compliant, ensure that  members 18 and over with a documented unhealthy alcohol use are screened between January 1 - November 1 of the measurement year."]
         }
     },
     {
@@ -179,7 +171,7 @@
             "weight" : 1, 
             "hasSubMeasures" : false,
             "inverted": false,
-            "recommendation" : "To be compliant, confirm that members are receiving alcohol counseling or another form of follow-up care 60 days after the date of the first positive screen for unhealthy alcohol use."
+            "recommendation" : ["To be compliant, confirm that members are receiving alcohol counseling or another form of follow-up care 60 days after the date of the first positive screen for unhealthy alcohol use."]
         }
     },
     {
@@ -188,15 +180,14 @@
             "domainOfCare": "ECDS",
             "title": "Adult Immunization Status",
             "displayLabel": "AIS-E",
-            "description": "AIS-E assesses the percentage of members 19 years of age and older who are up-to-date on recommended  routine vaccines for influenza, tetanus and diphtheria (Td) or tetanus, diphtheria and acellular pertussis (Tdap), zoster and pneumococcal.", 
-            "description_list": [],
+            "description": ["AIS-E assesses the percentage of members 19 years of age and older who are up-to-date on recommended routine vaccines for influenza, tetanus and diphtheria (Td) or tetanus, diphtheria and acellular pertussis (Tdap), zoster and pneumococcal."], 
             "link": "https://www.ncqa.org/hedis/measures/adult-immunization-status/",
             "measureType": "process",
             "weight": 1,
             "hasSubMeasures": true,
             "inverted": false,
             "tooltip": "AIS-E assesses the percentage of members 19 years and older who are up-to-date on vaccines for influenza, TD or tetanus, TDaP, zoster and pneumococcal.",
-            "recommendation_list": []
+            "recommendation": []
         }
     },
     {
@@ -210,8 +201,7 @@
             "weight": 1,
             "hasSubMeasures": false,
             "inverted": false,
-            "recommendation":"To be compliant, ensure that the influenza vaccine is administered between July 1(prior measurement year) and June 30(current measurement year).",
-            "recommendation_list": []
+            "recommendation": ["To be compliant, ensure that the influenza vaccine is administered between July 1(prior measurement year) and June 30(current measurement year)."]
         }
     },
     {
@@ -225,8 +215,8 @@
             "weight": 1,
             "hasSubMeasures": false,
             "inverted": false,
-            "recommendation": "To be compliant, either:",
-            "recommendation_list": [
+            "recommendation": [
+                "To be compliant, either:",
                 "A) At least 1 Td or Tdap vaccine must be administered at least 9 years prior to measurement year or ",
                 "B) member has to have a history of either Anaphylaxis or Encephalitis due to the diphtheria, tetanus or pertussis vaccine."
             ]
@@ -243,8 +233,12 @@
             "weight": 1,
             "hasSubMeasures": false,
             "inverted": false,
-            "recommendation": "To be compliant, confirm that either 1 dose of herpes zoster live vaccine OR 2 doses of herpes zoster recombinant vaccine was administered at least 28 days apart. Vaccines can be given anytime on or after the 50th birthday.",
-            "recommendation_list": []
+            "recommendation": [
+                "To be compliant, confirm that either:", 
+                "A) 1 dose of herpes zoster live vaccine",
+                "OR", 
+                "B) 2 doses of herpes zoster recombinant vaccine was administered at least 28 days apart. Vaccines can be given anytime on or after the 50th birthday."
+            ]
         }
     },
     {
@@ -258,8 +252,9 @@
             "weight": 1,
             "hasSubMeasures": false,
             "inverted": false,
-            "recommendation": "To be compliant, confirm that the 23-valent pneumococcal polysaccharide vaccine was administered on or after the 60th birthday.",
-            "recommendation_list": []
+            "recommendation": [
+                "To be compliant, confirm that the 23-valent pneumococcal polysaccharide vaccine was administered on or after the 60th birthday."
+            ]
         }
     },
     {
@@ -269,14 +264,12 @@
             "title" : "Breast Cancer Screening Rate",
             "displayLabel" : "BCS-E",
             "description": "BCS-E assesses women 50–74 years of age who had at least one mammogram to screen for breast cancer in the past two years.", 
-            "description_list": [],
             "link": "https://www.ncqa.org/hedis/measures/breast-cancer-screening/",
             "measureType" : "process",
             "weight" : 1,
             "hasSubMeasures" : false,
             "inverted": false,
-            "recommendation" : "To be compliant, ensure that women between 50-74 receive one or more mammograms between October 1, 2 years before the current measurement year, and the end of the current measurement year.",
-            "recommendation_list": [],
+            "recommendation" : ["To be compliant, ensure that women between 50-74 receive one or more mammograms between October 1, 2 years before the current measurement year, and the end of the current measurement year."],
             "tooltip": "BCS-E assesses women 50–74 years of age who had at least one mammogram to screen for breast cancer in the past two years."
 
         }
@@ -294,8 +287,12 @@
             "weight" : 1,
             "hasSubMeasures" : false,
             "inverted": false,
-            "recommendation": "Administrative Specification: To be compliant, ensure that women who are either 24-64 years who have had cervical cytology at least 2 years prior to measurement year OR women 20-64 years who have had cervical high-risk human papillomavirus (hrHPV) testing at least 4 years prior to measurement year were screened for cervical cancer. Hybrid Specification: To be compliant, women who were appropriately screened for cervical cancer should be documented in administrative data or medical record review.",
-            "recommendation_list": [],
+            "recommendation": [
+                "Administrative Specification: ",
+                "To be compliant, ensure that women who are either 24-64 years who have had cervical cytology at least 2 years prior to measurement year OR women 20-64 years who have had cervical high-risk human papillomavirus (hrHPV) testing at least 4 years prior to measurement year were screened for cervical cancer.", 
+                "Hybrid Specification: ", 
+                "To be compliant, women who were appropriately screened for cervical cancer should be documented in administrative data or medical record review."
+            ],
             "tooltip": "CCS assesses women who were screened for cervical cancer with certain conditions applied to the following age brackets: 21–64 years and 30–64 years."
         }
     },
@@ -306,7 +303,6 @@
             "title" : "Childhood Immunization Status",
             "displayLabel" : "CIS-E",
             "description": "CIS-E assesses the percentage of children 2 years of age who had a four diphtheria, tetanus and acellular pertussis (DTaP); three polio (IPV); one measles, mumps and rubella (MMR); three haemophilus influenza type B (HiB); three hepatitis B (HepB), one chicken pox (VZV); four pneumococcal conjugate (PCV); one hepatitis A (HepA); two or three rotavirus (RV); and two influenza (flu) vaccines by their second birthday.", 
-            "description_list": [],
             "link": "https://www.ncqa.org/hedis/measures/childhood-immunization-status/",
             "measureType" : "process",
             "weight" : 3,
@@ -524,7 +520,6 @@
             "title" : "Colorectal Cancer Screening Rate",
             "displayLabel" : "CCS",
             "description": "COL assesses adults 50–75 who had appropriate screening for colorectal cancer with any of the following tests: annual fecal occult blood test, flexible sigmoidoscopy every 5 years, colonoscopy every 10 years, computed tomography colonography every 5 years, stool DNA test every 3 years.", 
-            "description_list": [],
             "link": "https://www.ncqa.org/hedis/measures/colorectal-cancer-screening/",
             "measureType" : "process",
             "weight" : 1,
@@ -596,7 +591,6 @@
             "title" : "Appropriate Testing for Children with Pharyngitis", 
             "displayLabel" : "CWP", 
             "description": "CWP assesses the percentage of episodes for members 3 years of age and older with a diagnosis of pharyngitis, dispensed an antibiotic and received a group A streptococcus test for the episode. A higher rate indicates completion of the appropriate testing required to merit antibiotic treatment for pharyngitis.", 
-            "description_list": [],
             "link": "https://www.ncqa.org/hedis/measures/appropriate-testing-for-pharyngitis/",
             "measureType" : "process", 
             "weight" : 1, 
@@ -614,7 +608,6 @@
             "title" : "Monitor Depression Symptoms for Adolescents and Adults", 
             "displayLabel" : "DMS-E", 
             "description": "DMS-E assesses the percentage of members 12 years of age and older with a diagnosis of major depression or dysthymia who had an outpatient encounter with a PHQ-9 score present in their record in the same assessment period as the encounter.", 
-            "description_list": [],
             "link": "https://www.ncqa.org/hedis/measures/utilization-of-the-phq-9-to-monitor-depression-symptoms-for-adolescents-and-adults/",
             "measureType" : "process", 
             "weight" : 1, 
@@ -788,7 +781,6 @@
             "title": "Follow-Up After Emergency Department Visit for Mental Illness",
             "displayLabel": "FUM",
             "description": "FUM assesses emergency department (ED) visits for adults and children 6 years of age and older with a diagnosis of mental illness or intentional self-harm and who received a follow-up visit for mental illness within 7 and 30 days.", 
-            "description_list": [],
             "link": "https://www.ncqa.org/hedis/measures/follow-up-after-emergency-department-visit-for-mental-illness/",
             "measureType": "process",
             "weight": 3,
@@ -836,7 +828,6 @@
             "title": "Immunizations for Adolescents",
             "displayLabel": "IMA-E",
             "description": "IMA-E assesses adolescents 13 years of age who had one dose of meningococcal vaccine, one Tdap vaccine and the complete human papillomavirus vaccine series by their 13th birthday.", 
-            "description_list": [],
             "link": "https://www.ncqa.org/hedis/measures/immunizations-for-adolescents/",
             "measureType": "outcome",
             "weight": 3,
@@ -1058,7 +1049,6 @@
             "title" : "Prenatal Immunization Status", 
             "displayLabel" : "PRS-E", 
             "description": "PRS-E assesses the percentage of deliveries in the measurement period in which women received influenza and tetanus, diphtheria toxoids and acellular pertussis (Tdap) vaccinations.", 
-            "description_list": [],
             "link": "https://www.ncqa.org/hedis/measures/prenatal-immunization-status/",
             "measureType" : "process", 
             "weight" : 1, 
@@ -1125,7 +1115,6 @@
             "title" : "Non-Recommended PSA-Based Screening in Older Men", 
             "displayLabel" : "PSA", 
             "description": "PSA assesses whether men 70 years of age and older were screened unnecessarily for prostate cancer using prostate-specific antigen (PSA)-based screening.", 
-            "description_list": [],
             "link": "https://www.ncqa.org/hedis/measures/non-recommended-psa-based-screening-in-older-men/",
             "measureType" : "process", 
             "weight" : 1, 
