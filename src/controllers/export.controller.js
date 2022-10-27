@@ -3,11 +3,11 @@
 const fs = require('fs');
 const process = require('process');
 const moment = require('moment');
-const logger = require('../../src/config/winston');
+const logger = require('../config/winston');
 
 const { generateTestReport } = require('../exports/test-report');
 const { generateMemberReport, injectTemplate } = require('../exports/member-report');
-const dao = require('../config/dao');
+const dao = require('../config/daoFactory').getDao();
 
 const __root = process.cwd();
 
@@ -19,7 +19,7 @@ const generateTest = async () => {
   }
 };
 
-async function generateMemberById(req, res, next) {
+async function generateMemberById(req, res) {
   let memberResults = await dao.findMembers(req.query);
   memberResults = memberResults.sort((a, b) => new Date(b.timeStamp) - new Date(a.timeStamp));
   const fileName = `${memberResults[0].memberId}.xlsx`;
@@ -54,8 +54,7 @@ async function generateMemberById(req, res, next) {
       }
     }
   } catch (error) {
-    if (error instanceof ReferenceError) {
-    } else if (error) {
+    if (error) {
       res.send(error);
     } else {
       res.end();

@@ -1,62 +1,87 @@
 /* eslint-disable no-underscore-dangle */
-const { MongoClient } = require('mongodb');
+const { Client } = require('@elastic/elasticsearch')
 const logger = require('winston');
 const DOMPurify = require('dompurify');
-const { mongodb } = require('./config');
+const config = require('./config');
 
-const connectionUrl = `mongodb://${mongodb.host}:${mongodb.port}`;
+// const connectionUrl = `mongodb://${mongodb.host}:${mongodb.port}`;
 
 let db;
 
 const init = async () => {
-  const client = await MongoClient.connect(connectionUrl, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
+  logger.info('Other Init');
+  db = new Client({
+    node: 'https://search-saraswati-h6d4vxmnqbp2n3rk23g6l4hvkq.us-east-2.es.amazonaws.com',
+    auth: {
+      username: config.dbUsername,
+      password: config.dbPassword,
+    },
   });
-  db = client.db(mongodb.name);
 };
 
 const initTest = (mockDb) => {
+  logger.info('Other');
   db = mockDb;
 };
 
-const findMembers = (query) => {
-  const collection = db.collection('measures');
-  return collection.find(query).toArray();
+const findMembers = async (query) => {
+  logger.info('Other FindMembers');
+  const result = await db.search({
+    index: 'measure-results',
+    query,
+  });
+  return result.body.hits.hits.map((hit) => hit._source);
+  // const collection = db.collection('measures');
+  // return collection.find(query).toArray();
 };
 
 const searchMembers = (query) => {
-  const collection = db.collection('measures');
+  logger.info('Other');
+  /* const collection = db.collection('measures');
   // sanitize query
   const sanitizedQuery = DOMPurify.sanitize(query.memberId);
-  return collection.find({ memberId: { $regex: sanitizedQuery.memberId, $options: 'i' } }).toArray();
+  return collection.find({ memberId: { $regex: sanitizedQuery.memberId, $options: 'i' } }).toArray(); */
+  return [];
 };
 
 const findMeasureResults = (query) => {
-  const collection = db.collection('measure_results');
+  logger.info('Other');
+  /* const collection = db.collection('measure_results');
   try {
     return collection.find(query).toArray();
   } catch (e) {
     logger.error(e);
     return e;
-  }
+  } */
+  return [];
 };
 
 const findPredictions = () => {
-  const collection = db.collection('model_predictions');
-  return collection.find({}).toArray();
+  logger.info('Other');
+  return [];
+  // const collection = db.collection('model_predictions');
+  // return collection.find({}).toArray();
 };
 
-const findInfo = (measure) => {
-  const collection = db.collection('hedis_info');
+const findInfo = async (measure) => {
+  logger.info('Other Info');
+  const result = await db.search({
+    index: 'hedis_info',
+  });
+  const list = result.body.hits.hits.map((hit) => hit._source);
+  logger.info(list);
+  return list;
+  /* const collection = db.collection('hedis_info');
   if (measure) {
     return collection.find({ _id: new RegExp(`^${measure}`) }).toArray();
   }
-  return collection.find({}).toArray();
+  return collection.find({}).toArray(); */
 };
 
 const insertMember = async (member) => {
-  const collection = db.collection('measures');
+  logger.info('Other insert member');
+  return false;
+  /* const collection = db.collection('measures');
   try {
     const countOfRecords = await collection.countDocuments({ memberId: member.memberId });
     const recordId = `${member.memberId}-${member.measurementType}-${countOfRecords}`;
@@ -67,14 +92,15 @@ const insertMember = async (member) => {
   } catch (e) {
     logger.error(e);
     return e;
-  }
+  } */
 };
 
 const insertMembers = (measures) => measures.map((measure) => insertMember(measure));
 
 // create collection for results
 const insertMeasureResults = (results) => {
-  const collection = db.collection('measure_results');
+  logger.info('Other insert measure');
+  /* const collection = db.collection('measure_results');
   for (let i = 0; i < results.length; i += 1) {
     const resultObject = results[i];
     delete resultObject._id;
@@ -107,13 +133,14 @@ const insertMeasureResults = (results) => {
       logger.error(e);
       return false;
     }
-  }
+  } */
   return true;
 };
 
 // create collection for predictions
 const insertPredictions = (predictions) => {
-  const collection = db.collection('model_predictions');
+  logger.info('Other insert predictions');
+  /* const collection = db.collection('model_predictions');
   const predictionInsert = predictions;
   try {
     predictionInsert._id = predictionInsert.measure;
@@ -123,12 +150,15 @@ const insertPredictions = (predictions) => {
   } catch (e) {
     logger.error(e);
     return e;
-  }
+  } */
+
+  return true;
 };
 
 // create collection for hedis info
 const insertInfo = (info) => {
-  const collection = db.collection('hedis_info');
+  logger.info('Other insert info');
+  /* const collection = db.collection('hedis_info');
   try {
     return collection.insertMany(info, {
       upsert: true,
@@ -136,16 +166,20 @@ const insertInfo = (info) => {
   } catch (e) {
     logger.error(e);
     return e;
-  }
+  } */
+  return true;
 };
 
 const getPayors = () => {
-  const collection = db.collection('payors');
-  return collection.find({}).toArray();
+  logger.info('Other get payers');
+  return [];
+  // const collection = db.collection('payors');
+  // return collection.find({}).toArray();
 };
 
 const insertPayors = async (payor) => {
-  const collection = db.collection('payors');
+  logger.info('Other insert payers');
+  /* const collection = db.collection('payors');
   const foundPayors = await collection.find({}).toArray();
   const filteredPayors = foundPayors.filter((payer) => payer.payor === payor.payor);
   if (filteredPayors.length < 1) {
@@ -155,17 +189,20 @@ const insertPayors = async (payor) => {
       logger.error(e);
       return e;
     }
-  }
+  } */
   return false;
 };
 
 const getPractitioners = () => {
-  const collection = db.collection('practitioners');
-  return collection.find({}).toArray();
+  logger.info('Other get practitioners');
+  return [];
+  // const collection = db.collection('practitioners');
+  // return collection.find({}).toArray();
 };
 
 const insertPractitioner = async (practitioner) => {
-  const collection = db.collection('practitioners');
+  logger.info('Other insert practitioners');
+  /* const collection = db.collection('practitioners');
   const foundPayors = await collection.find({}).toArray();
   const filteredPayors = foundPayors
     .filter((prac) => prac.practitioner === practitioner.practitioner);
@@ -176,17 +213,20 @@ const insertPractitioner = async (practitioner) => {
       logger.error(e);
       return e;
     }
-  }
+  } */
   return false;
 };
 
 const getHealthcareProviders = () => {
-  const collection = db.collection('healthcareProviders');
-  return collection.find({}).toArray();
+  logger.info('Other get HCP');
+  return [];
+  // const collection = db.collection('healthcareProviders');
+  // return collection.find({}).toArray();
 };
 
 const insertHealthcareProviders = async (provider) => {
-  const collection = db.collection('healthcareProviders');
+  logger.info('Other insert HCP');
+  /* const collection = db.collection('healthcareProviders');
   const foundHCProvider = await collection.find({}).toArray();
   const filteredHCProvider = foundHCProvider.filter((prov) => prov.provider === provider.provider);
   if (filteredHCProvider.length < 1) {
@@ -196,17 +236,20 @@ const insertHealthcareProviders = async (provider) => {
       logger.error(e);
       return e;
     }
-  }
+  } */
   return false;
 };
 
 const getHealthcareCoverages = () => {
-  const collection = db.collection('healthcareCoverage');
-  return collection.find({}).toArray();
+  logger.info('Other get cov');
+  return [];
+  // const collection = db.collection('healthcareCoverage');
+  // return collection.find({}).toArray();
 };
 
 const insertHealthcareCoverage = async (coverage) => {
-  const collection = db.collection('healthcareCoverage');
+  logger.info('Other insert cov');
+  /* const collection = db.collection('healthcareCoverage');
   const foundHCCoverage = await collection.find({}).toArray();
   const filteredHCCoverage = foundHCCoverage
     .filter((cover) => cover.coverage === coverage.coverage);
@@ -217,7 +260,7 @@ const insertHealthcareCoverage = async (coverage) => {
       logger.error(e);
       return e;
     }
-  }
+  } */
   return false;
 };
 

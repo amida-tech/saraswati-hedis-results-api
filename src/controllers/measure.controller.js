@@ -1,5 +1,5 @@
 /* eslint-disable no-underscore-dangle */
-const dao = require('../config/dao');
+const dao = require('../config/daoFactory').getDao();
 
 const { calculateTrend, calculateTrendLegacy } = require('../calculators/TrendCalculator');
 const { calculateDailyMeasureResults } = require('../calculators/DailyResultsCalculator');
