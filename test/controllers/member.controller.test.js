@@ -4,6 +4,7 @@ const path = require('path');
 
 const {
   getMembers,
+  searchMembers,
   getMemberInfo,
   postBulkMembers,
   postMember,
@@ -17,6 +18,7 @@ jest.mock('../../src/config/dao', () => {
     __esModule: true,
     ...originalModule,
     findMembers: jest.fn(() => []),
+    searchMembers: jest.fn(() => []),
     insertMember: jest.fn(() => {}),
     insertMembers: jest.fn(() => []),
   };
@@ -35,6 +37,14 @@ describe('## member.controller.js', () => {
     it('Should call response.send', async () => {
       const response = { send: jest.fn().mockReturnValue(Promise.resolve()) };
       await getMemberInfo({ }, response, jest.fn());
+      expect(response.send).toHaveBeenCalled();
+    });
+  });
+
+  describe('Test searchMembers', () => {
+    it('Should call response.send', async () => {
+      const response = { send: jest.fn().mockReturnValue(Promise.resolve()) };
+      await searchMembers({ }, response, jest.fn());
       expect(response.send).toHaveBeenCalled();
     });
   });

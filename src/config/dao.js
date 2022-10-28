@@ -1,8 +1,8 @@
 /* eslint-disable no-underscore-dangle */
 const { MongoClient } = require('mongodb');
-const { mongodb } = require('./config');
 const logger = require('winston');
-const { recommendationInfo } = require('../utilities/recommendationInfo');
+const DOMPurify = require('dompurify');
+const { mongodb } = require('./config');
 
 const connectionUrl = `mongodb://${mongodb.host}:${mongodb.port}`;
 
@@ -23,6 +23,13 @@ const initTest = (mockDb) => {
 const findMembers = (query) => {
   const collection = db.collection('measures');
   return collection.find(query).toArray();
+};
+
+const searchMembers = (query) => {
+  const collection = db.collection('measures');
+  // sanitize query
+  const sanitizedQuery = DOMPurify.sanitize(query.memberId);
+  return collection.find({ memberId: { $regex: sanitizedQuery.memberId, $options: 'i' } }).toArray();
 };
 
 const findMeasureResults = (query) => {
@@ -155,7 +162,8 @@ const getPractitioners = () => {
 const insertPractitioner = async (practitioner) => {
   const collection = db.collection('practitioners');
   const foundPayors = await collection.find({}).toArray();
-  const filteredPayors = foundPayors.filter((prac) => prac.practitioner === practitioner.practitioner);
+  const filteredPayors = foundPayors
+    .filter((prac) => prac.practitioner === practitioner.practitioner);
   if (filteredPayors.length < 1) {
     try {
       return await collection.insertMany([practitioner]);
@@ -189,7 +197,8 @@ const getHealthcareCoverages = () => {
 const insertHealthcareCoverage = async (coverage) => {
   const collection = db.collection('healthcareCoverage');
   const foundHCCoverage = await collection.find({}).toArray();
-  const filteredHCCoverage = foundHCCoverage.filter((cover) => cover.coverage === coverage.coverage);
+  const filteredHCCoverage = foundHCCoverage
+    .filter((cover) => cover.coverage === coverage.coverage);
   if (filteredHCCoverage.length < 1) {
     try {
       return await collection.insertMany([coverage]);
@@ -204,6 +213,7 @@ module.exports = {
   init,
   initTest,
   findMembers,
+  searchMembers,
   findMeasureResults,
   findPredictions,
   findInfo,
