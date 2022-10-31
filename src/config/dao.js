@@ -2,7 +2,7 @@
 const { MongoClient } = require('mongodb');
 const { mongodb } = require('./config');
 const logger = require('winston');
-const mongoSanitize = require('express-mongo-sanitize');
+const DOMPurify = require('dompurify')
 
 const connectionUrl = `mongodb://${mongodb.host}:${mongodb.port}`;
 
@@ -28,9 +28,8 @@ const findMembers = (query) => {
 const searchMembers = (query) => {
   const collection = db.collection('measures')
   // sanitize query
-  console.log(query.memberId)
-  const saniQuery = mongoSanitize.sanitize(query.memberId)
-  return collection.find( { 'memberId' : { '$regex' : saniQuery, '$options' : 'i' } } ).toArray()
+  const sanitizedQuery = DOMPurify.sanitize(query.memberId);
+  return collection.find( { 'memberId' : { '$regex' : sanitizedQuery.memberId, '$options' : 'i' } } ).toArray()
 }
 
 const findMeasureResults = (query) => {
