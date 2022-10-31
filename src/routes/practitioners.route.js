@@ -4,6 +4,8 @@ const practitionerCtrl = require('../controllers/practitioners.controller');
 const router = express.Router(); // eslint-disable-line new-cap
 
 router.route('/').get(practitionerCtrl.getPractitioners);
-router.route('/storePractitioner').post(practitionerCtrl.postPractitioner);
+if (process.env.NODE_ENV !== 'production') {
+  router.route('/storePractitioner').post(practitionerCtrl.postPractitioner);
+}
 
 module.exports = router;
