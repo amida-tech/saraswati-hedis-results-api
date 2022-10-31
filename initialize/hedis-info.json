@@ -590,7 +590,7 @@
         "cole" : {
             "domainOfCare" : "ECDS",
             "title" : "Colorectal Cancer Screening Rate",
-            "displayLabel" : "CCS",
+            "displayLabel" : "COL-E",
             "description": [ "COL assesses adults 50–75 who had appropriate screening for colorectal cancer with any of the following tests: annual fecal occult blood test, flexible sigmoidoscopy every 5 years, colonoscopy every 10 years, computed tomography colonography every 5 years, stool DNA test every 3 years."], 
             "link": "https://www.ncqa.org/hedis/measures/colorectal-cancer-screening/",
             "measureType" : "process",
