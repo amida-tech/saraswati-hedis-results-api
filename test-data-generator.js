@@ -1,4 +1,4 @@
-/* eslint-disable no-console */
+const logger = require('./src/config/winston');
 /* eslint-disable no-underscore-dangle */
 const { v4: uuidv4 } = require('uuid');
 const minimist = require('minimist');
@@ -632,8 +632,8 @@ function isCompliant(score) {
 
 async function generateData(measureList, days) {
   let currentDay = new Date(new Date().setDate(today.getDate() - days));
-  console.log('\n\x1b[33mInfo:\x1b[0m Starting data generation with settings:');
-  console.log(`\x1b[33mInfo:\x1b[0m Measures will be produced for ${measureList.toString()} will be used.\n`);
+  logger.info('\n\x1b[33mInfo:\x1b[0m Starting data generation with settings:');
+  logger.info(`\x1b[33mInfo:\x1b[0m Measures will be produced for ${measureList.toString()} will be used.\n`);
   const newScores = [];
   let measure;
   const dayTracker = {}; // Manages how many records are created and when rates changes.
@@ -641,7 +641,7 @@ async function generateData(measureList, days) {
   let daysLeft = days;
   while (daysLeft > 0) {
     currentDay = new Date(new Date().setDate(today.getDate() - daysLeft));
-    console.log(`TESTING: On day ${daysLeft}, ${currentDay.toISOString()}:`);
+    logger.info(`TESTING: On day ${daysLeft}, ${currentDay.toISOString()}:`);
     for (let i = 0; i < scoresToUpdate.length; i += 1) {
       const score = measureFunctions[template[scoresToUpdate[i].measurementType]
         .updateEntry](scoresToUpdate[i], currentDay);
@@ -657,8 +657,8 @@ async function generateData(measureList, days) {
       scoresToUpdate.splice(i, 1);
     }
 
-    console.log(`TESTING: Compliance update: ${scoresToUpdate.length} non-compliant, ${scoresUpdated} now compliant, ${finalNoncompliant} will never be.`);
-    console.log(`TESTING: Running total: ${newScores.length}.`);
+    logger.info(`TESTING: Compliance update: ${scoresToUpdate.length} non-compliant, ${scoresUpdated} now compliant, ${finalNoncompliant} will never be.`);
+    logger.info(`TESTING: Running total: ${newScores.length}.`);
     for (let i = 0; i < measureList.length; i += 1) {
       measure = measureList[i % measureList.length];
       if (dayTracker[measure] === undefined) {
@@ -692,7 +692,7 @@ async function generateData(measureList, days) {
         Math.random() * (dayTracker[measure].popRange[1] - dayTracker[measure].popRange[0] + 1),
       ) + dayTracker[measure].popRange[0];
     }
-    console.log(JSON.stringify(dayTracker));
+    logger.info(JSON.stringify(dayTracker));
 
     for (let i = 0; i < measureList.length; i += 1) {
       measure = measureList[i % measureList.length];
@@ -710,7 +710,7 @@ async function generateData(measureList, days) {
         }
       }
     }
-    console.log(`TESTING: Day ${daysLeft} final report: ${newScores.length} total records, ${scoresToUpdate.length} non-compliant.\n`);
+    logger.info(`TESTING: Day ${daysLeft} final report: ${newScores.length} total records, ${scoresToUpdate.length} non-compliant.\n`);
     daysLeft -= 1;
   }
   return newScores;
@@ -723,10 +723,10 @@ function outputData(newScoresList, measureList, days) {
   try {
     fs.writeFileSync(`${__dirname}/test/generated-data/${fileTitle}`, JSON.stringify(newScoresList, null, 4));
   } catch (writeErr) {
-    console.error(`\x1b[31mError:\x1b[0m Unable to write to directory:${writeErr}.`);
+    logger.error(`\x1b[31mError:\x1b[0m Unable to write to directory:${writeErr}.`);
     process.exit();
   }
-  console.log(`\x1b[32mSuccess:\x1b[0m Check ${fileTitle} for new data.`);
+  logger.info(`\x1b[32mSuccess:\x1b[0m Check ${fileTitle} for new data.`);
   process.exit();
 }
 
@@ -734,13 +734,13 @@ async function insertData(newScoresList) {
   await dao.init();
   const insertResults = await dao.insertMembers(newScoresList);
   if (!insertResults) {
-    console.error('\x1b[31mError:\x1b[0m Something went wrong during insertion.');
+    logger.error('\x1b[31mError:\x1b[0m Something went wrong during insertion.');
     process.exit();
   }
-  const waitTime = 100000 + newScoresList.length * 3;
-  console.log(`\x1b[33mInfo:\x1b[0m Results are being inserted into DAO. Please wait ${waitTime} seconds for asynchronous completion...`);
+  const waitTime = 1000 + newScoresList.length * 3;
+  logger.info(`\x1b[33mInfo:\x1b[0m Results are being inserted into DAO. Please wait ${waitTime} seconds for asynchronous completion...`);
   setTimeout(() => {
-    console.log('\x1b[32mSuccess:\x1b[0m Check database for new insertions.');
+    logger.info('\x1b[32mSuccess:\x1b[0m Check database for new insertions.');
     process.exit();
   }, waitTime);
 }
@@ -751,25 +751,25 @@ async function processData() {
     const includedList = parseArgs.i.split(',');
     const checkedList = includedList.filter((measure) => !measureList.includes(measure));
     if (checkedList.length > 0) {
-      console.error(`\x1b[31mError:\x1b[0m Unknown measures: ${checkedList}. Aborting.`);
+      logger.error(`\x1b[31mError:\x1b[0m Unknown measures: ${checkedList}. Aborting.`);
       process.exit();
     }
     measureList = includedList;
   }
 
   if (parseArgs.d && typeof parseArgs.d !== 'number') {
-    console.error('\x1b[31mError:\x1b[0m The "days" argument must be a number. Aborting.');
+    logger.error('\x1b[31mError:\x1b[0m The "days" argument must be a number. Aborting.');
     process.exit();
   }
 
   if (parseArgs.s && typeof parseArgs.s !== 'number') {
-    console.error('\x1b[31mError:\x1b[0m The "size" argument must be a number. Aborting.');
+    logger.error('\x1b[31mError:\x1b[0m The "size" argument must be a number. Aborting.');
     process.exit();
   }
 
   const days = parseArgs.d || 0;
   const newScoresList = await generateData(measureList, days);
-  console.log(`\x1b[33mInfo:\x1b[0m ${newScoresList.length} scores to be inserted. ${scoresToUpdate.length} are non-compliant, and ${scoresUpdated} became compliant.`);
+  logger.info(`\x1b[33mInfo:\x1b[0m ${newScoresList.length} scores to be inserted. ${scoresToUpdate.length} are non-compliant, and ${scoresUpdated} became compliant.`);
   if (parseArgs.o) {
     outputData(newScoresList, measureList, days);
   }
@@ -777,12 +777,12 @@ async function processData() {
 }
 
 if (parseArgs.h === true) {
-  console.log('\n A script for generated fake HEDIS scores for Saraswati.\n\n Options:');
-  console.log('   -d, --days: How many days back you want generated. Default is 0, today.');
-  console.log('   -h, --help: Help command. What you\'re reading now...');
-  console.log('   -i, --include: A spaceless, comma-separated list of measures to create. Default is to use all. Valid options are: ');
-  console.log(`\t${Object.keys(template).join(', ')}`);
-  console.log('   -o, --output: Instead of inserting into database, writes output to the file "saraswati-test-data" with a datetime stamp.');
+  logger.info('\n A script for generated fake HEDIS scores for Saraswati.\n\n Options:');
+  logger.info('   -d, --days: How many days back you want generated. Default is 0, today.');
+  logger.info('   -h, --help: Help command. What you\'re reading now...');
+  logger.info('   -i, --include: A spaceless, comma-separated list of measures to create. Default is to use all. Valid options are: ');
+  logger.info(`\t${Object.keys(template).join(', ')}`);
+  logger.info('   -o, --output: Instead of inserting into database, writes output to the file "saraswati-test-data" with a datetime stamp.');
   process.exit();
 }
 

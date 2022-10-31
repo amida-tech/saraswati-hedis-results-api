@@ -12,7 +12,7 @@ const kafka = new Kafka({
   brokers: config.kafkaConfig.brokers,
 });
 
-console.log('Running now...');
+logger.info('Running now...');
 async function kafkaRunner() {
   const consumer = kafka.consumer({ groupId: config.kafkaConfig.queue });
 
