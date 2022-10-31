@@ -13,11 +13,17 @@
             "domainOfCare": "EOC",
             "title": "Avoidance of Antibiotic Treatment in Adults with Acute Bronchitis",
             "displayLabel": "AAB",
-            "description": "AAB assesses the percentage of episodes for members 3 months of age and older with a diagnosis of acute bronchitis/bronchiolitis that did not result in an antibiotic dispensing event.",
+            "description": ["AAB assesses the percentage of episodes for members 3 months of age and older with a diagnosis of acute bronchitis/bronchiolitis that did not result in an antibiotic dispensing event. A higher rate indicates appropriate treatment for bronchitis/bronchiolitis (i.e., the percentage of episodes that were not prescribed an antibiotic)."],
+            "link": "https://www.ncqa.org/hedis/measures/avoidance-of-antibiotic-treatment-for-acute-bronchitis-bronchiolitis/",
             "measureType": "process",
             "weight": 1,
             "hasSubMeasures": false,
-            "inverted": true
+            "inverted": true,
+            "recommendation": [
+                "Corrective Actions: ", 
+                "Avoid treating adults diagnosed with bronchitis or bronchiolitis with antibotics."
+            ],
+            "tooltip": "AAB assesses the percentage of episodes for members 3 months of age and older with a diagnosis of acute bronchitis/bronchiolitis that did not result in an antibiotic dispensing event."
         }
     },
     {
@@ -26,11 +32,18 @@
             "domainOfCare" : "ECDS", 
             "title" : "Follow-Up Care for Children Prescribed ADHD Medication", 
             "displayLabel" : "ADD-E",
-            "description": "ADD-E assesses follow-up care for children prescribed an ADHD medication in the Initiation and Continuation & Maintenance phases.", 
+            "description": [
+                "ADD-E assesses follow-up care for children prescribed an ADHD medication in 2 phases:",
+                "Initiation Phase which assesses children between 6 and 12 years of age who were diagnosed with ADHD and had one follow-up visit with a practitioner with prescribing authority within 30 days of their first prescription of ADHD medication.",
+                "Continuation and Maintenance Phase which assesses children between 6 and 12 years of age who had a prescription for ADHD medication and remained on the medication for at least 210 days, and had at least two follow-up visits with a practitioner in the 9 months after the Initiation Phase."
+            ],
+            "link": "https://www.ncqa.org/hedis/measures/follow-up-care-for-children-prescribed-adhd-medication/",
             "measureType" : "process", 
             "weight" : 1, 
             "hasSubMeasures" : true,
-            "inverted": false
+            "inverted": false,
+            "tooltip": "ADD-E assesses follow-up care for children prescribed an ADHD medication in the Initiation and Continuation & Maintenance phases.",
+            "recommendation": []
         }
     },
     {
@@ -39,10 +52,16 @@
             "domainOfCare" : "ECDS", 
             "title" : "Follow-Up Care After Initiation of Treatment", 
             "displayLabel" : "ADD-E: Follow-Up After Initiation", 
-            "measureType" : "process", 
+            "measureType" : "process",
+            "link": "https://www.ncqa.org/hedis/measures/follow-up-care-for-children-prescribed-adhd-medication/", 
             "weight" : 1, 
             "hasSubMeasures" : true,
-            "inverted": false
+            "inverted": false,
+            "recommendation" : [
+                "Corrective Actions: ", 
+                "Confirm that a follow up visit with a practitioner with the authority to prescribe medication is completed 30 days after the index prescription start date (IPSD).", 
+                "Note, the initial ISPD visit does not count as the initiation phase visit."
+            ]
         }
     },
     {
@@ -51,10 +70,15 @@
             "domainOfCare" : "ECDS", 
             "title" : "Follow-Up Care After Initiation of Treatment", 
             "displayLabel" : "ADD-E: Follow-Up During Continuation", 
-            "measureType" : "process", 
+            "measureType" : "process",
+            "link": "https://www.ncqa.org/hedis/measures/follow-up-care-for-children-prescribed-adhd-medication/", 
             "weight" : 1, 
             "hasSubMeasures" : true,
-            "inverted": false
+            "inverted": false,
+            "recommendation" : [
+                "Corrective Actions: ",
+                "After the initial follow up visit with a practitioner with the authority to prescribe medication, confirm that at least 2 follow up visits have been completed within 9 months after the index prescription start date (IPSD). Only one of the 2 visits can be an e-visit/virtual check-in."
+            ]
         }
     },
     {
@@ -63,11 +87,14 @@
             "domainOfCare" : "ECDS", 
             "title" : "Metabolic Monitoring for Children and Adolescents on Antipsychotics", 
             "displayLabel" : "APM-E", 
-            "description": "APM-E assesses the percentage of children and adolescents with ongoing antipsychotic medication use who had metabolic testing during the year.", 
+            "description": ["APM-E assesses the percentage of children and adolescents with ongoing antipsychotic medication use who had metabolic testing during the year."], 
+            "link": "https://www.ncqa.org/hedis/measures/metabolic-monitoring-for-children-and-adolescents-on-antipsychotics/",
             "measureType" : "process", 
             "weight" : 1, 
             "hasSubMeasures" : true,
-            "inverted": false
+            "inverted": false,
+            "tooltip": "APM-E assesses the percentage of children and adolescents with ongoing antipsychotic medication use who had metabolic testing during the year.",
+            "recommendation": []
         }
     },
     {
@@ -76,10 +103,15 @@
             "domainOfCare" : "ECDS", 
             "title" : "Blood Glucose Monitoring for Children and Adolescents on Antipsychotics", 
             "displayLabel" : "APM-E: Blood Glucose Monitoring", 
+            "link": "https://www.ncqa.org/hedis/measures/metabolic-monitoring-for-children-and-adolescents-on-antipsychotics/",
             "measureType" : "process", 
             "weight" : 1, 
             "hasSubMeasures" : false,
-            "inverted": false
+            "inverted" : false,
+            "recommendation" : [
+                "Corrective Actions: ",
+                "Confirm members are tested at least once for HbA1c."
+            ]
         }
     },
     {
@@ -88,10 +120,14 @@
             "domainOfCare" : "ECDS", 
             "title" : "Cholesterol Monitoring for Children and Adolescents on Antipsychotics", 
             "displayLabel" : "APM-E: Cholesterol Monitoring", 
+            "link": "https://www.ncqa.org/hedis/measures/metabolic-monitoring-for-children-and-adolescents-on-antipsychotics/",
             "measureType" : "process", 
             "weight" : 1, 
             "hasSubMeasures" : false,
-            "inverted": false
+            "inverted" : false,
+            "recommendation" : [
+                "Corrective Actions: ",
+                "Confirm members are tested at least once for LDL-C or cholesterol."]
         }
     },
     {
@@ -100,10 +136,15 @@
             "domainOfCare" : "ECDS", 
             "title" : "Blood Glucose and Cholesterol Monitoring for Children and Adolescents on Antipsychotics", 
             "displayLabel" : "APM-E: Blood Glucose and Cholesterol Monitoring", 
+            "link": "https://www.ncqa.org/hedis/measures/metabolic-monitoring-for-children-and-adolescents-on-antipsychotics/",
             "measureType" : "process", 
             "weight" : 1, 
             "hasSubMeasures" : false,
-            "inverted": false
+            "inverted" : false,
+            "recommendation" : [
+                "Corrective Actions: ",
+                "Confirm members are tested at least once for both blood glucose or HbA1c AND LDL-C or cholesterol."
+            ]
         }
     },
     {
@@ -112,11 +153,14 @@
             "domainOfCare" : "ECDS", 
             "title" : "Unhealthy Alcohol Use Screening and Follow-Up", 
             "displayLabel" : "ASF-E", 
-            "description": "ASF-E assesses the percentage of members 18 years and older who were screened for unhealthy alcohol use and received appropriate follow-up care if they screened positive.", 
+            "description": ["ASF-E assesses the percentage of members 18 years of age and older who were screened for unhealthy alcohol use using a standardized tool and received appropriate follow-up care if they screened positive. Two rates are reported."], 
+            "link": "https://www.ncqa.org/hedis/measures/unhealthy-alcohol-use-screening-and-follow-up/",
             "measureType" : "process", 
             "weight" : 1, 
             "hasSubMeasures" : true,
-            "inverted": false
+            "inverted": false,
+            "recommendation": [],
+            "tooltip": "ASF-E assesses the percentage of members 18 years and older who were screened for unhealthy alcohol use and received appropriate follow-up care if they screened positive."
         }
     },
     {
@@ -125,10 +169,15 @@
             "domainOfCare" : "ECDS", 
             "title" : "Unhealthy Alcohol Use Screening", 
             "displayLabel" : "ASF-E: Unhealthy Alcohol Use Screening", 
+            "link": "https://www.ncqa.org/hedis/measures/unhealthy-alcohol-use-screening-and-follow-up/",
             "measureType" : "process", 
             "weight" : 1, 
             "hasSubMeasures" : false,
-            "inverted": false
+            "inverted": false,
+            "recommendation" : [
+                "Corrective Actions: ",
+                "Confirm that members 18 and over with a documented unhealthy alcohol use are screened between January 1 - November 1 of the measurement year."
+            ]
         }
     },
     {
@@ -137,10 +186,14 @@
             "domainOfCare" : "ECDS", 
             "title" : "Counseling or Other Follow-Up on Positive Screen for Unhealthy Alcohol Use", 
             "displayLabel" : "ASF-E: Follow-Up", 
+            "link": "https://www.ncqa.org/hedis/measures/unhealthy-alcohol-use-screening-and-follow-up/",
             "measureType" : "process", 
             "weight" : 1, 
             "hasSubMeasures" : false,
-            "inverted": false
+            "inverted": false,
+            "recommendation" : [
+                "Corrective Actions: ",
+                "Confirm that members are receiving alcohol counseling or another form of follow-up care 60 days after the date of the first positive screen for unhealthy alcohol use."]
         }
     },
     {
@@ -149,11 +202,14 @@
             "domainOfCare": "ECDS",
             "title": "Adult Immunization Status",
             "displayLabel": "AIS-E",
-            "description": "AIS-E assesses the percentage of members 19 years and older who are up-to-date on vaccines for influenza, TD or tetanus, TDaP, zoster and pneumococcal.", 
+            "description": ["AIS-E assesses the percentage of members 19 years of age and older who are up-to-date on recommended routine vaccines for influenza, tetanus and diphtheria (Td) or tetanus, diphtheria and acellular pertussis (Tdap), zoster and pneumococcal."], 
+            "link": "https://www.ncqa.org/hedis/measures/adult-immunization-status/",
             "measureType": "process",
             "weight": 1,
             "hasSubMeasures": true,
-            "inverted": false
+            "inverted": false,
+            "tooltip": "AIS-E assesses the percentage of members 19 years and older who are up-to-date on vaccines for influenza, TD or tetanus, TDaP, zoster and pneumococcal.",
+            "recommendation": []
         }
     },
     {
@@ -162,10 +218,15 @@
             "domainOfCare": "ECDS",
             "title": "Adult Immunization Status: Influenza",
             "displayLabel": "AIS-E: Influenza",
+            "link": "https://www.ncqa.org/hedis/measures/adult-immunization-status/",
             "measureType": "process",
             "weight": 1,
             "hasSubMeasures": false,
-            "inverted": false
+            "inverted": false,
+            "recommendation": [
+                "Corrective Actions: ",
+                "Confirm that the influenza vaccine is administered between July 1(prior measurement year) and June 30(current measurement year)."
+            ]
         }
     },
     {
@@ -174,10 +235,17 @@
             "domainOfCare": "ECDS",
             "title": "Adult Immunization Status: Td/Tdap",
             "displayLabel": "AIS-E: Td/Tdap",
+            "link": "https://www.ncqa.org/hedis/measures/adult-immunization-status/",
             "measureType": "process",
             "weight": 1,
             "hasSubMeasures": false,
-            "inverted": false
+            "inverted": false,
+            "recommendation": [
+                "Corrective Actions, either:",
+                "A) At least 1 Td or Tdap vaccine must be administered at least 9 years prior to measurement year",
+                "OR",
+                "B) Confirm member has to have a history of either Anaphylaxis or Encephalitis due to the diphtheria, tetanus or pertussis vaccine."
+            ]
         }
     },
     {
@@ -186,10 +254,17 @@
             "domainOfCare": "ECDS",
             "title": "Adult Immunization Status: Zoster",
             "displayLabel": "AIS-E: Zoster",
+            "link": "https://www.ncqa.org/hedis/measures/adult-immunization-status/",
             "measureType": "process",
             "weight": 1,
             "hasSubMeasures": false,
-            "inverted": false
+            "inverted": false,
+            "recommendation": [
+                "Corrective Actions, confirm that either:", 
+                "A) 1 dose of herpes zoster live vaccine",
+                "OR", 
+                "B) 2 doses of herpes zoster recombinant vaccine was administered at least 28 days apart. Vaccines can be given anytime on or after the 50th birthday."
+            ]
         }
     },
     {
@@ -198,10 +273,15 @@
             "domainOfCare": "ECDS",
             "title": "Adult Immunization Status: Pneumococcal",
             "displayLabel": "AIS-E: Pneumococcal",
+            "link": "https://www.ncqa.org/hedis/measures/adult-immunization-status/",
             "measureType": "process",
             "weight": 1,
             "hasSubMeasures": false,
-            "inverted": false
+            "inverted": false,
+            "recommendation": [
+                "Corrective Actions, confirm that:",
+                "The 23-valent pneumococcal polysaccharide vaccine was administered on or after the 60th birthday."
+            ]
         }
     },
     {
@@ -210,11 +290,18 @@
             "domainOfCare" : "ECDS",
             "title" : "Breast Cancer Screening Rate",
             "displayLabel" : "BCS-E",
-            "description": "BCS-E assesses women 50-74 years of age who had at least one mammogram to screen for breast cancer in the past two years.", 
+            "description": ["BCS-E assesses women 50–74 years of age who had at least one mammogram to screen for breast cancer in the past two years."], 
+            "link": "https://www.ncqa.org/hedis/measures/breast-cancer-screening/",
             "measureType" : "process",
             "weight" : 1,
             "hasSubMeasures" : false,
-            "inverted": false
+            "inverted": false,
+            "recommendation" : [
+                "Corrective Actions, confirm that :",
+                "Women between 50-74 receive one or more mammograms between October 1, 2 years before the current measurement year, and the end of the current measurement year."
+            ],
+            "tooltip": "BCS-E assesses women 50–74 years of age who had at least one mammogram to screen for breast cancer in the past two years."
+
         }
     },
     {
@@ -223,11 +310,24 @@
             "domainOfCare" : "EOF",
             "title" : "Cervical Cancer Screening Rate",
             "displayLabel" : "CCS",
-            "description": "CCS assesses women who were screened for cervical cancer with certain conditions applied to the following age brackets: 21–64 years and 30–64 years.", 
+            "description": [
+                "CCS assesses women who were screened for cervical cancer using any of the following criteria:", 
+                "Women 21–64 years of age who had cervical cytology performed within the last 3 years.", 
+                "Women 30–64 years of age who had cervical high-risk human papillomavirus (hrHPV) testing performed within the last 5 years.", 
+                "Women 30–64 years of age who had cervical cytology/high-risk human papillomavirus (hrHPV) cotesting within the last 5 years."
+            ],
+            "link": "https://www.ncqa.org/hedis/measures/cervical-cancer-screening/",
             "measureType" : "process",
             "weight" : 1,
             "hasSubMeasures" : false,
-            "inverted": false
+            "inverted": false,
+            "recommendation": [
+                "Administrative Specification: ",
+                "Corrective Actions, confirm that women who are either 24-64 years who have had cervical cytology at least 2 years prior to measurement year OR women 20-64 years who have had cervical high-risk human papillomavirus (hrHPV) testing at least 4 years prior to measurement year were screened for cervical cancer.", 
+                "Hybrid Specification: ", 
+                "Corrective Actions, women who were appropriately screened for cervical cancer should be documented in administrative data or medical record review."
+            ],
+            "tooltip": "CCS assesses women who were screened for cervical cancer with certain conditions applied to the following age brackets: 21–64 years and 30–64 years."
         }
     },
     {
@@ -236,11 +336,15 @@
             "domainOfCare" : "ECDS",
             "title" : "Childhood Immunization Status",
             "displayLabel" : "CIS-E",
-            "description": "CIS-E assesses the percentage of children 2 years of age who had four DTaP, three IPV, 1 MMR, three HiB, three HepB, one VZV, four PCV, one HepA, two or three RV and two flu vaccines by their second birthday.", 
+            "description": ["CIS-E assesses the percentage of children 2 years of age who had a four diphtheria, tetanus and acellular pertussis (DTaP); three polio (IPV); one measles, mumps and rubella (MMR); three haemophilus influenza type B (HiB); three hepatitis B (HepB), one chicken pox (VZV); four pneumococcal conjugate (PCV); one hepatitis A (HepA); two or three rotavirus (RV); and two influenza (flu) vaccines by their second birthday."], 
+            "link": "https://www.ncqa.org/hedis/measures/childhood-immunization-status/",
             "measureType" : "process",
             "weight" : 3,
             "hasSubMeasures" : true,
-            "inverted": false
+            "inverted": false,
+            "recommendation": [],
+            "tooltip": "CIS-E assesses the percentage of children 2 years of age who had four DTaP, three IPV, 1 MMR, three HiB, three HepB, one VZV, four PCV, one HepA, two or three RV and two flu vaccines by their second birthday."
+            
         }
     },
     {
@@ -249,10 +353,17 @@
             "domainOfCare" : "ECDS",
             "title" : "Childhood Immunization Status: DTaP",
             "displayLabel" : "CIS-E: DTaP",
+            "link": "https://www.ncqa.org/hedis/measures/childhood-immunization-status/",
             "measureType" : "process",
             "weight" : 3,
             "hasSubMeasures" : false,
-            "inverted": false
+            "inverted": false,
+            "recommendation" : [
+                "Corrective Actions, confirm that by the child’s 2nd birthday: ",
+                "A) The child has received at least 4 DTaP vaccinations (not including the one administered before 42 days after birth.",
+                "B) The child had Anaphylaxis due to the diphtheria, tetanus or pertussis vaccine.",
+                "C) The child had Encephalitis due to the diphtheria, tetanus or pertussis vaccine."
+            ]
         }
     },
     {
@@ -261,10 +372,15 @@
             "domainOfCare" : "ECDS",
             "title" : "Childhood Immunization Status: IPV",
             "displayLabel" : "CIS-E: IPV",
+            "link": "https://www.ncqa.org/hedis/measures/childhood-immunization-status/",
             "measureType" : "process",
             "weight" : 3,
             "hasSubMeasures" : false,
-            "inverted": false
+            "inverted": false,
+            "recommendation" : [
+                "Corrective Actions, confirm that by the child’s 2nd birthday: ",
+                "The child has received at least 3 IPV vaccinations (not including the one administered 42 days after birth)."
+            ]
         }
     },
     {
@@ -273,10 +389,17 @@
             "domainOfCare" : "ECDS",
             "title" : "Childhood Immunization Status: MMR",
             "displayLabel" : "CIS-E: MMR",
+            "link": "https://www.ncqa.org/hedis/measures/childhood-immunization-status/",
             "measureType" : "process",
             "weight" : 3,
             "hasSubMeasures" : false,
-            "inverted": false
+            "inverted": false,
+            "recommendation" : [
+                "Corrective Actions, confirm that: ",
+                "A) The child has either had at least one MMR vaccination between the 1st and 2nd birthday", 
+                "OR",
+                "B) The child has a history of measles, mumps and rubella illnesses, all before their 2nd birthday."
+            ]
         }
     },
     {
@@ -285,10 +408,17 @@
             "domainOfCare" : "ECDS",
             "title" : "Childhood Immunization Status: HiB",
             "displayLabel" : "CIS-E: HiB",
+            "link": "https://www.ncqa.org/hedis/measures/childhood-immunization-status/",
             "measureType" : "process",
             "weight" : 3,
             "hasSubMeasures" : false,
-            "inverted": false
+            "inverted": false,
+            "recommendation" : [
+                "Corrective Actions, confirm that by the child’s 2nd birthday: ", 
+                "A) The child has either had at least 3 HiB vaccinations (not including the one administered before 42 days after birth)", 
+                "OR", 
+                "B) The child had anaphylaxis from the HiB vaccine."
+            ]
         }
     },
     {
@@ -297,10 +427,17 @@
             "domainOfCare" : "ECDS",
             "title" : "Childhood Immunization Status: Hepatitus B",
             "displayLabel" : "CIS-E: Hepatitus B",
+            "link": "https://www.ncqa.org/hedis/measures/childhood-immunization-status/",
             "measureType" : "process",
             "weight" : 3,
             "hasSubMeasures" : false,
-            "inverted": false
+            "inverted": false,
+            "recommendation" : [
+                "Corrective Actions, confirm that by the child’s 2nd birthday: ",
+                "A) The child has either had at least 3 hepatitis B vaccinations (note that the newborn hepatitis B vaccine administered at most 7 days post birth counts towards the 3 hepatitis B vaccinations)", 
+                "OR", 
+                "B) The child has a history of hepatitis B illness OR anaphylaxis from the hepatitis B vaccine."
+            ]
         }
     },
     {
@@ -309,10 +446,17 @@
             "domainOfCare" : "ECDS",
             "title" : "Childhood Immunization Status: VZV",
             "displayLabel" : "CIS-E: VZV",
+            "link": "https://www.ncqa.org/hedis/measures/childhood-immunization-status/",
             "measureType" : "process",
             "weight" : 3,
             "hasSubMeasures" : false,
-            "inverted": false
+            "inverted": false,
+            "recommendation" : [
+                "Corrective Actions, confirm that the child has either: ",
+                "A) Received at least 1 VZV vaccine between the 1st and 2nd birthday", 
+                "OR", 
+                "B) The child has a history of varicella zoster (ie: chicken pox) illness before the 2nd birthday."
+            ]
         }
     },
     {
@@ -321,10 +465,15 @@
             "domainOfCare" : "ECDS",
             "title" : "Childhood Immunization Status: Pneumococcal Conjugate",
             "displayLabel" : "CIS-E: Pneumococcal Conjugate",
+            "link": "https://www.ncqa.org/hedis/measures/childhood-immunization-status/",
             "measureType" : "process",
             "weight" : 3,
             "hasSubMeasures" : false,
-            "inverted": false
+            "inverted": false,
+            "recommendation" : [
+                "Corrective Actions, confirm that by the child’s 2nd birthday that: ",
+                "The child has received at least 4 pneumococcal conjugate vaccinations (not including the one administered before 42 days after birth)."
+            ]
         }
     },
     {
@@ -333,10 +482,17 @@
             "domainOfCare" : "ECDS",
             "title" : "Childhood Immunization Status: Hepatitus A",
             "displayLabel" : "CIS-E: Hepatitus A",
+            "link": "https://www.ncqa.org/hedis/measures/childhood-immunization-status/",
             "measureType" : "process",
             "weight" : 3,
             "hasSubMeasures" : false,
-            "inverted": false
+            "inverted": false,
+            "recommendation" : [
+                "Corrective Actions, confirm that by the child’s 2nd birthday that: ",
+                "A) The child has received at least 1 hepatitis A vaccine between the 1st and 2nd birthday",
+                "OR",
+                "B) The child has a history of hepatitis A illness before the 2nd birthday."
+            ]
         }
     },
     {
@@ -345,10 +501,20 @@
             "domainOfCare" : "ECDS",
             "title" : "Childhood Immunization Status: Rotavirus",
             "displayLabel" : "CIS-E: Rotavirus",
+            "link": "https://www.ncqa.org/hedis/measures/childhood-immunization-status/",
             "measureType" : "process",
             "weight" : 3,
             "hasSubMeasures" : false,
-            "inverted": false
+            "inverted": false,
+            "recommendation" : [
+                "Corrective Actions, confirm that by the child’s 2nd birthday that: ",
+                "A) The child has received at least 2 doses of the 2-dose rotative vaccine before the 2nd birthday (not including the one administered before 42 days after birth)",
+                "OR",
+                "B) The child has received at least 3 doses of the 3-dose rotative vaccine before the 2nd birthday (not including the one administered before 42 days after birth)",
+                "OR",
+                "C) The child has received a combination of at least 1 dose of the 2-dose & at least 2 doses of the 3-dose vaccines before the 2nd birthday (not including the one administered before 42 days after birth)",
+                "OR",
+                "D) The child had anaphylaxis from the rotavirus vaccine by the 2nd birthday."]
         }
     },
     {
@@ -357,10 +523,15 @@
             "domainOfCare" : "ECDS",
             "title" : "Childhood Immunization Status: Influenza",
             "displayLabel" : "CIS-E: Influenza",
+            "link": "https://www.ncqa.org/hedis/measures/childhood-immunization-status/",
             "measureType" : "process",
             "weight" : 3,
             "hasSubMeasures" : false,
-            "inverted": false
+            "inverted": false,
+            "recommendation" : [
+                "Corrective Actions, confirm that by the child’s 2nd birthday that: ",
+                "The child has received at least 2 influenza vaccines before the 2nd birthday (not including the one administered before 6 months/180 days after birth).", 
+                "Note that 1 of the 2 vaccinations can be the LAIV vaccination provided on the child’s 2nd birthday - this does not include any LAIV vaccines administered before the 2nd birthday."]
         }
     },
     {
@@ -369,10 +540,15 @@
             "domainOfCare" : "ECDS",
             "title" : "Childhood Immunization Status: Combination 3",
             "displayLabel" : "CIS-E: Combination 3",
+            "link": "https://www.ncqa.org/hedis/measures/childhood-immunization-status/",
             "measureType" : "process",
             "weight" : 3,
             "hasSubMeasures" : false,
-            "inverted": false
+            "inverted": false,
+            "recommendation" : [
+                "Confirm compliance with: ",
+                "DTaP, IPV, MMR, HiB, hepatitis B, VZV and pneumococcal vaccinations status."
+            ]
         }
     },
     {
@@ -381,10 +557,15 @@
             "domainOfCare" : "ECDS",
             "title" : "Childhood Immunization Status: Combination 7",
             "displayLabel" : "CIS-E: Combination 7",
+            "link": "https://www.ncqa.org/hedis/measures/childhood-immunization-status/",
             "measureType" : "process",
             "weight" : 3,
             "hasSubMeasures" : false,
-            "inverted": false
+            "inverted": false,
+            "recommendation" : [
+                "Confirm compliance with: ",
+                "DTaP, IPV, MMR, HiB, hepatitis B, VZV, pneumococcal, hepatitis A and rotavirus vaccinations status."
+            ]
         }
     },
     {
@@ -393,10 +574,15 @@
             "domainOfCare" : "ECDS",
             "title" : "Childhood Immunization Status: Combination 10",
             "displayLabel" : "CIS-E: Combination 10",
+            "link": "https://www.ncqa.org/hedis/measures/childhood-immunization-status/",
             "measureType" : "process",
             "weight" : 3,
             "hasSubMeasures" : false,
-            "inverted": false
+            "inverted": false,
+            "recommendation" :[
+                "Confirm compliance with: ",
+                "DTaP, IPV, MMR, HiB, hepatitis B, VZV, pneumococcal, hepatitis A, rotavirus and Influenza vaccinations status."
+            ]
         }
     },
     {
@@ -404,12 +590,22 @@
         "cole" : {
             "domainOfCare" : "ECDS",
             "title" : "Colorectal Cancer Screening Rate",
-            "displayLabel" : "COL-E",
-            "description": "COL-E assesses adults 50-75 who had appropriate screening for colorectal cancer with the appropriate designated tests.", 
+            "displayLabel" : "CCS",
+            "description": [ "COL assesses adults 50–75 who had appropriate screening for colorectal cancer with any of the following tests: annual fecal occult blood test, flexible sigmoidoscopy every 5 years, colonoscopy every 10 years, computed tomography colonography every 5 years, stool DNA test every 3 years."], 
+            "link": "https://www.ncqa.org/hedis/measures/colorectal-cancer-screening/",
             "measureType" : "process",
             "weight" : 1,
             "hasSubMeasures" : false,
-            "inverted": false
+            "inverted": false,
+            "recommendation" : [
+                "Corrective Actions, confirm one or more screenings for colorectal cancer. Acceptable screenings include: ",
+                "A) Fecal occult blood test during the measurement year.",
+                "B) Flexible sigmoidoscopy up to 4 years prior to measurement year.",
+                "C) Colonoscopy up to 9 years prior to measurement year.",
+                "D) CT colonography up to 4 years prior to measurement year.",
+                "E) FIT-DNA test up to 2 years prior to measurement year."
+            ],
+            "tooltip": "COL assesses adults 50–75 who had appropriate screening for colorectal cancer with the appropriate designated tests."
         }
     },
     {
@@ -418,11 +614,17 @@
             "domainOfCare" : "EOC", 
             "title" : "Risk of Continued Opioid Use", 
             "displayLabel" : "COU", 
-            "description": "COU assesses potentially high-risk opioid analgesic prescribing practices with members 18 years and older who have a new episode of opioid use that puts them at risk for continued opioid use.", 
+            "description": [
+                "COU assesses potentially high-risk opioid analgesic prescribing practices. The percentage of members 18 years and older who have a new episode of opioid use that puts them at risk for continued opioid use. Two rates are reported.",
+                "The percentage of members with at least 15 days of prescription opioids in a 30-day period.", "The percentage of members with at least 31 days of prescription opioids in a 62-day period."
+            ],
+            "link": "https://www.ncqa.org/hedis/measures/risk-of-continued-opioid-use/",
             "measureType" : "process", 
             "weight" : 1, 
             "hasSubMeasures" : true,
-            "inverted": false
+            "inverted": false,
+            "recommendation": [],
+            "tooltip": "COU assesses potentially high-risk opioid analgesic prescribing practices with members 18 years and older who have a new episode of opioid use that puts them at risk for continued opioid use."
         }
     },
     {
@@ -431,10 +633,12 @@
             "domainOfCare" : "EOC", 
             "title" : "15 or More Days of Opioid Medications in 30 Day Period", 
             "displayLabel" : "COU: 15 Days Opioid Medications", 
+            "link": "https://www.ncqa.org/hedis/measures/risk-of-continued-opioid-use/",
             "measureType" : "process", 
             "weight" : 1, 
             "hasSubMeasures" : false,
-            "inverted": false
+            "inverted": false,
+            "recommendation" : ["Avoid dispensing opioid medications to members who have been using opioid prescriptions for 15 days over a 30-day period after the index prescription start date (IPSD)."]
         }
     },
     {
@@ -443,10 +647,12 @@
             "domainOfCare" : "EOC", 
             "title" : "31 or More Days of Opioid Medications in 62 Day Period", 
             "displayLabel" : "COU: 31 Days Opioid Medications", 
+            "link": "https://www.ncqa.org/hedis/measures/risk-of-continued-opioid-use/",
             "measureType" : "process", 
             "weight" : 1, 
             "hasSubMeasures" : false,
-            "inverted": false
+            "inverted": false,
+            "recommendation" : ["Avoid dispensing opioid medications to members who have been using opioid prescriptions for 31 days over a 62-day period after the index prescription start date (IPSD)."]
         }
     },
     {
@@ -455,11 +661,18 @@
             "domainOfCare" : "EOC", 
             "title" : "Appropriate Testing for Children with Pharyngitis", 
             "displayLabel" : "CWP", 
-            "description": "CWP assesses the percentage of episodes for members 3 years and older with a diagnosis of pharyngitis, dispensed an antibiotic and received a group A streptococcus test for the episode.", 
+            "description": ["CWP assesses the percentage of episodes for members 3 years of age and older with a diagnosis of pharyngitis, dispensed an antibiotic and received a group A streptococcus test for the episode. A higher rate indicates completion of the appropriate testing required to merit antibiotic treatment for pharyngitis."], 
+            "link": "https://www.ncqa.org/hedis/measures/appropriate-testing-for-pharyngitis/",
             "measureType" : "process", 
             "weight" : 1, 
             "hasSubMeasures" : false,
-            "inverted": false
+            "inverted": false,
+            "recommendation" : [
+                "Corrective Actions, confirm that: ",
+                "For a diagnosis of pharyngitis, an antibiotic was given and the group A streptococcus (strep) test was performed within 7 days of pharyngitis’ diagnosis.",
+                "A group A streptococcus test (Group A Strep Tests Value Set) in the seven-day period from three days prior to the Episode Date through three days after the Episode Date."
+            ],
+            "tooltip": "CWP assesses the percentage of episodes for members 3 years and older with a diagnosis of pharyngitis, dispensed an antibiotic and received a group A streptococcus test for the episode."
         }
     },
     {
@@ -468,11 +681,14 @@
             "domainOfCare" : "ECDS", 
             "title" : "Monitor Depression Symptoms for Adolescents and Adults", 
             "displayLabel" : "DMS-E", 
-            "description": "DMS-E assesses the percentage of members 12 years and older diagnosed with major depression or dysthymia and an outpatient encounter with a PHQ-9 score in their record at the same time as the encounter.", 
+            "description": ["DMS-E assesses the percentage of members 12 years of age and older with a diagnosis of major depression or dysthymia who had an outpatient encounter with a PHQ-9 score present in their record in the same assessment period as the encounter."], 
+            "link": "https://www.ncqa.org/hedis/measures/utilization-of-the-phq-9-to-monitor-depression-symptoms-for-adolescents-and-adults/",
             "measureType" : "process", 
             "weight" : 1, 
             "hasSubMeasures" : true,
-            "inverted": false
+            "inverted": false,
+            "tooltip": "DMS-E assesses the percentage of members 12 years and older diagnosed with major depression or dysthymia and an outpatient encounter with a PHQ-9 score in their record at the same time as the encounter.",
+            "recommendation": []
         }
     },
     {
@@ -481,10 +697,15 @@
             "domainOfCare" : "ECDS", 
             "title" : "Assessment Period 1: January 1 - April 30", 
             "displayLabel" : "DMS-E: Assessment Period 1", 
+            "link": "https://www.ncqa.org/hedis/measures/utilization-of-the-phq-9-to-monitor-depression-symptoms-for-adolescents-and-adults/",
             "measureType" : "process", 
             "weight" : 1, 
             "hasSubMeasures" : false,
-            "inverted": false
+            "inverted": false,
+            "recommendation" : [
+                "Corrective Actions, confirm that :", 
+                "A PHQ-9 score has been recorded during Assessment Period 1 (January 1–April 30)."
+            ]
         }
     },
     {
@@ -493,10 +714,15 @@
             "domainOfCare" : "ECDS", 
             "title" : "Assessment Period 2: May 1 - August 31", 
             "displayLabel" : "DMS-E: Assessment Period 2", 
+            "link": "https://www.ncqa.org/hedis/measures/utilization-of-the-phq-9-to-monitor-depression-symptoms-for-adolescents-and-adults/",
             "measureType" : "process", 
             "weight" : 1, 
             "hasSubMeasures" : false,
-            "inverted": false
+            "inverted": false,
+            "recommendation" : [
+                "Corrective Actions, confirm that :", 
+                "A PHQ-9 score has been recorded during Assessment Period 2 (May 1–August 31)."
+            ]
         }
     },
     {
@@ -508,7 +734,11 @@
             "measureType" : "process", 
             "weight" : 1, 
             "hasSubMeasures" : false,
-            "inverted": false
+            "inverted": false,
+            "recommendation" : [
+                "Corrective Actions, confirm that :", 
+                "A PHQ-9 score has been recorded during Assessment Period 3 ( September 1–December 31)."
+            ]
         }
     },
     {
@@ -517,11 +747,20 @@
             "domainOfCare": "ECDS",
             "title": "Depression Remission or Response for Adolescents and Adults",
             "displayLabel": "DRR-E",
-            "description": "DRR-E assesses the percentage of members 12 years and older with a diagnosis of depression and an elevated PHQ-9 score, who had evidence of response or remission within 4–8 months of the elevated score.", 
+            "description": [
+                "DRR-E assesses The percentage of members 12 years of age and older with a diagnosis of depression and an elevated PHQ-9 score, who had evidence of response or remission within 4–8 months of the elevated score.",
+                "Follow-Up PHQ-9: The percentage of members who have a follow-up PHQ-9 score documented within 4–8 months after the initial elevated PHQ-9 score.",
+                "Depression Remission: The percentage of members who achieved remission within 4–8 months after the initial elevated PHQ-9 score.", 
+                "Depression Response: The percentage of members who showed response within 4–8 months after the initial elevated PHQ-9 score."
+            ],
+            "link": "https://www.ncqa.org/hedis/measures/depression-remission-or-response-for-adolescents-and-adults/",
             "measureType": "outcome",
             "weight": 1,
             "hasSubMeasures": true,
-            "inverted": false
+            "inverted": false,
+            "tooltip": "DRR-E assesses the percentage of members 12 years and older with a diagnosis of depression and an elevated PHQ-9 score, who had evidence of response or remission within 4–8 months of the elevated score.",
+            "recommendation": []
+
         }
     },
     {
@@ -530,10 +769,15 @@
             "domainOfCare": "ECDS",
             "title": "Depression Follow-Up for Adolescents and Adults",
             "displayLabel": "DRR-E: Follow-Up",
+            "link": "https://www.ncqa.org/hedis/measures/depression-remission-or-response-for-adolescents-and-adults/",
             "measureType": "outcome",
             "weight": 1,
             "hasSubMeasures": false,
-            "inverted": false
+            "inverted": false,
+            "recommendation": [
+                "Corrective Actions, confirm that: ", 
+                "A follow up PHQ-9 score was documented within 4-8 months of the initial assessment with elevated PHQ-9 score."
+            ]
         }
     },
     {
@@ -542,10 +786,15 @@
             "domainOfCare": "ECDS",
             "title": "Depression Remission for Adolescents and Adults",
             "displayLabel": "DRR-E: Remission",
+            "link": "https://www.ncqa.org/hedis/measures/depression-remission-or-response-for-adolescents-and-adults/",
             "measureType": "outcome",
             "weight": 1,
             "hasSubMeasures": false,
-            "inverted": false
+            "inverted": false,
+            "recommendation": [
+                "Corrective Actions, confirm that: ", 
+                "The PHQ-9 score is less than 5 during the follow-up period (4-8 months); this indicates a remission of depression symptoms."
+            ]
         }
     },
     {
@@ -554,10 +803,15 @@
             "domainOfCare": "ECDS",
             "title": "Depression Response for Adolescents and Adults",
             "displayLabel": "DRR-E: Response",
+            "link": "https://www.ncqa.org/hedis/measures/depression-remission-or-response-for-adolescents-and-adults/",
             "measureType": "outcome",
             "weight": 1,
             "hasSubMeasures": false,
-            "inverted": false
+            "inverted": false,
+            "recommendation": [
+                "Corrective Actions, confirm that: ", 
+                "The PHQ-9 score is 50% lower than the score recorded at the initial assessment; this indicates a response to treatment for depression during the follow-up period (4-8 months prior to IESD)."
+            ]
         }
     },
     {
@@ -566,11 +820,18 @@
             "domainOfCare": "ECDS",
             "title": "Depression Screening and Follow-Up for Adolescents and Adults",
             "displayLabel": "DSF-E",
-            "description": "DSF-E assesses the percentage of members 12 years and older who were screened for clinical depression using a standardized instrument and, if screened positive, received follow-up care.", 
+            "description": [
+                "DSF-E assesses The percentage of members 12 years of age and older who were screened for clinical depression using a standardized instrument and, if screened positive, received follow-up care.",
+                "Depression Screening: The percentage of members who were screened for clinical depression using a standardized instrument.",
+                "Follow-Up on Positive Screen: The percentage of members who received follow-up care within 30 days of a positive depression screen finding."
+            ],
+            "link": "https://www.ncqa.org/hedis/measures/depression-screening-and-follow-up-for-adolescents-and-adults/",
             "measureType": "process",
             "weight": 1,
             "hasSubMeasures": true,
-            "inverted": false
+            "inverted": false,
+            "tooltip": "DSF-E assesses the percentage of members 12 years and older who were screened for clinical depression using a standardized instrument and, if screened positive, received follow-up care.",
+            "recommendation": []
         }
     },
     {
@@ -579,10 +840,15 @@
             "domainOfCare": "ECDS",
             "title": "Depression Screening for Adolescents and Adults",
             "displayLabel": "DSF-E: Depression Screening",
+            "link": "https://www.ncqa.org/hedis/measures/depression-screening-and-follow-up-for-adolescents-and-adults/",
             "measureType": "process",
             "weight": 1,
             "hasSubMeasures": false,
-            "inverted": false
+            "inverted": false,
+            "recommendation": [ 
+                "Corrective Actions, confirm that: ",
+                "Screenings for clinical depression are done using the age-appropriate standardized instrument between January 1-December 1 of the measurement year."
+            ]
         }
     },
     {
@@ -591,10 +857,15 @@
             "domainOfCare": "ECDS",
             "title": "Follow-Up on Positive Depression Screen for Adolescents and Adults",
             "displayLabel": "DSF-E: Follow-Up on Positive Screen",
+            "link": "https://www.ncqa.org/hedis/measures/depression-screening-and-follow-up-for-adolescents-and-adults/",
             "measureType": "process",
             "weight": 1,
             "hasSubMeasures": false,
-            "inverted": false
+            "inverted": false,
+            "recommendation": [
+                "Corrective Actions, confirm that: ", 
+                "Members receive qualifying follow-up care within 30 days of positive depression screen"
+            ]
         }
     },
     {
@@ -603,11 +874,14 @@
             "domainOfCare": "EOC",
             "title": "Follow-Up After Emergency Department Visit for Mental Illness",
             "displayLabel": "FUM",
-            "description": "FUM assesses ED visits for adults and children 6 years and older with a diagnosis of mental illness or intentional self-harm and who received a follow-up visit for mental illness within 7 - 30 days.", 
+            "description": ["FUM assesses emergency department (ED) visits for adults and children 6 years of age and older with a diagnosis of mental illness or intentional self-harm and who received a follow-up visit for mental illness within 7 and 30 days."], 
+            "link": "https://www.ncqa.org/hedis/measures/follow-up-after-emergency-department-visit-for-mental-illness/",
             "measureType": "process",
             "weight": 3,
             "hasSubMeasures": true,
-            "inverted": false
+            "inverted": false,
+            "recommendation": [],
+            "tooltip": "FUM assesses ED visits for adults and children 6 years and older with a diagnosis of mental illness or intentional self-harm and who received a follow-up visit for mental illness within 7 - 30 days."
         }
     },
     {
@@ -616,10 +890,16 @@
             "domainOfCare": "EOC",
             "title": "Follow-Up Within 7 Days of Emergancy Department Visit",
             "displayLabel": "FUM: Follow-Up Within 7 Days",
+            "link": "https://www.ncqa.org/hedis/measures/follow-up-after-emergency-department-visit-for-mental-illness/",
             "measureType": "process",
             "weight": 3,
             "hasSubMeasures": false,
-            "inverted": false
+            "inverted": false,
+            "recommendation": [
+                "Corrective Actions, confirm that :",
+                "A qualifying follow-up visit occurred within 30 days after the emergency department (ED) visit with a diagnosis of mental health illness and/or intentional self-harm.", 
+                "Note: these include follow-up visits on the date of ED."
+            ]
         }
     },
     {
@@ -628,10 +908,16 @@
             "domainOfCare": "EOC",
             "title": "Follow-Up Within 30 Days of Emergancy Department Visit",
             "displayLabel": "FUM: Follow-Up Within 30 Days",
+            "link": "https://www.ncqa.org/hedis/measures/follow-up-after-emergency-department-visit-for-mental-illness/",
             "measureType": "process",
             "weight": 3,
             "hasSubMeasures": false,
-            "inverted": false
+            "inverted": false,
+            "recommendation": [
+                "Corrective Actions, confirm that: ", 
+                "Qualifying follow-up visit occurred within 7 days after the emergency department (ED) visit with a diagnosis of mental health illness and/or intentional self-harm.",
+                "Note: these include follow-up visits on the date of ED."
+            ]
         }
     },
     {
@@ -640,11 +926,14 @@
             "domainOfCare": "ECDS",
             "title": "Immunizations for Adolescents",
             "displayLabel": "IMA-E",
-            "description": "IMA-E assesses adolescents 13 years of age who had one dose of meningococcal vaccine, one Tdap vaccine and the complete human papillomavirus vaccine series by their 13th birthday.", 
+            "description": ["IMA-E assesses adolescents 13 years of age who had one dose of meningococcal vaccine, one Tdap vaccine and the complete human papillomavirus vaccine series by their 13th birthday."], 
+            "link": "https://www.ncqa.org/hedis/measures/immunizations-for-adolescents/",
             "measureType": "outcome",
             "weight": 3,
             "hasSubMeasures": true,
-            "inverted": false
+            "inverted": false,
+            "recommendation": [],
+            "tooltip": "IMA-E assesses adolescents 13 years of age who had one dose of meningococcal vaccine, one Tdap vaccine and the complete human papillomavirus vaccine series by their 13th birthday."
         }
     },
     {
@@ -653,10 +942,17 @@
             "domainOfCare": "ECDS",
             "title": "Meningococcal Serogroups A, C, W, Y",
             "displayLabel": "IMA-E: Meningococcal",
+            "link": "https://www.ncqa.org/hedis/measures/immunizations-for-adolescents/",
             "measureType": "outcome",
             "weight": 3,
             "hasSubMeasures": false,
-            "inverted": false
+            "inverted": false,
+            "recommendation": [
+                "Corrective Actions, members must have either of the following: ",
+                "A) At least one meningococcal serogroups A, C, W, Y vaccine, with a date of service on or between the member’s 11th and 13th birthdays.", 
+                "B) The member had anaphylaxis due to the meningococcal vaccine any time on or before the member’s 13th birthday."
+            ],
+            "tooltip": ""
         }
     },
     {
@@ -665,10 +961,18 @@
             "domainOfCare": "ECDS",
             "title": "Tdap",
             "displayLabel": "IMA-E: Tdap",
+            "link": "https://www.ncqa.org/hedis/measures/immunizations-for-adolescents/",
             "measureType": "outcome",
             "weight": 3,
             "hasSubMeasures": false,
-            "inverted": false
+            "inverted": false,
+            "recommendation": [
+                "Corrective Actions, members must have either of the following:",  
+                "A) At least one tetanus, diphtheria toxoids and acellular pertussis (Tdap) vaccine, with a date of service on or between the member’s 10th and 13th birthdays.",
+                "B) Anaphylaxis due to the tetanus, diphtheria or pertussis vaccine any time on or before the member’s 13th birthday.",
+                "C) Encephalitis due to the tetanus, diphtheria or pertussis vaccine any time on or before the member’s 13th birthday."
+            ],
+            "tooltip": ""
         }
     },
     {
@@ -677,10 +981,18 @@
             "domainOfCare": "ECDS",
             "title": "HPV",
             "displayLabel": "IMA-E: HPV",
+            "link": "https://www.ncqa.org/hedis/measures/immunizations-for-adolescents/",
             "measureType": "outcome",
             "weight": 3,
             "hasSubMeasures": false,
-            "inverted": false
+            "inverted": false,
+            "recommendation":[
+                "Corrective Actions, member must have received either of the following: ",
+                "A) At least two HPV vaccines, on or between the member’s 9th and 13th birthdays and with dates of service at least 146 days apart. For example, if the service date for the first vaccine was March 1, then the service date for the second vaccine must be on or after July 25.",
+                "B) At least three HPV vaccines, with different dates of service on or between the member’s 9th and 13th birthdays.",
+                "C) The member had anaphylaxis due to the HPV vaccine any time on or before the member’s 13th birthday."
+            ],
+            "tooltip": ""
         }
     },
     {
@@ -689,10 +1001,16 @@
             "domainOfCare": "ECDS",
             "title": "Combination 1: Meningococcal, Tdap",
             "displayLabel": "IMA-E: Combination 1",
+            "link": "https://www.ncqa.org/hedis/measures/immunizations-for-adolescents/",
             "measureType": "outcome",
             "weight": 3,
             "hasSubMeasures": false,
-            "inverted": false
+            "inverted": false,
+            "recommendation": [
+                "Corrective Actions: ",
+                "Adolescents who are numerator compliant must have for both the Meningococcal and Tdap indicators."
+            ],
+            "tooltip": ""
         }
     },
     {
@@ -701,10 +1019,15 @@
             "domainOfCare": "ECDS",
             "title": "Combination 2: Meningococcal, Tdap, HPV",
             "displayLabel": "IMA-E: Combination 2",
+            "link": "https://www.ncqa.org/hedis/measures/immunizations-for-adolescents/",
             "measureType": "outcome",
             "weight": 3,
             "hasSubMeasures": false,
-            "inverted": false
+            "inverted": false,
+            "recommendation": [
+                "Corrective Actions: ",
+                "Adolescents who are numerator compliant must have for all three indicators (Meningococcal, Tdap, HPV)."
+            ]
         }
     },
     {
@@ -713,11 +1036,18 @@
             "domainOfCare" : "ECDS", 
             "title" : "Postpartum Depression Screening and Follow-up", 
             "displayLabel" : "PDS-E", 
-            "description": "PDS-E assesses the percentage of deliveries in which members were screened for clinical depression during the postpartum period, and if screened positive, received follow-up care.", 
+            "description": [
+                "PDS-E assesses the percentage of deliveries in which members were screened for clinical depression during the postpartum period, and if screened positive, received follow-up care. Two rates are reported.", 
+                "Depression Screening: The percentage of deliveries in which members were screened for clinical depression using a standardized instrument during the postpartum period.", 
+                "Follow-Up on Positive Screen: The percentage of deliveries in which members received follow-up care within 30 days of a positive depression screen finding."
+            ],
+            "link": "https://www.ncqa.org/hedis/measures/postpartum-depression-screening-and-follow-up/",
             "measureType" : "process", 
             "weight" : 1, 
             "hasSubMeasures" : true,
-            "inverted": false
+            "inverted": false,
+            "recommendation": [],
+            "tooltip": "PDS-E assesses the percentage of deliveries in which members were screened for clinical depression during the postpartum period, and if screened positive, received follow-up care."
         }
     },
     {
@@ -726,10 +1056,15 @@
             "domainOfCare" : "ECDS", 
             "title" : "Postpartum Depression Screening", 
             "displayLabel" : "PDS-E: Depression Screening", 
+            "link": "https://www.ncqa.org/hedis/measures/postpartum-depression-screening-and-follow-up/",
             "measureType" : "process", 
             "weight" : 1, 
             "hasSubMeasures" : false,
-            "inverted": false
+            "inverted": false,
+            "recommendation": [
+                "Corrective Actions, confirm: ",
+                "Deliveries in which members had a documented result for depression screening, using an age-appropriate standardized instrument, performed during the 7–84 days following the date of delivery."
+            ]
         }
     },
     {
@@ -738,10 +1073,23 @@
             "domainOfCare" : "ECDS", 
             "title" : "Follow-Up on Positive Postpartum Depression Screen", 
             "displayLabel" : "PDS-E: Follow-Up on Positive Screen", 
+            "link": "https://www.ncqa.org/hedis/measures/postpartum-depression-screening-and-follow-up/",
             "measureType" : "process", 
             "weight" : 1, 
             "hasSubMeasures" : false,
-            "inverted": false
+            "inverted": false,
+            "recommendation": [
+                "Corrective Actions: ",
+                "Confirm that deliveries in which members received follow-up care on or up to 30 days after the date of the first positive screen (31 total days).",
+                "Any of the following on or up to 30 days after the first positive screen: ",
+                "A) An outpatient, telephone, e-visit or virtual check-in follow-up visit with a diagnosis of depression or other behavioral health condition.",
+                "B) A depression case management encounter that documents assessment for symptoms of depression or a diagnosis of depression or other behavioral health condition.",
+                "C) A behavioral health encounter, including assessment, therapy, collaborative care or medication management.",
+                "D) A dispensed antidepressant medication.",
+                "OR",
+                "E) Documentation of additional depression screening on a full-length instrument indicating either no depression or no symptoms that require follow-up (i.e., a negative screen) on the same day as a positive screen on a brief screening instrument.",
+                "Note: For example, if there is a positive screen resulting from a PHQ-2 score, documentation of a negative finding from a PHQ-9 performed on the same day qualifies as evidence of follow-up."
+            ]
         }
     },
     {
@@ -750,11 +1098,18 @@
             "domainOfCare" : "ECDS", 
             "title" : "Prenatal Depression Screening and Follow-up", 
             "displayLabel" : "PND-E", 
-            "description": "PND-E assesses the percentage of deliveries in which members were screened for clinical depression while pregnant and, if screened positive, received follow-up care.", 
+            "description": [
+                "PND-E assesses the percentage of deliveries in which members were screened for clinical depression while pregnant and, if screened positive, received follow-up care. Two rates are reported.",
+                "Depression Screening: The percentage of deliveries in which members were screened for clinical depression during pregnancy using a standardized instrument.",
+                "Follow-Up on Positive Screen: The percentage of deliveries in which members received follow-up care within 30 days of a positive depression screen finding."
+            ],
+            "link": "https://www.ncqa.org/hedis/measures/prenatal-depression-screening-and-followup/",
             "measureType" : "process", 
             "weight" : 1, 
             "hasSubMeasures" : true,
-            "inverted": false
+            "inverted": false,
+            "recommendation": [],
+            "tooltip": "PND-E assesses the percentage of deliveries in which members were screened for clinical depression while pregnant and, if screened positive, received follow-up care."
         }
     },
     {
@@ -763,10 +1118,17 @@
             "domainOfCare" : "ECDS", 
             "title" : "Prenatal Depression Screening", 
             "displayLabel" : "PND-E: Depression Screening", 
+            "link": "https://www.ncqa.org/hedis/measures/prenatal-depression-screening-and-followup/",
             "measureType" : "process", 
             "weight" : 1, 
             "hasSubMeasures" : false,
-            "inverted": false
+            "inverted": false,
+            "recommendation": [
+                "Corrective Actions: ",
+                "Confirm deliveries in which members had a documented result for depression screening, using an age-appropriate standardized screening instrument, performed during pregnancy.",
+                "A) Deliveries between January 1 and December 1 of the Measurement Period: Screening should be performed between the pregnancy start date and the delivery date (including on the delivery date).",
+                "B) Deliveries between December 2 and December 31 of the Measurement Period: Screening should be performed between the pregnancy start date and December 1 of the Measurement Period."
+            ]
         }
     },
     {
@@ -775,10 +1137,22 @@
             "domainOfCare" : "ECDS", 
             "title" : "Follow-Up on Positive Prenatal Depression Screen", 
             "displayLabel" : "PND-E: Follow-Up on Positive Screen", 
+            "link": "https://www.ncqa.org/hedis/measures/prenatal-depression-screening-and-followup/",
             "measureType" : "process", 
             "weight" : 1, 
             "hasSubMeasures" : false,
-            "inverted": false
+            "inverted": false,
+            "recommendation": [
+                "Corrective Actions: ",
+                "Confirm deliveries in which members received follow-up care on or up to 30 days after the date of the first positive screen (31 total days).",
+                "A) An outpatient, telephone, e-visit or virtual check-in follow-up visit with a diagnosis of depression or other behavioral health condition.",
+                "B) A depression case management encounter that documents assessment for symptoms of depression or a diagnosis of depression or other behavioral health condition.",
+                "C) A behavioral health encounter, including assessment, therapy, collaborative care or medication management.",
+                "D) A dispensed antidepressant medication.",
+                "OR",
+                "E) Documentation of additional depression screening on a full-length instrument indicating either no depression or no symptoms that require follow-up (i.e., a negative screen) on the same day as a positive screen on a brief screening instrument.",
+                "Note: For example, if there is a positive screen resulting from a PHQ-2 score, documentation of a negative finding from a PHQ-9 performed on the same day qualifies as evidence of follow-up."
+            ]
         }
     },
     {
@@ -787,11 +1161,14 @@
             "domainOfCare" : "ECDS", 
             "title" : "Prenatal Immunization Status", 
             "displayLabel" : "PRS-E", 
-            "description": "PRS-E assesses the percentage of deliveries in the measurement period in which women received influenza and tetanus, diphtheria toxoids and acellular pertussis (Tdap) vaccinations.", 
+            "description": ["PRS-E assesses the percentage of deliveries in the measurement period in which women received influenza and tetanus, diphtheria toxoids and acellular pertussis (Tdap) vaccinations."],
+            "link": "https://www.ncqa.org/hedis/measures/prenatal-immunization-status/",
             "measureType" : "process", 
             "weight" : 1, 
             "hasSubMeasures" : true,
-            "inverted": false
+            "inverted": false,
+            "recommendation": [],
+            "tooltip": "PRS-E assesses the percentage of deliveries in the measurement period in which women received influenza and tetanus, diphtheria toxoids and acellular pertussis (Tdap) vaccinations."
         }
     },
     {
@@ -800,10 +1177,15 @@
             "domainOfCare" : "ECDS", 
             "title" : "Immunization Status: Influenza", 
             "displayLabel" : "PRS-E: Influenza", 
+            "link": "https://www.ncqa.org/hedis/measures/prenatal-immunization-status/",
             "measureType" : "process", 
             "weight" : 1, 
             "hasSubMeasures" : false,
-            "inverted": false
+            "inverted": false,
+            "recommendation": [
+                "Corrective Actions: ",
+                "Confirm deliveries where members received an adult influenza vaccine on or between July 1 of the year prior to the Measurement Period and the delivery date."
+            ]
         }
     },
     {
@@ -812,10 +1194,18 @@
             "domainOfCare" : "ECDS", 
             "title" : "Immunization Status: Tdap", 
             "displayLabel" : "PRS-E: Tdap", 
+            "link": "https://www.ncqa.org/hedis/measures/prenatal-immunization-status/",
             "measureType" : "process", 
             "weight" : 1, 
             "hasSubMeasures" : false,
-            "inverted": false
+            "inverted": false,
+            "recommendation": [
+                "Corrective Actions: ",
+                "Confirm deliveries where members received at least one Tdap vaccine during the pregnancy (including on the delivery date) or confirm deliveries where members had any of the following.",
+                "A) Anaphylaxis due to the diphtheria, tetanus or pertussis vaccine on or before the delivery date.",
+                "B) Encephalitis due to the diphtheria, tetanus or pertussis vaccine on or before the delivery date."
+            ]
+
         }
     },
     {
@@ -824,10 +1214,15 @@
             "domainOfCare" : "ECDS", 
             "title" : "Immunization Status: Influenza and Tdap", 
             "displayLabel" : "PRS-E: Combination", 
+            "link": "https://www.ncqa.org/hedis/measures/prenatal-immunization-status/",
             "measureType" : "process", 
             "weight" : 1, 
             "hasSubMeasures" : false,
-            "inverted": false
+            "inverted": false,
+            "recommendation": [
+                "Corrective Actions: ",
+                "Confirm deliveries meet criteria for immunization status for both Influenza and Tdap."
+            ]
         }
     },
     {
@@ -836,11 +1231,17 @@
             "domainOfCare" : "EOC", 
             "title" : "Non-Recommended PSA-Based Screening in Older Men", 
             "displayLabel" : "PSA", 
-            "description": "PSA assesses whether men 70 years and older were screened unnecessarily for prostate cancer using prostate-specific antigen (PSA)-based screening.", 
+            "description": ["PSA assesses whether men 70 years of age and older were screened unnecessarily for prostate cancer using prostate-specific antigen (PSA)-based screening."], 
+            "link": "https://www.ncqa.org/hedis/measures/non-recommended-psa-based-screening-in-older-men/",
             "measureType" : "process", 
             "weight" : 1, 
             "hasSubMeasures" : false,
-            "inverted": false
+            "inverted": false,
+            "tooltip": "PSA assesses whether men 70 years and older were screened unnecessarily for prostate cancer using prostate-specific antigen (PSA)-based screening.",
+            "recommendation": [
+                "Corrective Actions: ",
+                "Confirm men 70 years and older are not screened unnecessarily for prostate cancer using prostate-specific antigen (PSA)-based screening."
+            ]
         }
     },
     {
@@ -849,11 +1250,19 @@
             "domainOfCare" : "EOC", 
             "title" : "Use of Opioids from Multiple Providers", 
             "displayLabel" : "UOP", 
-            "description": "UOP assesses potentially high-risk opioid analgesic prescribing practices via the proportion of members 18 years and older, receiving prescription opioids for more than 15 days during the year from multiple providers.", 
+            "description": [
+                "UOP assesses potentially high-risk opioid analgesic prescribing practices: The proportion of members 18 years and older, receiving prescription opioids for ≥15 days during the measurement year from multiple providers. Three rates are reported.",
+                "Multiple Prescribers: The proportion of members receiving prescriptions for opioids from four or more different prescribers during the measurement year.", 
+                "Multiple Pharmacies: The proportion of members receiving prescriptions for opioids from four or more different pharmacies during the measurement year.", 
+                "Multiple Prescribers and Multiple Pharmacies: The proportion of members receiving prescriptions for opioids from four or more different prescribers and four or more different pharmacies during the measurement year (i.e., the proportion of members who are numerator compliant for both the Multiple Prescribers and Multiple Pharmacies rates)."
+            ],
+            "link": "https://www.ncqa.org/hedis/measures/use-of-opioids-from-multiple-providers/",
             "measureType" : "process", 
             "weight" : 1, 
             "hasSubMeasures" : true,
-            "inverted": false
+            "inverted": false,
+            "recommendation": [],
+            "tooltip": "UOP assesses potentially high-risk opioid analgesic prescribing practices via the proportion of members 18 years and older, receiving prescription opioids for more than 15 days during the year from multiple providers."
         }
     },
     {
@@ -862,10 +1271,15 @@
             "domainOfCare" : "EOC", 
             "title" : "Use of Opioids from Multiple Prescribers", 
             "displayLabel" : "UOP: Multiple Prescribers", 
+            "link": "https://www.ncqa.org/hedis/measures/use-of-opioids-from-multiple-providers/",
             "measureType" : "process", 
             "weight" : 1, 
             "hasSubMeasures" : false,
-            "inverted": false
+            "inverted": false,
+            "recommendation":[
+                "Corrective Actions: ",
+                "Avoid opioid dispensing event with ≥15 days to member with 4 or more different prescribers during the measurement year."
+            ]
         }
     },
     {
@@ -874,10 +1288,15 @@
             "domainOfCare" : "EOC", 
             "title" : "Use of Opioids from Multiple Pharmacies", 
             "displayLabel" : "UOP: Multiple Pharmacies", 
+            "link": "https://www.ncqa.org/hedis/measures/use-of-opioids-from-multiple-providers/",
             "measureType" : "process", 
             "weight" : 1, 
             "hasSubMeasures" : false,
-            "inverted": false
+            "inverted": false,
+            "recommendation": [
+                "Corrective Actions: ",
+                "Avoid opioid dispensing event to member with 4 or more different pharmacies during the measurement year."
+            ]
         }
     },
     {
@@ -886,10 +1305,15 @@
             "domainOfCare" : "EOC", 
             "title" : "Use of Opioids from Multiple Prescribers and Pharmacies", 
             "displayLabel" : "UOP: Multiple Prescribers and Pharmacies", 
+            "link": "https://www.ncqa.org/hedis/measures/use-of-opioids-from-multiple-providers/",
             "measureType" : "process", 
             "weight" : 1, 
             "hasSubMeasures" : false,
-            "inverted": false
+            "inverted": false,
+            "recommendation": [
+                "Corrective Actions: ",
+                "Avoid opioid dispensing event more than 15 days to member with 4 or more different prescribers and 4 or more different pharmacies during the measurement year."
+            ]
         }
     },
     {
@@ -898,11 +1322,20 @@
             "domainOfCare" : "EOC", 
             "title" : "Appropriate Treatment for Children With Upper Respiratory Infection", 
             "displayLabel" : "URI", 
-            "description": "URI assesses the percentage of episodes for members 3 months and older diagnosed with an URI that did not result in an antibiotic dispensing event.", 
+            "description": [
+                "URI assesses the percentage of episodes for members 3 months of age and older with a diagnosis of upper respiratory infection (URI) that did not result in an antibiotic dispensing event. A higher rate indicates appropriate treatment for URI (i.e., the percentage of episodes that were not prescribed an antibiotic).",
+                "Note: on NCQA website (as of 6/27/2022) - this measure is called Appropriate Treatment for Upper Respiratory Infection (URI)"
+            ],
+            "link": "https://www.ncqa.org/hedis/measures/appropriate-treatment-for-upper-respiratory-infection/",
             "measureType" : "process", 
             "weight" : 1, 
             "hasSubMeasures" : false,
-            "inverted": true
+            "inverted": true,
+            "tooltip": "URI assesses the percentage of episodes for members 3 months and older diagnosed with an URI that did not result in an antibiotic dispensing event.",
+            "recommendation": [
+                "Corrective Actions: ",
+                "Avoid antibiotic dispensing event to members 3 months of age and older with a diagnosis of upper respiratory infection (URI)."
+            ]
         }
     }
 ]
