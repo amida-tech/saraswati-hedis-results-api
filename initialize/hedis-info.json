@@ -20,7 +20,7 @@
             "hasSubMeasures": false,
             "inverted": true,
             "recommendation": [
-                "To be compliant: ", 
+                "Corrective Actions: ", 
                 "Avoid treating adults diagnosed with bronchitis or bronchiolitis with antibotics."
             ],
             "tooltip": "AAB assesses the percentage of episodes for members 3 months of age and older with a diagnosis of acute bronchitis/bronchiolitis that did not result in an antibiotic dispensing event."
@@ -58,7 +58,7 @@
             "hasSubMeasures" : true,
             "inverted": false,
             "recommendation" : [
-                "To be compliant: ", 
+                "Corrective Actions: ", 
                 "Confirm that a follow up visit with a practitioner with the authority to prescribe medication is completed 30 days after the index prescription start date (IPSD).", 
                 "Note, the initial ISPD visit does not count as the initiation phase visit."
             ]
@@ -76,7 +76,7 @@
             "hasSubMeasures" : true,
             "inverted": false,
             "recommendation" : [
-                "To be compliant: ",
+                "Corrective Actions: ",
                 "After the initial follow up visit with a practitioner with the authority to prescribe medication, confirm that at least 2 follow up visits have been completed within 9 months after the index prescription start date (IPSD). Only one of the 2 visits can be an e-visit/virtual check-in."
             ]
         }
@@ -109,7 +109,7 @@
             "hasSubMeasures" : false,
             "inverted" : false,
             "recommendation" : [
-                "To be compliant: ",
+                "Corrective Actions: ",
                 "Confirm members are tested at least once for HbA1c."
             ]
         }
@@ -126,7 +126,7 @@
             "hasSubMeasures" : false,
             "inverted" : false,
             "recommendation" : [
-                "To be compliant: ",
+                "Corrective Actions: ",
                 "Confirm members are tested at least once for LDL-C or cholesterol."]
         }
     },
@@ -142,7 +142,7 @@
             "hasSubMeasures" : false,
             "inverted" : false,
             "recommendation" : [
-                "To be compliant: ",
+                "Corrective Actions: ",
                 "Confirm members are tested at least once for both blood glucose or HbA1c AND LDL-C or cholesterol."
             ]
         }
@@ -175,7 +175,7 @@
             "hasSubMeasures" : false,
             "inverted": false,
             "recommendation" : [
-                "To be compliant: ",
+                "Corrective Actions: ",
                 "Confirm that members 18 and over with a documented unhealthy alcohol use are screened between January 1 - November 1 of the measurement year."
             ]
         }
@@ -192,7 +192,7 @@
             "hasSubMeasures" : false,
             "inverted": false,
             "recommendation" : [
-                "To be compliant: ",
+                "Corrective Actions: ",
                 "Confirm that members are receiving alcohol counseling or another form of follow-up care 60 days after the date of the first positive screen for unhealthy alcohol use."]
         }
     },
@@ -224,7 +224,7 @@
             "hasSubMeasures": false,
             "inverted": false,
             "recommendation": [
-                "To be compliant: ",
+                "Corrective Actions: ",
                 "Confirm that the influenza vaccine is administered between July 1(prior measurement year) and June 30(current measurement year)."
             ]
         }
@@ -241,7 +241,7 @@
             "hasSubMeasures": false,
             "inverted": false,
             "recommendation": [
-                "To be compliant, either:",
+                "Corrective Actions, either:",
                 "A) At least 1 Td or Tdap vaccine must be administered at least 9 years prior to measurement year",
                 "OR",
                 "B) Confirm member has to have a history of either Anaphylaxis or Encephalitis due to the diphtheria, tetanus or pertussis vaccine."
@@ -260,7 +260,7 @@
             "hasSubMeasures": false,
             "inverted": false,
             "recommendation": [
-                "To be compliant, confirm that either:", 
+                "Corrective Actions, confirm that either:", 
                 "A) 1 dose of herpes zoster live vaccine",
                 "OR", 
                 "B) 2 doses of herpes zoster recombinant vaccine was administered at least 28 days apart. Vaccines can be given anytime on or after the 50th birthday."
@@ -279,7 +279,7 @@
             "hasSubMeasures": false,
             "inverted": false,
             "recommendation": [
-                "To be compliant, confirm that:",
+                "Corrective Actions, confirm that:",
                 "The 23-valent pneumococcal polysaccharide vaccine was administered on or after the 60th birthday."
             ]
         }
@@ -297,7 +297,7 @@
             "hasSubMeasures" : false,
             "inverted": false,
             "recommendation" : [
-                "To be compliant, confirm that :",
+                "Corrective Actions, confirm that :",
                 "Women between 50-74 receive one or more mammograms between October 1, 2 years before the current measurement year, and the end of the current measurement year."
             ],
             "tooltip": "BCS-E assesses women 50–74 years of age who had at least one mammogram to screen for breast cancer in the past two years."
@@ -323,9 +323,9 @@
             "inverted": false,
             "recommendation": [
                 "Administrative Specification: ",
-                "To be compliant, confirm that women who are either 24-64 years who have had cervical cytology at least 2 years prior to measurement year OR women 20-64 years who have had cervical high-risk human papillomavirus (hrHPV) testing at least 4 years prior to measurement year were screened for cervical cancer.", 
+                "Corrective Actions, confirm that women who are either 24-64 years who have had cervical cytology at least 2 years prior to measurement year OR women 20-64 years who have had cervical high-risk human papillomavirus (hrHPV) testing at least 4 years prior to measurement year were screened for cervical cancer.", 
                 "Hybrid Specification: ", 
-                "To be compliant, women who were appropriately screened for cervical cancer should be documented in administrative data or medical record review."
+                "Corrective Actions, women who were appropriately screened for cervical cancer should be documented in administrative data or medical record review."
             ],
             "tooltip": "CCS assesses women who were screened for cervical cancer with certain conditions applied to the following age brackets: 21–64 years and 30–64 years."
         }
@@ -336,7 +336,7 @@
             "domainOfCare" : "ECDS",
             "title" : "Childhood Immunization Status",
             "displayLabel" : "CIS-E",
-            "description": "CIS-E assesses the percentage of children 2 years of age who had a four diphtheria, tetanus and acellular pertussis (DTaP); three polio (IPV); one measles, mumps and rubella (MMR); three haemophilus influenza type B (HiB); three hepatitis B (HepB), one chicken pox (VZV); four pneumococcal conjugate (PCV); one hepatitis A (HepA); two or three rotavirus (RV); and two influenza (flu) vaccines by their second birthday.", 
+            "description": ["CIS-E assesses the percentage of children 2 years of age who had a four diphtheria, tetanus and acellular pertussis (DTaP); three polio (IPV); one measles, mumps and rubella (MMR); three haemophilus influenza type B (HiB); three hepatitis B (HepB), one chicken pox (VZV); four pneumococcal conjugate (PCV); one hepatitis A (HepA); two or three rotavirus (RV); and two influenza (flu) vaccines by their second birthday."], 
             "link": "https://www.ncqa.org/hedis/measures/childhood-immunization-status/",
             "measureType" : "process",
             "weight" : 3,
@@ -359,7 +359,7 @@
             "hasSubMeasures" : false,
             "inverted": false,
             "recommendation" : [
-                "To be compliant, confirm that by the child’s 2nd birthday: ",
+                "Corrective Actions, confirm that by the child’s 2nd birthday: ",
                 "A) The child has received at least 4 DTaP vaccinations (not including the one administered before 42 days after birth.",
                 "B) The child had Anaphylaxis due to the diphtheria, tetanus or pertussis vaccine.",
                 "C) The child had Encephalitis due to the diphtheria, tetanus or pertussis vaccine."
@@ -378,7 +378,7 @@
             "hasSubMeasures" : false,
             "inverted": false,
             "recommendation" : [
-                "To be compliant, confirm that by the child’s 2nd birthday: ",
+                "Corrective Actions, confirm that by the child’s 2nd birthday: ",
                 "The child has received at least 3 IPV vaccinations (not including the one administered 42 days after birth)."
             ]
         }
@@ -395,7 +395,7 @@
             "hasSubMeasures" : false,
             "inverted": false,
             "recommendation" : [
-                "To be compliant, confirm that: ",
+                "Corrective Actions, confirm that: ",
                 "A) The child has either had at least one MMR vaccination between the 1st and 2nd birthday", 
                 "OR",
                 "B) The child has a history of measles, mumps and rubella illnesses, all before their 2nd birthday."
@@ -414,7 +414,7 @@
             "hasSubMeasures" : false,
             "inverted": false,
             "recommendation" : [
-                "To be compliant, confirm that by the child’s 2nd birthday: ", 
+                "Corrective Actions, confirm that by the child’s 2nd birthday: ", 
                 "A) The child has either had at least 3 HiB vaccinations (not including the one administered before 42 days after birth)", 
                 "OR", 
                 "B) The child had anaphylaxis from the HiB vaccine."
@@ -433,7 +433,7 @@
             "hasSubMeasures" : false,
             "inverted": false,
             "recommendation" : [
-                "To be compliant, confirm that by the child’s 2nd birthday: ",
+                "Corrective Actions, confirm that by the child’s 2nd birthday: ",
                 "A) The child has either had at least 3 hepatitis B vaccinations (note that the newborn hepatitis B vaccine administered at most 7 days post birth counts towards the 3 hepatitis B vaccinations)", 
                 "OR", 
                 "B) The child has a history of hepatitis B illness OR anaphylaxis from the hepatitis B vaccine."
@@ -452,7 +452,7 @@
             "hasSubMeasures" : false,
             "inverted": false,
             "recommendation" : [
-                "To be compliant, confirm that the child has either: ",
+                "Corrective Actions, confirm that the child has either: ",
                 "A) Received at least 1 VZV vaccine between the 1st and 2nd birthday", 
                 "OR", 
                 "B) The child has a history of varicella zoster (ie: chicken pox) illness before the 2nd birthday."
@@ -471,7 +471,7 @@
             "hasSubMeasures" : false,
             "inverted": false,
             "recommendation" : [
-                "To be compliant, confirm that by the child’s 2nd birthday that: ",
+                "Corrective Actions, confirm that by the child’s 2nd birthday that: ",
                 "The child has received at least 4 pneumococcal conjugate vaccinations (not including the one administered before 42 days after birth)."
             ]
         }
@@ -488,7 +488,7 @@
             "hasSubMeasures" : false,
             "inverted": false,
             "recommendation" : [
-                "To be compliant, confirm that by the child’s 2nd birthday that: ",
+                "Corrective Actions, confirm that by the child’s 2nd birthday that: ",
                 "A) The child has received at least 1 hepatitis A vaccine between the 1st and 2nd birthday",
                 "OR",
                 "B) The child has a history of hepatitis A illness before the 2nd birthday."
@@ -507,14 +507,14 @@
             "hasSubMeasures" : false,
             "inverted": false,
             "recommendation" : [
-                "To be compliant, confirm that by the child’s 2nd birthday that: ",
+                "Corrective Actions, confirm that by the child’s 2nd birthday that: ",
                 "A) The child has received at least 2 doses of the 2-dose rotative vaccine before the 2nd birthday (not including the one administered before 42 days after birth)",
                 "OR",
                 "B) The child has received at least 3 doses of the 3-dose rotative vaccine before the 2nd birthday (not including the one administered before 42 days after birth)",
                 "OR",
                 "C) The child has received a combination of at least 1 dose of the 2-dose & at least 2 doses of the 3-dose vaccines before the 2nd birthday (not including the one administered before 42 days after birth)",
                 "OR",
-                "B) The child had anaphylaxis from the rotavirus vaccine by the 2nd birthday."]
+                "D) The child had anaphylaxis from the rotavirus vaccine by the 2nd birthday."]
         }
     },
     {
@@ -529,7 +529,7 @@
             "hasSubMeasures" : false,
             "inverted": false,
             "recommendation" : [
-                "To be compliant, confirm that by the child’s 2nd birthday that: ",
+                "Corrective Actions, confirm that by the child’s 2nd birthday that: ",
                 "The child has received at least 2 influenza vaccines before the 2nd birthday (not including the one administered before 6 months/180 days after birth).", 
                 "Note that 1 of the 2 vaccinations can be the LAIV vaccination provided on the child’s 2nd birthday - this does not include any LAIV vaccines administered before the 2nd birthday."]
         }
@@ -598,7 +598,7 @@
             "hasSubMeasures" : false,
             "inverted": false,
             "recommendation" : [
-                "To be compliant, confirm one or more screenings for colorectal cancer. Acceptable screenings include: ",
+                "Corrective Actions, confirm one or more screenings for colorectal cancer. Acceptable screenings include: ",
                 "A) Fecal occult blood test during the measurement year.",
                 "B) Flexible sigmoidoscopy up to 4 years prior to measurement year.",
                 "C) Colonoscopy up to 9 years prior to measurement year.",
@@ -668,7 +668,7 @@
             "hasSubMeasures" : false,
             "inverted": false,
             "recommendation" : [
-                "To be compliant, confirm that: ",
+                "Corrective Actions, confirm that: ",
                 "For a diagnosis of pharyngitis, an antibiotic was given and the group A streptococcus (strep) test was performed within 7 days of pharyngitis’ diagnosis.",
                 "A group A streptococcus test (Group A Strep Tests Value Set) in the seven-day period from three days prior to the Episode Date through three days after the Episode Date."
             ],
@@ -703,7 +703,7 @@
             "hasSubMeasures" : false,
             "inverted": false,
             "recommendation" : [
-                "To be compliant, confirm that :", 
+                "Corrective Actions, confirm that :", 
                 "A PHQ-9 score has been recorded during Assessment Period 1 (January 1–April 30)."
             ]
         }
@@ -720,7 +720,7 @@
             "hasSubMeasures" : false,
             "inverted": false,
             "recommendation" : [
-                "To be compliant, confirm that :", 
+                "Corrective Actions, confirm that :", 
                 "A PHQ-9 score has been recorded during Assessment Period 2 (May 1–August 31)."
             ]
         }
@@ -736,7 +736,7 @@
             "hasSubMeasures" : false,
             "inverted": false,
             "recommendation" : [
-                "To be compliant, confirm that :", 
+                "Corrective Actions, confirm that :", 
                 "A PHQ-9 score has been recorded during Assessment Period 3 ( September 1–December 31)."
             ]
         }
@@ -775,7 +775,7 @@
             "hasSubMeasures": false,
             "inverted": false,
             "recommendation": [
-                "To be compliant, confirm that: ", 
+                "Corrective Actions, confirm that: ", 
                 "A follow up PHQ-9 score was documented within 4-8 months of the initial assessment with elevated PHQ-9 score."
             ]
         }
@@ -792,7 +792,7 @@
             "hasSubMeasures": false,
             "inverted": false,
             "recommendation": [
-                "To be compliant, confirm that: ", 
+                "Corrective Actions, confirm that: ", 
                 "The PHQ-9 score is less than 5 during the follow-up period (4-8 months); this indicates a remission of depression symptoms."
             ]
         }
@@ -809,7 +809,7 @@
             "hasSubMeasures": false,
             "inverted": false,
             "recommendation": [
-                "To be compliant, confirm that: ", 
+                "Corrective Actions, confirm that: ", 
                 "The PHQ-9 score is 50% lower than the score recorded at the initial assessment; this indicates a response to treatment for depression during the follow-up period (4-8 months prior to IESD)."
             ]
         }
@@ -846,7 +846,7 @@
             "hasSubMeasures": false,
             "inverted": false,
             "recommendation": [ 
-                "To be compliant, confirm that: ",
+                "Corrective Actions, confirm that: ",
                 "Screenings for clinical depression are done using the age-appropriate standardized instrument between January 1-December 1 of the measurement year."
             ]
         }
@@ -863,7 +863,7 @@
             "hasSubMeasures": false,
             "inverted": false,
             "recommendation": [
-                "To be compliant, confirm that: ", 
+                "Corrective Actions, confirm that: ", 
                 "Members receive qualifying follow-up care within 30 days of positive depression screen"
             ]
         }
@@ -896,7 +896,7 @@
             "hasSubMeasures": false,
             "inverted": false,
             "recommendation": [
-                "To be compliant, confirm that :",
+                "Corrective Actions, confirm that :",
                 "A qualifying follow-up visit occurred within 30 days after the emergency department (ED) visit with a diagnosis of mental health illness and/or intentional self-harm.", 
                 "Note: these include follow-up visits on the date of ED."
             ]
@@ -914,7 +914,7 @@
             "hasSubMeasures": false,
             "inverted": false,
             "recommendation": [
-                "To be compliant, confirm that: ", 
+                "Corrective Actions, confirm that: ", 
                 "Qualifying follow-up visit occurred within 7 days after the emergency department (ED) visit with a diagnosis of mental health illness and/or intentional self-harm.",
                 "Note: these include follow-up visits on the date of ED."
             ]
@@ -948,7 +948,7 @@
             "hasSubMeasures": false,
             "inverted": false,
             "recommendation": [
-                "To be compliant, members must have either of the following: ",
+                "Corrective Actions, members must have either of the following: ",
                 "A) At least one meningococcal serogroups A, C, W, Y vaccine, with a date of service on or between the member’s 11th and 13th birthdays.", 
                 "B) The member had anaphylaxis due to the meningococcal vaccine any time on or before the member’s 13th birthday."
             ],
@@ -967,7 +967,7 @@
             "hasSubMeasures": false,
             "inverted": false,
             "recommendation": [
-                "To be compliant, members must have either of the following:",  
+                "Corrective Actions, members must have either of the following:",  
                 "A) At least one tetanus, diphtheria toxoids and acellular pertussis (Tdap) vaccine, with a date of service on or between the member’s 10th and 13th birthdays.",
                 "B) Anaphylaxis due to the tetanus, diphtheria or pertussis vaccine any time on or before the member’s 13th birthday.",
                 "C) Encephalitis due to the tetanus, diphtheria or pertussis vaccine any time on or before the member’s 13th birthday."
@@ -987,7 +987,7 @@
             "hasSubMeasures": false,
             "inverted": false,
             "recommendation":[
-                "To be compliant, member must have received either of the following: ",
+                "Corrective Actions, member must have received either of the following: ",
                 "A) At least two HPV vaccines, on or between the member’s 9th and 13th birthdays and with dates of service at least 146 days apart. For example, if the service date for the first vaccine was March 1, then the service date for the second vaccine must be on or after July 25.",
                 "B) At least three HPV vaccines, with different dates of service on or between the member’s 9th and 13th birthdays.",
                 "C) The member had anaphylaxis due to the HPV vaccine any time on or before the member’s 13th birthday."
@@ -1007,7 +1007,7 @@
             "hasSubMeasures": false,
             "inverted": false,
             "recommendation": [
-                "To be compliant: ",
+                "Corrective Actions: ",
                 "Adolescents who are numerator compliant must have for both the Meningococcal and Tdap indicators."
             ],
             "tooltip": ""
@@ -1025,7 +1025,7 @@
             "hasSubMeasures": false,
             "inverted": false,
             "recommendation": [
-                "To be compliant: ",
+                "Corrective Actions: ",
                 "Adolescents who are numerator compliant must have for all three indicators (Meningococcal, Tdap, HPV)."
             ]
         }
@@ -1062,7 +1062,7 @@
             "hasSubMeasures" : false,
             "inverted": false,
             "recommendation": [
-                "To be compliant, confirm: ",
+                "Corrective Actions, confirm: ",
                 "Deliveries in which members had a documented result for depression screening, using an age-appropriate standardized instrument, performed during the 7–84 days following the date of delivery."
             ]
         }
@@ -1079,7 +1079,7 @@
             "hasSubMeasures" : false,
             "inverted": false,
             "recommendation": [
-                "To be compliant: ",
+                "Corrective Actions: ",
                 "Confirm that deliveries in which members received follow-up care on or up to 30 days after the date of the first positive screen (31 total days).",
                 "Any of the following on or up to 30 days after the first positive screen: ",
                 "A) An outpatient, telephone, e-visit or virtual check-in follow-up visit with a diagnosis of depression or other behavioral health condition.",
@@ -1124,7 +1124,7 @@
             "hasSubMeasures" : false,
             "inverted": false,
             "recommendation": [
-                "To be compliant: ",
+                "Corrective Actions: ",
                 "Confirm deliveries in which members had a documented result for depression screening, using an age-appropriate standardized screening instrument, performed during pregnancy.",
                 "A) Deliveries between January 1 and December 1 of the Measurement Period: Screening should be performed between the pregnancy start date and the delivery date (including on the delivery date).",
                 "B) Deliveries between December 2 and December 31 of the Measurement Period: Screening should be performed between the pregnancy start date and December 1 of the Measurement Period."
@@ -1143,7 +1143,7 @@
             "hasSubMeasures" : false,
             "inverted": false,
             "recommendation": [
-                "To be compliant: ",
+                "Corrective Actions: ",
                 "Confirm deliveries in which members received follow-up care on or up to 30 days after the date of the first positive screen (31 total days).",
                 "A) An outpatient, telephone, e-visit or virtual check-in follow-up visit with a diagnosis of depression or other behavioral health condition.",
                 "B) A depression case management encounter that documents assessment for symptoms of depression or a diagnosis of depression or other behavioral health condition.",
@@ -1183,7 +1183,7 @@
             "hasSubMeasures" : false,
             "inverted": false,
             "recommendation": [
-                "To be compliant: ",
+                "Corrective Actions: ",
                 "Confirm deliveries where members received an adult influenza vaccine on or between July 1 of the year prior to the Measurement Period and the delivery date."
             ]
         }
@@ -1200,7 +1200,7 @@
             "hasSubMeasures" : false,
             "inverted": false,
             "recommendation": [
-                "To be compliant: ",
+                "Corrective Actions: ",
                 "Confirm deliveries where members received at least one Tdap vaccine during the pregnancy (including on the delivery date) or confirm deliveries where members had any of the following.",
                 "A) Anaphylaxis due to the diphtheria, tetanus or pertussis vaccine on or before the delivery date.",
                 "B) Encephalitis due to the diphtheria, tetanus or pertussis vaccine on or before the delivery date."
@@ -1220,7 +1220,7 @@
             "hasSubMeasures" : false,
             "inverted": false,
             "recommendation": [
-                "To be compliant: ",
+                "Corrective Actions: ",
                 "Confirm deliveries meet criteria for immunization status for both Influenza and Tdap."
             ]
         }
@@ -1239,7 +1239,7 @@
             "inverted": false,
             "tooltip": "PSA assesses whether men 70 years and older were screened unnecessarily for prostate cancer using prostate-specific antigen (PSA)-based screening.",
             "recommendation": [
-                "To be compliant: ",
+                "Corrective Actions: ",
                 "Confirm men 70 years and older are not screened unnecessarily for prostate cancer using prostate-specific antigen (PSA)-based screening."
             ]
         }
@@ -1277,7 +1277,7 @@
             "hasSubMeasures" : false,
             "inverted": false,
             "recommendation":[
-                "To be compliant: ",
+                "Corrective Actions: ",
                 "Avoid opioid dispensing event with ≥15 days to member with 4 or more different prescribers during the measurement year."
             ]
         }
@@ -1294,7 +1294,7 @@
             "hasSubMeasures" : false,
             "inverted": false,
             "recommendation": [
-                "To be compliant: ",
+                "Corrective Actions: ",
                 "Avoid opioid dispensing event to member with 4 or more different pharmacies during the measurement year."
             ]
         }
@@ -1311,7 +1311,7 @@
             "hasSubMeasures" : false,
             "inverted": false,
             "recommendation": [
-                "To be compliant: ",
+                "Corrective Actions: ",
                 "Avoid opioid dispensing event more than 15 days to member with 4 or more different prescribers and 4 or more different pharmacies during the measurement year."
             ]
         }
@@ -1333,7 +1333,7 @@
             "inverted": true,
             "tooltip": "URI assesses the percentage of episodes for members 3 months and older diagnosed with an URI that did not result in an antibiotic dispensing event.",
             "recommendation": [
-                "To be compliant: ",
+                "Corrective Actions: ",
                 "Avoid antibiotic dispensing event to members 3 months of age and older with a diagnosis of upper respiratory infection (URI)."
             ]
         }
