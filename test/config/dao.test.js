@@ -3,6 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const config = require('../../src/config/config');
 const dao = require('../../src/config/dao');
+const logger = require('../../src/config/winston')
 
 const data = JSON.parse(fs.readFileSync(`${path.resolve()}/test/resources/bulk-data.json`));
 const resultData = JSON.parse(fs.readFileSync(`${path.resolve()}/test/result-data/measure-results.json`));
@@ -34,7 +35,12 @@ describe('## db.js', () => {
   beforeAll(async () => {
     db = { collection: jest.fn(() => collection) };
     dao.initTest(db);
+    logger.silent = true;
   });
+
+  afterAll(() => {
+    logger.silent = false;
+  })
 
   describe('Test getMeasures function', () => {
     test('Should not throw an error', async () => {
