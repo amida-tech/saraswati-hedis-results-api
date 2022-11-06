@@ -31,16 +31,14 @@ const collection = {
 
 describe('## db.js', () => {
   let db;
+  // with the current version of Winston, transports try to fire during tests and create an error
+  // by setting the logger to silent, we can avoid info logs firing off
+  logger.silent = true;
 
   beforeAll(async () => {
     db = { collection: jest.fn(() => collection) };
     dao.initTest(db);
-    logger.silent = true;
   });
-
-  afterAll(() => {
-    logger.silent = false;
-  })
 
   describe('Test getMeasures function', () => {
     test('Should not throw an error', async () => {
