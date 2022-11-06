@@ -27,7 +27,7 @@ const logger = createLogger({
   format: configuredFormatter(options),
   defaultMeta: { service: 'HERA' },
   transports: [
-    new transports.Console({})
+    new transports.Console({}),
   ]
 });
 
