@@ -121,7 +121,7 @@ const calcLatestNumDen = (resultList, measureInfo, currentDate) => {
       });
     }
 
-    const patientData = patient[patient.memberId];
+    const patientData = patient.result;
     const resultHolder = resultMap.get(measurementType);
 
     // Save values for each field name, putting subscores into their respective index
