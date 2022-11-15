@@ -207,6 +207,339 @@ const insertHealthcareCoverage = async (coverage) => {
     }
   }
 };
+
+// Creates User Collections in mongoDB
+const createUserCollection = () => {
+  try {
+    return db.createCollection('users', {
+      // Validation / Schema for more information see ----> https://www.mongodb.com/docs/v4.4/core/schema-validation/
+      validator: {
+        $jsonSchema: {
+          bsonType: 'object',
+          required: [
+            // 'email',
+            firstName,
+            // 'lastName',
+            // 'role',
+            // 'companyName',
+            // 'companyPreference',
+            // 'userPrefrences',
+            // 'created_on',
+            // 'updated_on',
+          ],
+          properties: {
+            // email: {
+            //   bsonType: 'string',
+            //   description: `Email must include '@'.`
+            // },
+            firstName: {
+              bsonType: 'string',
+              description: 'First name of the user',
+            },
+            // lastName: {
+            //   bsonType: 'string',
+            //   description: 'Last name of the user',
+            // },
+            // role: {
+            //   bsonType: 'string',
+            //   description: 'Role of the Employee',
+            // },
+            // companyName: {
+            //   bsonType: 'string',
+            //   description: 'Name of The company',
+            // },
+            // companyPreference: {
+            //   bsonType: 'object',
+            //   description: 'Company wide preferences',
+            //   properties: {
+            //     companyType: {
+            //       bsonType: 'string',
+            //       description: 'Name of The company',
+            //       minLength:4
+            //     },
+            //     measureList: {
+            //       bsonType: 'array',
+            //       items: {
+            //         bsonType: 'string',
+            //         description: 'List of quality care measures company has requested.',
+            //       },
+            //       // minItems: 1,
+            //       uniqueItems: true
+            //     },
+            //     customMeasureList: {
+            //       bsonType: 'array',
+            //       items: {
+            //           description: 'List of custom quality care measures company has requested.',
+            //           bsonType: 'string'
+            //       },
+            //       // minItems: 0, Discuss at PR REVIEW
+            //       uniqueItems: true
+            //     },
+            //     customFilters: {
+            //           bsonType: 'object',
+            //           description: 'Company wide filter drawer preferences',
+            //           properties:{
+            //             filterType: {
+            //               bsonType: 'string',
+            //               description: 'Company wide filters option.',
+            //               // minLength: 6
+            //             },
+            //             filters: {
+            //               bsonType: 'array',
+            //               items: {
+            //                   description: 'List of filters company has requested.',
+            //                   bsonType: 'string'
+            //               },
+            //               // minItems: 0, Discuss at PR REVIEW
+            //               uniqueItems: true
+            //             }
+            //           },
+            //           // minItems: 1,
+            //           required: [ 'filterType', 'filters' ],
+            //           uniqueItems: true
+            //     },
+            //     starRating: {
+            //       bsonType: 'bool',
+            //       description: 'Access to Star Rating',
+            //     },
+            //     ratingsAndTrends: {
+            //       bsonType: 'bool',
+            //       description: 'Access to ratings and trends',
+            //     },
+            //     predictions: {
+            //       bsonType: 'bool',
+            //       description: 'Access to predictions',
+            //     },
+            //     tableFilters: {
+            //       bsonType: 'bool',
+            //       description: 'Access to table filters',
+            //     },
+            //     reportsAccess: {
+            //       bsonType: 'object',
+            //       description: 'Company wide preferences for reports access',
+            //       properties: {
+            //         memberInfoAccess: {
+            //           bsonType: 'bool',
+            //           description: 'Access to member information',
+            //         },
+            //         memberPolicyInfoAccess: {
+            //           bsonType: 'bool',
+            //           description: 'Access to member insurance policy information',
+            //         },
+            //         reportAccess: {
+            //           bsonType: 'bool',
+            //           description: 'Access to member report information',
+            //         },
+            //       },
+            //       required: [ 'memberInfoAccess', 'memberPolicyInfoAccess', 'reportAccess' ]
+            //     }
+            //     // ,
+            //     // settings:{ // REVIEW AT PR
+            //     //   bsonType: 'object',
+            //     //   description: 'Company wide preferences for reports access',
+            //     //   properties: {},
+            //     //   required: [ ],
+            //     // } 
+            //   },
+            //   required: [
+            //     'companyType',
+            //     'measureList',
+            //     'customMeasureList',
+            //     'customFilters',
+            //     'starRating',
+            //     'ratingsAndTrends',
+            //     'predictions',
+            //     'tableFilters',
+            //     'reportsAccess',
+            //     // 'settings'
+            //   ],
+            // },
+            // userPrefrences: {
+            //   bsonType: 'object',
+            //   description: 'User preferences',
+            //   properties: {
+            //     measureList: {
+            //     bsonType: 'array',
+            //     items: {
+            //         description: 'List of quality care measures company has requested.',
+            //         bsonType: 'string'
+            //     },
+            //     minItems: 1,
+            //     uniqueItems: true
+            //     },
+            //     profilePicture: {
+            //       bsonType: 'string',
+            //       description: 'Profile picture of the user',
+            //     },
+            //     darkLightMode: {
+            //       bsonType: 'string',
+            //       description: 'User Selection for dark / light mode.',
+            //       // minLength: 4,
+            //     },
+            //     timezone: {
+            //       bsonType: 'string',
+            //       description: 'User Timezone',
+            //       minLength: 3
+            //     },
+            //     lastLogin: {
+            //       bsonType: 'date',
+            //       description: 'User last recorded timezone',
+            //     },
+            //     reportView: {
+            //       bsonType: 'bool',
+            //       description: 'User access to member reports',
+            //     },
+            //     reportsAccess: {
+            //       bsonType: 'object',
+            //       description: 'User preferences for reports access',
+            //       properties: {
+            //         memberInfoAccess: {
+            //           bsonType: 'bool',
+            //           description: 'User access to member information',
+            //         },
+            //         memberPolicyInfoAccess: {
+            //           bsonType: 'bool',
+            //           description: 'User access to member insurance policy information',
+            //         },
+            //         reportAccess: {
+            //           bsonType: 'bool',
+            //           description: 'User access to member report information',
+            //         },
+            //       },
+            //       required: [ 'memberInfoAccess', 'memberPolicyInfoAccess', 'reportAccess' ]
+            //     },
+            //     reportsGenerated: {
+            //       bsonType: 'array',
+            //       items: {
+            //         bsonType: 'object',
+            //         description: 'User preferences for reports access',
+            //         properties: {
+            //           paitientID: {
+            //             bsonType: 'string',
+            //             description: 'Paitent / Member Id of the lastest generated report',
+            //             minLength: 5
+            //           },
+            //           date: {
+            //             bsonType: 'date',
+            //             description: 'Date of the latest generated member report',
+            //           },
+            //         },
+            //         required: [ 'paitientID', 'date']
+            //       },
+            //       // minItems: 0, Check At PR
+            //       uniqueItems: true
+            //     },
+            //     lastFilter: {
+            //       bsonType: 'array',
+            //       items: {
+            //         bsonType: 'object',
+            //         description: 'Last filter option user searched with',
+            //         properties: {
+            //           filterName: {
+            //             bsonType: 'string',
+            //             description: 'Name of filter',
+            //           },
+            //           fiterValues: {
+            //             bsonType: 'array',
+            //             items: {
+            //               bsonType: 'string',
+            //               description: 'Value of filters selected',
+            //             },
+            //           }
+            //         },
+            //         required: [ 'filterName', 'fiterValues']
+            //       },
+            //       // minItems: 0,  // Check At PR
+            //       uniqueItems: true
+            //     }
+            //   },
+            //   required: [
+            //     'measureList',
+            //     'profilePicture',
+            //     'darkLightMode',
+            //     'timezone',
+            //     'lastLogin',
+            //     'reportView',
+            //     'reportsAccess',
+            //     'reportsGenerated',
+            //     'lastFilter',
+            //   ],
+            // },
+            // created_on: {
+            //   bsonType: 'date',
+            //   description: 'Date user was created',
+            // },
+            // updated_on: {
+            //   bsonType: 'date',
+            //   description: `Date of user's last update`,
+            // },
+          },
+          
+        }
+      }
+    })
+  } catch (error) {
+    console.log(error)
+  }
+}
+//  GET USERS FROM DB
+const verifyUserCollection = (collection) => {
+    // Verify User DB Exist Load Test Users
+  let response = ''
+  const verifyCollection = db.listCollections({name: collection})
+    .next((err, collinfo)=> {
+      if (collinfo) {
+        return 'User Database Already Loaded...'
+      } else {
+        createUserCollection()
+        return 'User database does not exist, Creating now...'
+      }
+    });
+    console.log('verifyCollection',verifyCollection)
+};
+//  GET USERS FROM DB
+const getUsers = (query) => {
+  const collection = db.collection('users');
+  return collection.find(query).toArray();
+};
+const addUsers = (users) => {
+  const collection = db.collection('users');
+  return collection.insertOne(users)
+};
+const getUsersByEmail = (email) => {
+  const collection = db.collection('users');
+  if (measure) {
+    return collection.find({ email }).toArray();
+  }
+  return collection.find({}).toArray();
+}
+const updateUserByEmail = async (member) => {
+
+};
+
+const deleteUserByEmail = async (member) => {
+  
+};
+
+const backUpUser = async (member) => {
+ 
+};
+const accessControl = (email) =>{
+  
+  // return access by role
+ 
+  // superAdmin
+
+  // admin
+  
+  // payor
+  
+  // provider
+  
+  // paitient
+
+}
+
 module.exports = {
   init,
   initTest,
@@ -228,4 +561,12 @@ module.exports = {
   insertHealthcareProviders,
   getHealthcareCoverages,
   insertHealthcareCoverage,
+  createUserCollection,
+  verifyUserCollection,
+  getUsers,
+  addUsers,
+  getUsersByEmail,
+  updateUserByEmail,
+  deleteUserByEmail,
+  backUpUser,
 };

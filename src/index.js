@@ -123,6 +123,90 @@ async function initHedisInfo() {
     }
   }
 }
+async function initUsers() {
+  // First user added is the test user just to check and see if user exist.
+  const testUsers = [
+    {
+      email: 'testUser@amida.com',
+      firstName: 'Test',
+      lastName: 'User',
+      role: 'Test - SuperAdmin',
+      companyName: 'Amida Technology Solutions',
+      companyPreference: {
+        companyType: 'Healthcare Provider',
+        measureList: [ 'aab', 'adde', 'apme', 'asfe', 'bcs', 'ccs', 'cise', 'col', 'cou', 'cwp', 'dmse', 'pdse', 'pnde', 'prse', 'psa', 'uop', 'uri'],
+        customMeasureList: [],
+        customFilters: {
+          filterType: 'Hybrid', // hybrid or classic or custom
+          filters: [ 'Domain of Care', 'Payors', 'Practioners' ],
+        },
+        starRating: true, // ability to view starRatings 
+        ratingsAndTrends: true, // ability to view ratings and trends 
+        predictions: true, // ability to view predictions 
+        tableFilters: true,
+        reportsAccess: {
+          memberInfoAccess: true,
+          memberPolicyInfoAccess: true,
+          reportAccess: true,
+        },
+        // settings: {} //comeback to this later
+      }, 
+      userPrefrences: {
+        measureList: [ 'aab', 'adde', 'apme', 'asfe', 'bcs', 'ccs', 'cise', 'col', 'cou', 'cwp', 'dmse', 'pdse', 'pnde', 'prse', 'psa', 'uop', 'uri'],
+        profilePicture: 'picture',
+        lastLogin: new Date(),
+        darkLightMode: 'light',
+        reportView: true,
+        reportsGenerated: [
+          {
+            paitientID: "paitient ID",
+            date: new Date(),
+          }
+        ], // max 15 or 20 entries
+        reportsAccess: {
+          memberInfoAccess: true,
+          memberPolicyInfoAccess: true,
+          reportAccess: true,
+        },
+        lastFilter: [
+          {
+            filterName: 'Domain Of Care',
+            filterValues: [ 'EDOC' ],
+          },
+        ], // last filter options user searched with
+        timezone: 'EST',
+      },
+      created_on : new Date(), 
+      updated_on : new Date(),
+      active: true,
+    }
+  ];
+
+  try {
+    // Verify User DB Exist
+    // const createDb = await dao.createUserCollection()
+    // console.log({createDb})
+    const usersInDB = await dao.getUsers()
+
+    if(usersInDB.length === 0){
+      testUsers.forEach(async (testUser) => {
+        const insertTestUser = await dao.addUsers(testUser)
+        // IF INSERRTED COUNT GREATER 0
+        if(insertTestUser.insertedCount > 0 ){
+          winstonInstance.info(`Test user: ${testUser.email}, inserted into users database with: "${testUser.role}" as their role`)
+        } else {
+          winstonInstance.info('User database active')
+        }
+      })
+    } else {
+      winstonInstance.info('User database ready')
+    }
+  } catch (error) {
+    winstonInstance.error(error)
+  }
+  
+}
+
 async function prepareDatabase() {
   await initHedisInfo();
   if (config.providers_payors.active) {
@@ -131,6 +215,9 @@ async function prepareDatabase() {
       healthcareProvidersPayorsGenerator();
     });
   }
+  if(config.testUsersActive) {
+    await initUsers()
+  } 
 }
 
 dao.init().then(() => {
@@ -145,5 +232,4 @@ dao.init().then(() => {
     prepareDatabase();
   });
 });
-
 module.exports = app;
