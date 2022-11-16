@@ -1,4 +1,5 @@
 const express = require('express');
+const { user } = require('pg/lib/defaults');
 
 const router = express(); // eslint-disable-line new-cap
 const { 
@@ -15,18 +16,123 @@ const {
 
 router.get('/', accessControl, getUsers, (req, res) => {
     const users = req.Users
-    const selectUserFound = req.verifiedUser 
-
+    const selectUserFound = req.verifiedUser
+    if (users.length > 0) {
+        res.send(200).json({ 
+            status: "Success",
+            message: "Found users",
+            userCount: users.length,
+            users,
+        })
+    } else {
+        res.send(200).json({ 
+            status: "Fail",
+            message: "No users found",
+            userCount: users.length,
+            users,
+        })
+    }
 })
-router.get('/:id', getUsersByID, (req, res) => {})
-router.post('/email', getUsersByEmail, (req, res) => {})
+router.get('/:id', accessControl, getUsersByID, (req, res) => {
+    const user = req.User
+    const selectUserFound = req.verifiedUser
+    if (user.length > 0) {
+        res.send(200).json({ 
+            status: "Success",
+            message: "Found user by given ID: " + req.params.id,
+            userCount: user.length,
+            user,
+        })
+    } else {
+        res.send(200).json({ 
+            status: "Failed",
+            message: "No user found by given ID: " + req.params.id,
+            userCount: user.length,
+            user,
+        })
+    }
+})
+router.post('/email', accessControl, getUsersByEmail, (req, res) => {
+    const user = req.User
+    const selectUserFound = req.verifiedUser
+    if (user.length > 0) {
+        res.send(200).json({ 
+            status: "Success",
+            message: "Found user by given email: " + req.body.email,
+            userCount: user.length,
+            user,
+        })
+    } else {
+        res.send(200).json({ 
+            status: "Failed",
+            message: "No found user by given email: " + req.body.email,
+
+            userCount: user.length,
+            user,
+        })
+    }
+})
 
 
-router.post('/update/:id', updateUser, (req, res) => {})
-router.post('/delete/:id', disableUser, (req, res) => {})
+router.post('/update/:id', accessControl, updateUser, (req, res) => {
+    const user = req.updatedUser
+    const selectUserFound = req.verifiedUser
+    if (user.length > 0) {
+        res.send(200).json({ 
+            status: "Success",
+            message: "Successful update of user by given ID: " + req.params.id,
+            userCount: user.length,
+            user,
+        })
+    } else {
+        res.send(200).json({ 
+            status: "Failed",
+            message: "Unsuccessful update of user by given ID: " + req.params.id,
+            userCount: user.length,
+            user,
+        })
+    }
+})
+router.post('/disable/:id', accessControl, disableUser, (req, res) => {
+    const user = req.updatedUser
+    const selectUserFound = req.verifiedUser
+    if (user.length > 0) {
+        res.send(200).json({
+            status: "Success",
+            message: "Successful disabled user by given ID: " + req.params.id,
+            userCount: user.length,
+            user,
+        })
+    } else {
+        res.send(200).json({ 
+            status: "Failed",
+            message: "Unsuccessful disabled user by given ID: " + req.params.id,
+            userCount: user.length,
+            user,
+        })
+    }
+})
 
-router.post('/register', addUser, (req, res) => {})
-router.post('/login', accessControl, getUsersByEmail, loginUser, (req, res) => {})
+router.post('/register', accessControl, addUser, (req, res) => {
+    const user = req.User
+    const selectUserFound = req.verifiedUser
+    if (user.length > 0) {
+        res.send(200).json({ 
+            status: "Success",
+            message: "User registration to database with given email: " + req.body.email,
+            userCount: user.length,
+            user,
+        })
+    } else {
+        res.send(200).json({ 
+            status: "Failed",
+            message: "User not added successfully database with given email: " + req.body.email,
+            userCount: user.length,
+            user,
+        })
+    }
+})
+router.post('/login', accessControl, getUsersByEmail, loginUser)
 
 
 

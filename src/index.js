@@ -185,13 +185,12 @@ async function initUsers() {
   try {
     // Verify User DB Exist
     // const createDb = await dao.createUserCollection()
-    // console.log({createDb})
     const usersInDB = await dao.getUsers()
 
     if(usersInDB.length === 0){
       testUsers.forEach(async (testUser) => {
         const insertTestUser = await dao.addUsers(testUser)
-        // IF INSERRTED COUNT GREATER 0
+        // IF USER ADDED
         if(insertTestUser.insertedCount > 0 ){
           winstonInstance.info(`Test user: ${testUser.email}, inserted into users database with: "${testUser.role}" as their role`)
         } else {

@@ -1,4 +1,3 @@
-const { googleClientID, googleClientSecret, googleOAuthRedirectUrl } = require("../config/config")
 const axios = require('axios')
 const qs = require('qs')
 const winstonInstance = require("../config/winston")
@@ -184,10 +183,11 @@ function makeToken(user) {
         active: user.active,
 	};
 	const options = {
-        // 3hours in ms
+        // TOKEN EXPIRATION 3hours in ms
 		expiresIn: 10800000,
 	};
-	return jwt.sign(payload, googleClientSecret, options);
+    // secret in between  payload and options should be changed to env variable
+	return jwt.sign(payload, "I AM THE SECRET CHANGE ME LATER", options);
 }
 module.exports = {
     getUsers,

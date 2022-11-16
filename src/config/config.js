@@ -37,8 +37,6 @@ const envVarsSchema = Joi.object({
   HEDIS_INFO_RELATIVE_PATH: Joi.string()
     .default('initialize/hedis-info.json')
     .description('Location of data to autoload hedis_info collection'),
-  TEST_USERS_ACTIVE:Joi.boolean()
-  .default(false),
 }).unknown();
 
 const { error, value: envVars } = envVarsSchema.validate(process.env);
@@ -72,7 +70,6 @@ const config = {
     schedule: envVars.PROVIDER_PAYORS_SCHEDULE,
   },
   infoLocation: envVars.HEDIS_INFO_RELATIVE_PATH,
-  testUsersActive: envVars.TEST_USERS_ACTIVE,
 };
 
 module.exports = config;
