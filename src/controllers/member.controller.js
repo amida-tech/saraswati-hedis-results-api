@@ -2,9 +2,26 @@
 const dao = require('../config/dao');
 
 const getMembers = async (req, res, next) => {
+  let { page, size, measurementType } = req.query
+  const initialLoad = 200
+  
+  if (!page) {
+    page = 1
+  }
+  if (!size) {
+    size = initialLoad
+  }
+  const limit = parseInt(size)
+  let skip = ( page - 1 ) * size
+  if(parseInt(page) !== 1){
+    skip = initialLoad
+  }
+  console.log({page, size, limit, skip})
+
   try {
-    const measures = await dao.findMembers(req.query);
-    return res.send(measures);
+    const members = await dao.findMembers({ measurementType }, limit, skip);
+    const filteredMembers = await dao.findMembers({ measurementType });
+    return res.send({members, totalMembers: filteredMembers.length });
   } catch (e) {
     return next(e)
   }

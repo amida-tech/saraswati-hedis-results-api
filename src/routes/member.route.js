@@ -6,6 +6,7 @@ const memberCtrl = require('../controllers/member.controller');
 const router = express.Router(); // eslint-disable-line new-cap
 
 router.route('/').get(memberCtrl.getMembers)
+
 if (process.env.NODE_ENV !== 'production') {
   router.route('/').post(memberCtrl.postMember)
   router.route('/bulk').post(memberCtrl.postBulkMembers);

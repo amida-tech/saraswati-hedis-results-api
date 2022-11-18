@@ -20,8 +20,17 @@ const initTest = (mockDb) => {
   db = mockDb;
 };
 
-const findMembers = (query) => {
-  const collection = db.collection('measures');
+// const findMembers = async (query, limit, skip) => {
+//   const collection = await db.collection('measures');
+//   const foundMembers = await collection.find(query).toArray()
+//   return collection.find(query).toArray();
+// };
+
+const findMembers = async (query, limit, skip) => {
+  const collection = await db.collection('measures');
+  if (limit || skip) {
+    return collection.find(query, { offset: skip, limit }).toArray()
+  }
   return collection.find(query).toArray();
 };
 
