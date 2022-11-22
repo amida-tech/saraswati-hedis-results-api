@@ -1,4 +1,53 @@
-const { XMLParser, XMLBuilder, XMLValidator } = require('fast-xml-parser');
+const { XMLBuilder } = require('fast-xml-parser');
+
+const measureDataV3Template = {
+  '@_root': '2.16.840.1.113883.10.20.27.3.5',
+  '@_extension': '2016-09-01',
+};
+
+const measureDataV4Template = {
+  '@_root': '2.16.840.1.113883.10.20.27.3.16',
+  '@_extension': '2019-05-01',
+};
+
+const qrda3ReportV5Template = {
+  '@_root': '2.16.840.1.113883.10.20.27.1.1',
+  '@_extension': '2020-12-01',
+};
+
+const qrda3MeasureSectionV5Template = {
+  '@_root': '2.16.840.1.113883.10.20.27.2.1',
+  '@_extension': '2020-12-01',
+};
+
+const performanceRateTemplate = {
+  '@_root': '2.16.840.1.113883.10.20.27.3.30',
+  '@_extension': '2016-09-01',
+};
+
+const perfRatePropMeasureV3Template = {
+  '@_root': '2.16.840.1.113883.10.20.27.3.14',
+  '@_extension': '2020-12-01',
+};
+
+const individualTaxayerId = {
+  '@_root': '2.16.840.1.113883.4.2',
+  '@_extension': 'extension',
+};
+
+const reportingParametersTemplate = {
+  '@_root': '2.16.840.1.113883.10.20.17.3.8',
+  '@_extension': '2020-12-01',
+};
+
+const measureReferenceResultsV4Template = {
+  '@_root': '2.16.840.1.113883.10.20.27.3.1',
+  '@_extension': '2020-12-01',
+};
+
+const measureSectionTemplate = { '@_root': '2.16.840.1.113883.10.20.24.2.2' };
+
+const loincCodeSystem = '2.16.840.1.113883.6.1';
 
 const ipopValueObject = () => ({
   '@_xsi:type': 'CD',
@@ -50,14 +99,8 @@ const createResultComponent = (result, fieldName) => {
       '@_classCode': 'OBS',
       '@_moodCode': 'EVN',
       templateId: [
-        {
-          '@_root': '2.16.840.1.113883.10.20.27.3.5',
-          '@_extension': '2016-09-01',
-        },
-        {
-          '@_root': '2.16.840.1.113883.10.20.27.3.16',
-          '@_extension': '2019-05-01',
-        },
+        measureDataV3Template,
+        measureDataV4Template,
       ],
       statusCode: { '@_code': 'completed' },
       value: valueObject,
@@ -121,16 +164,13 @@ const qrda3Export = (results, measureInfo) => {
         '@_root': '2.16.840.1.113883.1.3',
         '@_extension': 'POCD_HD000040',
       },
-      templateId: {
-        '@_root': '2.16.840.1.113883.10.20.27.1.1',
-        '@_extension': '2020-12-01',
-      },
+      templateId: qrda3ReportV5Template,
       id: {
         '@_root': 'clinicalDocumentTest',
       },
       code: {
         '@_code': '55184-6',
-        '@_codeSystem': '2.16.840.1.113883.6.1',
+        '@_codeSystem': loincCodeSystem,
         '@_codeSystemName': 'LOINC',
         '@_displayName': 'Quality Reporting Document Architecture Summary Report',
       },
@@ -216,10 +256,7 @@ const qrda3Export = (results, measureInfo) => {
                 '@_nullFlavor': 'NA',
               },
               representedOrganization: {
-                id: {
-                  '@_root': '2.16.840.1.113883.4.2',
-                  '@_extension': 'extension',
-                },
+                id: individualTaxayerId,
                 name: 'Health R US',
               },
             },
@@ -236,16 +273,13 @@ const qrda3Export = (results, measureInfo) => {
           component: {
             section: {
               templateId: [
-                { '@_root': '2.16.840.1.113883.10.20.24.2.2' },
-                {
-                  '@_root': '2.16.840.1.113883.10.20.27.2.1',
-                  '@_extension': '2020-12-01',
-                },
+                measureSectionTemplate,
+                qrda3MeasureSectionV5Template,
               ],
               code: {
                 '@_code': '55186-1',
-                '@_codeSystem': '2.16.840.1.113883.6.1',
-                '@_displayName': 'measure section',
+                '@_codeSystem': loincCodeSystem,
+                '@_displayName': 'Measure Section',
               },
               title: 'Measure Section',
               entry: [
@@ -254,10 +288,7 @@ const qrda3Export = (results, measureInfo) => {
                   act: {
                     '@_classCode': 'ACT',
                     '@_moodCode': 'EVN',
-                    templateId: {
-                      '@_root': '2.16.840.1.113883.10.20.17.3.8',
-                      '@_extension': '2020-12-01',
-                    },
+                    templateId: reportingParametersTemplate,
                     id: { '@_root': 'measure-section-1' },
                     code: {
                       '@_code': '252116004',
@@ -276,10 +307,7 @@ const qrda3Export = (results, measureInfo) => {
                     '@_moodCode': 'EVN',
                     templateId: [
                       { '@_root': '2.16.840.1.113883.10.20.24.3.98' },
-                      {
-                        '@_root': '2.16.840.1.113883.10.20.27.3.1',
-                        '@_extension': '2020-12-01',
-                      },
+                      measureReferenceResultsV4Template,
                     ],
                     id: { '@_root': 'main-results' },
                     statusCode: { '@_code': 'completed' },
@@ -294,7 +322,7 @@ const qrda3Export = (results, measureInfo) => {
                         },
                         code: {
                           '@_code': '57024-2',
-                          '@_codeSystem': '2.16.840.1.113883.6.1',
+                          '@_codeSystem': loincCodeSystem,
                           '@_codeSystemName': 'LOINC',
                           '@_displayName': 'Health Quality Measure Document',
                         },
@@ -306,6 +334,27 @@ const qrda3Export = (results, measureInfo) => {
                       createResultComponent(results[0], 'exclusions'),
                       createResultComponent(results[0], 'denominator'),
                       createResultComponent(results[0], 'numerator'),
+                      {
+                        observation: {
+                          '@_classCode': 'OBS',
+                          '@_moodCode': 'EVN',
+                          templateId: [
+                            performanceRateTemplate,
+                            perfRatePropMeasureV3Template,
+                          ],
+                          code: {
+                            '@_code': '72510-1',
+                            '@_codeSystem': loincCodeSystem,
+                            '@_codeSystemName': 'LOINC',
+                            '@_displayName': 'Performance Rate',
+                          },
+                          statusCode: { '@_code': 'completed' },
+                          value: {
+                            '@_xsi:type': 'REAL',
+                            '@_value': results[0].value / 100,
+                          },
+                        },
+                      },
                     ],
                   },
                 },
