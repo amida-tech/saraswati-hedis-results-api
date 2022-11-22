@@ -1,15 +1,15 @@
 /* eslint-disable no-underscore-dangle */
 const measureInfo = require('../../initialize/hedis-info.json');
 
-let measureLinks = []
+const measureLinks = [];
 
 measureInfo.forEach((measure) => {
   if (!measure._id.split('').includes('-')) {
     measureLinks.push(
-      { "measure": measure._id, "link": measure[measure._id].link}
-    )
+      { measure: measure._id, link: measure[measure._id].link },
+    );
   }
-})
+});
 
 const createInfoObject = (infoList) => {
   const fullInfo = {};

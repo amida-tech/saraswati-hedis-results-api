@@ -1,201 +1,186 @@
-const axios = require('axios')
-const qs = require('qs')
-const winstonInstance = require("../config/winston")
-const jwt = require("jsonwebtoken");
-
+const axios = require('axios');
+const qs = require('qs');
+const winstonInstance = require('../config/winston');
+const dao = require("../config/dao")
 const getUsers = async (req, res, next) => {
-    try {
-        const allUsers = await dao.getUsers()
-        req.Users = allUsers
-        next()
-    } catch (error) {
-        winstonInstance.error(error)
+  try {
+    const allUsers = await dao.getUsers();
+    req.Users = allUsers;
+    next();
+  } catch (error) {
+    winstonInstance.error(error);
+  }
+};
 
-    }
- 
-}
-const getUsersByID = async (req, res, next) => {
-    const { id } = req.params
-    try {
-        const getUserByID = await dao.getUserByID(id)
-        req.User = getUserByID
-        next()
-    } catch (error) {
-        winstonInstance.error(error)
-
-    }
-}
 const getUsersByEmail = async (req, res, next) => {
-    const { email } = req.body
-    try {
-        const getUsersByEmail = await dao.getUsersByEmail(email.toLowerCase())
-        req.User = getUsersByEmail
-        next()
-    } catch (error) {
-        winstonInstance.error(error)
-    }
-}
-const addUser = async (req, res, next) => {
-    const { 
-        email,
-        firstName,
-        lastName,
-        role,
-        companyName,
-        companyPreference,
-        userPrefrences,
-        created_on,
-        updated_on,
-        active,
-    } = req.body
-    try {
-        const addUser = await dao.addUsers({
-            email: email.toLowerCase(),
-            firstName,
-            lastName,
-            role,
-            companyName,
-            companyPreference,
-            userPrefrences,
-            created_on,
-            updated_on,
-            active,
-        })
-        req.newUser = addUser
-        next()
-    } catch (error) {
-        winstonInstance.error(error)
-    }
-}
-const updateUser = async (req, res, next) => {
-    const { id } = req.params
-    const { 
-        email,
-        firstName,
-        lastName,
-        role,
-        companyName,
-        companyPreference,
-        userPrefrences,
-        created_on,
-        updated_on,
-        active,
-    } = req.body
-    try {
-        const updateUser = await dao.updateUser({
-            email: email.toLowerCase(),
-            firstName,
-            lastName,
-            role,
-            companyName,
-            companyPreference,
-            userPrefrences,
-            created_on,
-            updated_on,
-            active,
-        }, id)
-        req.updatedUser = updateUser
-        next()
-    } catch (error) {
-        winstonInstance.error(error)
-    }
-}
-const disableUser = async (req, res, next) => {
-    const { id } = req.params
-    const { 
-        email,
-        firstName,
-        lastName,
-        role,
-        companyName,
-        companyPreference,
-        userPrefrences,
-        created_on,
-        updated_on,
-        active,
-    } = req.body
-    try {
-        const updateUser = await dao.updateUser({
-            email: email.toLowerCase(),
-            firstName,
-            lastName,
-            role,
-            companyName,
-            companyPreference,
-            userPrefrences,
-            created_on,
-            updated_on: Date.now(),
-            active: false,
-        }, id)
-        req.updatedUser = updateUser
-        next()
-    } catch (error) {
-        winstonInstance.error(error)
-    }
-}
-const accessControl = async (req, res, next) => {
-    const { email } = req.body
-    console.log({req})
-    const selectUser = await dao.getUsersByEmail(email.toLowerCase())
-    if(selectUser.length > 0 ){
-        console.log({ accessControl: selectUser })
-        const selectUserFound = selectUser[0]
-        if (selectUserFound.role.toLowerCase().includes('admin')) {
-            req.verifiedUser = selectUserFound
-            next()
-        } else {
-            // 403 means that the user is known but not authorized (i.e. doesn't have the proper role/group)
-            res.status(403).json({ message:'You are not a authorized for this feature please check with your admin.' })
-        }
-    } else {
-        // 401 means that the user is unknown (not authenticated at all or authenticated incorrectly, e.g. the credentials are invalid)
-        res.status(401).json({ message:'You are not a member' })
-    }
-}
-const loginUser = async (req,res,next) => { 
-    const foundUserArray = req.User
-    if (foundUserArray.length === 1){
-        const foundUser = foundUserArray[0]
-        foundUser.userPrefrences.lastLogin = Date.now()
-        foundUser.updated_on = Date.now()
-        const updateUser = await dao.updateUser(foundUser, foundUser._id)
-        if(updateUser.length > 0 ){
-            const token = makeToken(foundUser);
-            res.status(200).json({ message: `${foundUser.firstName} is back`, saraswatiToken: token });
-        } else {
-            res.status(401).json({ message: "Invalid credentials" });
+  const { email } = req.params;
+  try {
+    const getUsersByEmail = await dao.getUsersByEmail(email);
+    req.User = getUsersByEmail;
+    next();
+  } catch (error) {
+    winstonInstance.error(error);
+  }
+};
 
-        }
+const addUser = async (req, res, next) => {
+  const {
+    email,
+    firstName,
+    lastName,
+    role,
+    companyName,
+    companyPreferences,
+    userPrefrences,
+    created_on,
+    updated_on,
+    lastLogin,
+    active,
+  } = req.body;
+  const userToAdd = {
+    email: email.toLowerCase(),
+    firstName,
+    lastName,
+    role,
+    companyName,
+    companyPreferences,
+    userPrefrences,
+    created_on,
+    updated_on,
+    lastLogin,
+    active,
+  }
+  try {
+    const addUser = await dao.addUsers(userToAdd);
+    req.newUser = addUser;
+    next();
+  } catch (error) {
+    winstonInstance.error(error);
+  }
+};
+
+const updateUser = async (req, res, next) => {
+  const {
+    email,
+    firstName,
+    lastName,
+    role,
+    companyName,
+    companyPreferences,
+    userPrefrences,
+    created_on,
+    active,
+    lastLogin,
+  } = req.body;
+  try {
+    const userToUpdate = {
+      email: email.toLowerCase(),
+      firstName,
+      lastName,
+      role,
+      companyName,
+      companyPreferences,
+      userPrefrences,
+      created_on,
+      updated_on :Date.now(),
+      lastLogin,
+      active,
     }
-}
+    const updateUser = await dao.updateUserByEmail(userToUpdate,email.toLowerCase());
+    req.updatedUser = updateUser;
+    next();
+  } catch (error) {
+    winstonInstance.error(error);
+  }
+};
+
+const accessControl = async (req, res, next) => {
+  const { email } = req.body;
+  const selectUser = await dao.getUsersByEmail(email.toLowerCase());
+  if (selectUser.length > 0) {
+    const selectUserFound = selectUser[0];
+    if (selectUserFound.role.toLowerCase().includes('admin')) {
+      req.verifiedUser = selectUserFound;
+      next();
+    } else {
+      // 403 means that the user is known but not authorized (i.e. doesn't have the proper role/group)
+      res.status(403).json({ message: 'You are not a authorized for this feature please check with your admin.' });
+    }
+  } else {
+    // 401 means that the user is unknown (not authenticated at all or authenticated incorrectly, e.g. the credentials are invalid)
+    res.status(401).json({ message: 'You are not a member' });
+  }
+};
+
+const loginUser = async (req, res, next) => {
+  const foundUserArray = req.User;
+  if (foundUserArray.length === 1) {
+    const foundUser = foundUserArray[0];
+    foundUser.userPrefrences.lastLogin = Date.now();
+    foundUser.updated_on = Date.now();
+    const updateUser = await dao.updateUserByEmail(foundUser);
+    if (updateUser.length > 0) {
+      const token = makeToken(foundUser);
+      res.status(200).json({ message: `${foundUser.firstName} is back`, saraswatiToken: token });
+    } else {
+      res.status(401).json({ message: 'Invalid credentials' });
+    }
+  }
+};
+
 function makeToken(user) {
-	const payload = {
-		id: user._id,
-		firstName: user.firstName,
-		lastName: user.lastName,
-		email: user.email,
-		role: user.role,
-        companyName: user.companyName,
-        companyPreference: user.companyPreference,
-        userPrefrences: user.userPrefrences,
-        created_on: user.created_on,
-        updated_on: user.updated_on,
-        active: user.active,
-	};
-	const options = {
-        // TOKEN EXPIRATION 3hours in ms
-		expiresIn: 10800000,
-	};
+  const payload = {
+    id: user._id,
+    firstName: user.firstName,
+    lastName: user.lastName,
+    email: user.email,
+    role: user.role,
+    companyName: user.companyName,
+    companyPreferences: user.companyPreferences,
+    userPrefrences: user.userPrefrences,
+    created_on: user.created_on,
+    updated_on: user.updated_on,
+    active: user.active,
+    lastLogin: user.lastLogin,
+  };
+  const options = {
+    // TOKEN EXPIRATION 3hours in ms
+    expiresIn: 10800000,
+  };
     // secret in between  payload and options should be changed to env variable
-	return jwt.sign(payload, "I AM THE SECRET CHANGE ME LATER", options);
-}
+  return jwt.sign(payload, 'I AM THE SECRET CHANGE ME LATER', options);
+};
+
+const filterUsers = async (req, res, next) => {
+  const { email } = req.body
+  try {
+    if(email){
+      const getUsersByEmail = await dao.getUsersByEmail(email.toLowerCase());
+      if(getUsersByEmail.length === 0){
+        next()
+      } else {
+        res.status(403).json({
+          status: "Fail",
+          message: "User already exist in database. Please check credentials."
+        })
+      }
+    } else {
+      res.status(400).json({
+        status: "Fail",
+        message: "Please an Email"
+      })
+    }
+  } catch (error) {
+    winstonInstance.error(error)
+  }
+};
+
 module.exports = {
-    getUsers,
-    getUsersByID,
-    getUsersByEmail,
-    addUser,
-    updateUser,
-    disableUser,
-    accessControl,
-    loginUser,
-}
+  getUsers,
+  getUsersByEmail,
+  addUser,
+  filterUsers,
+  updateUser,
+  accessControl,
+  loginUser,
+};

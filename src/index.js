@@ -125,85 +125,108 @@ async function initHedisInfo() {
 }
 async function initUsers() {
   // First user added is the test user just to check and see if user exist.
+  
   const testUsers = [
     {
       email: 'testUser@amida.com',
-      firstName: 'Test',
-      lastName: 'User',
+      firstName: 'Test', // editable
+      lastName: 'User', // editable
       role: 'Test - SuperAdmin',
       companyName: 'Amida Technology Solutions',
-      companyPreference: {
-        companyType: 'Healthcare Provider',
-        measureList: [ 'aab', 'adde', 'apme', 'asfe', 'bcs', 'ccs', 'cise', 'col', 'cou', 'cwp', 'dmse', 'pdse', 'pnde', 'prse', 'psa', 'uop', 'uri'],
-        customMeasureList: [],
+      // companyRef: 1,// =====> "point to that company"
+      companyPreferences: {
+        companyType: 'Amida - Healthcare Provider',
+        state: "FL",
+        region: "US", // see abena
+        starRating: 4,
+        // AccreditaionStatus: "",
+        // Accreditaions: [],
+        address: "rando address",
+        phoneNumber: "6308928349",
+        measureList: ['aab', 'adde', 'apme', 'asfe', 'bcs', 'ccs', 'cise', 'col', 'cou', 'cwp', 'dmse', 'pdse', 'pnde', 'prse', 'psa', 'uop', 'uri'],
+        providerList: ['aab', 'adde', 'apme', 'asfe', 'bcs', 'ccs', 'cise', 'col', 'cou', 'cwp', 'dmse', 'pdse', 'pnde', 'prse', 'psa', 'uop', 'uri'],
+        plansList: ['aab', 'adde', 'apme', 'asfe', 'bcs', 'ccs', 'cise', 'col', 'cou', 'cwp', 'dmse', 'pdse', 'pnde', 'prse', 'psa', 'uop', 'uri'],
+        customMeasureList: ["sci","dhm","dhw"],
         customFilters: {
           filterType: 'Hybrid', // hybrid or classic or custom
-          filters: [ 'Domain of Care', 'Payors', 'Practioners' ],
+          filters: ['Domain of Care', 'Payors', 'Practitioners'],
         },
-        starRating: true, // ability to view starRatings 
-        ratingsAndTrends: true, // ability to view ratings and trends 
-        predictions: true, // ability to view predictions 
-        tableFilters: true,
+        starRatingAccess: true, // ability to view starRatings
+        ratingsAndTrendsAccess: true, // ability to view ratings and trends
+        predictionsAccess: true, // ability to view predictions
+        tableFiltersAccess: true,
         reportsAccess: {
           memberInfoAccess: true,
           memberPolicyInfoAccess: true,
           reportAccess: true,
         },
-        // settings: {} //comeback to this later
-      }, 
+        lastUpdated: Date.now(),
+      },
       userPrefrences: {
-        measureList: [ 'aab', 'adde', 'apme', 'asfe', 'bcs', 'ccs', 'cise', 'col', 'cou', 'cwp', 'dmse', 'pdse', 'pnde', 'prse', 'psa', 'uop', 'uri'],
+        measureList: ['aab', 'adde', 'apme', 'asfe', 'bcs', 'ccs', 'cise', 'col', 'cou', 'cwp', 'dmse', 'pdse', 'pnde', 'prse', 'psa', 'uop', 'uri'],
+        providerList: ['aab', 'adde', 'apme', 'asfe', 'bcs', 'ccs', 'cise', 'col', 'cou', 'cwp', 'dmse', 'pdse', 'pnde', 'prse', 'psa', 'uop', 'uri'],
+        plansList: ['aab', 'adde', 'apme', 'asfe', 'bcs', 'ccs', 'cise', 'col', 'cou', 'cwp', 'dmse', 'pdse', 'pnde', 'prse', 'psa', 'uop', 'uri'],
+        customMeasureList: ["dhm","dhw"],
+        customFilters: {
+          filterType: 'Hybrid', 
+          filters: ['Domain of Care', 'Practitioners'],
+        },
         profilePicture: 'picture',
-        lastLogin: new Date(),
         darkLightMode: 'light',
-        reportView: true,
+        reportsAccess: {
+          memberInfoAccess: true,
+          memberPolicyInfoAccess: true,
+          reportAccess: true,
+        },
         reportsGenerated: [
           {
-            paitientID: "paitient ID",
+            paitientID: 'paitient ID 1',
             date: new Date(),
-          }
+          },
+          {
+            paitientID: 'paitient ID 2',
+            date: new Date(),
+          },
         ], // max 15 or 20 entries
-        reportsAccess: {
-          memberInfoAccess: true,
-          memberPolicyInfoAccess: true,
-          reportAccess: true,
-        },
+        starRatingAccess: true, // ability to view starRatings
+        ratingsAndTrendsAccess: true, // ability to view ratings and trends
+        predictionsAccess: true, // ability to view predictions
+        tableFiltersAccess: true,
         lastFilter: [
           {
             filterName: 'Domain Of Care',
-            filterValues: [ 'EDOC' ],
+            filterValues: ['EDOC'],
           },
         ], // last filter options user searched with
         timezone: 'EST',
       },
-      created_on : new Date(), 
-      updated_on : new Date(),
+      created_on: new Date(),
+      updated_on: new Date(),
+      lastLogin: new Date(),
       active: true,
-    }
+    },
   ];
 
   try {
-    // Verify User DB Exist
-    // const createDb = await dao.createUserCollection()
-    const usersInDB = await dao.getUsers()
-
-    if(usersInDB.length === 0){
+    const usersInDB = await dao.getUsers();
+    if (usersInDB.length === 0) {
       testUsers.forEach(async (testUser) => {
-        const insertTestUser = await dao.addUsers(testUser)
-        // IF USER ADDED
-        if(insertTestUser.insertedCount > 0 ){
-          winstonInstance.info(`Test user: ${testUser.email}, inserted into users database with: "${testUser.role}" as their role`)
+        const insertTestUser = await dao.addUsers(testUser);
+        // IF TEST USER ADDED SUCCESSFULLY
+        if (insertTestUser.insertedCount > 0) {
+          winstonInstance.info(`Test user: ${testUser.email}, inserted into users database with: "${testUser.role}" as their role`);          
         } else {
-          winstonInstance.info('User database active')
+          // IF TEST USER FAILS TO INSERT
+          winstonInstance.info('User database active');
         }
-      })
+      });
     } else {
-      winstonInstance.info('User database ready')
+        // IF USER DB EXIST
+      winstonInstance.info('User database ready');
     }
   } catch (error) {
-    winstonInstance.error(error)
+    winstonInstance.error(error);
   }
-  
 }
 
 async function prepareDatabase() {
@@ -214,9 +237,9 @@ async function prepareDatabase() {
       healthcareProvidersPayorsGenerator();
     });
   }
-  if(config.testUsersActive) {
-    await initUsers()
-  } 
+  if (config.testUsersActive) {
+    await initUsers();
+  }
 }
 
 dao.init().then(() => {
