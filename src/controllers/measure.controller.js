@@ -112,8 +112,8 @@ const qrda3 = async (req, res, next) => {
     const measureInfo = createInfoObject(infoList);
 
     const dailyMeasureResults = calcLatestNumDen(patientResults, measureInfo, new Date());
-    qrda3Export(dailyMeasureResults);
-    return res.send(dailyMeasureResults);
+    const qrdaReport = qrda3Export(dailyMeasureResults, measureInfo);
+    return res.send(qrdaReport);
   } catch (e) {
     return next(e);
   }
