@@ -31,7 +31,4 @@ router.route('/trends')
 router.route('/exportCsv')
   .get(validate(paramValidation.exportCsv), measureCtrl.exportCsv);
 
-router.route('/qrda3')
-  .get(measureCtrl.qrda3);
-
 module.exports = router;

@@ -3,8 +3,6 @@ const dao = require('../config/dao');
 
 const { calculateTrend, calculateTrendLegacy } = require('../calculators/TrendCalculator');
 const { calculateDailyMeasureResults } = require('../calculators/DailyResultsCalculator');
-const { calcLatestNumDen } = require('../calculators/NumDenCalculator');
-const { qrda3Export } = require('../exports/export-utils');
 
 const { createInfoObject } = require('../utilities/infoUtil');
 const { generateCsv } = require('../utilities/reportsUtil');
@@ -100,25 +98,6 @@ const postInfo = async (req, res, next) => {
   }
 };
 
-const qrda3 = async (req, res, next) => {
-  try {
-    const patientResults = await dao.findMembers(req.query);
-
-    if (patientResults.length === 0) {
-      return res.send([]);
-    }
-
-    const infoList = await dao.findInfo();
-    const measureInfo = createInfoObject(infoList);
-
-    const dailyMeasureResults = calcLatestNumDen(patientResults, measureInfo, new Date());
-    const qrdaReport = qrda3Export(dailyMeasureResults, measureInfo);
-    return res.send(qrdaReport);
-  } catch (e) {
-    return next(e);
-  }
-};
-
 module.exports = {
   getMeasureResults,
   getDailyMeasureResults,
@@ -127,5 +106,4 @@ module.exports = {
   exportCsv,
   postMeasureResults,
   postInfo,
-  qrda3,
 };
