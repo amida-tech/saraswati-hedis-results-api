@@ -1,5 +1,4 @@
 const express = require('express');
-const { user } = require('pg/lib/defaults');
 
 const router = express(); // eslint-disable-line new-cap
 const {
@@ -10,11 +9,10 @@ const {
   updateUser,
   loginUser,
   filterUsers,
-} = require('../controllers/users.controller');
+} = require('../controllers/admin.controller');
 
-router.get('/', getUsers, (req, res) => {
+router.get('/users', getUsers, (req, res) => {
   const users = req.Users;
-  const selectUserFound = req.verifiedUser;
   if (users.length > 0) {
     res.status(200).json({
       status: 'Success',
@@ -30,31 +28,28 @@ router.get('/', getUsers, (req, res) => {
       users,
     });
   }
-
 });
-router.get('/email', getUsersByEmail, (req, res) => {
+router.get('/users/email', getUsersByEmail, (req, res) => {
   const user = req.User;
-  const selectUserFound = req.verifiedUser;
   if (user.length > 0) {
     res.status(200).json({
       status: 'Success',
-      message: `Found user by given email: ${req.params.email}`,
+      message: `Found user by given email: ${req.query.email}`,
       userCount: user.length,
       user,
     });
   } else {
     res.status(200).json({
       status: 'Failed',
-      message: `No found user by given email: ${req.params.email}`,
+      message: `No found user by given email: ${req.query.email}`,
 
       userCount: user.length,
       user,
     });
   }
 });
-router.put('/',  updateUser, (req, res) => {
+router.put('/users', updateUser, (req, res) => {
   const user = req.updatedUser;
-  const selectUserFound = req.verifiedUser;
   if (user.ok > 0) {
     res.status(200).json({
       status: 'Success',
@@ -67,15 +62,14 @@ router.put('/',  updateUser, (req, res) => {
     });
   }
 });
-router.post('/', filterUsers, addUser, (req, res) => {
+router.post('/users', filterUsers, addUser, (req, res) => {
   const user = req.newUser;
-  const selectUserFound = req.verifiedUser;
   if (user.insertedCount > 0) {
     res.status(200).json({
       status: 'Success',
       message: `User registration to database with given email: ${req.body.email}`,
       userCount: user.ops.length,
-      user:user.ops,
+      user: user.ops,
     });
   } else {
     res.status(200).json({
@@ -87,8 +81,5 @@ router.post('/', filterUsers, addUser, (req, res) => {
   }
 });
 
-// router.get //profile
-// router.post //profile
-
-router.post('/login',  getUsersByEmail, loginUser);
+router.post('/login', getUsersByEmail, loginUser);
 module.exports = router;

@@ -128,12 +128,12 @@ async function initUsers() {
 
   const testUsers = [
     {
-      email: 'testUser@amida.com',
+      email: 'testSuperAdmin@amida.com',
       firstName: 'Test', // editable
       lastName: 'User', // editable
       role: 'Test - SuperAdmin',
       companyName: 'Amida Technology Solutions',
-      // companyRef: 1,// =====> "point to that company"
+      // companyRef: 1, // =====> "point to that company"
       companyPreferences: {
         companyType: 'Amida - Healthcare Provider',
         state: 'FL',
@@ -143,40 +143,34 @@ async function initUsers() {
         // Accreditaions: [],
         address: 'rando address',
         phoneNumber: '6308928349',
-        measureList: ['aab', 'adde', "apme", 'asfe', 'bcs', 'ccs', 'cise', 'col', 'cou', 'cwp', 'dmse', 'pdse', 'pnde', 'prse', 'psa', 'uop', 'uri', 'sci', 'dhm', 'dhw'],
-        providerList: ['aab', 'adde', 'apme', 'asfe', 'bcs', 'ccs', 'cise', 'col', 'cou', 'cwp', 'dmse', 'pdse', 'pnde', 'prse', 'psa', 'uop', 'uri'],
-        plansList: ['aab', 'adde', 'apme', 'asfe', 'bcs', 'ccs', 'cise', 'col', 'cou', 'cwp', 'dmse', 'pdse', 'pnde', 'prse', 'psa', 'uop', 'uri'],
+        measureList: ['aab', 'adde', 'apme', 'asfe', 'bcs', 'ccs', 'cise', 'col', 'cou', 'cwp', 'dmse', 'pdse', 'pnde', 'prse', 'psa', 'uop', 'uri', 'sci', 'dhm', 'dhw'],
+        providerList: ['Norton Hill Carecenter', 'Cancer Treatment & Care', 'Anova Women\'s Birthing Service', 'Springfield Hospital', 'Hollifield Clinics'],
+        plansList: ['Health Maintenance Organization (HMO)', 'Preferred Provider Organization (PPO)', 'Exclusive Provider Organization (EPO)', 'Point-of-Service Plan (POS)'],
         customFilters: {
-          filterType: 'Hybrid', // hybrid or classic or custom
-          filters: ['Domain of Care', 'Payors', 'Practitioners'],
+          filterType: ['All'], // hybrid or classic or custom or all
+          filters: ['Domains of Care', 'Percent Range', 'Star Rating', 'Payors (Payers)', 'Healthcare Providers', 'Healthcare Coverages', 'Healthcare Practitioners'],
         },
-        starRatingAccess: false, // ability to view starRatings
-        ratingsAndTrendsAccess: false, // ability to view ratings and trends
-        predictionsAccess: false, // ability to view predictions
+        starRatingAccess: true, // ability to view starRatings
+        ratingsAndTrendsAccess: true, // ability to view ratings and trends
+        predictionsAccess: true, // ability to view predictions
         tableFiltersAccess: true,
-        reportsAccess: {
-          memberInfoAccess: false,
-          memberPolicyInfoAccess: false,
-          reportAccess: true,
-        },
-        lastUpdated: Date.now(),
-      },
-      userPreferences: {
-        measureList: ['aab', 'adde', 'apme', 'asfe', 'bcs', 'ccs', 'cise', 'col', 'cou', 'cwp', 'dmse', 'pdse', 'pnde', 'prse', 'psa', 'uop', 'uri'],
-        providerList: ['aab', 'adde', 'apme', 'asfe', 'bcs', 'ccs', 'cise', 'col', 'cou', 'cwp', 'dmse', 'pdse', 'pnde', 'prse', 'psa', 'uop', 'uri'],
-        plansList: ['aab', 'adde', 'apme', 'asfe', 'bcs', 'ccs', 'cise', 'col', 'cou', 'cwp', 'dmse', 'pdse', 'pnde', 'prse', 'psa', 'uop', 'uri'],
-        customMeasureList: ['dhm', 'dhw'],
-        customFilters: {
-          filterType: 'Hybrid',
-          filters: ['Domain of Care', 'Practitioners'],
-        },
-        profilePicture: 'picture',
-        darkLightMode: 'light',
         reportsAccess: {
           memberInfoAccess: true,
           memberPolicyInfoAccess: true,
           reportAccess: true,
         },
+        lastUpdated: Date.now(),
+      },
+      userPreferences: {
+        measureList: ['aab', 'adde', 'apme', 'asfe', 'bcs', 'ccs', 'cise', 'col', 'cou', 'cwp', 'dmse', 'pdse', 'pnde', 'prse', 'psa', 'uop', 'uri', 'sci', 'dhm', 'dhw'],
+        providerList: ['Norton Hill Carecenter', 'Cancer Treatment & Care', 'Anova Women\'s Birthing Service', 'Springfield Hospital', 'Hollifield Clinics'],
+        plansList: ['Health Maintenance Organization (HMO)', 'Preferred Provider Organization (PPO)', 'Exclusive Provider Organization (EPO)', 'Point-of-Service Plan (POS)'],
+        customFilters: {
+          filterType: ['All'], // hybrid or classic or custom
+          filters: ['Domains of Care', 'Percent Range', 'Star Rating', 'Payors (Payers)', 'Healthcare Providers', 'Healthcare Coverages', 'Healthcare Practitioners'],
+        },
+        profilePicture: 'picture',
+        darkLightMode: 'light',
         reportsGenerated: [
           {
             paitientID: 'paitient ID 1',
@@ -191,13 +185,92 @@ async function initUsers() {
         ratingsAndTrendsAccess: true, // ability to view ratings and trends
         predictionsAccess: true, // ability to view predictions
         tableFiltersAccess: true,
+        reportsAccess: {
+          memberInfoAccess: true,
+          memberPolicyInfoAccess: true,
+          reportAccess: true,
+        },
         lastFilter: [
           {
-            filterName: 'Domain Of Care',
-            filterValues: ['EDOC'],
+            filterMeasure: false,
+            Measure: null,
+            filterValues: [
+              {
+                domainsOfCare: [],
+                stars: [1],
+                percentRange: [0, 100],
+                payors: ['Organization/2'],
+                healthcareProviders: [],
+                healthcareCoverages: [],
+                healthcarePractitioners: ['Dr. Colette DeBarge'],
+                sum: 3,
+              },
+            ],
           },
         ], // last filter options user searched with
         timezone: 'EST',
+      },
+      created_on: new Date(),
+      updated_on: new Date(),
+      lastLogin: new Date(),
+      active: true,
+    },
+    {
+      email: 'testUser@amida.com',
+      firstName: '', // editable
+      lastName: '', // editable
+      role: 'Test - User',
+      companyName: 'Amida Technology Solutions',
+      // companyRef: 1, // =====> "point to company"
+      companyPreferences: {
+        companyType: 'Amida - Healthcare Provider',
+        state: 'FL',
+        region: 'US', // see abena
+        starRating: 4,
+        // AccreditaionStatus: "",
+        // Accreditaions: [],
+        address: 'rando address',
+        phoneNumber: '6308928349',
+        measureList: ['aab', 'adde', 'apme', 'asfe', 'bcs', 'ccs', 'cise', 'col', 'cou', 'cwp', 'dmse', 'pdse', 'pnde', 'prse', 'psa', 'uop', 'uri', 'sci', 'dhm', 'dhw'],
+        providerList: ['Norton Hill Carecenter', 'Cancer Treatment & Care', 'Anova Women\'s Birthing Service', 'Springfield Hospital', 'Hollifield Clinics'],
+        plansList: ['Health Maintenance Organization (HMO)', 'Preferred Provider Organization (PPO)', 'Exclusive Provider Organization (EPO)', 'Point-of-Service Plan (POS)'],
+        customFilters: {
+          filterType: ['All'], // hybrid or classic or custom
+          filters: ['Domains of Care', 'Percent Range', 'Star Rating', 'Payors (Payers)', 'Healthcare Providers', 'Healthcare Coverages', 'Healthcare Practitioners'],
+        },
+        starRatingAccess: true, // ability to view starRatings
+        ratingsAndTrendsAccess: true, // ability to view ratings and trends
+        predictionsAccess: true, // ability to view predictions
+        tableFiltersAccess: true,
+        reportsAccess: {
+          memberInfoAccess: true,
+          memberPolicyInfoAccess: true,
+          reportAccess: true,
+        },
+        lastUpdated: Date.now(),
+      },
+      userPreferences: {
+        measureList: [],
+        providerList: [],
+        plansList: [],
+        customFilters: {
+          filterType: ['All'], // hybrid or classic or custom
+          filters: ['Domains of Care', 'Percent Range', 'Star Rating', 'Payors (Payers)', 'Healthcare Providers', 'Healthcare Coverages', 'Healthcare Practitioners'],
+        },
+        profilePicture: '',
+        darkLightMode: 'light',
+        reportsGenerated: [], // max 15 or 20 entries
+        starRatingAccess: false, // ability to view starRatings
+        ratingsAndTrendsAccess: false, // ability to view ratings and trends
+        predictionsAccess: false, // ability to view predictions
+        tableFiltersAccess: false,
+        reportsAccess: {
+          memberInfoAccess: false,
+          memberPolicyInfoAccess: false,
+          reportAccess: false,
+        },
+        lastFilter: [], // last filter options user searched with
+        timezone: '',
       },
       created_on: new Date(),
       updated_on: new Date(),

@@ -162,7 +162,8 @@ const getPractitioners = () => {
 const insertPractitioner = async (practitioner) => {
   const collection = db.collection('practitioners');
   const foundPayors = await collection.find({}).toArray();
-  const filteredPayors = foundPayors.filter((prac) => prac.practitioner === practitioner.practitioner);
+  const filteredPayors = foundPayors
+    .filter((prac) => prac.practitioner === practitioner.practitioner);
   if (filteredPayors.length < 1) {
     try {
       return await collection.insertMany([practitioner]);
@@ -196,7 +197,8 @@ const getHealthcareCoverages = () => {
 const insertHealthcareCoverage = async (coverage) => {
   const collection = db.collection('healthcareCoverage');
   const foundHCCoverage = await collection.find({}).toArray();
-  const filteredHCCoverage = foundHCCoverage.filter((cover) => cover.coverage === coverage.coverage);
+  const filteredHCCoverage = foundHCCoverage
+    .filter((cover) => cover.coverage === coverage.coverage);
   if (filteredHCCoverage.length < 1) {
     try {
       return await collection.insertMany([coverage]);
@@ -210,7 +212,7 @@ const insertHealthcareCoverage = async (coverage) => {
 // Creates User Collections in mongoDB
 const createUserCollection = () => {
   try {
-    return db.createCollection('users') 
+    return db.createCollection('users');
   } catch (e) {
     logger.error(e);
     return e;
@@ -220,13 +222,33 @@ const createUserCollection = () => {
 //  GET USERS FROM DB
 const getUsers = (query) => {
   try {
-  const collection = db.collection('users');
-  return collection.find(query).toArray();
+    const collection = db.collection('users');
+    return collection.find(query).toArray();
   } catch (e) {
     logger.error(e);
     return e;
   }
 };
+const getUsersByID = (id) => {
+  try {
+    const collection = db.collection('users');
+    return collection.find({ _id: id }).toArray();
+  } catch (e) {
+    logger.error(e);
+    return e;
+  }
+};
+
+const getUsersByEmail = (email) => {
+  try {
+    const collection = db.collection('users');
+    return collection.find({ email }).toArray();
+  } catch (e) {
+    logger.error(e);
+    return e;
+  }
+};
+
 const addUsers = async (users) => {
   try {
     const collection = await db.collection('users');
@@ -236,29 +258,11 @@ const addUsers = async (users) => {
     return e;
   }
 };
-const getUsersByEmail = (email) => {
-  try {
-  const collection = db.collection('users');
-  return collection.find({email}).toArray();
 
-  } catch (e) {
-    logger.error(e);
-    return e;
-  }
-};
-const getUsersByID = (_id) => {
-  try {
-  const collection = db.collection('users');
-  return collection.find({}).toArray();
-  } catch (e) {
-    logger.error(e);
-    return e;
-  }
-};
-const updateUserByEmail = async (member,email) => {
+const updateUserByEmail = async (member, email) => {
   try {
     const collection = await db.collection('users');
-    return collection.findOneAndReplace({email}, member, {
+    return collection.findOneAndReplace({ email }, member, {
       upsert: true,
     });
   } catch (e) {
