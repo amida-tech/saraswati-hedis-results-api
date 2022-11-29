@@ -1,4 +1,3 @@
-const axios = require('axios');
 const qs = require('qs');
 const winstonInstance = require('../config/winston');
 const dao = require("../config/dao")
@@ -31,7 +30,7 @@ const addUser = async (req, res, next) => {
     role,
     companyName,
     companyPreferences,
-    userPrefrences,
+    userPreferences,
     created_on,
     updated_on,
     lastLogin,
@@ -44,7 +43,7 @@ const addUser = async (req, res, next) => {
     role,
     companyName,
     companyPreferences,
-    userPrefrences,
+    userPreferences,
     created_on,
     updated_on,
     lastLogin,
@@ -67,7 +66,7 @@ const updateUser = async (req, res, next) => {
     role,
     companyName,
     companyPreferences,
-    userPrefrences,
+    userPreferences,
     created_on,
     active,
     lastLogin,
@@ -80,7 +79,7 @@ const updateUser = async (req, res, next) => {
       role,
       companyName,
       companyPreferences,
-      userPrefrences,
+      userPreferences,
       created_on,
       updated_on :Date.now(),
       lastLogin,
@@ -94,29 +93,11 @@ const updateUser = async (req, res, next) => {
   }
 };
 
-const accessControl = async (req, res, next) => {
-  const { email } = req.body;
-  const selectUser = await dao.getUsersByEmail(email.toLowerCase());
-  if (selectUser.length > 0) {
-    const selectUserFound = selectUser[0];
-    if (selectUserFound.role.toLowerCase().includes('admin')) {
-      req.verifiedUser = selectUserFound;
-      next();
-    } else {
-      // 403 means that the user is known but not authorized (i.e. doesn't have the proper role/group)
-      res.status(403).json({ message: 'You are not a authorized for this feature please check with your admin.' });
-    }
-  } else {
-    // 401 means that the user is unknown (not authenticated at all or authenticated incorrectly, e.g. the credentials are invalid)
-    res.status(401).json({ message: 'You are not a member' });
-  }
-};
-
 const loginUser = async (req, res, next) => {
   const foundUserArray = req.User;
   if (foundUserArray.length === 1) {
     const foundUser = foundUserArray[0];
-    foundUser.userPrefrences.lastLogin = Date.now();
+    foundUser.userPreferences.lastLogin = Date.now();
     foundUser.updated_on = Date.now();
     const updateUser = await dao.updateUserByEmail(foundUser);
     if (updateUser.length > 0) {
@@ -137,7 +118,7 @@ function makeToken(user) {
     role: user.role,
     companyName: user.companyName,
     companyPreferences: user.companyPreferences,
-    userPrefrences: user.userPrefrences,
+    userPreferences: user.userPreferences,
     created_on: user.created_on,
     updated_on: user.updated_on,
     active: user.active,
@@ -181,6 +162,5 @@ module.exports = {
   addUser,
   filterUsers,
   updateUser,
-  accessControl,
   loginUser,
 };

@@ -125,7 +125,7 @@ async function initHedisInfo() {
 }
 async function initUsers() {
   // First user added is the test user just to check and see if user exist.
-  
+
   const testUsers = [
     {
       email: 'testUser@amida.com',
@@ -136,39 +136,38 @@ async function initUsers() {
       // companyRef: 1,// =====> "point to that company"
       companyPreferences: {
         companyType: 'Amida - Healthcare Provider',
-        state: "FL",
-        region: "US", // see abena
+        state: 'FL',
+        region: 'US', // see abena
         starRating: 4,
         // AccreditaionStatus: "",
         // Accreditaions: [],
-        address: "rando address",
-        phoneNumber: "6308928349",
-        measureList: ['aab', 'adde', 'apme', 'asfe', 'bcs', 'ccs', 'cise', 'col', 'cou', 'cwp', 'dmse', 'pdse', 'pnde', 'prse', 'psa', 'uop', 'uri'],
+        address: 'rando address',
+        phoneNumber: '6308928349',
+        measureList: ['aab', 'adde', "apme", 'asfe', 'bcs', 'ccs', 'cise', 'col', 'cou', 'cwp', 'dmse', 'pdse', 'pnde', 'prse', 'psa', 'uop', 'uri', 'sci', 'dhm', 'dhw'],
         providerList: ['aab', 'adde', 'apme', 'asfe', 'bcs', 'ccs', 'cise', 'col', 'cou', 'cwp', 'dmse', 'pdse', 'pnde', 'prse', 'psa', 'uop', 'uri'],
         plansList: ['aab', 'adde', 'apme', 'asfe', 'bcs', 'ccs', 'cise', 'col', 'cou', 'cwp', 'dmse', 'pdse', 'pnde', 'prse', 'psa', 'uop', 'uri'],
-        customMeasureList: ["sci","dhm","dhw"],
         customFilters: {
           filterType: 'Hybrid', // hybrid or classic or custom
           filters: ['Domain of Care', 'Payors', 'Practitioners'],
         },
-        starRatingAccess: true, // ability to view starRatings
-        ratingsAndTrendsAccess: true, // ability to view ratings and trends
-        predictionsAccess: true, // ability to view predictions
+        starRatingAccess: false, // ability to view starRatings
+        ratingsAndTrendsAccess: false, // ability to view ratings and trends
+        predictionsAccess: false, // ability to view predictions
         tableFiltersAccess: true,
         reportsAccess: {
-          memberInfoAccess: true,
-          memberPolicyInfoAccess: true,
+          memberInfoAccess: false,
+          memberPolicyInfoAccess: false,
           reportAccess: true,
         },
         lastUpdated: Date.now(),
       },
-      userPrefrences: {
+      userPreferences: {
         measureList: ['aab', 'adde', 'apme', 'asfe', 'bcs', 'ccs', 'cise', 'col', 'cou', 'cwp', 'dmse', 'pdse', 'pnde', 'prse', 'psa', 'uop', 'uri'],
         providerList: ['aab', 'adde', 'apme', 'asfe', 'bcs', 'ccs', 'cise', 'col', 'cou', 'cwp', 'dmse', 'pdse', 'pnde', 'prse', 'psa', 'uop', 'uri'],
         plansList: ['aab', 'adde', 'apme', 'asfe', 'bcs', 'ccs', 'cise', 'col', 'cou', 'cwp', 'dmse', 'pdse', 'pnde', 'prse', 'psa', 'uop', 'uri'],
-        customMeasureList: ["dhm","dhw"],
+        customMeasureList: ['dhm', 'dhw'],
         customFilters: {
-          filterType: 'Hybrid', 
+          filterType: 'Hybrid',
           filters: ['Domain of Care', 'Practitioners'],
         },
         profilePicture: 'picture',
@@ -214,14 +213,14 @@ async function initUsers() {
         const insertTestUser = await dao.addUsers(testUser);
         // IF TEST USER ADDED SUCCESSFULLY
         if (insertTestUser.insertedCount > 0) {
-          winstonInstance.info(`Test user: ${testUser.email}, inserted into users database with: "${testUser.role}" as their role`);          
+          winstonInstance.info(`Test user: ${testUser.email}, inserted into users database with: "${testUser.role}" as their role`);
         } else {
           // IF TEST USER FAILS TO INSERT
           winstonInstance.info('User database active');
         }
       });
     } else {
-        // IF USER DB EXIST
+      // IF USER DB EXIST
       winstonInstance.info('User database ready');
     }
   } catch (error) {
