@@ -82,6 +82,14 @@ const numeratorValueObject = () => ({
   '@_codeSystemName': 'ObservationValue',
 });
 
+const getMeasureText = (result, measureInfo) => {
+  const resultInfo = measureInfo[result.measurementType];
+  if (resultInfo.description) {
+    return `${resultInfo.title} - ${resultInfo.title}`;
+  }
+  return resultInfo.title;
+};
+
 const healthcareSystemName = 'Health R US';
 
 const getValueObject = (fieldName) => {
@@ -109,6 +117,10 @@ const createResultComponent = (result, fieldName) => {
         measureDataV3Template,
         measureDataV4Template,
       ],
+      code: {
+        '@_code': 'ASSERTION',
+        '@_codeSystem': '2.16.840.1.113883.5.4',
+      },
       statusCode: { '@_code': 'completed' },
       value: valueObject,
       entryRelationship: {
@@ -180,6 +192,7 @@ const qrda3Export = (results, measureInfo, practitioners) => {
   const options = {
     ignoreAttributes: false,
     format: true,
+    allowBooleanAttributes: true,
   };
 
   const date = new Date();
@@ -314,6 +327,7 @@ const qrda3Export = (results, measureInfo, practitioners) => {
                 '@_displayName': 'Measure Section',
               },
               title: 'Measure Section',
+              text: `${measureInfo[results.measure].displayLabel} Measure Section: ${results.value.toFixed(2)}% Compliance`,
               entry: [
                 {
                   '@_typeCode': 'DRIV',
@@ -332,7 +346,7 @@ const qrda3Export = (results, measureInfo, practitioners) => {
                 },
                 {
                   organizer: {
-                    '@_classCode': 'cluster',
+                    '@_classCode': 'CLUSTER',
                     '@_moodCode': 'EVN',
                     templateId: [
                       { '@_root': '2.16.840.1.113883.10.20.24.3.98' },
@@ -355,7 +369,7 @@ const qrda3Export = (results, measureInfo, practitioners) => {
                           '@_codeSystemName': 'LOINC',
                           '@_displayName': 'Health Quality Measure Document',
                         },
-                        text: measureInfo[results.measure].title,
+                        text: getMeasureText(results, measureInfo),
                       },
                     },
                     component: [
