@@ -1,0 +1,87 @@
+[
+    {
+      "email": "TestTest@amida.com",
+      "firstName": "Test", 
+      "lastName": "Test", 
+      "role": "Test - Test - SuperAdmin",
+      "companyName": "Amida Technology Solutions",
+      "companyPreferences": {
+        "companyType": "Amida - Healthcare Provider",
+        "state": "FL",
+        "region": "US", 
+        "starRating": 4,
+        "address": "Test random address",
+        "phoneNumber": "6308928349",
+        "measureList": ["aab", "adde", "apme", "asfe", "bcs", "ccs", "cise", "col", "cou", "cwp", "dmse", "pdse", "pnde", "prse", "psa", "uop", "uri", "sci", "dhm", "dhw"],
+        "providerList": ["Norton Hill Carecenter", "Cancer Treatment & Care", "Anova Women\"s Birthing Service", "Springfield Hospital", "Hollifield Clinics"],
+        "plansList": ["Health Maintenance Organization (HMO)", "Preferred Provider Organization (PPO)", "Exclusive Provider Organization (EPO)", "Point-of-Service Plan (POS)"],
+        "customFilters": {
+          "filterType": ["All"], 
+          "filters": ["Domains of Care", "Percent Range", "Star Rating", "Payors (Payers)", "Healthcare Providers", "Healthcare Coverages", "Healthcare Practitioners"]
+        },
+        "starRatingAccess": true, 
+        "ratingsAndTrendsAccess": true, 
+        "predictionsAccess": true, 
+        "tableFiltersAccess": true,
+        "reportsAccess": {
+          "memberInfoAccess": true,
+          "memberPolicyInfoAccess": true,
+          "reportAccess": true
+        },
+        "lastUpdated": "2022-11-29T20:49:53.434Z"
+      },
+      "userPreferences": {
+        "measureList": ["aab", "adde", "apme", "asfe", "bcs", "ccs", "cise", "col", "cou", "cwp", "dmse", "pdse", "pnde", "prse", "psa", "uop", "uri", "sci", "dhm", "dhw"],
+        "providerList": ["Norton Hill Carecenter", "Cancer Treatment & Care", "Anova Women\"s Birthing Service", "Springfield Hospital", "Hollifield Clinics"],
+        "plansList": ["Health Maintenance Organization (HMO)", "Preferred Provider Organization (PPO)", "Exclusive Provider Organization (EPO)", "Point-of-Service Plan (POS)"],
+        "customFilters": {
+          "filterType": ["All"], 
+          "filters": ["Domains of Care", "Percent Range", "Star Rating", "Payors (Payers)", "Healthcare Providers", "Healthcare Coverages", "Healthcare Practitioners"]
+        },
+        "profilePicture": "picture",
+        "darkLightMode": "light",
+        "reportsGenerated": [
+          {
+            "paitientID": "paitient ID 1",
+            "date": "2022-11-29T20:49:53.434Z"
+          },
+          {
+            "paitientID": "paitient ID 2",
+            "date": "2022-11-29T20:49:53.434Z"
+          }
+        ], 
+        "starRatingAccess": true, 
+        "ratingsAndTrendsAccess": true, 
+        "predictionsAccess": true, 
+        "tableFiltersAccess": true,
+        "reportsAccess": {
+          "memberInfoAccess": true,
+          "memberPolicyInfoAccess": true,
+          "reportAccess": true
+        },
+        "lastFilter": [
+          {
+            "filterMeasure": false,
+            "Measure": null,
+            "filterValues": [
+              {
+                "domainsOfCare": [],
+                "stars": [1],
+                "percentRange": [0, 100],
+                "payors": ["Organization/2"],
+                "healthcareProviders": [],
+                "healthcareCoverages": [],
+                "healthcarePractitioners": ["Dr. Colette DeBarge"],
+                "sum": 3
+              }
+            ]
+          }
+        ], 
+        "timezone": "EST"
+      },
+      "created_on": "2022-11-29T20:49:53.434Z",
+      "updated_on": "2022-11-29T20:49:53.434Z",
+      "lastLogin": "2022-11-29T20:49:53.434Z",
+      "active": true
+    }
+  ]

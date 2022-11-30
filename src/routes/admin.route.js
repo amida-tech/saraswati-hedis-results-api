@@ -8,6 +8,7 @@ const {
   addUser,
   updateUser,
   loginUser,
+  deleteUser,
   filterUsers,
 } = require('../controllers/admin.controller');
 
@@ -29,6 +30,7 @@ router.get('/users', getUsers, (req, res) => {
     });
   }
 });
+
 router.get('/users/email', getUsersByEmail, (req, res) => {
   const user = req.User;
   if (user.length > 0) {
@@ -48,6 +50,7 @@ router.get('/users/email', getUsersByEmail, (req, res) => {
     });
   }
 });
+
 router.put('/users', updateUser, (req, res) => {
   const user = req.updatedUser;
   if (user.ok > 0) {
@@ -62,6 +65,7 @@ router.put('/users', updateUser, (req, res) => {
     });
   }
 });
+
 router.post('/users', filterUsers, addUser, (req, res) => {
   const user = req.newUser;
   if (user.insertedCount > 0) {
@@ -81,5 +85,8 @@ router.post('/users', filterUsers, addUser, (req, res) => {
   }
 });
 
-router.post('/login', getUsersByEmail, loginUser);
+router.delete('/users', deleteUser, (req, res) => {
+  res.status(200).json({ status: 'Success', message: 'USER DELETED SUCCESSFULLY' });
+});
+// router.post('/login', getUsersByEmail, loginUser);
 module.exports = router;

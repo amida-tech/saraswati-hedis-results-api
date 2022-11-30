@@ -37,7 +37,7 @@ const addUser = async (req, res, next) => {
     active,
   } = req.body;
   const userToAdd = {
-    email: email.toLowerCase(),
+    email,
     firstName,
     lastName,
     role,
@@ -73,7 +73,7 @@ const updateUser = async (req, res, next) => {
   } = req.body;
   try {
     const userToUpdate = {
-      email: email.toLowerCase(),
+      email,
       firstName,
       lastName,
       role,
@@ -109,16 +109,31 @@ const filterUsers = async (req, res, next) => {
         });
       }
     } else {
-      res.status(400).json({
+      res.status(404).json({
         status: 'Fail',
-        message: 'Please an Email',
+        message: 'USER NOT FOUND',
       });
     }
   } catch (error) {
     winstonInstance.error(error);
   }
 };
-
+const deleteUser = async (req, res, next) => {
+  const { email } = req.query;
+  try {
+    const DeleteUserStatus = await dao.deleteUserByEmail(email);
+    if (DeleteUserStatus.lastErrorObject.n === 0) {
+      res.status(403).json({
+        status: 'Fail',
+        message: 'Unsuccessful deletion of user.',
+      });
+    } else {
+      next();
+    }
+  } catch (error) {
+    winstonInstance.error(error);
+  }
+};
 module.exports = {
   getUsers,
   getUsersByEmail,
@@ -126,4 +141,5 @@ module.exports = {
   filterUsers,
   updateUser,
   loginUser,
+  deleteUser,
 };

@@ -271,6 +271,16 @@ const updateUserByEmail = async (member, email) => {
   }
 };
 
+const deleteUserByEmail = async (email) => {
+  try {
+    const collection = await db.collection('users');
+    return collection.findOneAndDelete({ email });
+  } catch (e) {
+    logger.error(e);
+    return e;
+  }
+};
+
 module.exports = {
   init,
   initTest,
@@ -298,4 +308,5 @@ module.exports = {
   getUsersByEmail,
   getUsersByID,
   updateUserByEmail,
+  deleteUserByEmail,
 };
