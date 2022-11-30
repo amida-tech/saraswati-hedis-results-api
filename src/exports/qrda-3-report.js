@@ -196,7 +196,7 @@ const qrda3Export = (results, measureInfo, practitioners) => {
   };
 
   const date = new Date();
-  const dateString = `${date.getFullYear()}${date.getMonth()}${date.getDate()}${date.getHours()}${date.getMinutes()}${date.getSeconds()}`;
+  const dateString = `${date.getFullYear()}${date.getMonth() + 1}${date.getDate()}${date.getHours()}${date.getMinutes()}${date.getSeconds()}`;
 
   const clinicalDocument = {
     ClinicalDocument: {
