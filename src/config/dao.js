@@ -1,8 +1,8 @@
 /* eslint-disable no-underscore-dangle */
 const { MongoClient } = require('mongodb');
-const { mongodb } = require('./config');
 const logger = require('winston');
 const mongoSanitize = require('express-mongo-sanitize');
+const { mongodb } = require('./config');
 
 const connectionUrl = `mongodb://${mongodb.host}:${mongodb.port}`;
 
@@ -20,27 +20,36 @@ const initTest = (mockDb) => {
   db = mockDb;
 };
 
-// const findMembers = async (query, limit, skip) => {
-//   const collection = await db.collection('measures');
-//   const foundMembers = await collection.find(query).toArray()
-//   return collection.find(query).toArray();
-// };
-
 const findMembers = async (query, limit, skip) => {
   const collection = await db.collection('measures');
-  if (limit || skip) {
-    return collection.find(query, { offset: skip, limit }).toArray()
-  }
+  console.log({ query });
+  
+  const cursor = await collection.aggregate([
+
+    { $limit: 10 },
+    { $skip: 100 },
+  ]).toArray();
+
+  console.log({ cursor });
+  console.log({ cursor: cursor.length });
   return collection.find(query).toArray();
 };
 
+// const findMembers = async (query, limit, skip) => {
+//   const collection = await db.collection('measures');
+//   if (limit || skip) {
+//     return collection.find(query, { offset: skip, limit }).toArray();
+//   }
+// return collection.find(query).toArray();
+// };
+
 const searchMembers = (query) => {
-  const collection = db.collection('measures')
+  const collection = db.collection('measures');
   // sanitize query
-  console.log(query.memberId)
-  const saniQuery = mongoSanitize.sanitize(query.memberId)
-  return collection.find( { 'memberId' : { '$regex' : saniQuery, '$options' : 'i' } } ).toArray()
-}
+  console.log(query.memberId);
+  const saniQuery = mongoSanitize.sanitize(query.memberId);
+  return collection.find({ memberId: { $regex: saniQuery, $options: 'i' } }).toArray();
+};
 
 const findMeasureResults = (query) => {
   const collection = db.collection('measure_results');

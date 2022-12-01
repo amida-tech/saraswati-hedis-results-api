@@ -57,6 +57,7 @@ function queryBuilder(submeasure, filters) {
   if ($and.length > 0) {
     searchQuery = { ...searchQuery, $and };
   }
+  console.log(searchQuery)
   return {
     searchQuery,
   };
