@@ -254,7 +254,7 @@ async function initUsers() {
         providerList: [],
         plansList: [],
         customFilters: {
-          filterType: ['All'], // hybrid or classic or custom
+          filterType: ['All'], // hybrid or classic or custom OR NONE
           filters: ['Domains of Care', 'Percent Range', 'Star Rating', 'Payors (Payers)', 'Healthcare Providers', 'Healthcare Coverages', 'Healthcare Practitioners'],
         },
         profilePicture: '',
