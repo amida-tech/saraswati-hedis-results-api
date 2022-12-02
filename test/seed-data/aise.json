@@ -1,5 +1,5 @@
 [{
-        "immuno-1": {
+        "result": {
             "Member Coverage": [{
                     "identifier": [{
                             "system": {
@@ -1331,7 +1331,7 @@
         "memberId": "immuno-1",
         "measurementType": "aise"
     }, {
-        "immuno-2": {
+        "result": {
             "Member Coverage": [{
                     "identifier": [{
                             "system": {
@@ -2663,7 +2663,7 @@
         "memberId": "immuno-2",
         "measurementType": "aise"
     }, {
-        "immuno-3": {
+        "result": {
             "Member Coverage": [{
                     "identifier": [{
                             "system": {
@@ -3800,7 +3800,7 @@
         "memberId": "immuno-3",
         "measurementType": "aise"
     }, {
-        "immuno-4": {
+        "result": {
             "Member Coverage": [{
                     "identifier": [{
                             "system": {
@@ -4740,7 +4740,7 @@
         "memberId": "immuno-4",
         "measurementType": "aise"
     }, {
-        "immuno-5": {
+        "result": {
             "Member Coverage": [{
                     "identifier": [{
                             "system": {
@@ -5877,7 +5877,7 @@
         "memberId": "immuno-5",
         "measurementType": "aise"
     }, {
-        "immuno-6": {
+        "result": {
             "Member Coverage": [{
                     "identifier": [{
                             "system": {
@@ -7209,7 +7209,7 @@
         "memberId": "immuno-6",
         "measurementType": "aise"
     }, {
-        "immuno-7": {
+        "result": {
             "Member Coverage": [{
                     "identifier": [{
                             "system": {
@@ -8541,7 +8541,7 @@
         "memberId": "immuno-7",
         "measurementType": "aise"
     }, {
-        "immuno-8": {
+        "result": {
             "Member Coverage": [{
                     "identifier": [{
                             "system": {
@@ -9091,7 +9091,7 @@
         "memberId": "immuno-8",
         "measurementType": "aise"
     }, {
-        "immuno-9": {
+        "result": {
             "Member Coverage": [{
                     "identifier": [{
                             "system": {
@@ -9641,7 +9641,7 @@
         "memberId": "immuno-9",
         "measurementType": "aise"
     }, {
-        "immuno-10": {
+        "result": {
             "Member Coverage": [{
                     "identifier": [{
                             "system": {
@@ -10191,7 +10191,7 @@
         "memberId": "immuno-10",
         "measurementType": "aise"
     }, {
-        "immuno-11": {
+        "result": {
             "Member Coverage": [{
                     "identifier": [{
                             "system": {
@@ -10938,7 +10938,7 @@
         "memberId": "immuno-11",
         "measurementType": "aise"
     }, {
-        "immuno-12": {
+        "result": {
             "Member Coverage": [{
                     "identifier": [{
                             "system": {
@@ -11683,7 +11683,7 @@
         "memberId": "immuno-12",
         "measurementType": "aise"
     }, {
-        "immuno-13": {
+        "result": {
             "Member Coverage": [{
                     "identifier": [{
                             "system": {
@@ -12233,7 +12233,7 @@
         "memberId": "immuno-13",
         "measurementType": "aise"
     }, {
-        "immuno-14": {
+        "result": {
             "Member Coverage": [{
                     "identifier": [{
                             "system": {
@@ -13175,7 +13175,7 @@
         "memberId": "immuno-14",
         "measurementType": "aise"
     }, {
-        "immuno-15": {
+        "result": {
             "Member Coverage": [{
                     "identifier": [{
                             "system": {
@@ -13920,7 +13920,7 @@
         "memberId": "immuno-15",
         "measurementType": "aise"
     }, {
-        "immuno-16": {
+        "result": {
             "Member Coverage": [{
                     "identifier": [{
                             "system": {
@@ -15252,7 +15252,7 @@
         "memberId": "immuno-16",
         "measurementType": "aise"
     }, {
-        "immuno-17": {
+        "result": {
             "Member Coverage": [{
                     "identifier": [{
                             "system": {
@@ -16192,7 +16192,7 @@
         "memberId": "immuno-17",
         "measurementType": "aise"
     }, {
-        "immuno-18": {
+        "result": {
             "Member Coverage": [{
                     "identifier": [{
                             "system": {
@@ -17134,7 +17134,7 @@
         "memberId": "immuno-18",
         "measurementType": "aise"
     }, {
-        "immuno-19": {
+        "result": {
             "Member Coverage": [{
                     "identifier": [{
                             "system": {
@@ -18271,7 +18271,7 @@
         "memberId": "immuno-19",
         "measurementType": "aise"
     }, {
-        "immuno-20": {
+        "result": {
             "Member Coverage": [{
                     "identifier": [{
                             "system": {

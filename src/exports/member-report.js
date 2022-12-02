@@ -24,7 +24,6 @@ async function generateMemberReport(memberObj, fileName, folderPath) {
     // MEMBER DATA TO INSERT
     const coverageObj = memberObj.coverage[0];
     const planDates = `${coverageObj.period.start.value} to ${coverageObj.period.end.value}`;
-    const memberInfo = memberObj[memberObj.memberId];
 
     const dateFormatter = (date) => {
       const res = date.split('-');
