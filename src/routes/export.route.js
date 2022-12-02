@@ -11,6 +11,9 @@ router.route('/generateTest')
 router.route('/member')
   .get(validate(paramValidation.memberInfo), exportCtrl.generateMemberById);
 
+router.route('/qrda1')
+  .get(validate(paramValidation.memberInfo), exportCtrl.qrda1);
+
 router.route('/qrda3')
   .get(validate(paramValidation.exportCsv), exportCtrl.qrda3);
 

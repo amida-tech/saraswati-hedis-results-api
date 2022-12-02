@@ -9,6 +9,7 @@ const { generateTestReport } = require('../exports/test-report');
 const { generateMemberReport, injectTemplate } = require('../exports/member-report');
 const { calcLatestNumDen } = require('../calculators/NumDenCalculator');
 const { qrda3Export } = require('../exports/qrda-3-report');
+const { qrda1Export } = require('../exports/qrda-1-report');
 const { createInfoObject } = require('../utilities/infoUtil');
 const dao = require('../config/dao');
 
@@ -67,6 +68,16 @@ async function generateMemberById(req, res) {
   }
 }
 
+const qrda1 = async (req, res, next) => {
+  try {
+    const member = await dao.searchMembers(req.query);
+    const qrdaReport = qrda1Export(member);
+    return res.send(qrdaReport);
+  } catch (e) {
+    return next(e);
+  }
+};
+
 const qrda3 = async (req, res, next) => {
   try {
     let patientResults = [];
@@ -114,5 +125,6 @@ const qrda3 = async (req, res, next) => {
 module.exports = {
   generateTest,
   generateMemberById,
+  qrda1,
   qrda3,
 };

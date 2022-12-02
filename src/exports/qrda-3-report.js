@@ -1,5 +1,7 @@
 const { XMLBuilder } = require('fast-xml-parser');
 
+const utils = require('./qrda-utils');
+
 const measureDataV3Template = {
   '@_root': '2.16.840.1.113883.10.20.27.3.5',
   '@_extension': '2016-09-01',
@@ -46,8 +48,6 @@ const measureReferenceResultsV4Template = {
 };
 
 const measureSectionTemplate = { '@_root': '2.16.840.1.113883.10.20.24.2.2' };
-
-const loincCodeSystem = '2.16.840.1.113883.6.1';
 
 const measurementPeriod = {
   low: { '@_value': '20220101' },
@@ -207,30 +207,22 @@ const qrda3Export = (results, measureInfo, practitioners) => {
       CDA Header
       ********************************************************
       */
-      realmCode: {
-        '@_code': 'US',
-      },
-      typeId: {
-        '@_root': '2.16.840.1.113883.1.3',
-        '@_extension': 'POCD_HD000040',
-      },
+      realmCode: utils.realmCode,
+      typeId: utils.clinicalDocumentBase,
       templateId: qrda3ReportV5Template,
       id: {
         '@_root': 'clinicalDocumentTest',
       },
       code: {
         '@_code': '55184-6',
-        '@_codeSystem': loincCodeSystem,
+        '@_codeSystem': utils.loincCodeSystem,
         '@_codeSystemName': 'LOINC',
         '@_displayName': 'Quality Reporting Document Architecture Summary Report',
       },
       title: `${measureInfo[results.measure].displayLabel} QRDA Category III Summary Report`,
       effectiveTime: { '@_value': dateString },
-      confidentialityCode: {
-        '@_codeSystem': '2.16.840.1.113883.5.25',
-        '@_code': 'N',
-      },
-      languageCode: { '@_code': 'en' },
+      confidentialityCode: utils.confidentialityCode,
+      languageCode: utils.languageCode,
       versionNumber: { '@_value': '1' },
       // CDA requires this field, but multiple patients are used so it is set to null
       recordTarget: {
