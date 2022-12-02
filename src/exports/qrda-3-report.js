@@ -231,23 +231,7 @@ const qrda3Export = (results, measureInfo, practitioners) => {
         },
       },
       // Author can be a person or a device
-      author: {
-        time: { '@_value': dateString },
-        assignedAuthor: {
-          id: { '@_root': 'software_author' },
-          assignedAuthoringDevice: {
-            softwareName: 'Saraswati',
-          },
-          representedOrganization: {
-            /* The organization id is optional, but the name is required
-             id: {
-              '@_root': '2.16.840.1.113883.19.5',
-              '@_extension': '223344',
-            }, */
-            name: healthcareSystemName,
-          },
-        },
-      },
+      author: utils.createAuthor(healthcareSystemName, dateString),
       // This assignedCustodian represents the organization that owns and reports the data
       custodian: {
         assignedCustodian: {
@@ -315,7 +299,7 @@ const qrda3Export = (results, measureInfo, practitioners) => {
               ],
               code: {
                 '@_code': '55186-1',
-                '@_codeSystem': loincCodeSystem,
+                '@_codeSystem': utils.loincCodeSystem,
                 '@_displayName': 'Measure Section',
               },
               title: 'Measure Section',
@@ -357,7 +341,7 @@ const qrda3Export = (results, measureInfo, practitioners) => {
                         },
                         code: {
                           '@_code': '57024-2',
-                          '@_codeSystem': loincCodeSystem,
+                          '@_codeSystem': utils.loincCodeSystem,
                           '@_codeSystemName': 'LOINC',
                           '@_displayName': 'Health Quality Measure Document',
                         },
@@ -379,7 +363,7 @@ const qrda3Export = (results, measureInfo, practitioners) => {
                           ],
                           code: {
                             '@_code': '72510-1',
-                            '@_codeSystem': loincCodeSystem,
+                            '@_codeSystem': utils.loincCodeSystem,
                             '@_codeSystemName': 'LOINC',
                             '@_displayName': 'Performance Rate',
                           },

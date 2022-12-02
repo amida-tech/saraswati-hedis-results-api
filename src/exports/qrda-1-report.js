@@ -6,6 +6,8 @@ const usRealmHeader = {
   '@_extension': '2015-08-01',
 };
 
+const healthcareSystemName = 'Health R US';
+
 const qrda1Export = (memberInfo) => {
   const options = {
     ignoreAttributes: false,
@@ -88,6 +90,58 @@ const qrda1Export = (memberInfo) => {
               '@_codeSystem': '2.16.840.1.114222.4.11.837',
               '@_displayName': 'Not Hispanic or Latino',
             },
+          },
+        },
+      },
+      // Author can be a person or a device
+      author: utils.createAuthor(healthcareSystemName, dateString),
+      // This assignedCustodian represents the organization that owns and reports the data
+      custodian: {
+        assignedCustodian: {
+          representedCustodianOrganization: {
+            id: {
+              '@_root': '2.16.840.1.113883.4.6',
+              '@_extension': '223344',
+            },
+            name: healthcareSystemName,
+            telcom: {
+              '@_use': 'WP',
+              '@_value': '5558675309',
+            },
+            addr: {
+              '@_use': 'WP',
+              streetAddressLine: '666 Heck Lane',
+              city: 'Underworld',
+              state: 'FL',
+              postalCode: '666666',
+              country: 'Existence',
+            },
+          },
+        },
+      },
+      // Who is receiving this document
+      informationRecipient: {
+        intendedRecipient: {
+          informationRecipient: {
+            name: {
+              given: 'Docter',
+              family: 'Mister',
+              suffix: 'Guy',
+            },
+          },
+          receivedOrganization: {
+            name: healthcareSystemName,
+          },
+        },
+      },
+      // The single person legally responsible for the document
+      legalAuthenticator: {
+        time: { '@_value': dateString },
+        signatureCode: { '@_code': 'S' },
+        assignedEntity: {
+          id: {
+            '@_extension': 'legalAuthenticator',
+            '@_root': '2.16.840.1.113883.4.6',
           },
         },
       },
