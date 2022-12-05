@@ -20,29 +20,31 @@ const initTest = (mockDb) => {
   db = mockDb;
 };
 
-const findMembers = async (query, limit, skip) => {
-  const collection = await db.collection('measures');
-  console.log({ query });
-  
-  const cursor = await collection.aggregate([
-
-    { $limit: 10 },
-    { $skip: 100 },
-  ]).toArray();
-
-  console.log({ cursor });
-  console.log({ cursor: cursor.length });
+const findMembers = (query) => {
+  const collection = db.collection('measures');
   return collection.find(query).toArray();
 };
 
-// const findMembers = async (query, limit, skip) => {
-//   const collection = await db.collection('measures');
-//   if (limit || skip) {
-//     return collection.find(query, { offset: skip, limit }).toArray();
-//   }
-// return collection.find(query).toArray();
-// };
+const paginateMembers = async (query, skip, limit) => {
+  if (query === undefined) {
+    return [];
+  }
+  const collection = db.collection('measures');
+  const pipeline = await collection.aggregate([{
+    $facet: {
+      members: [
+        {
+          $match: query,
+        },
+        { $skip: skip },
+        { $limit: limit },
+      ],
+    },
+  }]);
 
+  const results = await pipeline.toArray();
+  return results[0];
+};
 const searchMembers = (query) => {
   const collection = db.collection('measures');
   // sanitize query
@@ -229,6 +231,7 @@ module.exports = {
   init,
   initTest,
   findMembers,
+  paginateMembers,
   searchMembers,
   findMeasureResults,
   findPredictions,

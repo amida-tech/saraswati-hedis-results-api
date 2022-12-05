@@ -1,40 +1,42 @@
 /* eslint-disable radix */
 /* eslint-disable no-underscore-dangle */
 const dao = require('../config/dao');
+const { queryBuilder } = require('../utilities/filterDrawerUtils');
 
 const getMembers = async (req, res, next) => {
-  let page = parseInt(req.query.page);
-  let size = parseInt(req.query.size);
-  const { measurementType } = req.query;
-  const initialLoad = 200;
-
   try {
-    if (!page) {
-      page = 1;
-    }
-    if (!size) {
-      size = initialLoad;
-    }
-    const limit = size;
-    let skip = (page - 1) * size;
-    if (parseInt(page) !== 1) {
-      skip = initialLoad;
-    }
-    console.log({
-      page, size, limit, skip,
-    });
-
-    const members = await dao.findMembers({ measurementType }, skip, limit);
-    console.log({ members: members.length });
-    const filteredMembers = await dao.findMembers({ measurementType });
-    console.log({ filteredMembers: filteredMembers.length });
-
-    return res.send({ members, totalMembers: filteredMembers.length });
+    const measures = await dao.findMembers(req.query);
+    return res.send(measures);
   } catch (e) {
     return next(e);
   }
 };
 
+const paginateMembers = async (req, res, next) => {
+  const { measurementType } = req.query;
+
+  let page = parseInt(req.query.page);
+  const size = parseInt(req.query.size);
+
+  const { searchQuery } = queryBuilder(measurementType || false);
+  // console.log({searchQuery})
+  if (page === 0) {
+    page = 1;
+  }
+  const skip = page * size;
+  const limit = size;
+  // console.log({skip, limit})
+
+  try {
+    const Members = await dao.paginateMembers(searchQuery, skip, limit);
+  // req.FoundFilteredMembers = 
+    // console.log(Object.keys(Members[0]));
+    // console.log(Members[0].members.length);
+    return res.send(Members);
+  } catch (error) {
+    next(error);
+  }
+};
 // Get all records with the memberId, sort and get the latest one
 const getMemberInfo = async (req, res, next) => {
   try {
@@ -77,6 +79,7 @@ const searchMembers = async (req, res, next) => {
 module.exports = {
   getMembers,
   getMemberInfo,
+  paginateMembers,
   postBulkMembers,
   postMember,
   searchMembers,

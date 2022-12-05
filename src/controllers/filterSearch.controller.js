@@ -6,7 +6,17 @@ const { createInfoObject } = require('../utilities/infoUtil');
 const filterMembers = async (req, res, next) => {
   const { submeasure, filters } = req.body;
   const { searchQuery } = queryBuilder(submeasure, filters);
-
+  try {
+    const Members = await dao.findMembers(searchQuery);
+    req.FoundMembers = Members;
+    next();
+  } catch (error) {
+    next(error);
+  }
+};
+const paginateMembers = async (req, res, next) => {
+  const { submeasure, filters } = req.body;
+  const { searchQuery } = queryBuilder(submeasure, filters);
   try {
     const Members = await dao.findMembers(searchQuery);
     req.FoundMembers = Members;
