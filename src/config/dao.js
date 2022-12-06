@@ -25,7 +25,11 @@ const findMembers = (query) => {
   return collection.find(query).toArray();
 };
 
-const paginateMembers = async (query, skip, limit) => {
+const paginateMembers = async (query, skip, limit, initialLoad) => {
+  console.log({
+    query, skip, limit, initialLoad,
+  });
+
   if (query === undefined) {
     return [];
   }
@@ -45,6 +49,7 @@ const paginateMembers = async (query, skip, limit) => {
   const results = await pipeline.toArray();
   return results[0];
 };
+
 const searchMembers = (query) => {
   const collection = db.collection('measures');
   // sanitize query

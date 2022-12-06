@@ -15,26 +15,23 @@ const getMembers = async (req, res, next) => {
 const paginateMembers = async (req, res, next) => {
   const { measurementType } = req.query;
 
-  let page = parseInt(req.query.page);
+  const page = parseInt(req.query.page);
   const size = parseInt(req.query.size);
+  const initialLoad = 0;
 
   const { searchQuery } = queryBuilder(measurementType || false);
-  // console.log({searchQuery})
-  if (page === 0) {
-    page = 1;
-  }
-  const skip = page * size;
-  const limit = size;
-  // console.log({skip, limit})
 
+  const skip = initialLoad + size * page;
+  const limit = size;
+
+  // console.log("pre", { page, size, initialLoad, skip, limit })
   try {
-    const Members = await dao.paginateMembers(searchQuery, skip, limit);
-  // req.FoundFilteredMembers = 
-    // console.log(Object.keys(Members[0]));
-    // console.log(Members[0].members.length);
-    return res.send(Members);
+    const { members } = await dao.paginateMembers(searchQuery, skip, limit, initialLoad);
+    const membersByMeasure = await dao.findMembers(searchQuery);
+    // console.log(members.length, membersByMeasure.length)
+    return res.send({ Members: members, totalCount: membersByMeasure.length });
   } catch (error) {
-    next(error);
+    return next(error);
   }
 };
 // Get all records with the memberId, sort and get the latest one
