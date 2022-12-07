@@ -70,8 +70,10 @@ async function generateMemberById(req, res) {
 
 const qrda1 = async (req, res, next) => {
   try {
-    const member = await dao.searchMembers(req.query);
-    const qrdaReport = qrda1Export(member);
+    const memberList = await dao.searchMembers(req.query);
+    const infoList = await dao.findInfo();
+    const measureInfo = createInfoObject(infoList);
+    const qrdaReport = qrda1Export(memberList, measureInfo);
     return res.send(qrdaReport);
   } catch (e) {
     return next(e);

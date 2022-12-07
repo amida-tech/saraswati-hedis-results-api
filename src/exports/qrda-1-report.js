@@ -8,7 +8,34 @@ const usRealmHeader = {
 
 const healthcareSystemName = 'Health R US';
 
-const qrda1Export = (memberInfo) => {
+const createDateString = (date) => `${date.getFullYear()}${date.getMonth() + 1}${date.getDate()}`;
+
+const getMeasureEntries = (memberInfoList, measureInfo) => {
+  const entryList = [];
+  memberInfoList.forEach((member) => {
+    entryList.push({
+      organizer: {
+        templateId: [{ '@_root': '2.16.840.1.113883.10.20.24.3.98' }, { '@_root': '2.16.840.1.113883.10.20.24.3.97' }],
+        id: { '@_root': member.measurementType },
+        statusCode: { '@_code': 'completed' },
+        reference: {
+          '@_typeCode': 'REFR',
+          externalDocument: {
+            '@_classCode': 'DOC',
+            '@_moodCode': 'EVN',
+            // This is the version specific identifier for the eMeasure
+            id: { '@_root': '2.16.840.1.113883.4.738' },
+            text: measureInfo[member.measurementType].title,
+          },
+        },
+      },
+    });
+  });
+
+  return entryList;
+};
+
+const qrda1Export = (memberInfo, measureInfo) => {
   const options = {
     ignoreAttributes: false,
     format: true,
@@ -143,6 +170,102 @@ const qrda1Export = (memberInfo) => {
             '@_extension': 'legalAuthenticator',
             '@_root': '2.16.840.1.113883.4.6',
           },
+        },
+      },
+      /*
+      ********************************************************
+      CDA Body
+      ********************************************************
+      */
+      component: {
+        structuredBody: {
+          component: [{
+            /*
+            ********************************************************
+            Measure Section
+            ********************************************************
+            */
+            section: {
+              // This is the templateId for Measure Section and Measure Section QDM
+              templateId: [utils.measureSectionTemplate, { '@_root': '2.16.840.1.113883.10.20.24.2.3' }],
+              // This is the LOINC code for "Measure document"
+              code: {
+                '@_code': '55186-1',
+                '@_codeSystem': utils.loincCodeSystem,
+              },
+              title: 'Measure Section',
+              text: 'The section of measures',
+              entry: getMeasureEntries(memberInfo, measureInfo),
+            },
+          },
+          /*
+          ********************************************************
+          Reporting Parameters Section
+          ********************************************************
+          */
+          {
+            section: {
+              templateId: [
+                // Reporting Parameters Section
+                { '@_root': '2.16.840.1.113883.10.20.17.2.1' },
+                // Reporting Parameters Section CMS
+                { '@_root': '2.16.840.1.113883.10.20.17.2.1.1', '@_extension': '2016-03-01' },
+              ],
+              id: { '@_root': 'reporting-parameters-id' },
+              code: {
+                '@_code': '55187-9',
+                '@_codeSystem': utils.loincCodeSystem,
+              },
+              title: 'Reporting Parameters',
+              entry: {
+                '@_typeCode': 'DRV',
+                act: {
+                  '@_classCode': 'ACT',
+                  '@_moodCode': 'EVN',
+                  templateId: [
+                    // Reporting Parameters Act
+                    { '@_root': '2.16.840.1.113883.10.20.17.3.8' },
+                    // Reporting Parameters Act CMS
+                    { '@_root': '2.16.840.1.113883.10.20.17.3.8.1', '@_extension': '2016-03-01' },
+                  ],
+                  id: { '@_root': 'reporting-parameters-act-id' },
+                  code: {
+                    '@_code': '252116004',
+                    '@_codeSystem': '2.16.840.1.113883.6.96',
+                    '@_displayName': 'Observation Parameters',
+                  },
+                  effectiveTime: {
+                    low: { '@_value': '20220101' },
+                    high: { '@_high': createDateString(new Date()) },
+                  },
+                },
+              },
+            },
+          },
+          /*
+          ********************************************************
+          Patient Data Section
+          ********************************************************
+          */
+          {
+            section: {
+              templateId: [
+                // Patient Data Section
+                { '@_root': '2.16.840.1.113883.10.20.17.2.4' },
+                // Patient Data Section QDM (V7)
+                { '@_root': '2.16.840.1.113883.10.20.24.2.1', '@_extension': '2019-12-01' },
+                // Patient Data Section QDM (V7) - CMS
+                { '@_root': '2.16.840.1.113883.10.20.24.2.1.1', '@_extension': '2020-02-01' },
+              ],
+              id: { '@_root': 'patient-data-id' },
+              code: {
+                '@_code': '55188-7',
+                '@_codeSystem': utils.loincCodeSystem,
+              },
+              title: 'Patient Data',
+              // Here is where event info goes, but we don't store event info, we store results
+            },
+          }],
         },
       },
     },

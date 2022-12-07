@@ -14,6 +14,8 @@ const confidentialityCode = {
   '@_code': 'N',
 };
 
+const measureSectionTemplate = { '@_root': '2.16.840.1.113883.10.20.24.2.2' };
+
 const languageCode = { '@_code': 'en' };
 
 const createAuthor = (healthcareSystemName, date) => ({
@@ -41,4 +43,5 @@ module.exports = {
   confidentialityCode,
   languageCode,
   createAuthor,
+  measureSectionTemplate,
 };

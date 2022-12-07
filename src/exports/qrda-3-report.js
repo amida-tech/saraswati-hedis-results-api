@@ -47,8 +47,6 @@ const measureReferenceResultsV4Template = {
   '@_extension': '2020-12-01',
 };
 
-const measureSectionTemplate = { '@_root': '2.16.840.1.113883.10.20.24.2.2' };
-
 const measurementPeriod = {
   low: { '@_value': '20220101' },
   high: { '@_value': '20221231' },
@@ -196,7 +194,7 @@ const qrda3Export = (results, measureInfo, practitioners) => {
   };
 
   const date = new Date();
-  const dateString = `${date.getFullYear()}${date.getMonth() + 1}${date.getDate()}${date.getHours()}${date.getMinutes()}${date.getSeconds()}`;
+  const dateTimeString = `${date.getFullYear()}${date.getMonth() + 1}${date.getDate()}${date.getHours()}${date.getMinutes()}${date.getSeconds()}`;
 
   const clinicalDocument = {
     ClinicalDocument: {
@@ -220,7 +218,7 @@ const qrda3Export = (results, measureInfo, practitioners) => {
         '@_displayName': 'Quality Reporting Document Architecture Summary Report',
       },
       title: `${measureInfo[results.measure].displayLabel} QRDA Category III Summary Report`,
-      effectiveTime: { '@_value': dateString },
+      effectiveTime: { '@_value': dateTimeString },
       confidentialityCode: utils.confidentialityCode,
       languageCode: utils.languageCode,
       versionNumber: { '@_value': '1' },
@@ -231,7 +229,7 @@ const qrda3Export = (results, measureInfo, practitioners) => {
         },
       },
       // Author can be a person or a device
-      author: utils.createAuthor(healthcareSystemName, dateString),
+      author: utils.createAuthor(healthcareSystemName, dateTimeString),
       // This assignedCustodian represents the organization that owns and reports the data
       custodian: {
         assignedCustodian: {
@@ -246,7 +244,7 @@ const qrda3Export = (results, measureInfo, practitioners) => {
       },
       // The legalAuthenticator identifies the single person legally responsible for the document
       legalAuthenticator: {
-        time: { '@_value': dateString },
+        time: { '@_value': dateTimeString },
         signatureCode: { '@_code': 'S' },
         assignedEntity: {
           id: { '@_root': 'legal-entity' },
@@ -294,7 +292,7 @@ const qrda3Export = (results, measureInfo, practitioners) => {
           component: {
             section: {
               templateId: [
-                measureSectionTemplate,
+                utils.measureSectionTemplate,
                 qrda3MeasureSectionV5Template,
               ],
               code: {
