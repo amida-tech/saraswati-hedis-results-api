@@ -8,8 +8,6 @@ const usRealmHeader = {
 
 const healthcareSystemName = 'Health R US';
 
-const createDateString = (date) => `${date.getFullYear()}${date.getMonth() + 1}${date.getDate()}`;
-
 const getMeasureEntries = (memberInfoList, measureInfo) => {
   const entryList = [];
   memberInfoList.forEach((member) => {
@@ -33,6 +31,17 @@ const getMeasureEntries = (memberInfoList, measureInfo) => {
   });
 
   return entryList;
+};
+
+const createPatientData = (member) => {
+  switch (member.measurementType) {
+    case 'aab':
+      return utils.handleAabPatientData(member);
+    case 'adde':
+      return utils.handleAddePatientData(member);
+    default:
+      return [];
+  }
 };
 
 const qrda1Export = (memberInfo, measureInfo) => {
@@ -236,7 +245,7 @@ const qrda1Export = (memberInfo, measureInfo) => {
                   },
                   effectiveTime: {
                     low: { '@_value': '20220101' },
-                    high: { '@_high': createDateString(new Date()) },
+                    high: { '@_high': utils.createDateString(new Date()) },
                   },
                 },
               },
@@ -263,6 +272,7 @@ const qrda1Export = (memberInfo, measureInfo) => {
                 '@_codeSystem': utils.loincCodeSystem,
               },
               title: 'Patient Data',
+              entry: createPatientData(memberInfo[0]),
               // Here is where event info goes, but we don't store event info, we store results
             },
           }],
