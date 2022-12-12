@@ -24,11 +24,9 @@ const paginateMembers = async (req, res, next) => {
   const skip = size * page;
   const limit = size;
 
-  console.log("pre", { page, size, initialLoad, skip, limit })
   try {
     const { members } = await dao.paginateMembers(searchQuery, skip, limit, initialLoad);
     const membersByMeasure = await dao.findMembers(searchQuery);
-    console.log(members.length, membersByMeasure.length)
     return res.send({ Members: members, totalCount: membersByMeasure.length });
   } catch (error) {
     return next(error);
