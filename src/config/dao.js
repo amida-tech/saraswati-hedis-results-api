@@ -25,11 +25,7 @@ const findMembers = (query) => {
   return collection.find(query).toArray();
 };
 
-const paginateMembers = async (query, skip, limit, initialLoad) => {
-  console.log({
-    query, skip, limit, initialLoad,
-  });
-
+const paginateMembers = async (query, skip, limit) => {
   if (query === undefined) {
     return [];
   }
