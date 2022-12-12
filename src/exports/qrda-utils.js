@@ -27,6 +27,8 @@ const padZero = (num) => {
 
 const createDateString = (date) => `${date.getFullYear()}${padZero(date.getMonth() + 1)}${padZero(date.getDate())}`;
 
+const createDateTimeString = (date) => `${date.getFullYear()}${date.getMonth() + 1}${date.getDate()}${date.getHours()}${date.getMinutes()}${date.getSeconds()}`;
+
 const createAuthor = (healthcareSystemName, date) => ({
   time: { '@_value': date },
   assignedAuthor: {
@@ -163,6 +165,38 @@ const createMedDispensedXml = (claim) => ({
   },
 });
 
+const createImmunoAdministeredXml = (immunization) => ({
+  '@_typeCode': 'DRIV',
+  substanceAdministration: {
+    '@_classCode': 'SBADM',
+    '@_moodCode': 'EVN',
+    templateId: [
+      // C-CDA R2 Immunization Activity (V3)
+      { '@_root': '2.16.840.1.113883.10.20.22.4.52', '@_extension': '2015-08-01' },
+      // Immunization Administered (V3)
+      { '@_root': '2.16.840.1.113883.10.20.24.3.140', '@_extension': '2019-12-01' },
+    ],
+    id: {
+      '@_root': immunization.id,
+    },
+    statusCode: { '@_code': 'completed' },
+    effectiveTime: { '@_value': immunization.date },
+    doseQuantity: { '@_value': 1 },
+    consumable: {
+      manufacturedProduct: {
+        '@_classCode': 'MANU',
+        // C-CDA R2.1 Immunization Medication Information (V2)
+        templateId: { '@_root': '2.16.840.1.113883.10.20.22.4.54', '@_extension': '2014-06-09' },
+        manufacturedMaterial: {
+          code: {
+            '@_code': immunization.code,
+          },
+        },
+      },
+    },
+  },
+});
+
 const handleAddePatientData = (member) => {
   const claims = getAddePatientData(member.result['ADHD Medication Dispensed'], member.result['Index Prescription Start Date']);
   const productInfo = [];
@@ -177,6 +211,36 @@ const handleAddePatientData = (member) => {
   return productInfo.map((claim) => createMedDispensedXml(claim));
 };
 
+const getAisePatientData = (memberResult) => {
+  const immunizations = [];
+  memberResult['Influenza Vaccine'].forEach((fluVac) => immunizations.push(fluVac));
+  memberResult['Td or Tdap Vaccine'].forEach((tdapVac) => immunizations.push(tdapVac));
+  memberResult['Herpes Zoster Live Vaccine'].forEach((herpVac) => immunizations.push(herpVac));
+  memberResult['Herpes Zoster Recombinant Vaccine'].forEach((herpVac) => immunizations.push(herpVac));
+  memberResult['Pneumococcal Polysaccharide Vaccine 23'].forEach((pneumVac) => immunizations.push(pneumVac));
+  const immunoInfoList = [];
+  immunizations.forEach((immuno) => {
+    const immunoInfo = { id: immuno.id.value, date: '', code: '' };
+    if (immuno.code) {
+      immunoInfo.code = immuno.code.coding[0].code.value;
+    } else if (immuno.vaccineCode) {
+      immunoInfo.code = immuno.vaccineCode.coding[0].code.value;
+    }
+
+    if (immuno.performed) {
+      immunoInfo.date = createDateTimeString(new Date(immuno.performed.value));
+    } else if (immuno.occurrence) {
+      immunoInfo.date = createDateTimeString(new Date(immuno.occurrence.value));
+    }
+
+    immunoInfoList.push(immunoInfo);
+  });
+  return immunoInfoList;
+};
+
+const handleAisePatientData = (member) => getAisePatientData(member.result)
+  .map((immunization) => createImmunoAdministeredXml(immunization));
+
 module.exports = {
   realmCode,
   clinicalDocumentBase,
@@ -187,5 +251,7 @@ module.exports = {
   measureSectionTemplate,
   handleAabPatientData,
   handleAddePatientData,
+  handleAisePatientData,
   createDateString,
+  createDateTimeString,
 };

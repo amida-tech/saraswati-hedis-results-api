@@ -193,8 +193,7 @@ const qrda3Export = (results, measureInfo, practitioners) => {
     allowBooleanAttributes: true,
   };
 
-  const date = new Date();
-  const dateTimeString = `${date.getFullYear()}${date.getMonth() + 1}${date.getDate()}${date.getHours()}${date.getMinutes()}${date.getSeconds()}`;
+  const dateTimeString = utils.createDateTimeString(new Date());
 
   const clinicalDocument = {
     ClinicalDocument: {

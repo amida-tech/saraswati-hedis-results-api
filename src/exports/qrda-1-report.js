@@ -39,6 +39,8 @@ const createPatientData = (member) => {
       return utils.handleAabPatientData(member);
     case 'adde':
       return utils.handleAddePatientData(member);
+    case 'aise':
+      return utils.handleAisePatientData(member);
     default:
       return [];
   }
@@ -273,7 +275,6 @@ const qrda1Export = (memberInfo, measureInfo) => {
               },
               title: 'Patient Data',
               entry: createPatientData(memberInfo[0]),
-              // Here is where event info goes, but we don't store event info, we store results
             },
           }],
         },
