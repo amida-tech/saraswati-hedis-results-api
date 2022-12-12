@@ -27,7 +27,12 @@ const paginateMembers = async (req, res, next) => {
   try {
     const { members } = await dao.paginateMembers(searchQuery, skip, limit, initialLoad);
     const membersByMeasure = await dao.findMembers(searchQuery);
-    return res.send({ Members: members, totalCount: membersByMeasure.length });
+    return res.send({
+      Members: members,
+      totalCount: membersByMeasure.length,
+      page,
+      rowCount: members.length,
+    });
   } catch (error) {
     return next(error);
   }
