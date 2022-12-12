@@ -72,56 +72,6 @@ const createProcedureXml = (claim) => ({
   },
 });
 
-const getAabPatientData = (claims, qualifyingEpisodes) => {
-  const validClaims = claims.filter(
-    (claim) => (claim.procedure != null && claim.item != null)
-      && claim.item.find((item) => {
-      // eslint-disable-next-line no-restricted-syntax
-        for (const episodeDate of qualifyingEpisodes) {
-          if (item.serviced.value) {
-            return item.serviced.value.startsWith(episodeDate);
-          }
-          if (item.serviced.start.value.startsWith(episodeDate)
-          || item.serviced.end.value.startsWith(episodeDate)) {
-            return true;
-          }
-        }
-        return false;
-      }),
-  );
-  return validClaims;
-};
-
-const handleAabPatientData = (member) => {
-  const claims = getAabPatientData(member.result['Member Claims'], member.result.Denominator);
-  const procedureInfo = [];
-  claims.forEach((claim) => claim.procedure
-    .forEach((procedure, procIndex) => procedure.procedure.coding
-      .forEach((coding, codeIndex) => procedureInfo
-        .push({
-          id: `${claim.id.value}-${procIndex}-${codeIndex}`,
-          code: coding.code.value,
-        }))));
-  return procedureInfo.map((claim) => createProcedureXml(claim));
-};
-
-const getAddePatientData = (claims, prescStartDate) => {
-  const validClaims = claims.filter(
-    (claim) => claim.LineItem != null
-      && claim.LineItem.find((item) => {
-        if (item.serviced.value) {
-          return item.serviced.value.startsWith(prescStartDate);
-        }
-        if (item.serviced.start.value.startsWith(prescStartDate)
-          || item.serviced.end.value.startsWith(prescStartDate)) {
-          return true;
-        }
-        return false;
-      }),
-  );
-  return validClaims;
-};
-
 const createMedDispensedXml = (claim) => ({
   '@_typeCode': 'DRIV',
   act: {
@@ -197,6 +147,92 @@ const createImmunoAdministeredXml = (immunization) => ({
   },
 });
 
+const createAssessmentPerformedXml = (assessment) => ({
+  '@_typeCode': 'DRIV',
+  observation: {
+    '@_classCode': 'OBS',
+    '@_moodCode': 'EVN',
+    // Assessment Performed (V3)
+    templateId: { '@_root': '2.16.840.1.113883.10.20.24.3.144', '@_extension': '2019-12-01' },
+    id: { '@_root': assessment.id },
+    code: { '@_code': assessment.code },
+    text: 'Unsafe Alcohol Use Assessment',
+    statusCode: { '@_code': 'completed' },
+    entryRelationship: {
+      '@_typeCode': 'REFR',
+      observation: {
+        '@_classCode': 'OBS',
+        '@_moodCode': 'EVN',
+        templateId: { '@_root': '2.16.840.1.113883.10.20.22.4.149', '@_extension': '2017-08-01' },
+        id: { '@_root': assessment.id },
+        code: {
+          '@_code': assessment.code,
+          '@_codeSystem': '2.16.840.1.113883.6.1',
+          '@_codeSystemName': 'LOINC',
+        },
+        value: {
+          '@_xsi:type': 'INT',
+          '@_value': assessment.value,
+        },
+      },
+    },
+  },
+});
+
+// AAB
+
+const getAabPatientData = (claims, qualifyingEpisodes) => {
+  const validClaims = claims.filter(
+    (claim) => (claim.procedure != null && claim.item != null)
+      && claim.item.find((item) => {
+      // eslint-disable-next-line no-restricted-syntax
+        for (const episodeDate of qualifyingEpisodes) {
+          if (item.serviced.value) {
+            return item.serviced.value.startsWith(episodeDate);
+          }
+          if (item.serviced.start.value.startsWith(episodeDate)
+          || item.serviced.end.value.startsWith(episodeDate)) {
+            return true;
+          }
+        }
+        return false;
+      }),
+  );
+  return validClaims;
+};
+
+const handleAabPatientData = (member) => {
+  const claims = getAabPatientData(member.result['Member Claims'], member.result.Denominator);
+  const procedureInfo = [];
+  claims.forEach((claim) => claim.procedure
+    .forEach((procedure, procIndex) => procedure.procedure.coding
+      .forEach((coding, codeIndex) => procedureInfo
+        .push({
+          id: `${claim.id.value}-${procIndex}-${codeIndex}`,
+          code: coding.code.value,
+        }))));
+  return procedureInfo.map((claim) => createProcedureXml(claim));
+};
+
+// ADD-E
+
+const getAddePatientData = (claims, prescStartDate) => {
+  const validClaims = claims.filter(
+    (claim) => claim.LineItem != null
+      && claim.LineItem.find((item) => {
+        if (item.serviced.value) {
+          return item.serviced.value.startsWith(prescStartDate);
+        }
+        if (item.serviced.start.value.startsWith(prescStartDate)
+          || item.serviced.end.value.startsWith(prescStartDate)) {
+          return true;
+        }
+        return false;
+      }),
+  );
+  return validClaims;
+};
+
 const handleAddePatientData = (member) => {
   const claims = getAddePatientData(member.result['ADHD Medication Dispensed'], member.result['Index Prescription Start Date']);
   const productInfo = [];
@@ -210,6 +246,8 @@ const handleAddePatientData = (member) => {
         }))));
   return productInfo.map((claim) => createMedDispensedXml(claim));
 };
+
+// AIS-E
 
 const getAisePatientData = (memberResult) => {
   const immunizations = [];
@@ -241,6 +279,31 @@ const getAisePatientData = (memberResult) => {
 const handleAisePatientData = (member) => getAisePatientData(member.result)
   .map((immunization) => createImmunoAdministeredXml(immunization));
 
+// APM-E is skipped
+// ASF-E
+
+const getAsfePatientData = (memberResult) => {
+  const documentedResults = [];
+  memberResult['AUDIT Screen with Documented Result'].forEach((audit) => documentedResults.push(audit));
+  memberResult['AUDIT-C Screen with Documented Result'].forEach((auditC) => documentedResults.push(auditC));
+  memberResult['Single-Question Screen with Documented Result'].forEach((sQuest) => documentedResults.push(sQuest));
+  const docResultList = [];
+  documentedResults.forEach((result) => {
+    const immunoInfo = {
+      id: result.id.value,
+      date: createDateTimeString(new Date(result.effective.value)),
+      code: result.code.coding[0].code.value,
+      value: result.value.value,
+    };
+
+    docResultList.push(immunoInfo);
+  });
+  return docResultList;
+};
+
+const handleAsfePatientData = (member) => getAsfePatientData(member.result)
+  .map((immunization) => createAssessmentPerformedXml(immunization));
+
 module.exports = {
   realmCode,
   clinicalDocumentBase,
@@ -252,6 +315,7 @@ module.exports = {
   handleAabPatientData,
   handleAddePatientData,
   handleAisePatientData,
+  handleAsfePatientData,
   createDateString,
   createDateTimeString,
 };
