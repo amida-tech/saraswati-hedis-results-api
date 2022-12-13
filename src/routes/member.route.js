@@ -6,6 +6,7 @@ const memberCtrl = require('../controllers/member.controller');
 const router = express.Router(); // eslint-disable-line new-cap
 
 router.route('/').get(memberCtrl.getMembers);
+
 router.route('/paginate').get(memberCtrl.paginateMembers);
 
 if (process.env.NODE_ENV !== 'production') {
