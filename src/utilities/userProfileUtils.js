@@ -164,6 +164,7 @@ function userChangeFinder(oldPref, newPref, companyWidePreferences) {
   UpdatedUser.userPreferences = userPreferences;
   UpdatedUser.userPreferences.reportsAccess = newReportsAccess;
   UpdatedUser.userPreferences.customFilters = newCustomFilters;
+
   return { UpdatedUser, foundErrors };
 }
 

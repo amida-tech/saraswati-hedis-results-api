@@ -85,7 +85,7 @@ const updateUser = async (req, res, next) => {
       lastLogin,
       active,
     };
-    const updatedUser = await dao.updateUserByEmail(userToUpdate, email.toLowerCase());
+    const updatedUser = await dao.updateUserByEmail(userToUpdate, email);
     req.updatedUser = updatedUser;
     next();
   } catch (error) {
@@ -93,13 +93,45 @@ const updateUser = async (req, res, next) => {
   }
 };
 
-const loginUser = async (req, res, next) => {};
+const loginUser = async (req, res, next) => {
+  const {
+    email,
+    firstName,
+    lastName,
+    role,
+    companyName,
+    companyPreferences,
+    userPreferences,
+    created_on,
+    active,
+  } = req.User;
+  try {
+    const userToUpdate = {
+      email,
+      firstName,
+      lastName,
+      role,
+      companyName,
+      companyPreferences,
+      userPreferences,
+      created_on,
+      updated_on: Date.now(),
+      lastLogin: Date.now(),
+      active,
+    };
+    const updatedUser = await dao.updateUserByEmail(userToUpdate, email);
+    req.updatedUser = updatedUser;
+    next();
+  } catch (error) {
+    winstonInstance.error(error);
+  }
+};
 
 const filterUsers = async (req, res, next) => {
   const { email } = req.body;
   try {
     if (email) {
-      const UsersFound = await dao.getUsersByEmail(email.toLowerCase());
+      const UsersFound = await dao.getUsersByEmail(email);
       if (UsersFound.length === 0) {
         next();
       } else {

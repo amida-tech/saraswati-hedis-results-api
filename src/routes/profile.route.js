@@ -40,4 +40,5 @@ router.put('/', getUserProfileByEmail, updateUserProfile, (req, res) => {
     });
   }
 });
+
 module.exports = router;

@@ -38,7 +38,7 @@ const envVarsSchema = Joi.object({
     .default('initialize/hedis-info.json')
     .description('Location of data to autoload hedis_info collection'),
   TEST_USER_ACTIVE: Joi.boolean()
-    .default(false)
+    .default(false),
 }).unknown();
 
 const { error, value: envVars } = envVarsSchema.validate(process.env);

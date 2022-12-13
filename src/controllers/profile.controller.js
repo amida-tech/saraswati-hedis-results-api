@@ -49,11 +49,10 @@ const updateUserProfile = async (req, res, next) => {
           foundErrors,
         } = userChangeFinder(foundUser[0], currentUserSettings, companyWidePreferences);
         if (foundErrors.length > 0) {
-          // REFRENCE for status Code ----> https://www.moesif.com/blog/technical/api-design/Which-HTTP-Status-Code-To-Use-For-Every-CRUD-App/ 
+          // REFRENCE for status Code ----> https://www.moesif.com/blog/technical/api-design/Which-HTTP-Status-Code-To-Use-For-Every-CRUD-App/
           res.status(204).json({
             status: 'Failed',
             message: 'UNABLE TO UPDATE USER',
-            // ASK MIKE
           });
         } else {
           const updateUser = await dao.updateUserByEmail(UpdatedUser, email);

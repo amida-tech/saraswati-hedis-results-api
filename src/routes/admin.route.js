@@ -88,5 +88,18 @@ router.post('/users', filterUsers, addUser, (req, res) => {
 router.delete('/users', deleteUser, (req, res) => {
   res.status(200).json({ status: 'Success', message: 'USER DELETED SUCCESSFULLY' });
 });
-router.post('/login', getUsersByEmail, loginUser);
+router.post('/login', getUsersByEmail, loginUser, (req, res) => {
+  const user = req.updatedUser;
+  if (user.ok > 0) {
+    res.status(200).json({
+      status: 'Success',
+      message: `Successful login of user by given email: ${req.body.email}`,
+    });
+  } else {
+    res.status(200).json({
+      status: 'Failed',
+      message: `Unsuccessful login of user by given email: ${req.body.email}`,
+    });
+  }
+});
 module.exports = router;
