@@ -43,7 +43,10 @@ const createPatientData = (member) => {
       return utils.handleAisePatientData(member);
     case 'asfe':
       return utils.handleAsfePatientData(member);
+    case 'ccs':
+      return utils.handleCcsPatientData(member);
     case 'apme':
+    case 'bcse':
     default:
       return [];
   }

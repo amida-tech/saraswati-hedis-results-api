@@ -156,8 +156,8 @@ const createAssessmentPerformedXml = (assessment) => ({
     templateId: { '@_root': '2.16.840.1.113883.10.20.24.3.144', '@_extension': '2019-12-01' },
     id: { '@_root': assessment.id },
     code: { '@_code': assessment.code },
-    text: 'Unsafe Alcohol Use Assessment',
     statusCode: { '@_code': 'completed' },
+    effectiveTime: { '@_value': assessment.date },
     entryRelationship: {
       '@_typeCode': 'REFR',
       observation: {
@@ -173,6 +173,36 @@ const createAssessmentPerformedXml = (assessment) => ({
         value: {
           '@_xsi:type': 'INT',
           '@_value': assessment.value,
+        },
+      },
+    },
+  },
+});
+
+const createLabTestPerformedXml = (test) => ({
+  '@_typeCode': 'DRIV',
+  observation: {
+    '@_classCode': 'OBS',
+    '@_moodCode': 'EVN',
+    // Laboratory Test Performed (V5)
+    templateId: { '@_root': '2.16.840.1.113883.10.20.24.3.38', '@_extension': '2019-12-01' },
+    id: { '@_root': test.id },
+    code: { '@_code': test.code },
+    statusCode: { '@_code': 'completed' },
+    effectiveTime: { '@_value': test.date },
+    entryRelationship: {
+      '@_typeCode': 'REFR',
+      observation: {
+        '@_classCode': 'OBS',
+        '@_moodCode': 'EVN',
+        templateId: [
+          { '@_root': '2.16.840.1.113883.10.20.22.4.2', '@_extension': '2015-08-01' },
+          { '@_root': '2.16.840.1.113883.10.20.24.3.87', '@_extension': '2019-12-01' },
+        ],
+        id: { '@_root': test.id },
+        statusCode: { '@_code': 'completed' },
+        code: {
+          '@_code': test.code,
         },
       },
     },
@@ -223,11 +253,8 @@ const getAddePatientData = (claims, prescStartDate) => {
         if (item.serviced.value) {
           return item.serviced.value.startsWith(prescStartDate);
         }
-        if (item.serviced.start.value.startsWith(prescStartDate)
-          || item.serviced.end.value.startsWith(prescStartDate)) {
-          return true;
-        }
-        return false;
+        return (item.serviced.start.value.startsWith(prescStartDate)
+          || item.serviced.end.value.startsWith(prescStartDate));
       }),
   );
   return validClaims;
@@ -304,6 +331,29 @@ const getAsfePatientData = (memberResult) => {
 const handleAsfePatientData = (member) => getAsfePatientData(member.result)
   .map((immunization) => createAssessmentPerformedXml(immunization));
 
+// BCS-E skipped
+// CCS
+
+const getCcsPatientData = (memberResult) => {
+  const documentedResults = [];
+  memberResult['Cervical Cytology Within 3 Years'].forEach((cervical) => documentedResults.push(cervical));
+  memberResult['hrHPV Testing Within 5 Years'].forEach((hrHPV) => documentedResults.push(hrHPV));
+  const docResultList = [];
+  documentedResults.forEach((result) => {
+    const immunoInfo = {
+      id: result.id.value,
+      date: createDateTimeString(new Date(result.effective.value)),
+      code: result.code.coding[0].code.value,
+    };
+
+    docResultList.push(immunoInfo);
+  });
+  return docResultList;
+};
+
+const handleCcsPatientData = (member) => getCcsPatientData(member.result)
+  .map((immunization) => createLabTestPerformedXml(immunization));
+
 module.exports = {
   realmCode,
   clinicalDocumentBase,
@@ -316,6 +366,7 @@ module.exports = {
   handleAddePatientData,
   handleAisePatientData,
   handleAsfePatientData,
+  handleCcsPatientData,
   createDateString,
   createDateTimeString,
 };
