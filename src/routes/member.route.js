@@ -7,7 +7,7 @@ const router = express.Router(); // eslint-disable-line new-cap
 
 router.route('/').get(memberCtrl.getMembers);
 
-router.route('/paginate').get(memberCtrl.paginateMembers);
+router.route('/paginate').post(memberCtrl.paginateMembers);
 
 if (process.env.NODE_ENV !== 'production') {
   router.route('/').post(memberCtrl.postMember);

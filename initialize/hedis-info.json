@@ -68,7 +68,7 @@
         "_id" : "adde-2", 
         "adde-2" : {
             "domainOfCare" : "ECDS", 
-            "title" : "Follow-Up Care After Initiation of Treatment", 
+            "title" : "Follow-Up Care During Continuation of Treatment", 
             "displayLabel" : "ADD-E: Follow-Up During Continuation", 
             "measureType" : "process",
             "link": "https://www.ncqa.org/hedis/measures/follow-up-care-for-children-prescribed-adhd-medication/", 
