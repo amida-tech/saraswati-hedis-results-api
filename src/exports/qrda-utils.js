@@ -27,7 +27,7 @@ const padZero = (num) => {
 
 const createDateString = (date) => `${date.getFullYear()}${padZero(date.getMonth() + 1)}${padZero(date.getDate())}`;
 
-const createDateTimeString = (date) => `${date.getFullYear()}${date.getMonth() + 1}${date.getDate()}${date.getHours()}${date.getMinutes()}${date.getSeconds()}`;
+const createDateTimeString = (date) => `${date.getFullYear()}${padZero(date.getMonth() + 1)}${padZero(date.getDate())}${padZero(date.getHours())}${padZero(date.getMinutes())}${padZero(date.getSeconds())}`;
 
 const createAuthor = (healthcareSystemName, date) => ({
   time: { '@_value': date },
@@ -203,6 +203,45 @@ const createLabTestPerformedXml = (test) => ({
         statusCode: { '@_code': 'completed' },
         code: {
           '@_code': test.code,
+        },
+      },
+    },
+  },
+});
+
+const createEncounterXml = (encounter) => ({
+  '@_typeCode': 'DRIV',
+  act: {
+    '@_classCode': 'ACT',
+    '@_moodCode': 'EVN',
+    templateId: {
+      '@_root': '2.16.840.1.113883.10.20.24.3.133',
+      '@_extension': '2019-12-01',
+    },
+    code: {
+      '@_code': 'ENC',
+      '@_codeSystem': loincCodeSystem,
+      '@_displayName': 'Encounter',
+      '@_codeSystemName': 'ActClass',
+    },
+    entryRelationship: {
+      '@_typeCode': 'SUBJ',
+      encounter: {
+        '@_classCode': 'ENC',
+        '@_moodCode': 'EVN',
+        templateId: [
+          // Conforms to C-CDA R2.1 Encounter Activity (V3)
+          { '@_root': '2.16.840.1.113883.10.20.22.4.49', '@_extension': '2015-08-01' },
+          // Encounter Performed (V5)
+          { '@_root': '2.16.840.1.113883.10.20.24.3.23', '@_extension': '2019-12-01' },
+        ],
+        id: { '@_root': encounter.id },
+        code: { '@_code': encounter.code },
+        text: `Encounter: ${encounter.id}`,
+        statusCode: { '@_code': 'cmopleted' },
+        effectiveTime: {
+          low: { '@_value': encounter.startDate },
+          high: { '@_value': encounter.endDate },
         },
       },
     },
@@ -461,6 +500,26 @@ const handleCwpPatientData = (member) => {
   return productInfo.map((claim) => createProcedureXml(claim));
 };
 
+// DMSE
+
+const getDmsePatientData = (memberResult) => {
+  const docResultList = [];
+  memberResult['Interactive Outpatient Encounter With A Diagnosis Of Major Depression Or Dysthymia'].forEach((result) => {
+    const immunoInfo = {
+      id: result.id.value,
+      startDate: createDateTimeString(new Date(result.period.start.value)),
+      endDate: createDateTimeString(new Date(result.period.end.value)),
+      code: result.type[0].coding[0].code.value,
+    };
+
+    docResultList.push(immunoInfo);
+  });
+  return docResultList;
+};
+
+const handleDmsePatientData = (member) => getDmsePatientData(member.result)
+  .map((encounter) => createEncounterXml(encounter));
+
 module.exports = {
   realmCode,
   clinicalDocumentBase,
@@ -477,6 +536,7 @@ module.exports = {
   handleCisePatientData,
   handleColePatientData,
   handleCwpPatientData,
+  handleDmsePatientData,
   createDateString,
   createDateTimeString,
 };
