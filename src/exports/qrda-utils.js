@@ -354,6 +354,51 @@ const getCcsPatientData = (memberResult) => {
 const handleCcsPatientData = (member) => getCcsPatientData(member.result)
   .map((immunization) => createLabTestPerformedXml(immunization));
 
+// CIS-E
+
+const getCisePatientData = (memberResult) => {
+  const documentedResults = [];
+  memberResult['DTaP Vaccinations'].forEach((dtap) => documentedResults.push(dtap));
+  memberResult['IPV Vaccinations'].forEach((ipv) => documentedResults.push(ipv));
+  memberResult['MMR Vaccinations'].forEach((mmr) => documentedResults.push(mmr));
+  memberResult['HiB Vaccinations'].forEach((hib) => documentedResults.push(hib));
+  memberResult['HepB Vaccinations'].forEach((hepB) => documentedResults.push(hepB));
+  memberResult['Newborn HepB Vaccinations'].forEach((hrHPV) => documentedResults.push(hrHPV));
+  memberResult['VZV Vaccinations'].forEach((newHepB) => documentedResults.push(newHepB));
+  memberResult['PCV Vaccinations'].forEach((pcv) => documentedResults.push(pcv));
+  memberResult['HepA Vaccinations'].forEach((hepA) => documentedResults.push(hepA));
+  memberResult['RV 2 Dose Vaccinations'].forEach((rv2) => documentedResults.push(rv2));
+  memberResult['RV 3 Dose Vaccinations'].forEach((rv3) => documentedResults.push(rv3));
+  memberResult['Influenza Vaccinations'].forEach((flu) => documentedResults.push(flu));
+  memberResult['LAIV Vaccinations'].forEach((laiv) => documentedResults.push(laiv));
+  const docResultList = [];
+  documentedResults.forEach((result) => {
+    const immunoInfo = {
+      id: result.id.value,
+      date: '',
+      code: '',
+    };
+
+    if (result.performed) {
+      immunoInfo.date = createDateTimeString(new Date(result.performed.value));
+    } else if (result.occurrence) {
+      immunoInfo.date = createDateTimeString(new Date(result.occurrence.value));
+    }
+
+    if (result.code) {
+      immunoInfo.code = result.code.coding[0].code.value;
+    } else if (result.vaccineCode) {
+      immunoInfo.code = result.vaccineCode.coding[0].code.value;
+    }
+
+    docResultList.push(immunoInfo);
+  });
+  return docResultList;
+};
+
+const handleCisePatientData = (member) => getCisePatientData(member.result)
+  .map((immunization) => createImmunoAdministeredXml(immunization));
+
 module.exports = {
   realmCode,
   clinicalDocumentBase,
@@ -367,6 +412,7 @@ module.exports = {
   handleAisePatientData,
   handleAsfePatientData,
   handleCcsPatientData,
+  handleCisePatientData,
   createDateString,
   createDateTimeString,
 };
