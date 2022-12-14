@@ -432,6 +432,35 @@ const getColePatientData = (memberResult) => {
 const handleColePatientData = (member) => getColePatientData(member.result)
   .map((immunization) => createLabTestPerformedXml(immunization));
 
+// CWP
+
+const getCwpPatientData = (claims, episodeDates) => {
+  const validClaims = claims.filter(
+    (claim) => claim.item != null && claim.procedure !== null
+      && claim.item.find((item) => {
+        if (item.serviced.value) {
+          return episodeDates.find((episodeDate) => item.serviced.value.startsWith(episodeDate));
+        }
+        return episodeDates.find((episodeDate) => item.serviced.start.value.startsWith(episodeDate))
+          || episodeDates.find((episodeDate) => item.serviced.end.value.startsWith(episodeDate));
+      }),
+  );
+  return validClaims;
+};
+
+const handleCwpPatientData = (member) => {
+  const claims = getCwpPatientData(member.result['Member Claims'], member.support['Certification Episode Date']);
+  const productInfo = [];
+  claims.forEach((claim) => claim.item
+    .forEach((item, itemIndex) => item.revenue.coding
+      .forEach((coding, codeIndex) => productInfo
+        .push({
+          id: `${claim.id.value}-${itemIndex}-${codeIndex}`,
+          code: coding.code.value,
+        }))));
+  return productInfo.map((claim) => createProcedureXml(claim));
+};
+
 module.exports = {
   realmCode,
   clinicalDocumentBase,
@@ -447,6 +476,7 @@ module.exports = {
   handleCcsPatientData,
   handleCisePatientData,
   handleColePatientData,
+  handleCwpPatientData,
   createDateString,
   createDateTimeString,
 };
