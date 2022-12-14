@@ -47,6 +47,8 @@ const createPatientData = (member) => {
       return utils.handleCcsPatientData(member);
     case 'cise':
       return utils.handleCisePatientData(member);
+    case 'cole':
+      return utils.handleColePatientData(member);
     case 'apme':
     case 'bcse':
     default:

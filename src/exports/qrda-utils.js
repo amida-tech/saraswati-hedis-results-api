@@ -399,6 +399,39 @@ const getCisePatientData = (memberResult) => {
 const handleCisePatientData = (member) => getCisePatientData(member.result)
   .map((immunization) => createImmunoAdministeredXml(immunization));
 
+// COL-E
+
+const getColePatientData = (memberResult) => {
+  const documentedResults = [];
+  memberResult['Fecal Occult Blood Test Performed'].forEach((fobtp) => documentedResults.push(fobtp));
+  memberResult['Flexible Sigmoidoscopy Performed'].forEach((fsp) => documentedResults.push(fsp));
+  memberResult['Colonoscopy Performed'].forEach((cp) => documentedResults.push(cp));
+  memberResult['CT Colonography Performed'].forEach((ctcp) => documentedResults.push(ctcp));
+  memberResult['Fecal Immunochemical Test DNA Performed'].forEach((fitdp) => documentedResults.push(fitdp));
+  const docResultList = [];
+  documentedResults.forEach((result) => {
+    const testInfo = {
+      id: result.id.value,
+      date: '',
+      code: result.code.coding[0].code.value,
+    };
+
+    if (result.effective && result.effective.value) {
+      testInfo.date = createDateTimeString(new Date(result.effective.value));
+    } else if (result.performed) {
+      testInfo.date = createDateTimeString(new Date(result.performed.value));
+    } else if (result.effective && result.effective.start) {
+      testInfo.date = createDateTimeString(new Date(result.effective.start.value));
+    }
+
+    docResultList.push(testInfo);
+  });
+  return docResultList;
+};
+
+const handleColePatientData = (member) => getColePatientData(member.result)
+  .map((immunization) => createLabTestPerformedXml(immunization));
+
 module.exports = {
   realmCode,
   clinicalDocumentBase,
@@ -413,6 +446,7 @@ module.exports = {
   handleAsfePatientData,
   handleCcsPatientData,
   handleCisePatientData,
+  handleColePatientData,
   createDateString,
   createDateTimeString,
 };
