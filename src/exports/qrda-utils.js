@@ -600,6 +600,36 @@ const handleFumPatientData = (member) => {
   return procedureInfo.map((claim) => createProcedureXml(claim));
 };
 
+// IMA-E
+
+const getImaePatientData = (memberResult) => {
+  const immunizations = [];
+  memberResult['Meningococcal Vaccinations'].forEach((fluVac) => immunizations.push(fluVac));
+  memberResult['Tdap Vaccinations'].forEach((tdapVac) => immunizations.push(tdapVac));
+  memberResult['HPV Vaccinations'].forEach((herpVac) => immunizations.push(herpVac));
+  const immunoInfoList = [];
+  immunizations.forEach((immuno) => {
+    const immunoInfo = { id: immuno.id.value, date: '', code: '' };
+    if (immuno.code) {
+      immunoInfo.code = immuno.code.coding[0].code.value;
+    } else if (immuno.vaccineCode) {
+      immunoInfo.code = immuno.vaccineCode.coding[0].code.value;
+    }
+
+    if (immuno.performed) {
+      immunoInfo.date = createDateTimeString(new Date(immuno.performed.value));
+    } else if (immuno.occurrence) {
+      immunoInfo.date = createDateTimeString(new Date(immuno.occurrence.value));
+    }
+
+    immunoInfoList.push(immunoInfo);
+  });
+  return immunoInfoList;
+};
+
+const handleImaePatientData = (member) => getImaePatientData(member.result)
+  .map((immunization) => createImmunoAdministeredXml(immunization));
+
 module.exports = {
   realmCode,
   clinicalDocumentBase,
@@ -620,6 +650,7 @@ module.exports = {
   handleDrrePatientData,
   handleDsfePatientData,
   handleFumPatientData,
+  handleImaePatientData,
   createDateString,
   createDateTimeString,
 };
