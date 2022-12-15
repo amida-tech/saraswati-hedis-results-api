@@ -630,6 +630,25 @@ const getImaePatientData = (memberResult) => {
 const handleImaePatientData = (member) => getImaePatientData(member.result)
   .map((immunization) => createImmunoAdministeredXml(immunization));
 
+// PDS-E
+
+const getPdsePatientData = (memberResult) => {
+  const docResultList = [];
+  memberResult.support['Certification Delivery'].forEach((result) => {
+    const assessmentInfo = {
+      id: result.deliveries.id.value,
+      date: createDateTimeString(new Date(result.deliveries.performed.start.value)),
+      code: result.deliveries.code.coding[0].code.value,
+    };
+
+    docResultList.push(assessmentInfo);
+  });
+  return docResultList;
+};
+
+const handlePdsePatientData = (member) => getPdsePatientData(member)
+  .map((encounter) => createProcedureXml(encounter));
+
 module.exports = {
   realmCode,
   clinicalDocumentBase,
@@ -651,6 +670,7 @@ module.exports = {
   handleDsfePatientData,
   handleFumPatientData,
   handleImaePatientData,
+  handlePdsePatientData,
   createDateString,
   createDateTimeString,
 };
