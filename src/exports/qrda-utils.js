@@ -520,6 +520,26 @@ const getDmsePatientData = (memberResult) => {
 const handleDmsePatientData = (member) => getDmsePatientData(member.result)
   .map((encounter) => createEncounterXml(encounter));
 
+// DRR-E
+
+const getDrrePatientData = (memberResult) => {
+  const docResultList = [];
+  memberResult['PHQ-9 Assessments'].forEach((result) => {
+    const assessmentInfo = {
+      id: result.id.value,
+      date: createDateTimeString(new Date(result.effective.start.value)),
+      code: result.code.coding[0].code.value,
+      value: result.value.value,
+    };
+
+    docResultList.push(assessmentInfo);
+  });
+  return docResultList;
+};
+
+const handleDrrePatientData = (member) => getDrrePatientData(member.result)
+  .map((encounter) => createAssessmentPerformedXml(encounter));
+
 module.exports = {
   realmCode,
   clinicalDocumentBase,
@@ -537,6 +557,7 @@ module.exports = {
   handleColePatientData,
   handleCwpPatientData,
   handleDmsePatientData,
+  handleDrrePatientData,
   createDateString,
   createDateTimeString,
 };
