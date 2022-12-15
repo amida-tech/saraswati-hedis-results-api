@@ -55,6 +55,8 @@ const createPatientData = (member) => {
       return utils.handleDmsePatientData(member);
     case 'drre':
       return utils.handleDrrePatientData(member);
+    case 'dsfe':
+      return utils.handleDsfePatientData(member);
     case 'apme':
     case 'bcse':
     case 'cou':

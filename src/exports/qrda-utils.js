@@ -540,6 +540,31 @@ const getDrrePatientData = (memberResult) => {
 const handleDrrePatientData = (member) => getDrrePatientData(member.result)
   .map((encounter) => createAssessmentPerformedXml(encounter));
 
+// DSF-E
+
+const getDsfePatientData = (memberResult) => {
+  const documentedResults = [];
+  memberResult['Adult Full Length Depression Screen with Documented Result'].forEach((audit) => documentedResults.push(audit));
+  memberResult['Adult Brief Screen with Documented Result'].forEach((auditC) => documentedResults.push(auditC));
+  memberResult['Adolescent Full Length Depression Screen with Documented Result'].forEach((audit) => documentedResults.push(audit));
+  memberResult['Adolescent Brief Screen with Documented Result'].forEach((auditC) => documentedResults.push(auditC));
+  const docResultList = [];
+  documentedResults.forEach((result) => {
+    const immunoInfo = {
+      id: result.id.value,
+      date: createDateTimeString(new Date(result.effective.start.value)),
+      code: result.code.coding[0].code.value,
+      value: result.value.value,
+    };
+
+    docResultList.push(immunoInfo);
+  });
+  return docResultList;
+};
+
+const handleDsfePatientData = (member) => getDsfePatientData(member.result)
+  .map((immunization) => createAssessmentPerformedXml(immunization));
+
 module.exports = {
   realmCode,
   clinicalDocumentBase,
@@ -558,6 +583,7 @@ module.exports = {
   handleCwpPatientData,
   handleDmsePatientData,
   handleDrrePatientData,
+  handleDsfePatientData,
   createDateString,
   createDateTimeString,
 };
