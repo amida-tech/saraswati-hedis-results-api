@@ -565,6 +565,41 @@ const getDsfePatientData = (memberResult) => {
 const handleDsfePatientData = (member) => getDsfePatientData(member.result)
   .map((immunization) => createAssessmentPerformedXml(immunization));
 
+// FUM
+
+const getFumPatientData = (claims, qualifyingEpisodes) => {
+  const validClaims = claims.filter(
+    (claim) => (claim.procedure != null && claim.item != null)
+      && claim.item.find((item) => {
+      // eslint-disable-next-line no-restricted-syntax
+        for (const episodeDate of qualifyingEpisodes) {
+          if (item.serviced.value) {
+            return item.serviced.value.startsWith(episodeDate.date);
+          }
+          if (item.serviced.start.value.startsWith(episodeDate.date)
+          || item.serviced.end.value.startsWith(episodeDate.date)) {
+            return true;
+          }
+        }
+        return false;
+      }),
+  );
+  return validClaims;
+};
+
+const handleFumPatientData = (member) => {
+  const claims = getFumPatientData(member.result['Member Claims'], member.support['Certification Info']);
+  const procedureInfo = [];
+  claims.forEach((claim) => claim.procedure
+    .forEach((procedure, procIndex) => procedure.procedure.coding
+      .forEach((coding, codeIndex) => procedureInfo
+        .push({
+          id: `${claim.id.value}-${procIndex}-${codeIndex}`,
+          code: coding.code.value,
+        }))));
+  return procedureInfo.map((claim) => createProcedureXml(claim));
+};
+
 module.exports = {
   realmCode,
   clinicalDocumentBase,
@@ -584,6 +619,7 @@ module.exports = {
   handleDmsePatientData,
   handleDrrePatientData,
   handleDsfePatientData,
+  handleFumPatientData,
   createDateString,
   createDateTimeString,
 };
