@@ -632,12 +632,12 @@ const handleImaePatientData = (member) => getImaePatientData(member.result)
 
 // PDS-E
 
-const getPdsePatientData = (memberResult) => {
+const getDeliveriesPatientData = (memberResult) => {
   const docResultList = [];
   memberResult.support['Certification Delivery'].forEach((result) => {
     const assessmentInfo = {
       id: result.deliveries.id.value,
-      date: createDateTimeString(new Date(result.deliveries.performed.start.value)),
+      date: createDateTimeString(new Date(result.deliveryDate)),
       code: result.deliveries.code.coding[0].code.value,
     };
 
@@ -646,7 +646,7 @@ const getPdsePatientData = (memberResult) => {
   return docResultList;
 };
 
-const handlePdsePatientData = (member) => getPdsePatientData(member)
+const handleDeliveriesPatientData = (member) => getDeliveriesPatientData(member)
   .map((encounter) => createProcedureXml(encounter));
 
 module.exports = {
@@ -670,7 +670,7 @@ module.exports = {
   handleDsfePatientData,
   handleFumPatientData,
   handleImaePatientData,
-  handlePdsePatientData,
+  handleDeliveriesPatientData,
   createDateString,
   createDateTimeString,
 };
