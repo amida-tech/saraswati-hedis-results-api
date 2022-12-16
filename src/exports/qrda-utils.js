@@ -631,6 +631,8 @@ const handleImaePatientData = (member) => getImaePatientData(member.result)
   .map((immunization) => createImmunoAdministeredXml(immunization));
 
 // PDS-E
+// PND-E
+// PRS-E
 
 const getDeliveriesPatientData = (memberResult) => {
   const docResultList = [];
@@ -648,6 +650,38 @@ const getDeliveriesPatientData = (memberResult) => {
 
 const handleDeliveriesPatientData = (member) => getDeliveriesPatientData(member)
   .map((encounter) => createProcedureXml(encounter));
+
+// URI
+
+const getUriPatientData = (claims, episodeDates) => {
+  const validClaims = claims.filter(
+    (claim) => claim.item != null && claim.procedure !== null
+      && claim.item.find((item) => {
+        if (item.serviced.value) {
+          return episodeDates.find((episodeDate) => item.serviced.value
+            .startsWith(episodeDate.date));
+        }
+        return episodeDates.find((episodeDate) => item.serviced.start.value
+          .startsWith(episodeDate.date))
+          || episodeDates.find((episodeDate) => item.serviced.end.value
+            .startsWith(episodeDate.date));
+      }),
+  );
+  return validClaims;
+};
+
+const handleUriPatientData = (member) => {
+  const claims = getUriPatientData(member.result['Member Claims'], member.support['Certification Info']);
+  const productInfo = [];
+  claims.forEach((claim) => claim.item
+    .forEach((item, itemIndex) => item.revenue.coding
+      .forEach((coding, codeIndex) => productInfo
+        .push({
+          id: `${claim.id.value}-${itemIndex}-${codeIndex}`,
+          code: coding.code.value,
+        }))));
+  return productInfo.map((claim) => createProcedureXml(claim));
+};
 
 module.exports = {
   realmCode,
@@ -671,6 +705,7 @@ module.exports = {
   handleFumPatientData,
   handleImaePatientData,
   handleDeliveriesPatientData,
+  handleUriPatientData,
   createDateString,
   createDateTimeString,
 };

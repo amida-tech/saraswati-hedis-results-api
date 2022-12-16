@@ -65,9 +65,13 @@ const createPatientData = (member) => {
     case 'pnde':
     case 'prse':
       return utils.handleDeliveriesPatientData(member);
+    case 'uri':
+      return utils.handleUriPatientData(member);
     case 'apme':
     case 'bcse':
     case 'cou':
+    case 'psa':
+    case 'uop':
     default:
       return [];
   }
