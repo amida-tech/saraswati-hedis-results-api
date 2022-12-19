@@ -1,8 +1,8 @@
-const logger = require('./src/config/winston');
 /* eslint-disable no-underscore-dangle */
 const { v4: uuidv4 } = require('uuid');
 const minimist = require('minimist');
 const fs = require('fs');
+const logger = require('./src/config/winston');
 const dao = require('./src/config/dao');
 const { template, coveragePlans, providerOptions } = require('./test-data-settings');
 

@@ -2,8 +2,8 @@ const cors = require('cors');
 const express = require('express');
 const swStats = require('swagger-stats');
 const expressWinston = require('express-winston');
-const config = require('./config');
 const winstonInstance = require('winston');
+const config = require('./config');
 const routes = require('../routes/index.route');
 
 const app = express();
