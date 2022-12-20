@@ -56,7 +56,7 @@ async function healthcareProvidersPayorsGenerator() {
         payorOptions.push(foundPayors);
       }
     } else {
-      const foundPatientPayor = patient[patient.memberId]['Member Coverage'][0].payor[0].reference.value;
+      const foundPatientPayor = patient.result['Member Coverage'][0].payor[0].reference.value;
       if (foundPatientPayor) {
         const modifiedFilteredOptions = payorOptions
           .filter((payors) => payors === foundPatientPayor);
