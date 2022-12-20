@@ -13,6 +13,8 @@ const getMeasureEntries = (memberInfoList, measureInfo) => {
   memberInfoList.forEach((member) => {
     entryList.push({
       organizer: {
+        '@_classCode': 'CLUSTER',
+        '@_moodCode': 'EVN',
         templateId: [{ '@_root': '2.16.840.1.113883.10.20.24.3.98' }, { '@_root': '2.16.840.1.113883.10.20.24.3.97' }],
         id: { '@_root': member.measurementType },
         statusCode: { '@_code': 'completed' },
@@ -22,7 +24,7 @@ const getMeasureEntries = (memberInfoList, measureInfo) => {
             '@_classCode': 'DOC',
             '@_moodCode': 'EVN',
             // This is the version specific identifier for the eMeasure
-            id: { '@_root': '2.16.840.1.113883.4.738' },
+            id: { '@_root': '2.16.840.1.113883.4.738', '@_extension': member.measurementType },
             text: measureInfo[member.measurementType].title,
           },
         },
@@ -98,16 +100,24 @@ const qrda1Export = (memberInfo, measureInfo) => {
       */
       realmCode: utils.realmCode,
       typeId: utils.clinicalDocumentBase,
-      templateId: usRealmHeader,
-      id: `qrda1-${memberInfo[0].memberId}`,
+      templateId: [
+        usRealmHeader,
+        // QRDA Category I Framework (V4)
+        { '@_root': '2.16.840.1.113883.10.20.24.1.1', '@_extension': '2017-08-01' },
+        // QDM-based QRDA (V7)
+        { '@_root': '2.16.840.1.113883.10.20.24.1.2', '@_extension': '2019-12-01' },
+        // QRDA Category I Report - CMS (V7)
+        { '@_root': '2.16.840.1.113883.10.20.24.1.3', '@_extension': '2020-02-01' },
+      ],
+      id: { '@_root': `qrda1-${memberInfo[0].memberId}` },
       code: {
         '@_code': '55182-6',
         '@_codeSystem': utils.loincCodeSystem,
         '@_codeSystemName': 'LOINC',
         '@_displayName': 'Quality Measure Report',
       },
-      text: 'QRDA Category I Report',
-      effectiveTime: dateString,
+      title: 'QRDA Category I Report',
+      effectiveTime: { '@_value': utils.createDateString(new Date()) },
       confidentialityCode: utils.confidentialityCode,
       languageCode: utils.languageCode,
       recordTarget: {
@@ -126,9 +136,9 @@ const qrda1Export = (memberInfo, measureInfo) => {
             city: 'Outside',
             state: 'Space',
             postalCode: '00000',
-            country: 'Existence',
+            country: 'US',
           },
-          telcom: {
+          telecom: {
             '@_use': 'HP',
             '@_value': '5558675309',
           },
@@ -142,7 +152,7 @@ const qrda1Export = (memberInfo, measureInfo) => {
               '@_code': 'M',
               '@_codeSystem': '2.16.840.1.113883.5.1',
             },
-            birthTime: '19690420',
+            birthTime: { '@_value': '1969' },
             maritalStatusCode: { // not required
               '@_code': 'S',
               '@_displayName': 'Single',
@@ -170,10 +180,10 @@ const qrda1Export = (memberInfo, measureInfo) => {
           representedCustodianOrganization: {
             id: {
               '@_root': '2.16.840.1.113883.4.6',
-              '@_extension': '223344',
+              '@_extension': '1234567893',
             },
             name: healthcareSystemName,
-            telcom: {
+            telecom: {
               '@_use': 'WP',
               '@_value': '5558675309',
             },
@@ -183,7 +193,7 @@ const qrda1Export = (memberInfo, measureInfo) => {
               city: 'Underworld',
               state: 'FL',
               postalCode: '666666',
-              country: 'Existence',
+              country: 'US',
             },
           },
         },
@@ -198,22 +208,27 @@ const qrda1Export = (memberInfo, measureInfo) => {
               suffix: 'Guy',
             },
           },
+          id: { '@_root': '2.16.840.1.113883.3.249.7', '@_extension': 'HQR_IQR' },
           receivedOrganization: {
             name: healthcareSystemName,
           },
         },
       },
       // The single person legally responsible for the document
-      legalAuthenticator: {
+      /* legalAuthenticator: {
         time: { '@_value': dateString },
         signatureCode: { '@_code': 'S' },
         assignedEntity: {
           id: {
-            '@_extension': 'legalAuthenticator',
             '@_root': '2.16.840.1.113883.4.6',
+            '@_extension': '1234567893',
+          },
+          telecom: {
+            '@_use': 'WP',
+            '@_value': '5558675309',
           },
         },
-      },
+      }, */
       /*
       ********************************************************
       CDA Body
@@ -259,6 +274,7 @@ const qrda1Export = (memberInfo, measureInfo) => {
                 '@_codeSystem': utils.loincCodeSystem,
               },
               title: 'Reporting Parameters',
+              text: 'Reporting Parameters',
               entry: {
                 '@_typeCode': 'DRV',
                 act: {
@@ -278,7 +294,7 @@ const qrda1Export = (memberInfo, measureInfo) => {
                   },
                   effectiveTime: {
                     low: { '@_value': '20220101' },
-                    high: { '@_high': utils.createDateString(new Date()) },
+                    high: { '@_value': utils.createDateString(new Date()) },
                   },
                 },
               },
@@ -305,6 +321,7 @@ const qrda1Export = (memberInfo, measureInfo) => {
                 '@_codeSystem': utils.loincCodeSystem,
               },
               title: 'Patient Data',
+              text: 'Patient Data',
               entry: createPatientData(memberInfo[0]),
             },
           }],

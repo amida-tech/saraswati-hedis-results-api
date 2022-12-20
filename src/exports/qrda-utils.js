@@ -34,7 +34,12 @@ const createAuthor = (healthcareSystemName, date) => ({
   assignedAuthor: {
     id: { '@_root': 'software_author' },
     assignedAuthoringDevice: {
+      manufacturerModelName: 'Saraswati',
       softwareName: 'Saraswati',
+    },
+    telecom: {
+      '@_use': 'WP',
+      '@_value': '5558675309',
     },
     representedOrganization: {
       /* The organization id is optional, but the name is required
@@ -64,7 +69,7 @@ const createProcedureXml = (claim) => ({
     code: {
       '@_code': claim.code,
     },
-    statusCode: 'completed',
+    statusCode: { '@_code': 'completed' },
     effectiveTime: {
       low: { '@_value': '20220101' },
       high: { '@_value': createDateString(new Date()) },
