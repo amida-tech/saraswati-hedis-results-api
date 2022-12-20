@@ -81,7 +81,7 @@ const numeratorValueObject = () => ({
 });
 
 const getMeasureText = (result, measureInfo) => {
-  const resultInfo = measureInfo[result.measurementType];
+  const resultInfo = measureInfo[result.measure];
   if (resultInfo.description) {
     return `${resultInfo.title} - ${resultInfo.title}`;
   }
