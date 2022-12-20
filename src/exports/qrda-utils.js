@@ -41,6 +41,14 @@ const createAuthor = (healthcareSystemName, date) => ({
       '@_use': 'WP',
       '@_value': '5558675309',
     },
+    addr: {
+      '@_use': 'WP',
+      streetAddressLine: '666 Heck Lane',
+      city: 'Underworld',
+      state: 'FL',
+      postalCode: '666666',
+      country: 'US',
+    },
     representedOrganization: {
       /* The organization id is optional, but the name is required
          id: {

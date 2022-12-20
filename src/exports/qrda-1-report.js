@@ -36,47 +36,93 @@ const getMeasureEntries = (memberInfoList, measureInfo) => {
 };
 
 const createPatientData = (member) => {
+  let entryList = [];
   switch (member.measurementType) {
     case 'aab':
-      return utils.handleAabPatientData(member);
+      entryList = utils.handleAabPatientData(member);
+      break;
     case 'adde':
-      return utils.handleAddePatientData(member);
+      entryList = utils.handleAddePatientData(member);
+      break;
     case 'aise':
-      return utils.handleAisePatientData(member);
+      entryList = utils.handleAisePatientData(member);
+      break;
     case 'asfe':
-      return utils.handleAsfePatientData(member);
+      entryList = utils.handleAsfePatientData(member);
+      break;
     case 'ccs':
-      return utils.handleCcsPatientData(member);
+      entryList = utils.handleCcsPatientData(member);
+      break;
     case 'cise':
-      return utils.handleCisePatientData(member);
+      entryList = utils.handleCisePatientData(member);
+      break;
     case 'cole':
-      return utils.handleColePatientData(member);
+      entryList = utils.handleColePatientData(member);
+      break;
     case 'cwp':
-      return utils.handleCwpPatientData(member);
+      entryList = utils.handleCwpPatientData(member);
+      break;
     case 'dmse':
-      return utils.handleDmsePatientData(member);
+      entryList = utils.handleDmsePatientData(member);
+      break;
     case 'drre':
-      return utils.handleDrrePatientData(member);
+      entryList = utils.handleDrrePatientData(member);
+      break;
     case 'dsfe':
-      return utils.handleDsfePatientData(member);
+      entryList = utils.handleDsfePatientData(member);
+      break;
     case 'fum':
-      return utils.handleFumPatientData(member);
+      entryList = utils.handleFumPatientData(member);
+      break;
     case 'imae':
-      return utils.handleImaePatientData(member);
+      entryList = utils.handleImaePatientData(member);
+      break;
     case 'pdse':
     case 'pnde':
     case 'prse':
-      return utils.handleDeliveriesPatientData(member);
+      entryList = utils.handleDeliveriesPatientData(member);
+      break;
     case 'uri':
-      return utils.handleUriPatientData(member);
+      entryList = utils.handleUriPatientData(member);
+      break;
     case 'apme':
     case 'bcse':
     case 'cou':
     case 'psa':
     case 'uop':
     default:
-      return [];
+      entryList = [];
   }
+  // TODO get payer information
+  entryList.push({
+    '@_typeCode': 'DRV',
+    observation: {
+      '@_classCode': 'OBS',
+      '@_moodCode': 'EVN',
+      templateId: { '@_root': '2.16.840.1.113883.10.20.24.3.55' },
+      id: { '@_root': `${member.memberId}-payer` },
+      code: {
+        '@_code': '48768-6',
+        '@_codeSystem': utils.loincCodeSystem,
+        '@_codeSystemName': 'LOINC',
+        '@_dieplayName': 'Payment Source',
+      },
+      statusCode: { '@_code': 'completed' },
+      effectiveTime: {
+        low: { '@_value': '20220101' },
+        high: { '@_value': '20221231' },
+      },
+      value: {
+        '@_xsi:type': 'CD',
+        '@_code': '1',
+        '@_codeSystem': '2.16.840.1.113883.3.221.5',
+        '@_codeSystemName': 'Source of Payment Typology',
+        '@_displayName': 'Medicare',
+      },
+    },
+  });
+
+  return entryList;
 };
 
 const qrda1Export = (memberInfo, measureInfo) => {
@@ -111,7 +157,7 @@ const qrda1Export = (memberInfo, measureInfo) => {
       ],
       id: { '@_root': `qrda1-${memberInfo[0].memberId}` },
       code: {
-        '@_code': '55182-6',
+        '@_code': '55182-0',
         '@_codeSystem': utils.loincCodeSystem,
         '@_codeSystemName': 'LOINC',
         '@_displayName': 'Quality Measure Report',
@@ -152,7 +198,7 @@ const qrda1Export = (memberInfo, measureInfo) => {
               '@_code': 'M',
               '@_codeSystem': '2.16.840.1.113883.5.1',
             },
-            birthTime: { '@_value': '1969' },
+            birthTime: { '@_value': '19690420' },
             maritalStatusCode: { // not required
               '@_code': 'S',
               '@_displayName': 'Single',
@@ -179,7 +225,7 @@ const qrda1Export = (memberInfo, measureInfo) => {
         assignedCustodian: {
           representedCustodianOrganization: {
             id: {
-              '@_root': '2.16.840.1.113883.4.6',
+              '@_root': '2.16.840.1.113883.4.336',
               '@_extension': '1234567893',
             },
             name: healthcareSystemName,
@@ -201,16 +247,27 @@ const qrda1Export = (memberInfo, measureInfo) => {
       // Who is receiving this document
       informationRecipient: {
         intendedRecipient: {
-          informationRecipient: {
+          /* informationRecipient: {
             name: {
               given: 'Docter',
               family: 'Mister',
               suffix: 'Guy',
             },
-          },
+          }, */
           id: { '@_root': '2.16.840.1.113883.3.249.7', '@_extension': 'HQR_IQR' },
-          receivedOrganization: {
-            name: healthcareSystemName,
+          // receivedOrganization: {
+          // name: healthcareSystemName,
+          // },
+        },
+      },
+      participant: {
+        '@_typeCode': 'DEV',
+        associatedEntity: {
+          '@_classCode': 'RGPR',
+          // CMS EHR Certification Number
+          id: {
+            '@_root': '2.16.840.1.113883.3.2074.1',
+            '@_extension': '0015HBC1D1EFG1H',
           },
         },
       },
