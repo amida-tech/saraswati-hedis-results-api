@@ -407,7 +407,7 @@ const qrda3Export = (results, measureInfo, practitioners) => {
         intendedRecipient: {
           id: {
             '@_root': '2.16.840.1.113883.3.249.7',
-            '@_extension': 'recipient-1',
+            '@_extension': 'PCF',
           },
         },
       },
