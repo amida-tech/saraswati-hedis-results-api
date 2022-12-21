@@ -129,7 +129,7 @@ const qrda1Export = (memberInfo, measureInfo) => {
   const options = {
     ignoreAttributes: false,
     format: true,
-    allowBooleanAttributes: true,
+    suppressBooleanAttributes: false,
   };
 
   const date = new Date();

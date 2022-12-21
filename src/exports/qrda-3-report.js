@@ -14,12 +14,12 @@ const measureDataV4Template = {
 
 const qrda3ReportV5Template = {
   '@_root': '2.16.840.1.113883.10.20.27.1.1',
-  '@_extension': '2020-12-01',
+  '@_extension': '2017-06-01',
 };
 
 const qrda3MeasureSectionV5Template = {
   '@_root': '2.16.840.1.113883.10.20.27.2.1',
-  '@_extension': '2020-12-01',
+  '@_extension': '2017-06-01',
 };
 
 const performanceRateTemplate = {
@@ -29,22 +29,14 @@ const performanceRateTemplate = {
 
 const perfRatePropMeasureV3Template = {
   '@_root': '2.16.840.1.113883.10.20.27.3.14',
-  '@_extension': '2020-12-01',
+  '@_extension': '2016-09-01',
 };
 
-const individualTaxayerId = {
-  '@_root': '2.16.840.1.113883.4.2',
-  '@_extension': 'extension',
-};
+const reportingParametersTemplate = { '@_root': '2.16.840.1.113883.10.20.17.3.8' };
 
-const reportingParametersTemplate = {
-  '@_root': '2.16.840.1.113883.10.20.17.3.8',
-  '@_extension': '2020-12-01',
-};
-
-const measureReferenceResultsV4Template = {
+const measureReferenceResultsV3Template = {
   '@_root': '2.16.840.1.113883.10.20.27.3.1',
-  '@_extension': '2020-12-01',
+  '@_extension': '2016-09-01',
 };
 
 const measurementPeriod = {
@@ -105,6 +97,32 @@ const getValueObject = (fieldName) => {
   }
 };
 
+const entryRelationshipCount = (value) => ({
+  '@_typeCode': 'SUBJ',
+  '@_inversionInd': 'true',
+  observation: {
+    '@_classCode': 'OBS',
+    '@_moodCode': 'EVN',
+    templateId: { '@_root': '2.16.840.1.113883.10.20.27.3.3' },
+    code: {
+      '@_code': 'MSRAGG',
+      '@_codeSystem': '2.16.840.1.113883.5.4',
+      '@_codeSystemName': 'ActCode',
+      '@_displayName': 'Rate Aggregation',
+    },
+    value: {
+      '@_xsi:type': 'INT',
+      '@_value': value,
+    },
+    methodCode: {
+      '@_code': 'COUNT',
+      '@_codeSystem': '2.16.840.1.113883.5.84',
+      '@_codeSystemName': 'ObservationMethod',
+      '@_displayName': 'Count',
+    },
+  },
+});
+
 const createResultComponent = (result, fieldName) => {
   const valueObject = getValueObject(fieldName);
   return {
@@ -121,31 +139,171 @@ const createResultComponent = (result, fieldName) => {
       },
       statusCode: { '@_code': 'completed' },
       value: valueObject,
-      entryRelationship: {
-        '@_typeCode': 'SUBJ',
-        '@_inversionInd': 'true',
-        observation: {
-          '@_classCode': 'OBS',
-          '@_moodCode': 'EVN',
-          templateId: { '@_root': '2.16.840.1.113883.10.20.27.3.3' },
-          code: {
-            '@_code': 'MSRAGG',
-            '@_codeSystem': '2.16.840.1.113883.5.4',
-            '@_codeSystemName': 'ActCode',
-            '@_displayName': 'rate aggregation',
-          },
-          value: {
-            '@_xsi:type': 'INT',
-            '@_value': result[fieldName],
-          },
-          methodCode: {
-            '@_code': 'COUNT',
-            '@_codeSystem': '2.16.840.1.113883.5.84',
-            '@_codeSystemName': 'ObservationMethod',
-            '@_displayName': 'Count',
+      entryRelationship: [
+        entryRelationshipCount(result[fieldName]),
+        // TODO Include stratifications in result calculations - include them here
+        // payer stratifications
+        // TODO Add medicare, medicaid, and private health insurance
+        {
+          '@_typeCode': 'COMP',
+          observation: {
+            '@_classCode': 'OBS',
+            '@_moodCode': 'EVN',
+            templateId: [
+              { '@_root': '2.16.840.1.113883.10.20.27.3.9', '@_extension': '2016-02-01' },
+              { '@_root': '2.16.840.1.113883.10.20.27.3.18', '@_extension': '2018-05-01' },
+            ],
+            id: { '@_root': 'payer-other' },
+            code: {
+              '@_code': '48768-6',
+              '@_codeSystem': utils.loincCodeSystem,
+              '@_codeSystemName': 'LOINC',
+              '@_displayName': 'Payment Source',
+            },
+            statusCode: { '@_code': 'completed' },
+            value: {
+              '@_xsi:type': 'CD',
+              '@_nullFlavor': 'OTH',
+              translation: {
+                '@_code': 'D',
+                '@_codeSystem': '2.16.840.1.113883.3.249.12',
+                '@_codeSystemName': 'CMS Clinical Codes',
+                '@_displayName': 'Other Payer',
+              },
+            },
+            entryRelationship: entryRelationshipCount(result[fieldName]),
           },
         },
-      },
+        // Sex stratifications
+        {
+          '@_typeCode': 'COMP',
+          observation: {
+            '@_classCode': 'OBS',
+            '@_moodCode': 'EVN',
+            templateId: { '@_root': '2.16.840.1.113883.10.20.27.3.6', '@_extension': '2016-09-01' },
+            id: { '@_root': 'sex-male' },
+            code: {
+              '@_code': '76689-9',
+              '@_codeSystem': utils.loincCodeSystem,
+              '@_codeSystemName': 'LOINC',
+              '@_displayName': 'Sex assigned at birth',
+            },
+            statusCode: { '@_code': 'completed' },
+            value: {
+              '@_xsi:type': 'CD',
+              '@_code': 'M',
+              '@_codeSystem': '2.16.840.1.113883.5.1',
+              '@_codeSystemName': 'AdministrativeGenderCode',
+              '@_displayName': 'Male',
+            },
+            // Gender count
+            entryRelationship: entryRelationshipCount(result[fieldName] / 2),
+          },
+        },
+        {
+          '@_typeCode': 'COMP',
+          observation: {
+            '@_classCode': 'OBS',
+            '@_moodCode': 'EVN',
+            templateId: { '@_root': '2.16.840.1.113883.10.20.27.3.6', '@_extension': '2016-09-01' },
+            id: { '@_root': 'sex-female' },
+            code: {
+              '@_code': '76689-9',
+              '@_codeSystem': utils.loincCodeSystem,
+              '@_codeSystemName': 'LOINC',
+              '@_displayName': 'Sex assigned at birth',
+            },
+            statusCode: { '@_code': 'completed' },
+            value: {
+              '@_xsi:type': 'CD',
+              '@_code': 'F',
+              '@_codeSystem': '2.16.840.1.113883.5.1',
+              '@_codeSystemName': 'AdministrativeGenderCode',
+              '@_displayName': 'Female',
+            },
+            // Gender count
+            entryRelationship: entryRelationshipCount(result[fieldName] / 2),
+          },
+        },
+        // Race stratifications
+        // TODO Add American Indian or Alaska Native, Asian, Black, and White
+        {
+          '@_typeCode': 'COMP',
+          observation: {
+            '@_classCode': 'OBS',
+            '@_moodCode': 'EVN',
+            templateId: { '@_root': '2.16.840.1.113883.10.20.27.3.8', '@_extension': '2016-09-01' },
+            id: { '@_root': 'race-other' },
+            code: {
+              '@_code': '72826-1',
+              '@_codeSystem': utils.loincCodeSystem,
+              '@_codeSystemName': 'LOINC',
+              '@_displayName': 'Race',
+            },
+            statusCode: { '@_code': 'completed' },
+            value: {
+              '@_xsi:type': 'CD',
+              '@_code': '2131-1',
+              '@_codeSystem': '2.16.840.1.113883.6.238',
+              '@_codeSystemName': 'Race &amp; Ethnicity - CDC',
+              '@_displayName': 'Other Race',
+            },
+            // Gender count
+            entryRelationship: entryRelationshipCount(result[fieldName]),
+          },
+        },
+        // Ethnicity stratifications
+        {
+          '@_typeCode': 'COMP',
+          observation: {
+            '@_classCode': 'OBS',
+            '@_moodCode': 'EVN',
+            templateId: { '@_root': '2.16.840.1.113883.10.20.27.3.7', '@_extension': '2016-09-01' },
+            id: { '@_root': 'ethinicity-non-his' },
+            code: {
+              '@_code': '69490-1',
+              '@_codeSystem': utils.loincCodeSystem,
+              '@_codeSystemName': 'LOINC',
+              '@_displayName': 'Ethnicity',
+            },
+            statusCode: { '@_code': 'completed' },
+            value: {
+              '@_xsi:type': 'CD',
+              '@_code': '2186-5',
+              '@_codeSystem': '2.16.840.1.113883.6.238',
+              '@_codeSystemName': 'Race &amp; Ethnicity - CDC',
+              '@_displayName': 'Not Hispanic or Latino',
+            },
+            // Ethnicity count
+            entryRelationship: entryRelationshipCount(result[fieldName] / 2),
+          },
+        },
+        {
+          '@_typeCode': 'COMP',
+          observation: {
+            '@_classCode': 'OBS',
+            '@_moodCode': 'EVN',
+            templateId: { '@_root': '2.16.840.1.113883.10.20.27.3.7', '@_extension': '2016-09-01' },
+            id: { '@_root': 'ethinicity-his' },
+            code: {
+              '@_code': '69490-1',
+              '@_codeSystem': utils.loincCodeSystem,
+              '@_codeSystemName': 'LOINC',
+              '@_displayName': 'Ethnicity',
+            },
+            statusCode: { '@_code': 'completed' },
+            value: {
+              '@_xsi:type': 'CD',
+              '@_code': '2135-2',
+              '@_codeSystem': '2.16.840.1.113883.6.238',
+              '@_codeSystemName': 'Race &amp; Ethnicity - CDC',
+              '@_displayName': 'Hispanic or Latino',
+            },
+            // Ethnicity count
+            entryRelationship: entryRelationshipCount(result[fieldName] / 2),
+          },
+        },
+      ],
       // Supplemental stratifications go here
       reference: {
         '@_typeCode': 'REFR',
@@ -168,15 +326,15 @@ const createPerformerList = (practitioners) => {
       assignedEntity: {
         id: {
           '@_root': '2.16.840.1.113883.4.6',
-          '@_extension': practitioner.value,
-          '@_assigningAuthorityNam': 'NPI',
+          '@_extension': '1234567893',
+          '@_assigningAuthorityName': 'NPI',
         },
         // TIN = Tax Identification Number
         representedOrganization: {
           id: {
             '@_root': '2.16.840.1.113883.4.2',
-            '@_extension': practitioner.value,
-            '@_assigningAuthorityNam': 'TIN',
+            '@_extension': '123456789',
+            '@_assigningAuthorityName': 'TIN',
           },
           name: practitioner.practitioner,
         },
@@ -190,7 +348,7 @@ const qrda3Export = (results, measureInfo, practitioners) => {
   const options = {
     ignoreAttributes: false,
     format: true,
-    allowBooleanAttributes: true,
+    suppressBooleanAttributes: false,
   };
 
   const dateTimeString = utils.createDateTimeString(new Date());
@@ -206,7 +364,10 @@ const qrda3Export = (results, measureInfo, practitioners) => {
       */
       realmCode: utils.realmCode,
       typeId: utils.clinicalDocumentBase,
-      templateId: qrda3ReportV5Template,
+      templateId: [
+        qrda3ReportV5Template,
+        { '@_root': '2.16.840.1.113883.10.20.27.1.2', '@_extension': '2021-07-01' },
+      ],
       id: {
         '@_root': 'clinicalDocumentTest',
       },
@@ -238,6 +399,15 @@ const qrda3Export = (results, measureInfo, practitioners) => {
               '@_extension': '223344',
             },
             name: healthcareSystemName,
+          },
+        },
+      },
+      // Program for which data is being submitted
+      informationRecipient: {
+        intendedRecipient: {
+          id: {
+            '@_root': '2.16.840.1.113883.3.249.7',
+            '@_extension': 'recipient-1',
           },
         },
       },
@@ -293,6 +463,7 @@ const qrda3Export = (results, measureInfo, practitioners) => {
               templateId: [
                 utils.measureSectionTemplate,
                 qrda3MeasureSectionV5Template,
+                { '@_root': '2.16.840.1.113883.10.20.27.2.3', '@_extension': '2019-05-01' },
               ],
               code: {
                 '@_code': '55186-1',
@@ -303,7 +474,6 @@ const qrda3Export = (results, measureInfo, practitioners) => {
               text: `${measureInfo[results.measure].displayLabel} Measure Section: ${results.value.toFixed(2)}% Compliance`,
               entry: [
                 {
-                  '@_typeCode': 'DRIV',
                   act: {
                     '@_classCode': 'ACT',
                     '@_moodCode': 'EVN',
@@ -322,8 +492,11 @@ const qrda3Export = (results, measureInfo, practitioners) => {
                     '@_classCode': 'CLUSTER',
                     '@_moodCode': 'EVN',
                     templateId: [
+                      // Measure Reference
                       { '@_root': '2.16.840.1.113883.10.20.24.3.98' },
-                      measureReferenceResultsV4Template,
+                      measureReferenceResultsV3Template,
+                      // Measure Reference and Results - CMS (V4)
+                      { '@_root': '2.16.840.1.113883.10.20.27.3.17', '@_extension': '2019-05-01' },
                     ],
                     id: { '@_root': 'main-results' },
                     statusCode: { '@_code': 'completed' },
@@ -357,6 +530,7 @@ const qrda3Export = (results, measureInfo, practitioners) => {
                           templateId: [
                             performanceRateTemplate,
                             perfRatePropMeasureV3Template,
+                            { '@_root': '2.16.840.1.113883.10.20.27.3.25', '@_extension': '2018-05-01' },
                           ],
                           code: {
                             '@_code': '72510-1',
@@ -367,7 +541,7 @@ const qrda3Export = (results, measureInfo, practitioners) => {
                           statusCode: { '@_code': 'completed' },
                           value: {
                             '@_xsi:type': 'REAL',
-                            '@_value': results.value / 100,
+                            '@_value': Math.round(results.value) / 100,
                           },
                         },
                       },
