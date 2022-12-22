@@ -304,7 +304,6 @@ const createResultComponent = (result, fieldName) => {
           },
         },
       ],
-      // Supplemental stratifications go here
       reference: {
         '@_typeCode': 'REFR',
         externalObservation: {
@@ -427,22 +426,50 @@ const qrda3Export = (results, measureInfo, practitioners) => {
         },
       },
       // Participant can be a location or device (EHR). Currently setup as device
-      participant: {
-        '@_typeCode': 'DEV',
-        associatedEntity: {
-          '@_classCode': 'RGPR',
-          id: {
-            '@_root': '2.16.840.1.113883.3.2074.1',
-            '@_extension': '0015EUK17H3DCM9',
-          },
-          code: {
-            '@_code': '129465004',
-            '@_displayName': 'medical record, device',
-            '@_codeSystem': '2.16.840.1.113883.6.96',
-            '@_codeSystemName': 'SNOMED-CT',
+      participant: [
+        {
+          '@_typeCode': 'LOC',
+          associatedEntity: {
+            '@_classCode': 'SDLOC',
+            id: { '@_root': '2.16.840.1.113883.3.249.5.3', '@_extension': '0015EUK17H3DCM9' },
+            code: {
+              '@_code': '394730007',
+              '@_displayName': 'Healthcare Related Organization',
+              '@_codeSystem': '2.16.840.1.113883.6.96',
+              '@_codeSystemName': 'SNOMED-CT',
+            },
+            addr: {
+              '@_use': 'WP',
+              streetAddressLine: '666 Heck Lane',
+              city: 'Underworld',
+              state: 'FL',
+              postalCode: '666666',
+              country: 'US',
+            },
           },
         },
-      },
+        {
+          '@_typeCode': 'DEV',
+          associatedEntity: {
+            '@_classCode': 'RGPR',
+            id: { '@_root': '2.16.840.1.113883.3.2074.1', '@_extension': '0015EUK17H3DCM9' },
+            code: {
+              '@_code': '129465004',
+              '@_displayName': 'Medical Record or Device',
+              '@_codeSystem': '2.16.840.1.113883.6.96',
+              '@_codeSystemName': 'SNOMED-CT',
+            },
+            addr: {
+              '@_use': 'WP',
+              streetAddressLine: '666 Heck Lane',
+              city: 'Underworld',
+              state: 'FL',
+              postalCode: '666666',
+              country: 'US',
+            },
+          },
+        },
+      ],
       // List of all providers involved with the score
       documentationOf: {
         '@_typeCode': 'DOC',
@@ -517,6 +544,17 @@ const qrda3Export = (results, measureInfo, practitioners) => {
                         },
                         text: getMeasureText(results, measureInfo),
                       },
+                      externalObservation: {
+                        '@_classCode': 'OBS',
+                        '@_moodCode': 'EVN',
+                        id: { '@_root': `performance-rate-${results.measure}` },
+                        text: 'The Observation',
+                        code: {
+                          '@_code': '55185-3',
+                          '@_codeSystem': utils.loincCodeSystem,
+                          '@_codeSystemName': 'LOINC',
+                        },
+                      },
                     },
                     component: [
                       createResultComponent(results, 'initialPopulation'),
@@ -542,6 +580,19 @@ const qrda3Export = (results, measureInfo, practitioners) => {
                           value: {
                             '@_xsi:type': 'REAL',
                             '@_value': Math.round(results.value) / 100,
+                          },
+                          reference: {
+                            '@_typeCode': 'REFR',
+                            externalObservation: {
+                              '@_classCode': 'OBS',
+                              '@_moodCode': 'EVN',
+                              id: { '@_root': `performance-rate-${results.measure}` },
+                              code: {
+                                '@_code': 'NUMER',
+                                '@_codeSystem': '2.16.840.1.113883.5.4',
+                                '@_codeSystemName': 'ActCode',
+                              },
+                            },
                           },
                         },
                       },
