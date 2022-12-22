@@ -169,6 +169,7 @@ const createImmunoAdministeredXml = (immunization) => ({
   substanceAdministration: {
     '@_classCode': 'SBADM',
     '@_moodCode': 'EVN',
+    '@_negationInd': 'false',
     templateId: [
       // C-CDA R2 Immunization Activity (V3)
       { '@_root': '2.16.840.1.113883.10.20.22.4.52', '@_extension': '2015-08-01' },
@@ -180,16 +181,36 @@ const createImmunoAdministeredXml = (immunization) => ({
     },
     statusCode: { '@_code': 'completed' },
     effectiveTime: { '@_value': immunization.date },
-    doseQuantity: { '@_value': 1 },
+    doseQuantity: {
+      '@_value': 1,
+      '@_unit': 1,
+    },
     consumable: {
       manufacturedProduct: {
         '@_classCode': 'MANU',
         // C-CDA R2.1 Immunization Medication Information (V2)
         templateId: { '@_root': '2.16.840.1.113883.10.20.22.4.54', '@_extension': '2014-06-09' },
         manufacturedMaterial: {
-          code: {
-            '@_code': immunization.code,
-          },
+          code: { '@_code': immunization.code },
+          lotNumberText: '19283746',
+        },
+        manufacturerOrganization: { '@_nullFlavor': 'UNK' },
+      },
+    },
+    performer: { '@_nullFlavor': 'UNK' },
+    entryRelationship: {
+      '@_typeCode': 'COMP',
+      '@_inversionInd': 'true',
+      templateId: { '@_root': '2.16.840.1.113883.10.20.22.4.118' },
+    },
+    author: {
+      templateId: { '@_root': '2.16.840.1.113883.10.20.22.4.119' },
+      time: { '@_value': createDateTimeString(new Date()) },
+      assignedAuthor: {
+        id: { '@_nullFlavor': 'UNK' },
+        code: {
+          '@_code': '261QP0904X',
+          '@_codeSystem': '2.16.840.1.113883.6.101',
         },
       },
     },
@@ -381,9 +402,17 @@ const getAisePatientData = (memberResult) => {
     }
 
     if (immuno.performed) {
-      immunoInfo.date = createDateTimeString(new Date(immuno.performed.value));
+      if (immuno.performed.start) {
+        immunoInfo.date = createDateTimeString(new Date(immuno.performed.start.value));
+      } else {
+        immunoInfo.date = createDateTimeString(new Date(immuno.performed.value));
+      }
     } else if (immuno.occurrence) {
-      immunoInfo.date = createDateTimeString(new Date(immuno.occurrence.value));
+      if (immuno.occurrence.start) {
+        immunoInfo.date = createDateTimeString(new Date(immuno.occurrence.start.value));
+      } else {
+        immunoInfo.date = createDateTimeString(new Date(immuno.occurrence.value));
+      }
     }
 
     immunoInfoList.push(immunoInfo);
