@@ -174,10 +174,10 @@ const qrda1Export = (memberInfo, measureInfo) => {
             <id root="2.16.840.1.113883.4.572" extension="HIC_number_goes_here" />
             or Patient's Medicare Beneficiary Identifier (MBI) -->
       <id root="2.16.840.1.113883.4.927" extension="Medicare_Beneficiary_Identifier_goes_here"/> */
-          id: {
-            '@_root': '2.16.840.1.113883.4.572',
-            '@_extension': memberInfo[0].memberId,
-          },
+          id: [
+            { '@_root': '2.16.840.1.113883.4.572', '@_extension': memberInfo[0].memberId },
+            { '@_root': '2.16.840.1.113883.4.927', '@_extension': memberInfo[0].memberId },
+          ],
           addr: { // TODO, get patient address
             '@_use': 'H',
             streetAddressLine: '12345 Rainbow Road',
@@ -219,7 +219,8 @@ const qrda1Export = (memberInfo, measureInfo) => {
             },
             languageCommunication: {
               preferenceInd: '1',
-              proficiencyLevelCode: '1',
+              proficiencyLevelCode: { '@_code': '1' },
+              languageCode: { '@_code': 'en' },
             },
           },
         },
@@ -230,10 +231,10 @@ const qrda1Export = (memberInfo, measureInfo) => {
       custodian: {
         assignedCustodian: {
           representedCustodianOrganization: {
-            id: {
-              '@_root': '2.16.840.1.113883.4.336',
-              '@_extension': '1234567893',
-            },
+            id: [
+              { '@_root': '2.16.840.1.113883.4.6', '@_extension': '1234567893' },
+              { '@_root': '2.16.840.1.113883.4.336', '@_extension': '1234567893' },
+            ],
             name: healthcareSystemName,
             telecom: {
               '@_use': 'WP',
