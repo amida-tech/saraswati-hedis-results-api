@@ -26,6 +26,9 @@ const getMeasureEntries = (memberInfoList, measureInfo) => {
             // This is the version specific identifier for the eMeasure
             id: { '@_root': '2.16.840.1.113883.4.738', '@_extension': member.measurementType },
             text: measureInfo[member.measurementType].title,
+            code: { '@_code': '57024-2', '@_codeSystem': utils.loincCodeSystem },
+            setId: { '@_nullFlavor': 'UNK' },
+            versionNumber: { '@_nullFlavor': 'UNK' },
           },
         },
       },
@@ -95,7 +98,7 @@ const createPatientData = (member) => {
   }
   // TODO get payer information
   entryList.push({
-    '@_typeCode': 'DRV',
+    '@_typeCode': 'DRIV',
     observation: {
       '@_classCode': 'OBS',
       '@_moodCode': 'EVN',
@@ -132,8 +135,7 @@ const qrda1Export = (memberInfo, measureInfo) => {
     suppressBooleanAttributes: false,
   };
 
-  const date = new Date();
-  const dateString = `${date.getFullYear()}${date.getMonth() + 1}${date.getDate()}${date.getHours()}${date.getMinutes()}${date.getSeconds()}`;
+  const dateString = utils.createDateTimeString(new Date());
 
   const clinicalDocument = {
     ClinicalDocument: {
@@ -163,7 +165,7 @@ const qrda1Export = (memberInfo, measureInfo) => {
         '@_displayName': 'Quality Measure Report',
       },
       title: 'QRDA Category I Report',
-      effectiveTime: { '@_value': utils.createDateString(new Date()) },
+      effectiveTime: { '@_value': dateString },
       confidentialityCode: utils.confidentialityCode,
       languageCode: utils.languageCode,
       recordTarget: {
@@ -214,6 +216,10 @@ const qrda1Export = (memberInfo, measureInfo) => {
               '@_code': '2186-5',
               '@_codeSystem': '2.16.840.1.114222.4.11.837',
               '@_displayName': 'Not Hispanic or Latino',
+            },
+            languageCommunication: {
+              preferenceInd: '1',
+              proficiencyLevelCode: '1',
             },
           },
         },
@@ -272,7 +278,7 @@ const qrda1Export = (memberInfo, measureInfo) => {
         },
       },
       // The single person legally responsible for the document
-      /* legalAuthenticator: {
+      legalAuthenticator: {
         time: { '@_value': dateString },
         signatureCode: { '@_code': 'S' },
         assignedEntity: {
@@ -284,8 +290,19 @@ const qrda1Export = (memberInfo, measureInfo) => {
             '@_use': 'WP',
             '@_value': '5558675309',
           },
+          addr: {
+            '@_use': 'WP',
+            streetAddressLine: '666 Heck Lane',
+            city: 'Underworld',
+            state: 'FL',
+            postalCode: '666666',
+            country: 'US',
+          },
+          assignedPerson: {
+            name: 'Bob',
+          },
         },
-      }, */
+      },
       /*
       ********************************************************
       CDA Body
@@ -333,7 +350,7 @@ const qrda1Export = (memberInfo, measureInfo) => {
               title: 'Reporting Parameters',
               text: 'Reporting Parameters',
               entry: {
-                '@_typeCode': 'DRV',
+                '@_typeCode': 'DRIV',
                 act: {
                   '@_classCode': 'ACT',
                   '@_moodCode': 'EVN',

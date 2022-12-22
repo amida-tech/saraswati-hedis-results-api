@@ -27,7 +27,7 @@ const padZero = (num) => {
 
 const createDateString = (date) => `${date.getFullYear()}${padZero(date.getMonth() + 1)}${padZero(date.getDate())}`;
 
-const createDateTimeString = (date) => `${date.getFullYear()}${padZero(date.getMonth() + 1)}${padZero(date.getDate())}${padZero(date.getHours())}${padZero(date.getMinutes())}${padZero(date.getSeconds())}`;
+const createDateTimeString = (date) => `${date.getFullYear()}${padZero(date.getMonth() + 1)}${padZero(date.getDate())}${padZero(date.getHours())}${padZero(date.getMinutes())}${padZero(date.getSeconds())}+${date.getTimezoneOffset()}`;
 
 const createAuthor = (healthcareSystemName, date) => ({
   time: { '@_value': date },
@@ -79,8 +79,44 @@ const createProcedureXml = (claim) => ({
     },
     statusCode: { '@_code': 'completed' },
     effectiveTime: {
-      low: { '@_value': '20220101' },
-      high: { '@_value': createDateString(new Date()) },
+      // '@_value': 'null',
+      low: { '@_value': `202201010000${new Date().getTimezoneOffset()}` },
+      high: { '@_value': createDateTimeString(new Date()) },
+    },
+    targetSiteCode: { '@_nullFlavor': 'UNK' },
+    performer: {
+      assignedEntity: {
+        id: { '@_root': 'null', '@_nullFlavor': 'UNK' },
+        addr: {
+          '@_use': 'WP',
+          streetAddressLine: '666 Heck Lane',
+          city: 'Underworld',
+          state: 'FL',
+          postalCode: '666666',
+          country: 'US',
+        },
+        assignedPerson: { '@_nullFlavor': 'UNK' },
+        telecom: { '@_root': 'null', '@_nullFlavor': 'UNK' },
+        representedOrganization: {
+          '@_classCode': 'ENC',
+          '@_moodCode': 'EVN',
+          id: { '@_nullFlavor': 'UNK' },
+        },
+      },
+    },
+    author: {
+      templateId: { '@_root': '2.16.840.1.113883.10.20.22.4.119' },
+      time: {
+        low: { '@_value': createDateTimeString(new Date()) },
+        high: { '@_value': createDateTimeString(new Date()) },
+      },
+      assignedAuthor: {
+        id: { '@_root': 'null', '@_nullFlavor': 'UNK' },
+        code: {
+          '@_code': '363LX0106X',
+          '@_codeSystem': '2.16.840.1.113883.6.101',
+        },
+      },
     },
   },
 });
