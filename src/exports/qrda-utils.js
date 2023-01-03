@@ -203,17 +203,6 @@ const createImmunoAdministeredXml = (immunization) => ({
       '@_inversionInd': 'true',
       templateId: { '@_root': '2.16.840.1.113883.10.20.22.4.118' },
     },
-    author: {
-      templateId: { '@_root': '2.16.840.1.113883.10.20.22.4.119' },
-      time: { '@_value': createDateTimeString(new Date()) },
-      assignedAuthor: {
-        id: { '@_nullFlavor': 'UNK' },
-        code: {
-          '@_code': '261QP0904X',
-          '@_codeSystem': '2.16.840.1.113883.6.101',
-        },
-      },
-    },
   },
 });
 
