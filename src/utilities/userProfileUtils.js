@@ -1,171 +1,233 @@
 function getDifference(newArray, oldArray) {
   return newArray.filter((element) => !oldArray.includes(element));
 }
+function verifySimpleFeature(newPre, oldPre, field) {
+  let changes = '';
+  if (newPre[field] === oldPre[field]) {
+    changes = oldPre[field];
+  } else if (newPre[field] === '') {
+    changes = oldPre[field];
+  } else {
+    changes = newPre[field];
+  }
+  return changes;
+}
+function adjustmentFinder(oldPref, newPref) {
+  const userPreferencesChange = [];
+  const userSettingsChange = [];
+  Object.keys(oldPref.userPreferences).forEach((key) => {
+    const specificSelection = oldPref.userPreferences[key];
+    const newSpecificSelection = newPref.userPreferences[key];
+    if (specificSelection !== newSpecificSelection) {
+      userPreferencesChange.push({
+        name: key,
+        changed: true,
+        type: Array.isArray(specificSelection) ? 'array' : typeof specificSelection,
+      });
+    } else {
+      userPreferencesChange.push({
+        name: key,
+        changed: false,
+        type: Array.isArray(specificSelection) ? 'array' : typeof specificSelection,
+      });
+    }
+  });
+  Object.keys(oldPref.userSettings).forEach((key) => {
+    const specificSelection = oldPref.userSettings[key];
+    const newSpecificSelection = newPref.userSettings[key];
+    const ObjSelection = typeof specificSelection === 'object';
+    const ArraySelection = Array.isArray(specificSelection);
 
+    if (ObjSelection && ArraySelection) {
+      if (
+        JSON.stringify(specificSelection)
+          !== JSON.stringify(newSpecificSelection)) {
+        userSettingsChange.push({
+          name: key,
+          changed: true,
+          type: Array.isArray(specificSelection) ? 'array' : typeof specificSelection,
+        });
+      } else {
+        userSettingsChange.push({
+          name: key,
+          changed: false,
+          type: Array.isArray(specificSelection) ? 'array' : typeof specificSelection,
+        });
+      }
+    } else if (ObjSelection && ArraySelection === false) {
+      if (
+        JSON.stringify(specificSelection)
+        !== JSON.stringify(newSpecificSelection)) {
+        userSettingsChange.push({
+          name: key,
+          changed: true,
+          type: Array.isArray(specificSelection) ? 'array' : typeof specificSelection,
+        });
+      } else {
+        userSettingsChange.push({
+          name: key,
+          changed: false,
+          type: Array.isArray(specificSelection) ? 'array' : typeof specificSelection,
+        });
+      }
+    }
+  });
+  return { userPreferencesChange, userSettingsChange };
+}
+
+function userPrefAdjuster({
+  userPreferencesChange,
+  oldPref,
+  newPref,
+}) {
+  const userPrefrencesObj = {};
+  userPreferencesChange.forEach((userChoice) => {
+    const { name, changed } = userChoice;
+    const OldSettings = oldPref[name];
+    const NewSettings = newPref[name];
+    if (changed) {
+      userPrefrencesObj[name] = NewSettings;
+    } else {
+      userPrefrencesObj[name] = OldSettings;
+    }
+  });
+  return userPrefrencesObj;
+}
+function userSettingAdjuster({
+  userSettingsChange,
+  oldPref,
+  newPref,
+  companyWidePreferences,
+}) {
+  const userSettings = {};
+  const errorsFound = [];
+  userSettings.profileFeatures = {};
+  userSettings.profileFeatures.healthcareTypes = {};
+  userSettings.profileFeatures.reportsAccess = {};
+  userSettingsChange.forEach((userChoice) => {
+    const { name, changed, type } = userChoice;
+    const OldSettings = oldPref[name];
+    const NewSettings = newPref[name];
+    const CompanySettings = companyWidePreferences[name];
+    if (changed) {
+      if (type === 'array') {
+        const choicesInQuestion = getDifference(NewSettings, OldSettings);
+        const companyDifference = getDifference(choicesInQuestion, CompanySettings);
+        if (companyDifference.length > 0) {
+          companyDifference.forEach((diff) => {
+            errorsFound.push({ [name]: diff });
+          });
+        } else {
+          userSettings[name] = NewSettings;
+        }
+      }
+      if (type === 'object') {
+        if (name === 'filters') {
+          const filtersNames = Object.keys(NewSettings);
+          filtersNames.forEach((filtersSettingsName) => {
+            if (filtersSettingsName === 'filterClassification') {
+              const companyChoice = CompanySettings[filtersSettingsName];
+              const newChoice = NewSettings[filtersSettingsName];
+              if (newChoice === companyChoice) {
+                userSettings.filters = {};
+                userSettings.filters[filtersSettingsName] = companyChoice;
+              } else {
+                errorsFound.push({ [name]: newChoice });
+              }
+            }
+            if (filtersSettingsName === 'filterNames') {
+              const companyChoice = CompanySettings[filtersSettingsName];
+              const newChoice = NewSettings[filtersSettingsName];
+              const oldChoice = OldSettings[filtersSettingsName];
+              const choicesInQuestion = getDifference(newChoice, oldChoice);
+              const companyDifference = getDifference(choicesInQuestion, companyChoice);
+              if (companyDifference.length > 0) {
+                companyDifference.forEach((diff) => {
+                  errorsFound.push({ [filtersSettingsName]: diff });
+                });
+              } else {
+                userSettings[name][filtersSettingsName] = companyChoice;
+              }
+            }
+          });
+        }
+        if (name === 'profileFeatures') {
+          const profileFeaturesNames = Object.keys(NewSettings);
+          profileFeaturesNames.forEach((pfName) => {
+            const companyChoice = CompanySettings[pfName];
+            const newChoice = NewSettings[pfName];
+            if (pfName === 'healthcareTypes' || pfName === 'reportsAccess') {
+              Object.keys(newChoice).forEach((feature) => {
+                const selectCompanyFeature = companyChoice[feature];
+                const usersNewPrefrence = newChoice[feature];
+                if (selectCompanyFeature === false && usersNewPrefrence) {
+                  errorsFound.push({ [feature]: usersNewPrefrence });
+                } else {
+                  if (pfName === 'healthcareTypes') {
+                    userSettings.profileFeatures.healthcareTypes[feature] = usersNewPrefrence;
+                  }
+                  userSettings.profileFeatures.reportsAccess[feature] = usersNewPrefrence;
+                }
+              });
+            }
+            if (pfName !== 'healthcareTypes' || pfName !== 'reportsAccess') {
+              if (companyChoice === false && newChoice) {
+                errorsFound.push({ [pfName]: newChoice });
+              } else {
+                userSettings.profileFeatures[pfName] = newChoice;
+              }
+            }
+          });
+        }
+      }
+    } else {
+      userSettings[name] = OldSettings;
+    }
+  });
+  return { userSettings, errorsFound };
+}
 function userChangeFinder(oldPref, newPref, companyWidePreferences) {
-  const timeStamp = Date.now();
+  const timeStamp = new Date(Date.now());
   const UpdatedUser = {};
   // PREVIOUS PROFILE UNEDITABLE  VVVVVV
   // eslint-disable-next-line no-underscore-dangle
   UpdatedUser._id = oldPref._id;
   UpdatedUser.email = oldPref.email;
   UpdatedUser.role = oldPref.role;
+  UpdatedUser.region = oldPref.region;
+  UpdatedUser.userGroup = oldPref.userGroup;
   UpdatedUser.companyName = oldPref.companyName;
   UpdatedUser.companyPreferences = oldPref.companyPreferences;
   UpdatedUser.active = oldPref.active;
   UpdatedUser.created_on = oldPref.created_on;
-  UpdatedUser.updated_on = timeStamp;
+  UpdatedUser.lastUpdated = timeStamp;
   UpdatedUser.lastLogin = oldPref.lastLogin;
   // PREVIOUS PROFILE UNEDITABLE  ^^^^^^^
 
+  UpdatedUser.userGroup = oldPref.userGroup;
   // Editable items for Users - First Name
-  let firstName = '';
-  if (newPref.firstName === oldPref.firstName) {
-    firstName = oldPref.firstName;
-  } else if (newPref.firstName === '') {
-    firstName = oldPref.firstName;
-  } else {
-    firstName = newPref.firstName;
-  }
-  UpdatedUser.firstName = firstName;
-
+  UpdatedUser.firstName = verifySimpleFeature(newPref, oldPref, 'firstName');
   // Editable items for Users - Last Name
-  let lastName = '';
-  if (newPref.lastName === oldPref.lastName) {
-    lastName = oldPref.lastName;
-  } else if (newPref.lastName === '') {
-    lastName = oldPref.lastName;
-  } else {
-    lastName = newPref.lastName;
-  }
-  UpdatedUser.lastName = lastName;
+  UpdatedUser.lastName = verifySimpleFeature(newPref, oldPref, 'lastName');
+  // Editable items for Users - Picture
+  UpdatedUser.picture = verifySimpleFeature(newPref, oldPref, 'picture');
 
-  const userChoices = [];
-  const userPreferences = {};
-  const foundErrors = [];
-  const newReportsAccess = {};
-  const reportsAccessErrors = {};
-  const newCustomFilters = {};
-  const customFiltersErrors = {};
   // sorting user options to find the type of Element and also determine if a change occured
-  Object.keys(oldPref.userPreferences).forEach((key) => {
-    if (typeof oldPref.userPreferences[key] !== 'object') {
-      if (oldPref.userPreferences[key] !== newPref.userPreferences[key]) {
-        userChoices.push({
-          name: key,
-          changed: true,
-          type: typeof oldPref.userPreferences[key],
-        });
-      } else {
-        userChoices.push({
-          name: key,
-          changed: false,
-          type: typeof oldPref.userPreferences[key],
-        });
-      }
-    }
-    if (typeof oldPref.userPreferences[key] === 'object') {
-      if (
-        JSON.stringify(oldPref.userPreferences[key])
-          !== JSON.stringify(newPref.userPreferences[key])) {
-        userChoices.push({
-          name: key,
-          changed: true,
-          type: typeof oldPref.userPreferences[key],
-        });
-      } else {
-        userChoices.push({
-          name: key,
-          changed: false,
-          type: typeof oldPref.userPreferences[key],
-        });
-      }
-    }
+  const { userPreferencesChange, userSettingsChange } = adjustmentFinder(oldPref, newPref);
+  const userPreferences = userPrefAdjuster({
+    userPreferencesChange,
+    oldPref: oldPref.userPreferences,
+    newPref: newPref.userPreferences,
   });
-  if (userChoices.length > 0) {
-    // unchanged userPreferences saves the old preferences as the update
-    userChoices.forEach((userChoice) => {
-      const { name, changed, type } = userChoice;
-      const OldSettings = oldPref.userPreferences[name];
-      const NewSettings = newPref.userPreferences[name];
-      const CompanySettings = companyWidePreferences[name];
-
-      if (changed !== false) {
-        //  Advance user changes that need Company compliance to change
-        //  Array Check to check difference
-        //  Although this can be caught before it gets here on front end
-        //  by only giving company options for user choose from.
-        if (Array.isArray(NewSettings)) {
-          // This Gets Difference between the User Pref and Company Pref function down below
-          const DifferenceFilter = getDifference(NewSettings, CompanySettings);
-          if (DifferenceFilter.length > 0) {
-            // This Pushes Illegal changes to Error folder
-            foundErrors.push({ [name]: DifferenceFilter });
-          } else {
-            // Changes aligned with company oversight
-            userPreferences[name] = NewSettings;
-          }
-        } else {
-          if (name === 'reportsAccess') {
-            const reportsAccessNames = Object.keys(NewSettings);
-            reportsAccessNames.forEach((reportsAccessSettingsName) => {
-              const CompanyReportsAccessSettings = CompanySettings[reportsAccessSettingsName];
-              const UserReportsAccessSettings = NewSettings[reportsAccessSettingsName];
-              if (CompanyReportsAccessSettings === false && UserReportsAccessSettings === true) {
-                // non compliantt company changes befomes an error
-                reportsAccessErrors[name] = UserReportsAccessSettings;
-              } else {
-                // compliantt company changes befomes new setting
-                newReportsAccess[reportsAccessSettingsName] = UserReportsAccessSettings;
-              }
-            });
-          }
-          if (name === 'customFilters') {
-            const customFiltersNames = Object.keys(NewSettings);
-            customFiltersNames.forEach((customFiltersSettingsName) => {
-              const CompanyCustomFiltersSettings = CompanySettings[customFiltersSettingsName];
-              const UserCustomFiltersSettings = NewSettings[customFiltersSettingsName];
-              // This Gets Difference between the User Pref and Company Pref function down below
-              const DifferenceFilter = getDifference(
-                UserCustomFiltersSettings,
-                CompanyCustomFiltersSettings,
-              );
-              if (DifferenceFilter.length > 0) {
-                // This Pushes Illegal changes to Error folder
-                customFiltersErrors[customFiltersSettingsName] = DifferenceFilter;
-              } else {
-                // Changes aligned with company oversight
-                newCustomFilters[customFiltersSettingsName] = UserCustomFiltersSettings;
-              }
-            });
-          }
-          if (type === 'boolean') {
-            if (CompanySettings === false && NewSettings === true) {
-              foundErrors.push({ [name]: NewSettings });
-            } else {
-              userPreferences[name] = NewSettings;
-            }
-          }
-          // Basic user changes that dont need company oversight we should expand this later
-          if (name === 'darkLightMode' || name === 'timezone' || name === 'profilePicture') {
-            userPreferences[name] = NewSettings;
-          }
-        }
-      }
-      userPreferences[name] = OldSettings;
-    });
-  }
-  if (Object.keys(reportsAccessErrors).length > 0) {
-    foundErrors.push(reportsAccessErrors);
-  }
-  if (Object.keys(customFiltersErrors).length > 0) {
-    foundErrors.push(customFiltersErrors);
-  }
+  const { userSettings, errorsFound } = userSettingAdjuster({
+    userSettingsChange,
+    oldPref: oldPref.userSettings,
+    newPref: newPref.userSettings,
+    companyWidePreferences: companyWidePreferences.companySettings,
+  });
   UpdatedUser.userPreferences = userPreferences;
-  UpdatedUser.userPreferences.reportsAccess = newReportsAccess;
-  UpdatedUser.userPreferences.customFilters = newCustomFilters;
-
-  return { UpdatedUser, foundErrors };
+  UpdatedUser.userSettings = userSettings;
+  return { UpdatedUser, errorsFound };
 }
 
 module.exports = { userChangeFinder };

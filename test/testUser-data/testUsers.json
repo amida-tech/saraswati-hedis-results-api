@@ -1,87 +1,136 @@
 [
-    {
-      "email": "TestTest@amida.com",
-      "firstName": "Test", 
-      "lastName": "Test", 
-      "role": "Test - Test - SuperAdmin",
-      "companyName": "Amida Technology Solutions",
-      "companyPreferences": {
-        "companyType": "Amida - Healthcare Provider",
-        "state": "FL",
-        "region": "US", 
-        "starRating": 4,
-        "address": "Test random address",
-        "phoneNumber": "6308928349",
-        "measureList": ["aab", "adde", "apme", "asfe", "bcs", "ccs", "cise", "col", "cou", "cwp", "dmse", "pdse", "pnde", "prse", "psa", "uop", "uri", "sci", "dhm", "dhw"],
-        "providerList": ["Norton Hill Carecenter", "Cancer Treatment & Care", "Anova Women\"s Birthing Service", "Springfield Hospital", "Hollifield Clinics"],
-        "plansList": ["Health Maintenance Organization (HMO)", "Preferred Provider Organization (PPO)", "Exclusive Provider Organization (EPO)", "Point-of-Service Plan (POS)"],
-        "customFilters": {
-          "filterType": ["All"], 
-          "filters": ["Domains of Care", "Percent Range", "Star Rating", "Payors (Payers)", "Healthcare Providers", "Healthcare Coverages", "Healthcare Practitioners"]
-        },
-        "starRatingAccess": true, 
-        "ratingsAndTrendsAccess": true, 
-        "predictionsAccess": true, 
-        "tableFiltersAccess": true,
-        "reportsAccess": {
-          "memberInfoAccess": true,
-          "memberPolicyInfoAccess": true,
-          "reportAccess": true
-        },
-        "lastUpdated": "2022-11-29T20:49:53.434Z"
+  {
+    "email": "TestUser@amida.com",
+    "firstName": "Test",
+    "lastName": "User",
+    "region": "US - New York",
+    "role": "Test - User",
+    "userGroup": "General",
+    "picture": "https://lh3.googleusercontent.com/ogw/AOh-ky2QAvQ4d3_vPfYmspbP-WSp1QbutpDbIQNf2skw=s32-c-mo",
+    "companyName": "Amida Technology Solutions",
+    "companyPreferences": {
+      "companyName": "New York City Hospital",
+      "companyType": "Health Care Orginization",
+      "classification": "Payor",
+      "address": "265 Frost Rd",
+      "state": "NY",
+      "city": "Brooklyn",
+      "zip": "11222",
+      "phoneNumber": "8880210247",
+      "website": "www.healthinsure-ny.com",
+      "areaServed": "US: Continental States",
+      "programsSpecialties": {
+        "programs": ["New York State Patient-Centered Medical Home"],
+        "specialties": ["Diabetes Recognition Programs"]
       },
-      "userPreferences": {
+      "starRating": 3.5,
+      "customerReportId": {
+        "npid": 212467,
+        "tax_Id": 222008
+      },
+      "companySettings": {
         "measureList": ["aab", "adde", "apme", "asfe", "bcs", "ccs", "cise", "col", "cou", "cwp", "dmse", "pdse", "pnde", "prse", "psa", "uop", "uri", "sci", "dhm", "dhw"],
         "providerList": ["Norton Hill Carecenter", "Cancer Treatment & Care", "Anova Women\"s Birthing Service", "Springfield Hospital", "Hollifield Clinics"],
         "plansList": ["Health Maintenance Organization (HMO)", "Preferred Provider Organization (PPO)", "Exclusive Provider Organization (EPO)", "Point-of-Service Plan (POS)"],
-        "customFilters": {
-          "filterType": ["All"], 
-          "filters": ["Domains of Care", "Percent Range", "Star Rating", "Payors (Payers)", "Healthcare Providers", "Healthcare Coverages", "Healthcare Practitioners"]
+        "filters": {
+          "filterClassification": "Classic",
+          "filterNames": ["Domains of Care", "Percent Range", "Star Rating", "Payors (Payers)", "Healthcare Providers", "Healthcare Coverages", "Healthcare Practitioners"]
         },
-        "profilePicture": "picture",
-        "darkLightMode": "light",
-        "reportsGenerated": [
-          {
-            "paitientID": "paitient ID 1",
-            "date": "2022-11-29T20:49:53.434Z"
+        "profileFeatures": {
+          "starRatingAccess": true,
+          "ratingsAndTrendsAccess": true,
+          "predictionsAccess": true,
+          "tableFiltersAccess": true,
+          "measureAccess": true,
+          "healthcareTypes": {
+            "providersAcesss": true,
+            "plansAccess": true,
+            "practitionersAccess": true
           },
-          {
-            "paitientID": "paitient ID 2",
-            "date": "2022-11-29T20:49:53.434Z"
+          "reportsAccess": {
+            "memberInfoAccess": true,
+            "memberPolicyInfoAccess": true,
+            "reportAccess": true
           }
-        ], 
-        "starRatingAccess": true, 
-        "ratingsAndTrendsAccess": true, 
-        "predictionsAccess": true, 
+        }
+      },
+      "usersGroups": ["Practitioners", "Payers/Payor", "Plans", "General", "Admin"], 
+      "created_on": "2023-01-04T20:58:58.947Z",
+      "lastUpdated": "2023-01-04T20:58:58.947Z",
+      "active": true
+    },
+    "userSettings": {
+      "measureList": ["aab", "adde", "apme", "asfe", "bcs", "ccs", "cise", "col", "cou", "cwp", "dmse", "pdse"],
+      "providerList": ["Norton Hill Carecenter", "Cancer Treatment & Care", "Anova Women\"s Birthing Service"],
+      "plansList": [
+        "Health Maintenance Organization (HMO)", "Preferred Provider Organization (PPO)", "Exclusive Provider Organization (EPO)"
+      ],
+      "filters": {
+        "filterClassification": "Classic", 
+        "filterNames": [ 
+          "Domains of Care",
+          "Percent Range",
+          "Star Rating",
+          "Payors (Payers)",
+          "Healthcare Providers",
+          "Healthcare Coverages",
+          "Healthcare Practitioners"
+        ]
+      },
+      "starRatingAccess": true,
+      "profileFeatures": { 
+        "ratingsAndTrendsAccess": true,
+        "predictionsAccess": true,
         "tableFiltersAccess": true,
+        "measureAccess": true,
+        "healthcareTypes": {
+          "providersAcesss": true,
+          "plansAccess": true,
+          "practitionersAccess": true
+        },
         "reportsAccess": {
           "memberInfoAccess": true,
           "memberPolicyInfoAccess": true,
           "reportAccess": true
+        }
+      }
+    },
+    "userPreferences": { 
+      "displayMode": "light",
+      "language": "EN",
+      "timezone": "Eastern Standard Time - (EST)",
+      "dateFormat": "MM/DD/YYYY", 
+      "timeFormat": "12-Hour"
+    },
+    "userHistory": {
+      "lastFilters": [], 
+      "reportsGenerated": [], 
+      "notifications": [ 
+        {
+          "title": "New Custom Measure added",
+          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+          "date": "2023-01-04T20:58:58.947Z"
         },
-        "lastFilter": [
-          {
-            "filterMeasure": false,
-            "Measure": null,
-            "filterValues": [
-              {
-                "domainsOfCare": [],
-                "stars": [1],
-                "percentRange": [0, 100],
-                "payors": ["Organization/2"],
-                "healthcareProviders": [],
-                "healthcareCoverages": [],
-                "healthcarePractitioners": ["Dr. Colette DeBarge"],
-                "sum": 3
-              }
-            ]
-          }
-        ], 
-        "timezone": "EST"
-      },
-      "created_on": "2022-11-29T20:49:53.434Z",
-      "updated_on": "2022-11-29T20:49:53.434Z",
-      "lastLogin": "2022-11-29T20:49:53.434Z",
-      "active": true
-    }
-  ]
+        {
+          "title": "Setup - Incomplete",
+          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+          "date": "2023-01-04T20:58:58.947Z"
+        },
+        {
+          "title": "You\"ve been added to a new user group",
+          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+          "date": "2023-01-04T20:58:58.947Z"
+        },
+        {
+          "title": "Your User Profile has been changed",
+          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+          "date": "2023-01-04T20:58:58.947Z"
+        }
+      ]
+    },
+    "created_on": "2023-01-04T20:58:58.947Z",
+    "lastUpdated": "2023-01-04T20:58:58.947Z",
+    "lastLogin": "2023-01-04T20:58:58.947Z",
+    "active": true
+  }
+]

@@ -25,8 +25,12 @@ const updateUserProfile = async (req, res, next) => {
     email,
     firstName,
     lastName,
+    region,
     role,
+    userGroup,
+    picture,
     companyName,
+    userSettings,
     userPreferences,
   } = req.body;
   try {
@@ -35,20 +39,24 @@ const updateUserProfile = async (req, res, next) => {
       const { foundUser } = req;
       if (foundUser.length > 0) {
         const currentUserSettings = {
-          email: email.toLowerCase(),
+          email,
           firstName,
           lastName,
+          region,
           role,
+          userGroup,
+          picture,
           companyName,
+          userSettings,
           userPreferences,
         };
         // should point to company refrence table in db later
         const companyWidePreferences = foundUser[0].companyPreferences;
         const {
           UpdatedUser,
-          foundErrors,
+          errorsFound,
         } = userChangeFinder(foundUser[0], currentUserSettings, companyWidePreferences);
-        if (foundErrors.length > 0) {
+        if (errorsFound.length > 0) {
           // REFRENCE for status Code ----> https://www.moesif.com/blog/technical/api-design/Which-HTTP-Status-Code-To-Use-For-Every-CRUD-App/
           res.status(204).json({
             status: 'Failed',

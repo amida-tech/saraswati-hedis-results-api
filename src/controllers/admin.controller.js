@@ -27,27 +27,33 @@ const addUser = async (req, res, next) => {
     email,
     firstName,
     lastName,
+    region,
     role,
+    userGroup,
+    picture,
     companyName,
     companyPreferences,
+    userSettings,
     userPreferences,
-    created_on,
-    updated_on,
-    lastLogin,
-    active,
+    userHistory,
   } = req.body;
   const userToAdd = {
     email,
     firstName,
     lastName,
+    region,
     role,
+    userGroup,
+    picture,
     companyName,
     companyPreferences,
+    userSettings,
     userPreferences,
-    created_on,
-    updated_on,
-    lastLogin,
-    active,
+    userHistory,
+    created_on: new Date(Date.now()),
+    lastUpdated: new Date(Date.now()),
+    lastLogin: new Date(Date.now()),
+    active: true,
   };
   try {
     const addedUser = await dao.addUsers(userToAdd);
@@ -63,30 +69,42 @@ const updateUser = async (req, res, next) => {
     email,
     firstName,
     lastName,
+    region,
     role,
+    userGroup,
+    picture,
     companyName,
     companyPreferences,
+    userSettings,
     userPreferences,
+    userHistory,
     created_on,
-    active,
     lastLogin,
+    active,
   } = req.body;
   try {
     const userToUpdate = {
       email,
       firstName,
       lastName,
+      region,
       role,
+      userGroup,
+      picture,
       companyName,
       companyPreferences,
+      userSettings,
       userPreferences,
+      userHistory,
       created_on,
-      updated_on: Date.now(),
+      lastUpdated: new Date(Date.now()),
       lastLogin,
       active,
     };
+
     const updatedUser = await dao.updateUserByEmail(userToUpdate, email);
     req.updatedUser = updatedUser;
+
     next();
   } catch (error) {
     winstonInstance.error(error);
@@ -98,25 +116,36 @@ const loginUser = async (req, res, next) => {
     email,
     firstName,
     lastName,
+    region,
     role,
+    userGroup,
+    picture,
     companyName,
     companyPreferences,
+    userSettings,
     userPreferences,
+    userHistory,
     created_on,
     active,
   } = req.User;
+  // const token = req.body.tokenGiven;
   try {
     const userToUpdate = {
       email,
       firstName,
       lastName,
+      region,
       role,
+      userGroup,
+      picture,
       companyName,
       companyPreferences,
+      userSettings,
       userPreferences,
+      userHistory,
       created_on,
-      updated_on: Date.now(),
-      lastLogin: Date.now(),
+      lastUpdated: new Date(Date.now()),
+      lastLogin: new Date(Date.now()),
       active,
     };
     const updatedUser = await dao.updateUserByEmail(userToUpdate, email);
