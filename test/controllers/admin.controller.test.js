@@ -235,7 +235,7 @@ describe('Admin Routes Test', () => {
       expect(response.body.status).toBe('Success');
       expect(response.body.message).toBe('USER DELETED SUCCESSFULLY');
     });
-    it('should return statusCode 200, status message in Json object to say "Success", with delete message', async () => {
+    it('should return statusCode 200, status message in Json object to say "Failed", with failed message. No user found.', async () => {
       await request(adminBaseURL).delete('/users').query({ email: 'TestUser@amida.com' });
       const response = await request(adminBaseURL).get('/users/email').query({ email: testUser.email });
       expect(response.statusCode).toBe(200);

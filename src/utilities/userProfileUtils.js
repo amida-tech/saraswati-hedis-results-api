@@ -169,12 +169,14 @@ function userSettingAdjuster({
                   userSettings.profileFeatures.reportsAccess[feature] = usersNewPrefrence;
                 }
               });
-            }
-            if (pfName !== 'healthcareTypes' || pfName !== 'reportsAccess') {
-              if (companyChoice === false && newChoice) {
-                errorsFound.push({ [pfName]: newChoice });
-              } else {
-                userSettings.profileFeatures[pfName] = newChoice;
+            } else {
+              // eslint-disable-next-line no-lonely-if
+              if (pfName !== 'healthcareTypes' || pfName !== 'reportsAccess') {
+                if (companyChoice === false && newChoice) {
+                  errorsFound.push({ [pfName]: newChoice });
+                } else {
+                  userSettings.profileFeatures[pfName] = newChoice;
+                }
               }
             }
           });
