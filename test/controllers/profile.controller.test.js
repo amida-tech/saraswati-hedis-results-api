@@ -3,6 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const request = require('supertest');
 
+const userProfileBaseURL = 'http://localhost:4000/api/v1/user/profile';
 const adminBaseURL = 'http://localhost:4000/api/v1/admin';
 
 const data = JSON.parse(fs.readFileSync(`${path.resolve()}/test/testUser-data/testUsers.json`));
@@ -20,8 +21,8 @@ jest.mock('../../src/config/dao', () => {
   };
 });
 
-describe('Admin Routes Test', () => {
-  describe('"GET"- Get User Profile By Email', () => {
+describe('User Profile Test', () => {
+  describe('"GET" - Get User Profile By Email', () => {
     const testUser = {
       ...data[0],
     };
@@ -32,24 +33,32 @@ describe('Admin Routes Test', () => {
       await request(adminBaseURL).delete('/users').query({ email: 'TestUser@amida.com' });
     });
     it('should return statusCode 200, status message in Json object to say "Success"', async () => {
-      const response = await request(adminBaseURL).get('/users/email').query({ email: testUser.email });
+      const response = await request(userProfileBaseURL).get('/email').query({ email: testUser.email });
       expect(response.statusCode).toBe(200);
       expect(response.body.status).toBe('Success');
+      expect(response.body.message).toBe(`Found user preferences by given email: ${testUser.email}`);
+      expect(response.body.userCount).toBe(1);
     });
     it('Message should be "Found users", UserCount Greater than 0, found users equal UserCount', async () => {
-      const response = await request(adminBaseURL).get('/users/email').query({ email: testUser.email });
-      expect(response.body.message).toBe(`Found user by given email: ${testUser.email}`);
+      const response = await request(userProfileBaseURL).get('/email').query({ email: testUser.email });
+      expect(response.body.message).toBe(`Found user preferences by given email: ${testUser.email}`);
       expect(response.body.userCount).toBe(1);
-      expect(response.body.user.length === response.body.userCount).toBe(true);
-      expect(response.body.user.length === 1).toBe(true);
+      expect(response.body.userPrefrence.length === response.body.userCount).toBe(true);
+      expect(response.body.userPrefrence.length === 1).toBe(true);
+    });
+    it('Message should be "USER NOT FOUND", UserCount should equal 0, does not return user when email is not in system', async () => {
+      const response = await request(userProfileBaseURL).get('/email').query({ email: 'User@amida.com' });
+      expect(response.statusCode).toBe(404);
+      expect(response.body.status).toBe('Failed');
+      expect(response.body.message).toBe('USER NOT FOUND');
     });
   });
-  describe('"PUT"- Update User Profile By Email', () => {
+  describe('"PUT" - Update User Profile By Email', () => {
     const testUser = {
       ...data[0],
     };
     beforeAll(async () => {
-      await request(adminBaseURL).post('/users').query().send(testUser);
+      await request(adminBaseURL).post('/users').send(testUser);
     });
     afterAll(async () => {
       await request(adminBaseURL).delete('/users').query({ email: 'TestUser@amida.com' });
@@ -64,25 +73,8 @@ describe('Admin Routes Test', () => {
       testUser.companyName = 'Amida Technology Solutions';
 
       const userSettings = {
-        measureList: ['aab', 'adde', 'apme', 'asfe', 'bcs', 'ccs', 'cise', 'col', 'cou'],
-        providerList: ['Norton Hill Carecenter', 'Cancer Treatment & Care'],
-        plansList: [
-          'Health Maintenance Organization (HMO)',
-          'Preferred Provider Organization (PPO)',
-        ],
-        filters: {
-          filterClassification: 'Classic',
-          filterNames: [
-            'Domains of Care',
-            'Percent Range',
-            'Payors (Payers)',
-            'Healthcare Providers',
-            'Healthcare Coverages',
-            'Healthcare Practitioners',
-          ],
-        },
-        starRatingAccess: true,
         profileFeatures: {
+          starRatingAccess: true,
           ratingsAndTrendsAccess: true,
           predictionsAccess: true,
           tableFiltersAccess: true,
@@ -98,6 +90,25 @@ describe('Admin Routes Test', () => {
             reportAccess: false,
           },
         },
+        measureList: ['aab', 'adde', 'apme', 'asfe', 'bcs', 'ccs', 'cise', 'col', 'cou'],
+        providerList: ['Norton Hill Carecenter', 'Cancer Treatment & Care'],
+        plansList: [
+          'Health Maintenance Organization (HMO)',
+          'Preferred Provider Organization (PPO)',
+        ],
+        filters: {
+          filterClassification: 'Classic',
+          filterNames: [
+            'Domains of Care',
+            'Percent Range',
+            'Star Rating',
+            'Payors (Payers)',
+            'Healthcare Providers',
+            'Healthcare Coverages',
+            'Healthcare Practitioners',
+          ],
+        },
+
       };
       const userPreferences = {
         displayMode: 'dark',
@@ -106,44 +117,17 @@ describe('Admin Routes Test', () => {
         dateFormat: 'MM/DD/YYYY',
         timeFormat: '24-Hour',
       };
-      const userHistory = {
-        lastFilters: [],
-        reportsGenerated: [],
-        notifications: [
-          {
-            title: 'New Custom Measure added',
-            description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-            date: '2023-01-04T20:58:58.947Z',
-          },
-          {
-            title: 'Setup - Incomplete',
-            description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-            date: '2023-01-04T20:58:58.947Z',
-          },
-          {
-            title: 'You"ve been added to a new user group',
-            description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-            date: '2023-01-04T20:58:58.947Z',
-          },
-          {
-            title: 'Your User Profile has been changed',
-            description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-            date: '2023-01-04T20:58:58.947Z',
-          },
-        ],
-      };
       testUser.userSettings = userSettings;
       testUser.userPreferences = userPreferences;
-      testUser.userHistory = userHistory;
       testUser.lastUpdated = new Date(Date.now());
 
-      const response = await request(adminBaseURL).put('/users').send(testUser);
+      const response = await request(userProfileBaseURL).put('/').query({ email: testUser.email }).send(testUser);
       expect(response.statusCode).toBe(200);
       expect(response.body.status).toBe('Success');
-      expect(response.body.message).toBe(`Successful update of user by given email: ${testUser.email}`);
+      expect(response.body.message).toBe(`Successful update of user preferences by given email: ${testUser.email}`);
 
-      const changesToUserResponse = await request(adminBaseURL).get('/users/email').query({ email: testUser.email });
-      const updatedUser = changesToUserResponse.body.user[0];
+      const changesToUserResponse = await request(userProfileBaseURL).get('/email').query({ email: testUser.email });
+      const updatedUser = changesToUserResponse.body.userPrefrence[0];
       expect(updatedUser.firstName).toBe('Amida');
       expect(updatedUser.lastName).toBe('Developer');
       expect(updatedUser.region).toBe('US - New York');
@@ -153,7 +137,7 @@ describe('Admin Routes Test', () => {
       expect(updatedUser.companyName).toBe('Amida Technology Solutions');
       expect(updatedUser.userSettings).toMatchObject(userSettings);
       expect(updatedUser.userPreferences).toMatchObject(userPreferences);
-      expect(updatedUser.userHistory).toMatchObject(userHistory);
+      expect(updatedUser.userHistory).toMatchObject(testUser.userHistory);
     });
   });
 });

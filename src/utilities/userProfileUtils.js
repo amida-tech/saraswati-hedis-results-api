@@ -202,6 +202,8 @@ function userChangeFinder(oldPref, newPref, companyWidePreferences) {
   UpdatedUser.created_on = oldPref.created_on;
   UpdatedUser.lastUpdated = timeStamp;
   UpdatedUser.lastLogin = oldPref.lastLogin;
+  UpdatedUser.userHistory = oldPref.userHistory;
+
   // PREVIOUS PROFILE UNEDITABLE  ^^^^^^^
 
   UpdatedUser.userGroup = oldPref.userGroup;

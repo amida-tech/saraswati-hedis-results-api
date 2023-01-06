@@ -117,8 +117,8 @@ describe('Admin Routes Test', () => {
             'Healthcare Practitioners',
           ],
         },
-        starRatingAccess: true,
         profileFeatures: {
+          starRatingAccess: true,
           ratingsAndTrendsAccess: true,
           predictionsAccess: true,
           tableFiltersAccess: true,

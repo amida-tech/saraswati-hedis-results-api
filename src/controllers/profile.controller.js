@@ -32,6 +32,7 @@ const updateUserProfile = async (req, res, next) => {
     companyName,
     userSettings,
     userPreferences,
+    userHistory,
   } = req.body;
   try {
     // User from DB from 'getUserProfileByEmail' middleware Above ^^^
@@ -49,6 +50,7 @@ const updateUserProfile = async (req, res, next) => {
           companyName,
           userSettings,
           userPreferences,
+          userHistory,
         };
         // should point to company refrence table in db later
         const companyWidePreferences = foundUser[0].companyPreferences;
