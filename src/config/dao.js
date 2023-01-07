@@ -1,8 +1,8 @@
 /* eslint-disable no-underscore-dangle */
 const { MongoClient } = require('mongodb');
-const { mongodb } = require('./config');
 const logger = require('winston');
 const mongoSanitize = require('express-mongo-sanitize');
+const { mongodb } = require('./config');
 
 const connectionUrl = `mongodb://${mongodb.host}:${mongodb.port}`;
 
@@ -26,12 +26,11 @@ const findMembers = (query) => {
 };
 
 const searchMembers = (query) => {
-  const collection = db.collection('measures')
+  const collection = db.collection('measures');
   // sanitize query
-  console.log(query.memberId)
-  const saniQuery = mongoSanitize.sanitize(query.memberId)
-  return collection.find( { 'memberId' : { '$regex' : saniQuery, '$options' : 'i' } } ).toArray()
-}
+  const saniQuery = mongoSanitize.sanitize(query.memberId);
+  return collection.find({ memberId: { $regex: saniQuery, $options: 'i' } }).toArray();
+};
 
 const findMeasureResults = (query) => {
   const collection = db.collection('measure_results');
@@ -163,7 +162,8 @@ const getPractitioners = () => {
 const insertPractitioner = async (practitioner) => {
   const collection = db.collection('practitioners');
   const foundPayors = await collection.find({}).toArray();
-  const filteredPayors = foundPayors.filter((prac) => prac.practitioner === practitioner.practitioner);
+  const filteredPayors = foundPayors
+    .filter((prac) => prac.practitioner === practitioner.practitioner);
   if (filteredPayors.length < 1) {
     try {
       return await collection.insertMany([practitioner]);
@@ -197,7 +197,8 @@ const getHealthcareCoverages = () => {
 const insertHealthcareCoverage = async (coverage) => {
   const collection = db.collection('healthcareCoverage');
   const foundHCCoverage = await collection.find({}).toArray();
-  const filteredHCCoverage = foundHCCoverage.filter((cover) => cover.coverage === coverage.coverage);
+  const filteredHCCoverage = foundHCCoverage
+    .filter((cover) => cover.coverage === coverage.coverage);
   if (filteredHCCoverage.length < 1) {
     try {
       return await collection.insertMany([coverage]);
@@ -207,6 +208,79 @@ const insertHealthcareCoverage = async (coverage) => {
     }
   }
 };
+
+// Creates User Collections in mongoDB
+const createUserCollection = () => {
+  try {
+    return db.createCollection('users');
+  } catch (e) {
+    logger.error(e);
+    return e;
+  }
+};
+
+//  GET USERS FROM DB
+const getUsers = (query) => {
+  try {
+    const collection = db.collection('users');
+    return collection.find(query).toArray();
+  } catch (e) {
+    logger.error(e);
+    return e;
+  }
+};
+const getUsersByID = (id) => {
+  try {
+    const collection = db.collection('users');
+    return collection.find({ _id: id }).toArray();
+  } catch (e) {
+    logger.error(e);
+    return e;
+  }
+};
+
+const getUsersByEmail = (email) => {
+  try {
+    const collection = db.collection('users');
+    return collection.find({ email }).toArray();
+  } catch (e) {
+    logger.error(e);
+    return e;
+  }
+};
+
+const addUsers = async (users) => {
+  try {
+    const collection = await db.collection('users');
+    return collection.insertOne(users);
+  } catch (e) {
+    logger.error(e);
+    return e;
+  }
+};
+
+const updateUserByEmail = async (member, email) => {
+  try {
+    const collection = await db.collection('users');
+    return collection.findOneAndReplace({ email }, member, {
+      upsert: true,
+    });
+  } catch (e) {
+    logger.error(e);
+    return e;
+  }
+};
+
+const deleteUserByEmail = async (email) => {
+  try {
+    const collection = await db.collection('users');
+    return collection.findOneAndDelete({ email });
+  } catch (e) {
+    logger.error(e);
+    return e;
+  }
+};
+
 module.exports = {
   init,
   initTest,
@@ -228,4 +302,11 @@ module.exports = {
   insertHealthcareProviders,
   getHealthcareCoverages,
   insertHealthcareCoverage,
+  createUserCollection,
+  getUsers,
+  addUsers,
+  getUsersByEmail,
+  getUsersByID,
+  updateUserByEmail,
+  deleteUserByEmail,
 };
