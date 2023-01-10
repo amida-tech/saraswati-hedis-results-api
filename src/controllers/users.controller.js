@@ -3,6 +3,7 @@ const {
   getUsersByEmail,
   addUsers,
   updateUserByEmail,
+  deleteUsersByEmail,
 } = require('../config/dao');
 
 const decodeJWT = (token) => {
@@ -27,6 +28,7 @@ const decodeJWT = (token) => {
     };
     return loginThisUser;
   }
+  return {};
 };
 
 const verifyUser = async (user) => {
@@ -81,7 +83,7 @@ const addNewUser = async (tokenInfo) => {
   return false;
 };
 
-const loginUser = async (req, res, next) => {
+const loginUser = async (req, res) => {
   const { token } = req.body;
   //   decodeToken
   const decodedUser = decodeJWT(token);
@@ -118,4 +120,23 @@ const loginUser = async (req, res, next) => {
   }
 };
 
-module.exports = { loginUser };
+const getUsers = async (req, res) => {
+  const { email } = req.query;
+  const userSearchResults = await getUsersByEmail(email);
+  if (userSearchResults.length > 0) {
+    res.status(200).json({ status: 'Success', message: `User found with given email: ${email}`, user: userSearchResults });
+  } else {
+    res.status(403).json({ status: 'Failed', message: 'User Not Found', user: [] });
+  }
+};
+
+const deleteUser = async (req, res) => {
+  const { email } = req.query;
+  const userDeleteResults = await deleteUsersByEmail(email);
+  if (userDeleteResults.lastErrorObject.n === 1) {
+    res.status(200).json({ status: 'Success', message: `User found with given email: ${email}. has been deleted`, user: userDeleteResults.value });
+  } else {
+    res.status(403).json({ status: 'Failed', message: 'User Not Found', user: [] });
+  }
+};
+module.exports = { loginUser, getUsers, deleteUser };
