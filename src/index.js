@@ -1,6 +1,7 @@
 const cron = require('node-cron');
 const fs = require('fs');
 const path = require('path');
+const { group } = require('console');
 const config = require('./config/config');
 const winstonInstance = require('./config/winston');
 const app = require('./config/express.js');
@@ -8,6 +9,7 @@ const dao = require('./config/dao');
 const { calcLatestNumDen } = require('./calculators/NumDenCalculator');
 const consumer = require('./consumer/consumer');
 const { createInfoObject } = require('./utilities/infoUtil');
+const { testUsers } = require('./utilities/testUser');
 
 async function healthcareProvidersPayorsGenerator() {
   const patientResults = await dao.getMembers();
@@ -123,6 +125,29 @@ async function initHedisInfo() {
     }
   }
 }
+async function initUsers() {
+  try {
+    const usersInDB = await dao.getUsers();
+    if (usersInDB.length === 0) {
+      testUsers.forEach(async (testUser) => {
+        const insertTestUser = await dao.addUsers(testUser);
+        // IF TEST USER ADDED SUCCESSFULLY
+        if (insertTestUser.insertedCount > 0) {
+          winstonInstance.info(`Test user: ${testUser.email}, inserted into users database with: "${testUser.role}" as their role`);
+        } else {
+          // IF TEST USER FAILS TO INSERT
+          winstonInstance.info('User database active');
+        }
+      });
+    } else {
+      // IF USER DB EXIST
+      winstonInstance.info('User database ready');
+    }
+  } catch (error) {
+    winstonInstance.error(error);
+  }
+}
+
 async function prepareDatabase() {
   await initHedisInfo();
   if (config.providers_payors.active) {
@@ -130,6 +155,9 @@ async function prepareDatabase() {
     cron.schedule(config.providers_payors.schedule, () => {
       healthcareProvidersPayorsGenerator();
     });
+  }
+  if (config.testUsersActive) {
+    await initUsers();
   }
 }
 
@@ -145,5 +173,4 @@ dao.init().then(() => {
     prepareDatabase();
   });
 });
-
 module.exports = app;

@@ -4,7 +4,7 @@ const fs = require('fs');
 const process = require('process');
 const moment = require('moment');
 const excel = require('exceljs');
-const logger = require('../../src/config/winston');
+const logger = require('../config/winston');
 
 async function generateMemberReport(memberObj, fileName, folderPath) {
   const __root = process.cwd();
