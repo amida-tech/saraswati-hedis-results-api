@@ -17,7 +17,7 @@ jest.mock('../../src/config/dao', () => {
   return {
     __esModule: true,
     ...originalModule,
-    findMembers: jest.fn(() => []),
+    getMembers: jest.fn(() => []),
     searchMembers: jest.fn(() => []),
     insertMember: jest.fn(() => {}),
     insertMembers: jest.fn(() => []),

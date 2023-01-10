@@ -19,13 +19,13 @@ const getMeasureResults = async (req, res, next) => {
 
 const getDailyMeasureResults = async (_req, res, next) => {
   try {
-    const patientResults = await dao.findMembers({});
+    const patientResults = await dao.getMembers({});
 
     if (patientResults.length === 0) {
       return res.send([]);
     }
 
-    const infoList = await dao.findInfo();
+    const infoList = await dao.getInfo();
     const measureInfo = createInfoObject(infoList);
 
     const dailyMeasureResults = calculateDailyMeasureResults(patientResults, measureInfo);
@@ -37,15 +37,15 @@ const getDailyMeasureResults = async (_req, res, next) => {
 
 const getTrends = async (req, res, next) => {
   try {
-    const predictions = await dao.findPredictions();
+    const predictions = await dao.getPredictions();
     if (req.query.legacyResults === 'true') {
       const results = await dao.findMeasureResults({});
 
       const legacyTrendData = calculateTrendLegacy(results, predictions, 7);
       return res.send(legacyTrendData);
     }
-    const memberResults = await dao.findMembers({});
-    const infoList = await dao.findInfo();
+    const memberResults = await dao.getMembers({});
+    const infoList = await dao.getInfo();
     const measureInfo = createInfoObject(infoList);
     const trendData = calculateTrend(memberResults, measureInfo, predictions, 7);
 
@@ -58,7 +58,7 @@ const getTrends = async (req, res, next) => {
 // Compiles individual info records into one JSON object
 const getInfo = async (_req, res, next) => {
   try {
-    const infoList = await dao.findInfo();
+    const infoList = await dao.getInfo();
     const fullInfo = createInfoObject(infoList);
     return res.send(fullInfo);
   } catch (e) {
@@ -69,8 +69,8 @@ const getInfo = async (_req, res, next) => {
 const exportCsv = async (req, res, next) => {
   try {
     res.set({ 'Content-Disposition': 'attachment; filename=results-export.csv' });
-    const patientResults = await dao.findMembers(req.query);
-    const infoList = await dao.findInfo(req.query.measurementType);
+    const patientResults = await dao.getMembers(req.query);
+    const infoList = await dao.getInfo(req.query.measurementType);
     const measureInfo = createInfoObject(infoList);
     const csv = generateCsv(patientResults, measureInfo, req.query.measurementType);
     return res.send(csv);

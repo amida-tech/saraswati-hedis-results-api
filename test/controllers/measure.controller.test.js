@@ -25,10 +25,10 @@ jest.mock('../../src/config/dao', () => {
   return {
     __esModule: true,
     ...originalModule,
-    findMembers: jest.fn(() => mockDrrePatientResults),
+    getMembers: jest.fn(() => mockDrrePatientResults),
     findMeasureResults: jest.fn(() => []),
-    findPredictions: jest.fn(() => {}),
-    findInfo: jest.fn(() => mockMeasureInfo),
+    getPredictions: jest.fn(() => {}),
+    getInfo: jest.fn(() => mockMeasureInfo),
     insertMember: jest.fn(() => {}),
     insertMembers: jest.fn(() => []),
     insertMeasureResults: jest.fn(() => []),

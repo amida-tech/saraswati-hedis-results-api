@@ -24,7 +24,7 @@ const generateTest = async () => {
 };
 
 async function generateMemberById(req, res) {
-  let memberResults = await dao.findMembers(req.query);
+  let memberResults = await dao.getMembers(req.query);
   memberResults = memberResults.sort((a, b) => new Date(b.timeStamp) - new Date(a.timeStamp));
   const fileName = `${memberResults[0].memberId}.xlsx`;
   const folderPath = `/reports/member/${memberResults[0].measurementType}`;
@@ -71,7 +71,7 @@ async function generateMemberById(req, res) {
 const qrda1 = async (req, res, next) => {
   try {
     const memberList = await dao.searchMembers(req.query);
-    const infoList = await dao.findInfo();
+    const infoList = await dao.getInfo();
     const measureInfo = createInfoObject(infoList);
     const qrdaReport = qrda1Export(memberList, measureInfo);
     return res.send(qrdaReport);
@@ -84,16 +84,16 @@ const qrda3 = async (req, res, next) => {
   try {
     let patientResults = [];
     if (req.query.measurementType === 'composite') {
-      patientResults = await dao.findMembers({});
+      patientResults = await dao.getMembers({});
     } else {
-      patientResults = await dao.findMembers(req.query);
+      patientResults = await dao.getMembers(req.query);
     }
 
     if (patientResults.length === 0) {
       return res.send([]);
     }
 
-    const infoList = await dao.findInfo();
+    const infoList = await dao.getInfo();
     const measureInfo = createInfoObject(infoList);
 
     const dailyMeasureResults = calcLatestNumDen(patientResults, measureInfo, new Date());

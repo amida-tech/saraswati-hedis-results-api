@@ -1,13 +1,16 @@
+/* eslint-disable prefer-destructuring */
 /* eslint-disable no-underscore-dangle */
+/* eslint-disable max-len */
 const { MongoClient } = require('mongodb');
-const { mongodb } = require('./config');
 const logger = require('winston');
 const mongoSanitize = require('express-mongo-sanitize');
+const { mongodb } = require('./config');
 
 const connectionUrl = `mongodb://${mongodb.host}:${mongodb.port}`;
 
 let db;
 
+// Initialization
 const init = async () => {
   const client = await MongoClient.connect(connectionUrl, {
     useNewUrlParser: true,
@@ -15,47 +18,20 @@ const init = async () => {
   });
   db = client.db(mongodb.name);
 };
-
 const initTest = (mockDb) => {
   db = mockDb;
 };
 
-const findMembers = (query) => {
+// Members
+const getMembers = (query) => {
   const collection = db.collection('measures');
   return collection.find(query).toArray();
 };
-
 const searchMembers = (query) => {
-  const collection = db.collection('measures')
-  // sanitize query
-  console.log(query.memberId)
-  const saniQuery = mongoSanitize.sanitize(query.memberId)
-  return collection.find( { 'memberId' : { '$regex' : saniQuery, '$options' : 'i' } } ).toArray()
-}
-
-const findMeasureResults = (query) => {
-  const collection = db.collection('measure_results');
-  try {
-    return collection.find(query).toArray();
-  } catch (e) {
-    logger.error(e);
-    return e;
-  }
+  const collection = db.collection('measures');
+  const saniQuery = mongoSanitize.sanitize(query.memberId);
+  return collection.find({ memberId: { $regex: saniQuery, $options: 'i' } }).toArray();
 };
-
-const findPredictions = () => {
-  const collection = db.collection('model_predictions');
-  return collection.find({}).toArray();
-};
-
-const findInfo = (measure) => {
-  const collection = db.collection('hedis_info');
-  if (measure) {
-    return collection.find({ _id: new RegExp(`^${measure}`) }).toArray();
-  }
-  return collection.find({}).toArray();
-};
-
 const insertMember = async (member) => {
   const collection = db.collection('measures');
   try {
@@ -70,10 +46,30 @@ const insertMember = async (member) => {
     return e;
   }
 };
-
 const insertMembers = (measures) => measures.map((measure) => insertMember(measure));
 
-// create collection for results
+// User
+const getUserRoles = ({ userId }) => {
+  const collection = db.collection('user');
+  const saniQuery = mongoSanitize.sanitize(userId);
+  try {
+    return collection.find({ memberId: { $regex: saniQuery, $options: 'i' } }).toArray()[0];
+  } catch (e) {
+    logger.error(e);
+    return e;
+  }
+};
+
+// Measures
+const getMeasureResults = (query) => {
+  const collection = db.collection('measure_results');
+  try {
+    return collection.find(query).toArray();
+  } catch (e) {
+    logger.error(e);
+    return e;
+  }
+};
 const insertMeasureResults = (results) => {
   const collection = db.collection('measure_results');
   for (let i = 0; i < results.length; i += 1) {
@@ -110,7 +106,11 @@ const insertMeasureResults = (results) => {
   return true;
 };
 
-// create collection for predictions
+// Predictions
+const getPredictions = () => {
+  const collection = db.collection('model_predictions');
+  return collection.find({}).toArray();
+};
 const insertPredictions = (predictions) => {
   const collection = db.collection('model_predictions');
   const predictionInsert = predictions;
@@ -125,7 +125,14 @@ const insertPredictions = (predictions) => {
   }
 };
 
-// create collection for hedis info
+// HEDIS info
+const getInfo = (measure) => {
+  const collection = db.collection('hedis_info');
+  if (measure) {
+    return collection.find({ _id: new RegExp(`^${measure}`) }).toArray();
+  }
+  return collection.find({}).toArray();
+};
 const insertInfo = (info) => {
   const collection = db.collection('hedis_info');
   try {
@@ -138,11 +145,11 @@ const insertInfo = (info) => {
   }
 };
 
+// Payors
 const getPayors = () => {
   const collection = db.collection('payors');
   return collection.find({}).toArray();
 };
-
 const insertPayors = async (payor) => {
   const collection = db.collection('payors');
   const foundPayors = await collection.find({}).toArray();
@@ -156,6 +163,8 @@ const insertPayors = async (payor) => {
     }
   }
 };
+
+// Practitioners
 const getPractitioners = () => {
   const collection = db.collection('practitioners');
   return collection.find({}).toArray();
@@ -173,6 +182,8 @@ const insertPractitioner = async (practitioner) => {
     }
   }
 };
+
+// Providers
 const getHealthcareProviders = () => {
   const collection = db.collection('healthcareProviders');
   return collection.find({}).toArray();
@@ -190,6 +201,8 @@ const insertHealthcareProviders = async (provider) => {
     }
   }
 };
+
+// Coverages
 const getHealthcareCoverages = () => {
   const collection = db.collection('healthcareCoverage');
   return collection.find({}).toArray();
@@ -207,14 +220,16 @@ const insertHealthcareCoverage = async (coverage) => {
     }
   }
 };
+
 module.exports = {
   init,
   initTest,
-  findMembers,
+  getMembers,
   searchMembers,
-  findMeasureResults,
-  findPredictions,
-  findInfo,
+  getUserRoles,
+  getMeasureResults,
+  getPredictions,
+  getInfo,
   insertMember,
   insertMembers,
   insertMeasureResults,

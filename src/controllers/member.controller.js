@@ -3,21 +3,21 @@ const dao = require('../config/dao');
 
 const getMembers = async (req, res, next) => {
   try {
-    const measures = await dao.findMembers(req.query);
+    const measures = await dao.getMembers(req.query);
     return res.send(measures);
   } catch (e) {
-    return next(e)
+    return next(e);
   }
 };
 
 // Get all records with the memberId, sort and get the latest one
 const getMemberInfo = async (req, res, next) => {
   try {
-    let memberResults = await dao.findMembers(req.query);
+    let memberResults = await dao.getMembers(req.query);
     memberResults = memberResults.sort((a, b) => new Date(b.timeStamp) - new Date(a.timeStamp));
     return res.send(memberResults[0]);
   } catch (e) {
-    return next(e)
+    return next(e);
   }
 };
 
@@ -27,7 +27,7 @@ const postBulkMembers = async (req, res, next) => {
     const measures = await dao.insertMembers(req.body, options);
     return res.send(measures);
   } catch (e) {
-    return next(e)
+    return next(e);
   }
 };
 
@@ -36,23 +36,23 @@ const postMember = async (req, res, next) => {
     const measure = await dao.insertMember(req.body);
     return res.send(measure);
   } catch (e) {
-    return next(e)
+    return next(e);
   }
 };
 
 const searchMembers = async (req, res, next) => {
   try {
-    let memberResults = await dao.searchMembers(req.query);
-    return res.send(memberResults)
+    const memberResults = await dao.searchMembers(req.query);
+    return res.send(memberResults);
   } catch (e) {
-    return next(e)
+    return next(e);
   }
-}
+};
 
 module.exports = {
   getMembers,
   getMemberInfo,
   postBulkMembers,
   postMember,
-  searchMembers
+  searchMembers,
 };
