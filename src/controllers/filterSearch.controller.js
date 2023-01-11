@@ -19,11 +19,9 @@ const filterMembers = async (req, res, next) => {
 const getDailyMeasureResults = async (req, res, next) => {
   try {
     const patientResults = req.FoundMembers;
-
     if (patientResults.length === 0) {
       return res.send([]);
     }
-
     const infoList = await dao.getInfo();
     const measureInfo = createInfoObject(infoList);
     const dailyMeasureResults = calculateDailyMeasureResults(patientResults, measureInfo);
@@ -32,6 +30,7 @@ const getDailyMeasureResults = async (req, res, next) => {
   } catch (e) {
     next(e);
   }
+  return next();
 };
 
 module.exports = {

@@ -19,7 +19,7 @@ const generateTest = async () => {
   }
 };
 
-async function generateMemberById(req, res, next) {
+async function generateMemberById(req, res) {
   let memberResults = await dao.getMembers(req.query);
   memberResults = memberResults.sort((a, b) => new Date(b.timeStamp) - new Date(a.timeStamp));
   const fileName = `${memberResults[0].memberId}.xlsx`;
@@ -55,6 +55,7 @@ async function generateMemberById(req, res, next) {
     }
   } catch (error) {
     if (error instanceof ReferenceError) {
+      res.send(ReferenceError);
     } else if (error) {
       res.send(error);
     } else {

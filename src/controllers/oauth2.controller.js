@@ -1,10 +1,10 @@
-const axios = require('axios');
-const qs = require('qs');
+// const axios = require('axios');
+// const qs = require('qs');
 const { googleClientID, googleClientSecret, googleOAuthRedirectUrl } = require('../config/config');
-const winstonInstance = require('../config/winston');
+const logger = require('../config/winston');
 
 const getGoogleOAuthTokens = async ({ code }) => {
-  const url = 'https://oauth2.googleapis.com/token';
+  // const url = 'https://oauth2.googleapis.com/token';
   const values = {
     code,
     client_id: googleClientID,
@@ -12,7 +12,7 @@ const getGoogleOAuthTokens = async ({ code }) => {
     redirect_uri: googleOAuthRedirectUrl,
     grant_type: 'authorization_code',
   };
-  console.log(values);
+  logger.info(values);
   // try {
   //     const res = await axios.post(url,qs.stringify(values),
   //     {
@@ -22,7 +22,7 @@ const getGoogleOAuthTokens = async ({ code }) => {
   //     })
   //     return res.data
   // } catch (e) {
-  //     winstonInstance.error(e);
+  //     logger.error(e);
   // }
 };
 

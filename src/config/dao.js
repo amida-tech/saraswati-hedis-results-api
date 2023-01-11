@@ -1,3 +1,4 @@
+/* eslint-disable prefer-destructuring */
 /* eslint-disable no-underscore-dangle */
 const { MongoClient } = require('mongodb');
 const logger = require('winston');
@@ -152,6 +153,8 @@ const insertPayors = async (payor) => {
       logger.error(e);
       return e;
     }
+  } else {
+    return [];
   }
 };
 
@@ -172,6 +175,8 @@ const insertPractitioner = async (practitioner) => {
       logger.error(e);
       return e;
     }
+  } else {
+    return [];
   }
 };
 
@@ -191,6 +196,8 @@ const insertHealthcareProviders = async (provider) => {
       logger.error(e);
       return e;
     }
+  } else {
+    return [];
   }
 };
 
@@ -211,6 +218,8 @@ const insertHealthcareCoverage = async (coverage) => {
       logger.error(e);
       return e;
     }
+  } else {
+    return [];
   }
 };
 
