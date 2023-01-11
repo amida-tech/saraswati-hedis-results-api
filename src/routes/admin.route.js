@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 const express = require('express');
 
 const router = express(); // eslint-disable-line new-cap
@@ -5,6 +6,7 @@ const {
   // accessControl,
   getUsers,
   getUsersByEmail,
+  getRoleByEmail,
   addUser,
   updateUser,
   loginUser,
@@ -22,7 +24,7 @@ router.get('/users', getUsers, (req, res) => {
       users,
     });
   } else {
-    res.status(200).json({
+    res.status(404).json({
       status: 'Fail',
       message: 'No users found',
       userCount: users.length,
@@ -47,6 +49,23 @@ router.get('/users/email', getUsersByEmail, (req, res) => {
 
       userCount: user.length,
       user,
+    });
+  }
+});
+
+router.get('/users/role', getRoleByEmail, (req, res) => {
+  const { email } = req.body;
+  const { role } = req;
+  if (role) {
+    res.status(200).json({
+      status: 'Success',
+      message: `Role found for ${email}`,
+      userRole: role,
+    });
+  } else {
+    res.status(404).json({
+      status: 'Failed',
+      message: `Role not found for: ${email}`,
     });
   }
 });
@@ -76,7 +95,7 @@ router.post('/users', filterUsers, addUser, (req, res) => {
       user: user.ops,
     });
   } else {
-    res.status(200).json({
+    res.status(400).json({
       status: 'Failed',
       message: `User not added successfully database with given email: ${req.body.email}`,
       userCount: 0,
@@ -97,7 +116,7 @@ router.post('/login', getUsersByEmail, loginUser, (req, res) => {
       message: `Successful login of user by given email: ${req.body.email}`,
     });
   } else {
-    res.status(200).json({
+    res.status(400).json({
       status: 'Failed',
       message: `Unsuccessful login of user by given email: ${req.body.email}`,
     });

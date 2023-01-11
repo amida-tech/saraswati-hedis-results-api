@@ -1,4 +1,4 @@
-const winstonInstance = require('../config/winston');
+const logger = require('../config/winston');
 const dao = require('../config/dao');
 
 const getUsers = async (req, res, next) => {
@@ -7,7 +7,7 @@ const getUsers = async (req, res, next) => {
     req.Users = allUsers;
     next();
   } catch (error) {
-    winstonInstance.error(error);
+    logger.error(error);
   }
 };
 
@@ -18,7 +18,25 @@ const getUsersByEmail = async (req, res, next) => {
     req.User = userByEmail;
     next();
   } catch (error) {
-    winstonInstance.error(error);
+    logger.error(error);
+  }
+};
+
+const getRoleByEmail = async (req, res, next) => {
+  const { email } = req.body;
+  try {
+    const role = await dao.getRoleByEmail(email);
+    if (role.length > 0) {
+      req.role = role;
+      next();
+    } else {
+      res.status(404).json({
+        status: 'Failed',
+        message: 'USER NOT FOUND',
+      });
+    }
+  } catch (error) {
+    logger.error(error);
   }
 };
 
@@ -60,7 +78,7 @@ const addUser = async (req, res, next) => {
     req.newUser = addedUser;
     next();
   } catch (error) {
-    winstonInstance.error(error);
+    logger.error(error);
   }
 };
 
@@ -107,7 +125,7 @@ const updateUser = async (req, res, next) => {
 
     next();
   } catch (error) {
-    winstonInstance.error(error);
+    logger.error(error);
   }
 };
 
@@ -152,7 +170,7 @@ const loginUser = async (req, res, next) => {
     req.updatedUser = updatedUser;
     next();
   } catch (error) {
-    winstonInstance.error(error);
+    logger.error(error);
   }
 };
 
@@ -176,7 +194,7 @@ const filterUsers = async (req, res, next) => {
       });
     }
   } catch (error) {
-    winstonInstance.error(error);
+    logger.error(error);
   }
 };
 const deleteUser = async (req, res, next) => {
@@ -192,12 +210,13 @@ const deleteUser = async (req, res, next) => {
       next();
     }
   } catch (error) {
-    winstonInstance.error(error);
+    logger.error(error);
   }
 };
 module.exports = {
   getUsers,
   getUsersByEmail,
+  getRoleByEmail,
   addUser,
   filterUsers,
   updateUser,

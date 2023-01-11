@@ -1,4 +1,4 @@
-const winstonInstance = require('../config/winston');
+const logger = require('../config/winston');
 const dao = require('../config/dao');
 const { userChangeFinder } = require('../utilities/userProfileUtils');
 
@@ -16,7 +16,7 @@ const getUserProfileByEmail = async (req, res, next) => {
       });
     }
   } catch (error) {
-    winstonInstance.error(error);
+    logger.error(error);
   }
 };
 
@@ -82,7 +82,7 @@ const updateUserProfile = async (req, res, next) => {
       });
     }
   } catch (error) {
-    winstonInstance.error(error);
+    logger.error(error);
   }
 };
 
