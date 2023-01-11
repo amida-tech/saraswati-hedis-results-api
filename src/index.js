@@ -123,6 +123,7 @@ async function initHedisInfo() {
     }
   }
 }
+
 async function prepareDatabase() {
   await initHedisInfo();
   if (config.providers_payors.active) {
