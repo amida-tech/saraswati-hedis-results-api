@@ -19,10 +19,10 @@ jest.mock('../../src/config/dao', () => {
   return {
     __esModule: true,
     ...originalModule,
-    findMembers: jest.fn().mockImplementation(() => {
+    getMembers: jest.fn().mockImplementation(() => {
       throw new Error();
     }),
-    findMeasureResults: jest.fn().mockImplementation(() => {
+    getMeasureResults: jest.fn().mockImplementation(() => {
       throw new Error();
     }),
     insertMember: jest.fn().mockImplementation(() => {

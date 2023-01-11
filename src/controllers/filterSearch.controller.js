@@ -8,7 +8,7 @@ const filterMembers = async (req, res, next) => {
   const { searchQuery } = queryBuilder(submeasure, filters);
 
   try {
-    const Members = await dao.findMembers(searchQuery);
+    const Members = await dao.getMembers(searchQuery);
     req.FoundMembers = Members;
     next();
   } catch (error) {
@@ -24,7 +24,7 @@ const getDailyMeasureResults = async (req, res, next) => {
       return res.send([]);
     }
 
-    const infoList = await dao.findInfo();
+    const infoList = await dao.getInfo();
     const measureInfo = createInfoObject(infoList);
     const dailyMeasureResults = calculateDailyMeasureResults(patientResults, measureInfo);
     req.dailyMeasureResults = dailyMeasureResults;

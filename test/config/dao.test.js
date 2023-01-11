@@ -42,28 +42,28 @@ describe('## db.js', () => {
 
   describe('Test getMeasures function', () => {
     test('Should not throw an error', async () => {
-      const success = dao.findMembers();
+      const success = dao.getMembers();
       expect(success).toBeTruthy();
     });
   });
 
   describe('Test getMeasureResults function', () => {
     test('Should not throw an error', async () => {
-      const test = dao.findMeasureResults();
+      const test = dao.getMeasureResults();
       expect(test).toBeTruthy();
     });
   });
 
   describe('Test getPredictions function', () => {
     test('Should not throw an error', async () => {
-      const test = dao.findPredictions();
+      const test = dao.getPredictions();
       expect(test).toBeTruthy();
     });
   });
 
-  describe('Test findInfo function', () => {
+  describe('Test getInfo function', () => {
     test('Should not throw an error', async () => {
-      const test = dao.findInfo();
+      const test = dao.getInfo();
       expect(test).toBeTruthy();
     });
   });

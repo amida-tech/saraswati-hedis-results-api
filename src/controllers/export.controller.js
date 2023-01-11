@@ -20,7 +20,7 @@ const generateTest = async () => {
 };
 
 async function generateMemberById(req, res, next) {
-  let memberResults = await dao.findMembers(req.query);
+  let memberResults = await dao.getMembers(req.query);
   memberResults = memberResults.sort((a, b) => new Date(b.timeStamp) - new Date(a.timeStamp));
   const fileName = `${memberResults[0].memberId}.xlsx`;
   const folderPath = `/reports/member/${memberResults[0].measurementType}`;

@@ -17,10 +17,10 @@ jest.mock('../../src/config/dao', () => {
   return {
     __esModule: true,
     ...originalModule,
-    findMeasureResults: jest.fn().mockImplementation(() => {
+    getMeasureResults: jest.fn().mockImplementation(() => {
       throw new Error();
     }),
-    findPredictions: jest.fn().mockImplementation(() => {
+    getPredictions: jest.fn().mockImplementation(() => {
       throw new Error();
     }),
     insertPredictions: jest.fn().mockImplementation(() => {

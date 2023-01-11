@@ -8,6 +8,7 @@ const connectionUrl = `mongodb://${mongodb.host}:${mongodb.port}`;
 
 let db;
 
+// INIT
 const init = async () => {
   const client = await MongoClient.connect(connectionUrl, {
     useNewUrlParser: true,
@@ -20,7 +21,8 @@ const initTest = (mockDb) => {
   db = mockDb;
 };
 
-const findMembers = (query) => {
+// MEMBERS
+const getMembers = (query) => {
   const collection = db.collection('measures');
   return collection.find(query).toArray();
 };
@@ -32,7 +34,7 @@ const searchMembers = (query) => {
   return collection.find({ memberId: { $regex: saniQuery, $options: 'i' } }).toArray();
 };
 
-const findMeasureResults = (query) => {
+const getMeasureResults = (query) => {
   const collection = db.collection('measure_results');
   try {
     return collection.find(query).toArray();
@@ -42,12 +44,12 @@ const findMeasureResults = (query) => {
   }
 };
 
-const findPredictions = () => {
+const getPredictions = () => {
   const collection = db.collection('model_predictions');
   return collection.find({}).toArray();
 };
 
-const findInfo = (measure) => {
+const getInfo = (measure) => {
   const collection = db.collection('hedis_info');
   if (measure) {
     return collection.find({ _id: new RegExp(`^${measure}`) }).toArray();
@@ -284,11 +286,11 @@ const deleteUserByEmail = async (email) => {
 module.exports = {
   init,
   initTest,
-  findMembers,
+  getMembers,
   searchMembers,
-  findMeasureResults,
-  findPredictions,
-  findInfo,
+  getMeasureResults,
+  getPredictions,
+  getInfo,
   insertMember,
   insertMembers,
   insertMeasureResults,

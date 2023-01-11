@@ -17,8 +17,8 @@ jest.mock('../../src/config/dao', () => {
   return {
     __esModule: true,
     ...originalModule,
-    findMeasureResults: jest.fn(() => []),
-    findPredictions: jest.fn(() => {}),
+    getMeasureResults: jest.fn(() => []),
+    getPredictions: jest.fn(() => {}),
     insertPredictions: jest.fn(() => []),
   };
 });

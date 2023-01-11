@@ -14,7 +14,7 @@ function randomNumber(var1, var2) {
 }
 
 async function generateData() {
-  return measureResultsDao.findMeasureResults().then((value) => {
+  return measureResultsDao.getMeasureResults().then((value) => {
     if (value.length === 0) {
       logger.error('\x1b[31m',
         '\nError: No data found.',

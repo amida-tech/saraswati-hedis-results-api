@@ -4,7 +4,7 @@ const dao = require('../config/dao');
 // Access predictions made by time series
 const getPredictions = async (req, res, next) => {
   try {
-    const predictions = await dao.findPredictions();
+    const predictions = await dao.getPredictions();
     return res.send(predictions);
   } catch (e) {
     return next(e);
@@ -14,7 +14,7 @@ const getPredictions = async (req, res, next) => {
 // Data time series to make predictions with
 const getPredictionData = async (req, res, next) => {
   try {
-    const search = await dao.findMeasureResults(req.params);
+    const search = await dao.getMeasureResults(req.params);
     const predictionData = search.sort((a, b) => a.date - b.date);
     const compiledData = {
       _id: req.params.measure,

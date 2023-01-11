@@ -12,7 +12,7 @@ const { createInfoObject } = require('./utilities/infoUtil');
 const { testUsers } = require('./utilities/testUser');
 
 async function healthcareProvidersPayorsGenerator() {
-  const patientResults = await dao.findMembers();
+  const patientResults = await dao.getMembers();
   // PROVIDERS
   const healthcareProviderOptions = [];
   const practitionerOptions = [];
@@ -114,7 +114,7 @@ async function healthcareProvidersPayorsGenerator() {
   }
 }
 async function initHedisInfo() {
-  let infoList = await dao.findInfo();
+  let infoList = await dao.getInfo();
   if (infoList.length === 0) {
     const hedisInfoLocation = `${path.resolve()}/${config.infoLocation}`;
     try {
