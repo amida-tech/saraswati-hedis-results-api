@@ -83,6 +83,25 @@ const addNewUser = async (tokenInfo) => {
   return false;
 };
 
+const getUserRole = async (req, res) => {
+  const { token } = req.body;
+  const decodedUser = decodeJWT(token);
+  const { scope, user } = await verifyUser(decodedUser);
+  if (scope) {
+    // based on generic google oauth token, there should be be a scope kvp
+    res.status(200).json({
+      status: 'Success',
+      message: `Role found ${user}`,
+      scope,
+    });
+  } else {
+    res.status(404).json({
+      status: 'Failed',
+      message: 'User does not exist',
+    });
+  }
+}
+
 const loginUser = async (req, res) => {
   const { token } = req.body;
   //   decodeToken
