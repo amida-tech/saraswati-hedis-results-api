@@ -90,7 +90,7 @@ const addNewUser = async (tokenInfo) => {
 // when we actually crack this all open
 // https://www.npmjs.com/package/google-auth-library
 
-// example of user JSON data you'd get with admin api
+// example of user JSON data you'd get from Admin SDK API directory w/ role management
 // {
 //   "roleId": string,
 //   "roleName": string,
@@ -109,27 +109,28 @@ const addNewUser = async (tokenInfo) => {
 
 const getUserRole = async (req, res) => {
   try {
-    // if (process.env.NODE_ENV !== 'production') {
-    //   res.status(200).json({
-    //     status: 'Success',
-    //     message: 'Dev is authorized',
-    //     scope: 'admin',
-    //   });
-    // }
+    if (process.env.NODE_ENV !== 'production') {
+      res.status(200).json({
+        status: 'Success',
+        message: 'Dev is authorized',
+        scope: 'admin',
+      });
+    }
   
-    // token, called 'authorization' in headers
+    // token is called 'authorization' in headers
     const { authorization } = req.headers;
+    // decode the token
     const decodedToken = decodeJWT(authorization);
+    // verify this is in fact our user
     const { userFound, user } = await verifyUser(decodedToken);
-    // this assumes you have a nice google token you got from the admin api
+    // check for role within token's JSON data
     const authorizationCheck = userAuthorization(decodedToken.roleName);
+    // if this is our user and are authorized, proceed
     if (userFound && authorizationCheck) {
-      // based on generic google oauth token, there should be be a scope kvp
       res.status(200).json({
         status: 'Success',
         message: `${user} is authorized`,
         role: decodedToken.roleName,
-        // maybe include redirection link? status 302
       });
     }
   } catch {
