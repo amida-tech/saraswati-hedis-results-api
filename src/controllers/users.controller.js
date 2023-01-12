@@ -158,4 +158,4 @@ const deleteUser = async (req, res) => {
     res.status(403).json({ status: 'Failed', message: 'User Not Found', user: [] });
   }
 };
-module.exports = { loginUser, getUsers, deleteUser };
+module.exports = { loginUser, getUsers, getUserRole, deleteUser };

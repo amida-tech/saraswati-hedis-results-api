@@ -9,6 +9,9 @@ router.route('/')
 router.route('/login')
   .post(usersCtrl.loginUser);
 
+router.route('/roles')
+  .get(usersCtrl.getUserRole);
+
 router.route('/')
   .delete(usersCtrl.deleteUser);
 
