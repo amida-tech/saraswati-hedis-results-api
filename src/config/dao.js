@@ -1,8 +1,8 @@
 /* eslint-disable no-underscore-dangle */
 const { MongoClient } = require('mongodb');
-const { mongodb } = require('./config');
 const logger = require('winston');
 const mongoSanitize = require('express-mongo-sanitize');
+const { mongodb } = require('./config');
 
 const connectionUrl = `mongodb://${mongodb.host}:${mongodb.port}`;
 
@@ -26,12 +26,12 @@ const findMembers = (query) => {
 };
 
 const searchMembers = (query) => {
-  const collection = db.collection('measures')
+  const collection = db.collection('measures');
   // sanitize query
-  console.log(query.memberId)
-  const saniQuery = mongoSanitize.sanitize(query.memberId)
-  return collection.find( { 'memberId' : { '$regex' : saniQuery, '$options' : 'i' } } ).toArray()
-}
+  console.log(query.memberId);
+  const saniQuery = mongoSanitize.sanitize(query.memberId);
+  return collection.find({ memberId: { $regex: saniQuery, $options: 'i' } }).toArray();
+};
 
 const findMeasureResults = (query) => {
   const collection = db.collection('measure_results');
@@ -239,6 +239,19 @@ const addUsers = async (users) => {
   }
 };
 
+const userAuthorization = async (role) => {
+  try {
+    // for now I can only assume there will be a basic User and Admin role
+    if (role === 'admin') {
+      return true;
+    }
+    return false;
+  } catch (e) {
+    logger.error(e);
+    return e;
+  }
+};
+
 const updateUserByEmail = async (member, email) => {
   try {
     const collection = await db.collection('users');
@@ -285,6 +298,7 @@ module.exports = {
   getUsers,
   getUsersByEmail,
   addUsers,
+  userAuthorization,
   updateUserByEmail,
   deleteUsersByEmail,
 };
