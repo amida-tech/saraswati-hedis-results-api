@@ -2,31 +2,35 @@ const jwt = require('jsonwebtoken');
 const {
   getUsersByEmail,
   addUsers,
+  userAuthorization,
   updateUserByEmail,
   deleteUsersByEmail,
 } = require('../config/dao');
 
 const decodeJWT = (token) => {
-  const {
-    iss,
-    aud,
-    hd,
-    email,
-    picture,
-    given_name,
-    family_name,
-  } = jwt.decode(token);
-
-  if (iss.includes('google')) {
-    const loginThisUser = {
-      clientID: aud,
+  if (token) {
+    const {
+      iss,
+      aud,
+      hd,
       email,
-      firstName: given_name,
-      lastName: family_name,
       picture,
-      companyDomain: hd,
-    };
-    return loginThisUser;
+      given_name,
+      family_name,
+    } = jwt.decode(token);
+  
+    if (iss.includes('google')) {
+      const loginThisUser = {
+        clientID: aud,
+        email,
+        firstName: given_name,
+        lastName: family_name,
+        picture,
+        companyDomain: hd,
+      };
+      return loginThisUser;
+    }
+    return {};
   }
   return {};
 };
@@ -83,24 +87,58 @@ const addNewUser = async (tokenInfo) => {
   return false;
 };
 
+// when we actually crack this all open
+// https://www.npmjs.com/package/google-auth-library
+
+// example of user JSON data you'd get with admin api
+// {
+//   "roleId": string,
+//   "roleName": string,
+//   "roleDescription": string,
+//   "rolePrivileges": [
+//     {
+//       "serviceId": string,
+//       "privilegeName": string
+//     }
+//   ],
+//   "isSystemRole": boolean,
+//   "isSuperAdminRole": boolean,
+//   "kind": string,
+//   "etag": string
+// }
+
 const getUserRole = async (req, res) => {
-  const { token } = req.body;
-  const decodedUser = decodeJWT(token);
-  const { scope, user } = await verifyUser(decodedUser);
-  if (scope) {
-    // based on generic google oauth token, there should be be a scope kvp
-    res.status(200).json({
-      status: 'Success',
-      message: `Role found ${user}`,
-      scope,
-    });
-  } else {
-    res.status(404).json({
+  try {
+    // if (process.env.NODE_ENV !== 'production') {
+    //   res.status(200).json({
+    //     status: 'Success',
+    //     message: 'Dev is authorized',
+    //     scope: 'admin',
+    //   });
+    // }
+  
+    // token, called 'authorization' in headers
+    const { authorization } = req.headers;
+    const decodedToken = decodeJWT(authorization);
+    const { userFound, user } = await verifyUser(decodedToken);
+    // this assumes you have a nice google token you got from the admin api
+    const authorizationCheck = userAuthorization(decodedToken.roleName);
+    if (userFound && authorizationCheck) {
+      // based on generic google oauth token, there should be be a scope kvp
+      res.status(200).json({
+        status: 'Success',
+        message: `${user} is authorized`,
+        role: decodedToken.roleName,
+        // maybe include redirection link? status 302
+      });
+    }
+  } catch {
+    res.status(401).json({
       status: 'Failed',
-      message: 'User does not exist',
+      message: 'User not authorized',
     });
   }
-}
+};
 
 const loginUser = async (req, res) => {
   const { token } = req.body;
@@ -158,4 +196,6 @@ const deleteUser = async (req, res) => {
     res.status(403).json({ status: 'Failed', message: 'User Not Found', user: [] });
   }
 };
-module.exports = { loginUser, getUsers, getUserRole, deleteUser };
+module.exports = {
+  loginUser, getUsers, getUserRole, deleteUser,
+};
