@@ -18,7 +18,7 @@ const decodeJWT = (token) => {
       given_name,
       family_name,
     } = jwt.decode(token);
-  
+
     if (iss.includes('google')) {
       const loginThisUser = {
         clientID: aud,
@@ -116,7 +116,6 @@ const getUserRole = async (req, res) => {
         scope: 'admin',
       });
     }
-  
     // token is called 'authorization' in headers
     const { authorization } = req.headers;
     // decode the token

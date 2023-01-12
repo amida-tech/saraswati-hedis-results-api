@@ -1,3 +1,4 @@
+/* eslint-disable prefer-destructuring */
 /* eslint-disable no-underscore-dangle */
 const { MongoClient } = require('mongodb');
 const logger = require('winston');
@@ -28,7 +29,6 @@ const findMembers = (query) => {
 const searchMembers = (query) => {
   const collection = db.collection('measures');
   // sanitize query
-  console.log(query.memberId);
   const saniQuery = mongoSanitize.sanitize(query.memberId);
   return collection.find({ memberId: { $regex: saniQuery, $options: 'i' } }).toArray();
 };
@@ -154,6 +154,8 @@ const insertPayors = async (payor) => {
       logger.error(e);
       return e;
     }
+  } else {
+    return {};
   }
 };
 const getPractitioners = () => {
@@ -163,7 +165,8 @@ const getPractitioners = () => {
 const insertPractitioner = async (practitioner) => {
   const collection = db.collection('practitioners');
   const foundPayors = await collection.find({}).toArray();
-  const filteredPayors = foundPayors.filter((prac) => prac.practitioner === practitioner.practitioner);
+  const filteredPayors = foundPayors
+    .filter((prac) => prac.practitioner === practitioner.practitioner);
   if (filteredPayors.length < 1) {
     try {
       return await collection.insertMany([practitioner]);
@@ -171,6 +174,8 @@ const insertPractitioner = async (practitioner) => {
       logger.error(e);
       return e;
     }
+  } else {
+    return {};
   }
 };
 const getHealthcareProviders = () => {
@@ -188,6 +193,8 @@ const insertHealthcareProviders = async (provider) => {
       logger.error(e);
       return e;
     }
+  } else {
+    return {};
   }
 };
 const getHealthcareCoverages = () => {
@@ -197,7 +204,8 @@ const getHealthcareCoverages = () => {
 const insertHealthcareCoverage = async (coverage) => {
   const collection = db.collection('healthcareCoverage');
   const foundHCCoverage = await collection.find({}).toArray();
-  const filteredHCCoverage = foundHCCoverage.filter((cover) => cover.coverage === coverage.coverage);
+  const filteredHCCoverage = foundHCCoverage
+    .filter((cover) => cover.coverage === coverage.coverage);
   if (filteredHCCoverage.length < 1) {
     try {
       return await collection.insertMany([coverage]);
@@ -205,6 +213,8 @@ const insertHealthcareCoverage = async (coverage) => {
       logger.error(e);
       return e;
     }
+  } else {
+    return {};
   }
 };
 

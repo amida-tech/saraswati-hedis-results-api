@@ -28,9 +28,9 @@ const getDailyMeasureResults = async (req, res, next) => {
     const measureInfo = createInfoObject(infoList);
     const dailyMeasureResults = calculateDailyMeasureResults(patientResults, measureInfo);
     req.dailyMeasureResults = dailyMeasureResults;
-    next();
+    return next();
   } catch (e) {
-    next(e);
+    return next(e);
   }
 };
 
