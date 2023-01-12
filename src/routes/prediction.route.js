@@ -3,9 +3,9 @@ const predictionCtrl = require('../controllers/prediction.controller');
 
 const router = express.Router(); // eslint-disable-line new-cap
 
-router.route('/').get(predictionCtrl.getPredictions)
+router.route('/').get(predictionCtrl.getPredictions);
 if (process.env.NODE_ENV !== 'production') {
-  router.route('/').post(predictionCtrl.postPredictions)
+  router.route('/').post(predictionCtrl.postPredictions);
 }
 
 router.route('/data/:measure')

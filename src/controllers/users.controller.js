@@ -2,31 +2,35 @@ const jwt = require('jsonwebtoken');
 const {
   getUsersByEmail,
   addUsers,
+  userAuthorization,
   updateUserByEmail,
   deleteUsersByEmail,
 } = require('../config/dao');
 
 const decodeJWT = (token) => {
-  const {
-    iss,
-    aud,
-    hd,
-    email,
-    picture,
-    given_name,
-    family_name,
-  } = jwt.decode(token);
-
-  if (iss.includes('google')) {
-    const loginThisUser = {
-      clientID: aud,
+  if (token) {
+    const {
+      iss,
+      aud,
+      hd,
       email,
-      firstName: given_name,
-      lastName: family_name,
       picture,
-      companyDomain: hd,
-    };
-    return loginThisUser;
+      given_name,
+      family_name,
+    } = jwt.decode(token);
+
+    if (iss.includes('google')) {
+      const loginThisUser = {
+        clientID: aud,
+        email,
+        firstName: given_name,
+        lastName: family_name,
+        picture,
+        companyDomain: hd,
+      };
+      return loginThisUser;
+    }
+    return {};
   }
   return {};
 };
@@ -81,6 +85,59 @@ const addNewUser = async (tokenInfo) => {
     return true;
   }
   return false;
+};
+
+// when we actually crack this all open
+// https://www.npmjs.com/package/google-auth-library
+
+// example of user JSON data you'd get from Admin SDK API directory w/ role management
+// {
+//   "roleId": string,
+//   "roleName": string,
+//   "roleDescription": string,
+//   "rolePrivileges": [
+//     {
+//       "serviceId": string,
+//       "privilegeName": string
+//     }
+//   ],
+//   "isSystemRole": boolean,
+//   "isSuperAdminRole": boolean,
+//   "kind": string,
+//   "etag": string
+// }
+
+const getUserRole = async (req, res) => {
+  try {
+    if (process.env.NODE_ENV !== 'production') {
+      res.status(200).json({
+        status: 'Success',
+        message: 'Dev is authorized',
+        scope: 'admin',
+      });
+    }
+    // token is called 'authorization' in headers
+    const { authorization } = req.headers;
+    // decode the token
+    const decodedToken = decodeJWT(authorization);
+    // verify this is in fact our user
+    const { userFound, user } = await verifyUser(decodedToken);
+    // check for role within token's JSON data
+    const authorizationCheck = userAuthorization(decodedToken.roleName);
+    // if this is our user and are authorized, proceed
+    if (userFound && authorizationCheck) {
+      res.status(200).json({
+        status: 'Success',
+        message: `${user} is authorized`,
+        role: decodedToken.roleName,
+      });
+    }
+  } catch {
+    res.status(403).json({
+      status: 'Failed',
+      message: 'User not authorized',
+    });
+  }
 };
 
 const loginUser = async (req, res) => {
@@ -139,4 +196,6 @@ const deleteUser = async (req, res) => {
     res.status(403).json({ status: 'Failed', message: 'User Not Found', user: [] });
   }
 };
-module.exports = { loginUser, getUsers, deleteUser };
+module.exports = {
+  loginUser, getUsers, getUserRole, deleteUser,
+};

@@ -1,8 +1,9 @@
+/* eslint-disable prefer-destructuring */
 /* eslint-disable no-underscore-dangle */
 const { MongoClient } = require('mongodb');
-const { mongodb } = require('./config');
 const logger = require('winston');
 const mongoSanitize = require('express-mongo-sanitize');
+const { mongodb } = require('./config');
 
 const connectionUrl = `mongodb://${mongodb.host}:${mongodb.port}`;
 
@@ -26,12 +27,11 @@ const findMembers = (query) => {
 };
 
 const searchMembers = (query) => {
-  const collection = db.collection('measures')
+  const collection = db.collection('measures');
   // sanitize query
-  console.log(query.memberId)
-  const saniQuery = mongoSanitize.sanitize(query.memberId)
-  return collection.find( { 'memberId' : { '$regex' : saniQuery, '$options' : 'i' } } ).toArray()
-}
+  const saniQuery = mongoSanitize.sanitize(query.memberId);
+  return collection.find({ memberId: { $regex: saniQuery, $options: 'i' } }).toArray();
+};
 
 const findMeasureResults = (query) => {
   const collection = db.collection('measure_results');
@@ -154,6 +154,8 @@ const insertPayors = async (payor) => {
       logger.error(e);
       return e;
     }
+  } else {
+    return {};
   }
 };
 const getPractitioners = () => {
@@ -163,7 +165,8 @@ const getPractitioners = () => {
 const insertPractitioner = async (practitioner) => {
   const collection = db.collection('practitioners');
   const foundPayors = await collection.find({}).toArray();
-  const filteredPayors = foundPayors.filter((prac) => prac.practitioner === practitioner.practitioner);
+  const filteredPayors = foundPayors
+    .filter((prac) => prac.practitioner === practitioner.practitioner);
   if (filteredPayors.length < 1) {
     try {
       return await collection.insertMany([practitioner]);
@@ -171,6 +174,8 @@ const insertPractitioner = async (practitioner) => {
       logger.error(e);
       return e;
     }
+  } else {
+    return {};
   }
 };
 const getHealthcareProviders = () => {
@@ -188,6 +193,8 @@ const insertHealthcareProviders = async (provider) => {
       logger.error(e);
       return e;
     }
+  } else {
+    return {};
   }
 };
 const getHealthcareCoverages = () => {
@@ -197,7 +204,8 @@ const getHealthcareCoverages = () => {
 const insertHealthcareCoverage = async (coverage) => {
   const collection = db.collection('healthcareCoverage');
   const foundHCCoverage = await collection.find({}).toArray();
-  const filteredHCCoverage = foundHCCoverage.filter((cover) => cover.coverage === coverage.coverage);
+  const filteredHCCoverage = foundHCCoverage
+    .filter((cover) => cover.coverage === coverage.coverage);
   if (filteredHCCoverage.length < 1) {
     try {
       return await collection.insertMany([coverage]);
@@ -205,6 +213,8 @@ const insertHealthcareCoverage = async (coverage) => {
       logger.error(e);
       return e;
     }
+  } else {
+    return {};
   }
 };
 
@@ -233,6 +243,19 @@ const addUsers = async (users) => {
   try {
     const collection = await db.collection('users');
     return collection.insertOne(users);
+  } catch (e) {
+    logger.error(e);
+    return e;
+  }
+};
+
+const userAuthorization = async (role) => {
+  try {
+    // for now I can only assume there will be a basic User and Admin role
+    if (role === 'admin') {
+      return true;
+    }
+    return false;
   } catch (e) {
     logger.error(e);
     return e;
@@ -285,6 +308,7 @@ module.exports = {
   getUsers,
   getUsersByEmail,
   addUsers,
+  userAuthorization,
   updateUserByEmail,
   deleteUsersByEmail,
 };

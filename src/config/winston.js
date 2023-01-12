@@ -1,4 +1,6 @@
-const { createLogger, format, transports, add } = require('winston');
+const {
+  createLogger, transports, add,
+} = require('winston');
 const { configuredFormatter } = require('winston-json-formatter');
 const pjson = require('../../package.json');
 const config = require('./config');
@@ -11,8 +13,8 @@ const logLevels = {
   warning: 4,
   notice: 5,
   info: 6,
-  debug: 7
-}
+  debug: 7,
+};
 
 const options = {
   service: 'saraswati-hedis-results-api',
@@ -28,7 +30,7 @@ const logger = createLogger({
   defaultMeta: { service: 'HERA' },
   transports: [
     new transports.Console({}),
-  ]
+  ],
 });
 
 // Handles request logs
@@ -36,8 +38,8 @@ if (config.env === 'test') {
   add(new transports.File({ filename: './reports/logs/winston-info.log' }));
 } else {
   add(new transports.Console({
-    format: configuredFormatter(options)
-  }))
+    format: configuredFormatter(options),
+  }));
 }
 
 module.exports = logger;
