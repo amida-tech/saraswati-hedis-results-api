@@ -134,7 +134,7 @@ const getUserRole = async (req, res) => {
       });
     }
   } catch {
-    res.status(401).json({
+    res.status(403).json({
       status: 'Failed',
       message: 'User not authorized',
     });
