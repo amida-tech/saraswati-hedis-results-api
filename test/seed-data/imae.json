@@ -1,5 +1,5 @@
 [{
-        "ima-e-patient-1": {
+        "result": {
             "Participation Period": {
                 "low": "2021-11-15",
                 "high": "2022-11-15",
@@ -1117,7 +1117,7 @@
         "memberId": "ima-e-patient-1",
         "measurementType": "imae"
     }, {
-        "ima-e-patient-2": {
+        "result": {
             "Participation Period": {
                 "low": "2021-11-15",
                 "high": "2022-11-15",
@@ -2039,7 +2039,7 @@
         "memberId": "ima-e-patient-2",
         "measurementType": "imae"
     }, {
-        "ima-e-patient-3": {
+        "result": {
             "Participation Period": {
                 "low": "2021-11-15",
                 "high": "2022-11-15",
@@ -2964,7 +2964,7 @@
         "memberId": "ima-e-patient-3",
         "measurementType": "imae"
     }, {
-        "ima-e-patient-4": {
+        "result": {
             "Participation Period": {
                 "low": "2021-11-15",
                 "high": "2022-11-15",
@@ -3697,7 +3697,7 @@
         "memberId": "ima-e-patient-4",
         "measurementType": "imae"
     }, 	{
-		"ima-e-patient-5": {
+		"result": {
 			"Participation Period": {
 				"low": "2021-11-15",
 				"high": "2022-11-15",
@@ -4234,7 +4234,7 @@
 		"memberId": "ima-e-patient-5",
 		"measurementType": "imae"
 	}, 	{
-		"ima-e-patient-6": {
+		"result": {
 			"Participation Period": {
 				"low": "2021-11-15",
 				"high": "2022-11-15",
@@ -4578,7 +4578,7 @@
 		"memberId": "ima-e-patient-6",
 		"measurementType": "imae"
 	}, 	{
-		"ima-e-patient-7": {
+		"result": {
 			"Participation Period": {
 				"low": "2021-11-15",
 				"high": "2022-11-15",
@@ -5307,7 +5307,7 @@
 		"memberId": "ima-e-patient-7",
 		"measurementType": "imae"
 	}, 	{
-		"ima-e-patient-8": {
+		"result": {
 			"Participation Period": {
 				"low": "2021-11-15",
 				"high": "2022-11-15",
@@ -6036,7 +6036,7 @@
 		"memberId": "ima-e-patient-8",
 		"measurementType": "imae"
 	}, 	{
-		"ima-e-patient-9": {
+		"result": {
 			"Participation Period": {
 				"low": "2021-11-15",
 				"high": "2022-11-15",
@@ -7154,7 +7154,7 @@
 		"memberId": "ima-e-patient-9",
 		"measurementType": "imae"
 	}, 	{
-		"ima-e-patient-10": {
+		"result": {
 			"Participation Period": {
 				"low": "2021-11-15",
 				"high": "2022-11-15",

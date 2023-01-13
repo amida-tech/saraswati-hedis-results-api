@@ -47,7 +47,7 @@ const generateCsv = (patientResults, measureInfo, measure) => {
   patientResults.forEach((result) => {
     const numeratorArray = [];
     const denominatorArray = [];
-    const patientResult = result[result.memberId];
+    const patientResult = result.result;
     Object.keys(patientResult).forEach((fieldName) => {
       if (fieldName.startsWith('Numerator')) {
         setValue(numeratorArray, 'Numerator', fieldName, patientResult);

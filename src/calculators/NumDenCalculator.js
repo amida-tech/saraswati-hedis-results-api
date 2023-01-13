@@ -120,6 +120,10 @@ const calcLatestNumDen = (resultList, measureInfo, currentDate) => {
         exclusionValues: [],
       });
     }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 62aefce1634611d06e313db246a67479d0c25627
     const patientData = patient.result;
     const resultHolder = resultMap.get(measurementType);
 

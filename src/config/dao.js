@@ -227,6 +227,60 @@ const insertHealthcareCoverage = async (coverage) => {
     }
   }
 };
+
+//  GET USERS FROM DB
+const getUsers = (query) => {
+  try {
+    const collection = db.collection('users');
+    return collection.find(query).toArray();
+  } catch (e) {
+    logger.error(e);
+    return e;
+  }
+};
+
+const getUsersByEmail = (email) => {
+  try {
+    const collection = db.collection('users');
+    return collection.find({ email }).toArray();
+  } catch (e) {
+    logger.error(e);
+    return e;
+  }
+};
+
+const addUsers = async (users) => {
+  try {
+    const collection = await db.collection('users');
+    return collection.insertOne(users);
+  } catch (e) {
+    logger.error(e);
+    return e;
+  }
+};
+
+const updateUserByEmail = async (member, email) => {
+  try {
+    const collection = await db.collection('users');
+    return collection.findOneAndReplace({ email }, member, {
+      upsert: true,
+    });
+  } catch (e) {
+    logger.error(e);
+    return e;
+  }
+};
+
+const deleteUsersByEmail = async (email) => {
+  try {
+    const collection = await db.collection('users');
+    return collection.findOneAndDelete({ email });
+  } catch (e) {
+    logger.error(e);
+    return e;
+  }
+};
+
 module.exports = {
   init,
   initTest,
@@ -249,4 +303,9 @@ module.exports = {
   insertHealthcareProviders,
   getHealthcareCoverages,
   insertHealthcareCoverage,
+  getUsers,
+  getUsersByEmail,
+  addUsers,
+  updateUserByEmail,
+  deleteUsersByEmail,
 };
