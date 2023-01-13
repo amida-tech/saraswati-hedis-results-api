@@ -1,4 +1,6 @@
 const jwt = require('jsonwebtoken');
+const { OAuth2Client } = require('google-auth-library');
+
 const {
   getUsersByEmail,
   addUsers,
@@ -7,6 +9,7 @@ const {
 } = require('../config/dao');
 
 const decodeJWT = (token) => {
+  const { tokenObj, accessToken } = token;
   const {
     iss,
     aud,
@@ -15,8 +18,8 @@ const decodeJWT = (token) => {
     picture,
     given_name,
     family_name,
-  } = jwt.decode(token);
-
+    locale,
+  } = jwt.decode(tokenObj.id_token);
   if (iss.includes('google')) {
     const loginThisUser = {
       clientID: aud,
@@ -25,6 +28,8 @@ const decodeJWT = (token) => {
       lastName: family_name,
       picture,
       companyDomain: hd,
+      locale,
+      accessToken,
     };
     return loginThisUser;
   }
@@ -58,6 +63,8 @@ const addNewUser = async (tokenInfo) => {
     lastName,
     picture,
     companyDomain,
+    locale,
+    accessToken,
   } = tokenInfo;
 
   const newUser = {
@@ -69,6 +76,8 @@ const addNewUser = async (tokenInfo) => {
     userGroup: 'General',
     picture,
     companyDomain,
+    locale,
+    accessToken,
     created_on: new Date(Date.now()),
     lastUpdated: new Date(Date.now()),
     lastLogin: new Date(Date.now()),
@@ -84,9 +93,9 @@ const addNewUser = async (tokenInfo) => {
 };
 
 const loginUser = async (req, res) => {
-  const { token } = req.body;
+  const { tokenInfo } = req.body;
   //   decodeToken
-  const decodedUser = decodeJWT(token);
+  const decodedUser = decodeJWT(tokenInfo);
   //   Verfy User
   const { userFound, user } = await verifyUser(decodedUser);
   //   If User Exist, update user's "lastUpdated", "lastLogin"
@@ -96,6 +105,7 @@ const loginUser = async (req, res) => {
       res.status(200).json({
         status: 'Success',
         message: 'Successful Login. Welcome Back!',
+        accessToken: decodedUser.accessToken,
       });
     } else {
       res.status(403).json({
@@ -110,6 +120,7 @@ const loginUser = async (req, res) => {
       res.status(200).json({
         status: 'Success',
         message: 'Successful Login. Welcome!',
+        accessToken: decodedUser.accessToken,
       });
     } else {
       res.status(403).json({
