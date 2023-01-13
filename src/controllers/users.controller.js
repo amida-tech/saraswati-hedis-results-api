@@ -9,7 +9,6 @@ const {
 } = require('../config/dao');
 
 const decodeJWT = (token) => {
-  const { tokenObj, accessToken } = token;
   const {
     iss,
     aud,
@@ -18,8 +17,7 @@ const decodeJWT = (token) => {
     picture,
     given_name,
     family_name,
-    locale,
-  } = jwt.decode(tokenObj.id_token);
+  } = jwt.decode(token);
   if (iss.includes('google')) {
     const loginThisUser = {
       clientID: aud,
@@ -28,8 +26,6 @@ const decodeJWT = (token) => {
       lastName: family_name,
       picture,
       companyDomain: hd,
-      locale,
-      accessToken,
     };
     return loginThisUser;
   }
@@ -63,8 +59,6 @@ const addNewUser = async (tokenInfo) => {
     lastName,
     picture,
     companyDomain,
-    locale,
-    accessToken,
   } = tokenInfo;
 
   const newUser = {
@@ -76,8 +70,6 @@ const addNewUser = async (tokenInfo) => {
     userGroup: 'General',
     picture,
     companyDomain,
-    locale,
-    accessToken,
     created_on: new Date(Date.now()),
     lastUpdated: new Date(Date.now()),
     lastLogin: new Date(Date.now()),
