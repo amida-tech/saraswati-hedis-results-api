@@ -3,6 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const config = require('../../src/config/config');
 const dao = require('../../src/config/dao');
+const logger = require('../../src/config/winston');
 
 const data = JSON.parse(fs.readFileSync(`${path.resolve()}/test/resources/bulk-data.json`));
 const resultData = JSON.parse(fs.readFileSync(`${path.resolve()}/test/result-data/measure-results.json`));
@@ -30,6 +31,9 @@ const collection = {
 
 describe('## db.js', () => {
   let db;
+  // with the current version of Winston, transports try to fire during tests and create an error
+  // by setting the logger to silent, we can avoid info logs firing off
+  logger.silent = true;
 
   beforeAll(async () => {
     db = { collection: jest.fn(() => collection) };

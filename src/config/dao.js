@@ -1,7 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 const { MongoClient } = require('mongodb');
 const logger = require('winston');
-const DOMPurify = require('dompurify');
+const mongoSanitize = require('express-mongo-sanitize');
 const { mongodb } = require('./config');
 
 const connectionUrl = `mongodb://${mongodb.host}:${mongodb.port}`;
@@ -25,11 +25,32 @@ const findMembers = (query) => {
   return collection.find(query).toArray();
 };
 
+const paginateMembers = async (query, skip, limit) => {
+  if (query === undefined) {
+    return [];
+  }
+  const collection = db.collection('measures');
+  const pipeline = await collection.aggregate([{
+    $facet: {
+      members: [
+        {
+          $match: query,
+        },
+        { $skip: skip },
+        { $limit: limit },
+      ],
+    },
+  }]);
+
+  const results = await pipeline.toArray();
+  return results[0];
+};
+
 const searchMembers = (query) => {
   const collection = db.collection('measures');
   // sanitize query
-  const sanitizedQuery = DOMPurify.sanitize(query.memberId);
-  return collection.find({ memberId: { $regex: sanitizedQuery.memberId, $options: 'i' } }).toArray();
+  const saniQuery = mongoSanitize.sanitize(query.memberId);
+  return collection.find({ memberId: { $regex: saniQuery, $options: 'i' } }).toArray();
 };
 
 const findMeasureResults = (query) => {
@@ -221,10 +242,64 @@ const insertHealthcareCoverage = async (coverage) => {
   return false;
 };
 
+//  GET USERS FROM DB
+const getUsers = (query) => {
+  try {
+    const collection = db.collection('users');
+    return collection.find(query).toArray();
+  } catch (e) {
+    logger.error(e);
+    return e;
+  }
+};
+
+const getUsersByEmail = (email) => {
+  try {
+    const collection = db.collection('users');
+    return collection.find({ email }).toArray();
+  } catch (e) {
+    logger.error(e);
+    return e;
+  }
+};
+
+const addUsers = async (users) => {
+  try {
+    const collection = await db.collection('users');
+    return collection.insertOne(users);
+  } catch (e) {
+    logger.error(e);
+    return e;
+  }
+};
+
+const updateUserByEmail = async (member, email) => {
+  try {
+    const collection = await db.collection('users');
+    return collection.findOneAndReplace({ email }, member, {
+      upsert: true,
+    });
+  } catch (e) {
+    logger.error(e);
+    return e;
+  }
+};
+
+const deleteUsersByEmail = async (email) => {
+  try {
+    const collection = await db.collection('users');
+    return collection.findOneAndDelete({ email });
+  } catch (e) {
+    logger.error(e);
+    return e;
+  }
+};
+
 module.exports = {
   init,
   initTest,
   findMembers,
+  paginateMembers,
   searchMembers,
   findMeasureResults,
   findPredictions,
@@ -242,4 +317,9 @@ module.exports = {
   insertHealthcareProviders,
   getHealthcareCoverages,
   insertHealthcareCoverage,
+  getUsers,
+  getUsersByEmail,
+  addUsers,
+  updateUserByEmail,
+  deleteUsersByEmail,
 };

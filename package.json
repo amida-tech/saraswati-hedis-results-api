@@ -13,6 +13,9 @@
     "docker:build": "docker build -t saraswati-hedis-results-api .",
     "docker:run": "docker run -p 3000:3000 saraswati-hedis-results-api"
   },
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "jest": {
     "coverageReporters": [
       "cobertura"
@@ -27,16 +30,20 @@
     "dotenv": "^8.2.0",
     "exceljs": "^4.3.0",
     "express": "^4.17.1",
+    "express-mongo-sanitize": "^2.2.0",
     "express-validation": "^3.0.6",
     "express-winston": "^4.0.5",
+    "fast-xml-parser": "^4.0.12",
     "http-status": "^1.5.0",
     "joi": "^17.3.0",
+    "jsonwebtoken": "^9.0.0",
     "kafkajs": "^1.15.0",
     "lodash": "^4.17.20",
     "moment": "^2.29.4",
     "mongodb": "^3.7.3",
     "node-cron": "^3.0.0",
     "pg": "^8.5.1",
+    "prom-client": "12",
     "regenerator-runtime": "^0.13.9",
     "sequelize": "^6.5.0",
     "supertest": "^6.1.3",
