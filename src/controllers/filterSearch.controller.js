@@ -31,7 +31,6 @@ const getDailyMeasureResults = async (req, res, next) => {
   } catch (e) {
     return next(e);
   }
-  return true;
 };
 
 module.exports = {

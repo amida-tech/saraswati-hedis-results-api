@@ -68,8 +68,10 @@ const getInfo = async (_req, res, next) => {
 
 const exportCsv = async (req, res, next) => {
   try {
+    console.log('Export CSV');
     res.set({ 'Content-Disposition': 'attachment; filename=results-export.csv' });
     const patientResults = await dao.findMembers(req.query);
+    console.log(patientResults.length);
     const infoList = await dao.findInfo(req.query.measurementType);
     const measureInfo = createInfoObject(infoList);
     const csv = generateCsv(patientResults, measureInfo, req.query.measurementType);

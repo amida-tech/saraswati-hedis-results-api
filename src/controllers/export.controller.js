@@ -3,7 +3,6 @@
 const fs = require('fs');
 const process = require('process');
 const moment = require('moment');
-const logger = require('../config/winston');
 
 const { generateTestReport } = require('../exports/test-report');
 const { generateMemberReport, injectTemplate } = require('../exports/member-report');
@@ -11,7 +10,7 @@ const { calcLatestNumDen } = require('../calculators/NumDenCalculator');
 const { qrda3Export } = require('../exports/qrda-3-report');
 const { qrda1Export } = require('../exports/qrda-1-report');
 const { createInfoObject } = require('../utilities/infoUtil');
-const dao = require('../config/dao');
+const dao = require('../config/daoFactory').getDao();
 
 const __root = process.cwd();
 

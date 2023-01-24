@@ -4,7 +4,7 @@ const path = require('path');
 const config = require('./config/config');
 const winstonInstance = require('./config/winston');
 const app = require('./config/express');
-const dao = require('./config/dao');
+const dao = require('./config/daoFactory').getDao();
 const consumer = require('./consumer/consumer');
 
 async function healthcareProvidersPayorsGenerator() {

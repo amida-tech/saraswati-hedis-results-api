@@ -1,6 +1,6 @@
 /* eslint-disable radix */
 /* eslint-disable no-underscore-dangle */
-const dao = require('../config/dao');
+const dao = require('../config/daoFactory').getDao();
 const { queryBuilder } = require('../utilities/filterDrawerUtils');
 
 const getMembers = async (req, res, next) => {

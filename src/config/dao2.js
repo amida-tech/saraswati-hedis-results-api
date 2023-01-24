@@ -1,7 +1,6 @@
 /* eslint-disable no-underscore-dangle */
-const { Client } = require('@elastic/elasticsearch')
+const { Client } = require('@elastic/elasticsearch');
 const logger = require('winston');
-const DOMPurify = require('dompurify');
 const config = require('./config');
 
 // const connectionUrl = `mongodb://${mongodb.host}:${mongodb.port}`;
@@ -26,13 +25,26 @@ const initTest = (mockDb) => {
 
 const findMembers = async (query) => {
   logger.info('Other FindMembers');
-  const result = await db.search({
-    index: 'measure-results',
-    query,
-  });
+  let result = [];
+  if (query) {
+    result = await db.search({
+      index: 'measure-results',
+      body: {
+        query: {
+          match: {
+            measurementType: {
+              query: query.measurementType,
+            },
+          },
+        },
+      },
+    });
+  } else {
+    result = await db.search({
+      index: 'measure-results',
+    });
+  }
   return result.body.hits.hits.map((hit) => hit._source);
-  // const collection = db.collection('measures');
-  // return collection.find(query).toArray();
 };
 
 const searchMembers = (query) => {
@@ -45,128 +57,84 @@ const searchMembers = (query) => {
 };
 
 const findMeasureResults = (query) => {
-  logger.info('Other');
-  /* const collection = db.collection('measure_results');
-  try {
-    return collection.find(query).toArray();
-  } catch (e) {
-    logger.error(e);
-    return e;
-  } */
+  logger.info('Find Measure Results not supported');
   return [];
 };
 
 const findPredictions = () => {
-  logger.info('Other');
+  logger.info('Find Predicitions not supported');
   return [];
-  // const collection = db.collection('model_predictions');
-  // return collection.find({}).toArray();
 };
 
 const findInfo = async (measure) => {
   logger.info('Other Info');
-  const result = await db.search({
-    index: 'hedis_info',
-  });
-  const list = result.body.hits.hits.map((hit) => hit._source);
-  logger.info(list);
-  return list;
-  /* const collection = db.collection('hedis_info');
+  let result = [];
   if (measure) {
-    return collection.find({ _id: new RegExp(`^${measure}`) }).toArray();
+    result = await db.search({
+      index: 'hedis_info',
+      body: {
+        query: {
+          match: {
+            measureId: {
+              query: measure,
+            },
+          },
+        },
+      },
+    });
+  } else {
+    result = await db.search({
+      index: 'hedis_info',
+    });
   }
-  return collection.find({}).toArray(); */
+
+  const list = result.body.hits.hits.map((hit) => hit._source);
+  return list;
 };
 
 const insertMember = async (member) => {
   logger.info('Other insert member');
-  return false;
-  /* const collection = db.collection('measures');
-  try {
-    const countOfRecords = await collection.countDocuments({ memberId: member.memberId });
-    const recordId = `${member.memberId}-${member.measurementType}-${countOfRecords}`;
-    logger.info(`Upserting new record with Id: ${recordId}`);
-    return collection.replaceOne({ _id: recordId }, member, {
-      upsert: true,
-    });
-  } catch (e) {
-    logger.error(e);
-    return e;
-  } */
+  await db.index({
+    index: 'measures',
+    type: '_doc',
+    body: member,
+  });
+  return true;
 };
 
-const insertMembers = (measures) => measures.map((measure) => insertMember(measure));
+const insertMembers = async (measures) => {
+  const body = [];
+  measures.forEach((element) => {
+    body.push({ index: { _index: 'measures' } });
+    body.push(element);
+  });
+  logger.info('Other insert info');
+  await db.bulk({ body });
+  return true;
+};
 
 // create collection for results
 const insertMeasureResults = (results) => {
-  logger.info('Other insert measure');
-  /* const collection = db.collection('measure_results');
-  for (let i = 0; i < results.length; i += 1) {
-    const resultObject = results[i];
-    delete resultObject._id;
-
-    const measurementType = resultObject.measure;
-    let date;
-    if (Object.prototype.toString.call(resultObject.date) === '[object Date]') {
-      // eslint-disable-next-line prefer-destructuring
-      date = resultObject.date.toISOString().split('T')[0];
-    } else {
-      // eslint-disable-next-line prefer-destructuring
-      date = resultObject.date.split('T')[0];
-      resultObject.date = new Date(date);
-    }
-
-    resultObject._id = `${measurementType}-${date}`;
-    if (resultObject.subScores) {
-      for (let j = 0; j < resultObject.subScores.length; j += 1) {
-        resultObject.subScores[j].date = resultObject.date;
-      }
-    }
-
-    try {
-      collection.findOneAndReplace(
-        { _id: resultObject._id },
-        resultObject,
-        { upsert: true },
-      );
-    } catch (e) {
-      logger.error(e);
-      return false;
-    }
-  } */
+  logger.info('This function is not supported');
   return true;
 };
 
 // create collection for predictions
 const insertPredictions = (predictions) => {
-  logger.info('Other insert predictions');
-  /* const collection = db.collection('model_predictions');
-  const predictionInsert = predictions;
-  try {
-    predictionInsert._id = predictionInsert.measure;
-    return collection.findOneAndReplace({ measure: predictionInsert.measure }, predictionInsert, {
-      upsert: true,
-    });
-  } catch (e) {
-    logger.error(e);
-    return e;
-  } */
+  logger.info('This function is not yet supported');
 
   return true;
 };
 
 // create collection for hedis info
-const insertInfo = (info) => {
+const insertInfo = async (info) => {
+  const body = [];
+  info.forEach((element) => {
+    body.push({ index: { _index: 'hedis_info' } });
+    body.push(element);
+  });
   logger.info('Other insert info');
-  /* const collection = db.collection('hedis_info');
-  try {
-    return collection.insertMany(info, {
-      upsert: true,
-    });
-  } catch (e) {
-    logger.error(e);
-    return e;
-  } */
+  await db.bulk({ body });
   return true;
 };
 
