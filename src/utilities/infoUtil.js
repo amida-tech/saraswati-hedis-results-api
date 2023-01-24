@@ -1,12 +1,11 @@
-/* eslint-disable no-underscore-dangle */
 const measureInfo = require('../../initialize/hedis-info.json');
 
 const measureLinks = [];
 
 measureInfo.forEach((measure) => {
-  if (!measure._id.split('').includes('-')) {
+  if (!measure.measureId.split('').includes('-')) {
     measureLinks.push(
-      { measure: measure._id, link: measure[measure._id].link },
+      { measure: measure.measureId, link: measure.info.link },
     );
   }
 });
@@ -15,13 +14,13 @@ const createInfoObject = (infoList) => {
   const fullInfo = {};
   for (let i = 0; i < infoList.length; i += 1) {
     const info = infoList[i];
-    fullInfo[info._id] = info[info._id];
+    fullInfo[info.measureId] = info.info;
 
     // eslint-disable-next-line max-len
-    const foundLinkObj = measureLinks.filter((measureLink) => info._id.includes(measureLink.measure));
+    const foundLinkObj = measureLinks.filter((measureLink) => info.measureId.includes(measureLink.measure));
     if (foundLinkObj.length !== 0) {
       const { link } = foundLinkObj[0];
-      fullInfo[info._id] = { ...fullInfo[info._id], link };
+      fullInfo[info.measureId] = { ...fullInfo[info.measureId], link };
     }
   }
   return fullInfo;
