@@ -8,7 +8,6 @@ const config = require('./config');
 let db;
 
 const init = async () => {
-  logger.info('Other Init');
   db = new Client({
     node: 'https://search-saraswati-h6d4vxmnqbp2n3rk23g6l4hvkq.us-east-2.es.amazonaws.com',
     auth: {
@@ -19,16 +18,17 @@ const init = async () => {
 };
 
 const initTest = (mockDb) => {
-  logger.info('Other');
   db = mockDb;
 };
 
+const extractResults = (results) => results.body.hits.hits.map((hit) => hit._source);
+
 const findMembers = async (query) => {
-  logger.info('Other FindMembers');
   let result = [];
-  if (query) {
+  if (query && Object.keys(query).length !== 0) {
     result = await db.search({
-      index: 'measure-results',
+      index: 'measures',
+      size: 10000,
       body: {
         query: {
           match: {
@@ -41,14 +41,16 @@ const findMembers = async (query) => {
     });
   } else {
     result = await db.search({
-      index: 'measure-results',
+      index: 'measures',
+      size: 10000,
     });
   }
-  return result.body.hits.hits.map((hit) => hit._source);
+  return extractResults(result);
 };
 
 const searchMembers = (query) => {
   logger.info('Other');
+  logger.info(query);
   /* const collection = db.collection('measures');
   // sanitize query
   const sanitizedQuery = DOMPurify.sanitize(query.memberId);
@@ -57,22 +59,22 @@ const searchMembers = (query) => {
 };
 
 const findMeasureResults = (query) => {
-  logger.info('Find Measure Results not supported');
+  logger.info('findMeasureResults not supported');
   return [];
 };
 
 const findPredictions = () => {
-  logger.info('Find Predicitions not supported');
+  logger.info('findPredictions not supported');
   return [];
 };
 
 const findInfo = async (measure) => {
-  logger.info('Other Info');
   let result = [];
   if (measure) {
     result = await db.search({
       index: 'hedis_info',
       body: {
+        size: 100,
         query: {
           match: {
             measureId: {
@@ -80,20 +82,28 @@ const findInfo = async (measure) => {
             },
           },
         },
+        sort: [
+          {
+            measureId: {
+              order: 'desc',
+            },
+          },
+        ],
       },
     });
   } else {
     result = await db.search({
       index: 'hedis_info',
+      body: {
+        size: 100,
+      },
     });
   }
 
-  const list = result.body.hits.hits.map((hit) => hit._source);
-  return list;
+  return extractResults(result);
 };
 
 const insertMember = async (member) => {
-  logger.info('Other insert member');
   await db.index({
     index: 'measures',
     type: '_doc',
@@ -108,20 +118,19 @@ const insertMembers = async (measures) => {
     body.push({ index: { _index: 'measures' } });
     body.push(element);
   });
-  logger.info('Other insert info');
   await db.bulk({ body });
   return true;
 };
 
 // create collection for results
 const insertMeasureResults = (results) => {
-  logger.info('This function is not supported');
+  logger.info('insertMeasureResults is not supported');
   return true;
 };
 
 // create collection for predictions
 const insertPredictions = (predictions) => {
-  logger.info('This function is not yet supported');
+  logger.info('insertPredictions is not yet supported');
 
   return true;
 };
@@ -133,103 +142,133 @@ const insertInfo = async (info) => {
     body.push({ index: { _index: 'hedis_info' } });
     body.push(element);
   });
-  logger.info('Other insert info');
   await db.bulk({ body });
   return true;
 };
 
-const getPayors = () => {
-  logger.info('Other get payers');
-  return [];
-  // const collection = db.collection('payors');
-  // return collection.find({}).toArray();
+const getPayors = async () => {
+  const result = await db.search({
+    index: 'payors',
+    size: 100,
+  });
+  return extractResults(result);
+};
+
+const genericSearch = async (index, query) => {
+  const result = await db.search({
+    index,
+    body: query,
+  });
+  return extractResults(result);
 };
 
 const insertPayors = async (payor) => {
-  logger.info('Other insert payers');
-  /* const collection = db.collection('payors');
-  const foundPayors = await collection.find({}).toArray();
-  const filteredPayors = foundPayors.filter((payer) => payer.payor === payor.payor);
-  if (filteredPayors.length < 1) {
-    try {
-      return await collection.insertMany([payor]);
-    } catch (e) {
-      logger.error(e);
-      return e;
-    }
-  } */
-  return false;
+  const query = {
+    size: 10000,
+    query: {
+      match: {
+        value: {
+          query: payor.value,
+        },
+      },
+    },
+  };
+  const currentValue = await genericSearch('payors', query);
+  if (currentValue.length === 0) {
+    await db.index({
+      index: 'payors',
+      type: '_doc',
+      body: payor,
+    });
+  }
 };
 
-const getPractitioners = () => {
-  logger.info('Other get practitioners');
-  return [];
-  // const collection = db.collection('practitioners');
-  // return collection.find({}).toArray();
+const getPractitioners = async () => {
+  const result = await db.search({
+    index: 'practitioners',
+    size: 100,
+  });
+  return extractResults(result);
 };
 
 const insertPractitioner = async (practitioner) => {
-  logger.info('Other insert practitioners');
-  /* const collection = db.collection('practitioners');
-  const foundPayors = await collection.find({}).toArray();
-  const filteredPayors = foundPayors
-    .filter((prac) => prac.practitioner === practitioner.practitioner);
-  if (filteredPayors.length < 1) {
-    try {
-      return await collection.insertMany([practitioner]);
-    } catch (e) {
-      logger.error(e);
-      return e;
-    }
-  } */
-  return false;
+  const query = {
+    size: 10000,
+    query: {
+      match: {
+        value: {
+          query: practitioner.value,
+        },
+      },
+    },
+  };
+  const currentValue = await genericSearch('practitioners', query);
+  if (currentValue.length === 0) {
+    await db.index({
+      index: 'practitioners',
+      type: '_doc',
+      body: practitioner,
+    });
+  }
 };
 
-const getHealthcareProviders = () => {
-  logger.info('Other get HCP');
-  return [];
-  // const collection = db.collection('healthcareProviders');
-  // return collection.find({}).toArray();
+const getHealthcareProviders = async () => {
+  const result = await db.search({
+    index: 'healthcare-providers',
+    size: 100,
+  });
+  return extractResults(result);
 };
 
 const insertHealthcareProviders = async (provider) => {
-  logger.info('Other insert HCP');
-  /* const collection = db.collection('healthcareProviders');
-  const foundHCProvider = await collection.find({}).toArray();
-  const filteredHCProvider = foundHCProvider.filter((prov) => prov.provider === provider.provider);
-  if (filteredHCProvider.length < 1) {
-    try {
-      return await collection.insertMany([provider]);
-    } catch (e) {
-      logger.error(e);
-      return e;
-    }
-  } */
-  return false;
+  const query = {
+    size: 10000,
+    query: {
+      match: {
+        value: {
+          query: provider.value,
+        },
+      },
+    },
+  };
+  const currentValue = await genericSearch('healthcare-providers', query);
+  if (currentValue.length === 0) {
+    await db.index({
+      index: 'healthcare-providers',
+      type: '_doc',
+      body: provider,
+    });
+  }
 };
 
-const getHealthcareCoverages = () => {
-  logger.info('Other get cov');
-  return [];
-  // const collection = db.collection('healthcareCoverage');
-  // return collection.find({}).toArray();
+const getHealthcareCoverages = async () => {
+  logger.info('Insert healthcare coverage');
+  const result = await db.search({
+    index: 'healthcare-coverage',
+    size: 100,
+  });
+  return extractResults(result);
 };
 
 const insertHealthcareCoverage = async (coverage) => {
-  logger.info('Other insert cov');
-  /* const collection = db.collection('healthcareCoverage');
-  const foundHCCoverage = await collection.find({}).toArray();
-  const filteredHCCoverage = foundHCCoverage
-    .filter((cover) => cover.coverage === coverage.coverage);
-  if (filteredHCCoverage.length < 1) {
-    try {
-      return await collection.insertMany([coverage]);
-    } catch (e) {
-      logger.error(e);
-      return e;
-    }
-  } */
-  return false;
+  const query = {
+    size: 10000,
+    query: {
+      match: {
+        value: {
+          query: coverage.value,
+        },
+      },
+    },
+  };
+  const currentValue = await genericSearch('healthcare-coverage', query);
+  if (currentValue.length === 0) {
+    await db.index({
+      index: 'healthcare-coverage',
+      type: '_doc',
+      body: coverage,
+    });
+  }
 };
 
 module.exports = {
