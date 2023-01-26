@@ -1,6 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 const { Client } = require('@elastic/elasticsearch');
 const logger = require('winston');
+const mongoSanitize = require('express-mongo-sanitize');
 const config = require('./config');
 
 // const connectionUrl = `mongodb://${mongodb.host}:${mongodb.port}`;
@@ -23,22 +24,64 @@ const initTest = (mockDb) => {
 
 const extractResults = (results) => results.body.hits.hits.map((hit) => hit._source);
 
+const convertQuery = (mongoQuery) => {
+  const elasticQuery = {
+    query: {
+      bool: {
+        must: [],
+      },
+    },
+  };
+
+  const orStatements = { bool: { should: [] } };
+
+  mongoQuery.$and.forEach((expr) => {
+    expr.$or.forEach((expr2) => {
+      const oldField = Object.keys(expr2)[0];
+      let newField = oldField;
+      while (newField.includes('.0') || newField.includes('.1')) {
+        newField = newField.replace('.0', '').replace('.1', '');
+      }
+      const matcher = {
+        match_phrase: {
+          [newField]: {
+            query: expr2[oldField],
+          },
+        },
+      };
+      orStatements.bool.should.push(matcher);
+    });
+  });
+
+  elasticQuery.query.bool.must.push(orStatements);
+  return elasticQuery;
+};
+
+// Search members by anything else
 const findMembers = async (query) => {
   let result = [];
   if (query && Object.keys(query).length !== 0) {
-    result = await db.search({
-      index: 'measures',
-      size: 10000,
-      body: {
-        query: {
-          match: {
-            measurementType: {
-              query: query.measurementType,
+    if (query.$and) {
+      result = await db.search({
+        index: 'measures',
+        size: 10000,
+        body: convertQuery(query),
+      });
+    } else {
+      result = await db.search({
+        index: 'measures',
+        size: 10000,
+        body: {
+          query: {
+            match: {
+              measurementType: {
+                query: query.measurementType,
+              },
             },
           },
         },
-      },
-    });
+      });
+    }
   } else {
     result = await db.search({
       index: 'measures',
@@ -48,13 +91,27 @@ const findMembers = async (query) => {
   return extractResults(result);
 };
 
-const searchMembers = (query) => {
-  logger.info('Other');
-  logger.info(query);
-  /* const collection = db.collection('measures');
-  // sanitize query
-  const sanitizedQuery = DOMPurify.sanitize(query.memberId);
-  return collection.find({ memberId: { $regex: sanitizedQuery.memberId, $options: 'i' } }).toArray(); */
+// Search members by ID
+const searchMembers = async (query) => {
+  const saniQuery = mongoSanitize.sanitize(query.memberId);
+  const result = await db.search({
+    index: 'measures',
+    size: 10000,
+    body: {
+      query: {
+        match_phrase: {
+          memberId: {
+            query: saniQuery,
+          },
+        },
+      },
+    },
+  });
+  return extractResults(result);
+};
+
+const paginateMembers = async (query, skip, limit) => {
+  logger.info('paginateMembers is not yet supported');
   return [];
 };
 
@@ -76,7 +133,7 @@ const findInfo = async (measure) => {
       body: {
         size: 100,
         query: {
-          match: {
+          match_phrase: {
             measureId: {
               query: measure,
             },
@@ -166,7 +223,7 @@ const insertPayors = async (payor) => {
   const query = {
     size: 10000,
     query: {
-      match: {
+      match_phrase: {
         value: {
           query: payor.value,
         },
@@ -195,7 +252,7 @@ const insertPractitioner = async (practitioner) => {
   const query = {
     size: 10000,
     query: {
-      match: {
+      match_phrase: {
         value: {
           query: practitioner.value,
         },
@@ -224,7 +281,7 @@ const insertHealthcareProviders = async (provider) => {
   const query = {
     size: 10000,
     query: {
-      match: {
+      match_phrase: {
         value: {
           query: provider.value,
         },
@@ -254,7 +311,7 @@ const insertHealthcareCoverage = async (coverage) => {
   const query = {
     size: 10000,
     query: {
-      match: {
+      match_phrase: {
         value: {
           query: coverage.value,
         },
