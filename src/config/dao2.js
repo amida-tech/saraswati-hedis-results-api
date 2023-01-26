@@ -4,13 +4,13 @@ const logger = require('winston');
 const mongoSanitize = require('express-mongo-sanitize');
 const config = require('./config');
 
-// const connectionUrl = `mongodb://${mongodb.host}:${mongodb.port}`;
+const connectionUrl = config.mongodb.host;
 
 let db;
 
 const init = async () => {
   db = new Client({
-    node: 'https://search-saraswati-h6d4vxmnqbp2n3rk23g6l4hvkq.us-east-2.es.amazonaws.com',
+    node: connectionUrl,
     auth: {
       username: config.dbUsername,
       password: config.dbPassword,
