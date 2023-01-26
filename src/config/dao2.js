@@ -35,59 +35,57 @@ const convertQuery = (mongoQuery) => {
 
   const orStatements = { bool: { should: [] } };
 
-  mongoQuery.$and.forEach((expr) => {
-    expr.$or.forEach((expr2) => {
-      const oldField = Object.keys(expr2)[0];
-      let newField = oldField;
-      while (newField.includes('.0') || newField.includes('.1')) {
-        newField = newField.replace('.0', '').replace('.1', '');
-      }
-      const matcher = {
-        match_phrase: {
-          [newField]: {
-            query: expr2[oldField],
-          },
+  if (mongoQuery.measurementType) {
+    elasticQuery.query.bool.must.push({
+      match_phrase: {
+        measurementType: {
+          query: mongoQuery.measurementType,
         },
-      };
-      orStatements.bool.should.push(matcher);
+      },
     });
-  });
+  }
+
+  if (mongoQuery.$and) {
+    mongoQuery.$and.forEach((expr) => {
+      expr.$or.forEach((expr2) => {
+        const oldField = Object.keys(expr2)[0];
+        let newField = oldField;
+        while (newField.includes('.0') || newField.includes('.1')) {
+          newField = newField.replace('.0', '').replace('.1', '');
+        }
+        const matcher = {
+          match_phrase: {
+            [newField]: {
+              query: expr2[oldField],
+            },
+          },
+        };
+        orStatements.bool.should.push(matcher);
+      });
+    });
+  }
 
   elasticQuery.query.bool.must.push(orStatements);
   return elasticQuery;
 };
 
 // Search members by anything else
-const findMembers = async (query) => {
+const findMembers = async (query, from, size) => {
   let result = [];
+  const queryObj = {
+    index: 'measures',
+    body: {},
+  };
   if (query && Object.keys(query).length !== 0) {
-    if (query.$and) {
-      result = await db.search({
-        index: 'measures',
-        size: 10000,
-        body: convertQuery(query),
-      });
-    } else {
-      result = await db.search({
-        index: 'measures',
-        size: 10000,
-        body: {
-          query: {
-            match: {
-              measurementType: {
-                query: query.measurementType,
-              },
-            },
-          },
-        },
-      });
-    }
-  } else {
-    result = await db.search({
-      index: 'measures',
-      size: 10000,
-    });
+    queryObj.body = convertQuery(query);
   }
+  if (from && size) {
+    queryObj.body.from = from;
+    queryObj.body.size = size;
+  } else {
+    queryObj.body.size = 10000;
+  }
+  result = await db.search(queryObj);
   return extractResults(result);
 };
 
@@ -110,9 +108,9 @@ const searchMembers = async (query) => {
   return extractResults(result);
 };
 
-const paginateMembers = async (query, skip, limit) => {
-  logger.info('paginateMembers is not yet supported');
-  return [];
+const paginateMembers = async (query, from, size) => {
+  const results = await findMembers(query, from, size);
+  return { members: results };
 };
 
 const findMeasureResults = (query) => {
@@ -341,6 +339,7 @@ module.exports = {
   insertMeasureResults,
   insertPredictions,
   insertInfo,
+  paginateMembers,
   getPayors,
   insertPayors,
   getPractitioners,
