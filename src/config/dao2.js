@@ -173,7 +173,17 @@ const insertMembers = async (measures) => {
     body.push({ index: { _index: 'measures' } });
     body.push(element);
   });
-  await db.bulk({ body });
+  if (body.length > 999) {
+    let index = 0;
+    while (index <= body.length) {
+      const arraySlice = body.slice(index, index + 1000);
+      // eslint-disable-next-line no-await-in-loop
+      await db.bulk({ body: arraySlice });
+      index += 1000;
+    }
+  } else {
+    await db.bulk({ body });
+  }
   return true;
 };
 
