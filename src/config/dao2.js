@@ -38,7 +38,7 @@ const convertQuery = (mongoQuery) => {
   if (mongoQuery.measurementType) {
     elasticQuery.query.bool.must.push({
       term: {
-        measurementType: {
+        'measurementType.keyword': {
           value: mongoQuery.measurementType,
         },
       },
@@ -98,7 +98,7 @@ const searchMembers = async (query) => {
     body: {
       query: {
         term: {
-          memberId: {
+          'memberId.keyword': {
             value: saniQuery,
           },
         },
@@ -132,7 +132,7 @@ const findInfo = async (measure) => {
         size: 100,
         query: {
           term: {
-            measureId: {
+            'measureId.keyword': {
               value: measure,
             },
           },
@@ -232,7 +232,7 @@ const insertPayors = async (payor) => {
     size: 10000,
     query: {
       term: {
-        value: {
+        'value.keyword': {
           value: payor.value,
         },
       },
@@ -261,7 +261,7 @@ const insertPractitioner = async (practitioner) => {
     size: 10000,
     query: {
       term: {
-        value: {
+        'value.keyword': {
           value: practitioner.value,
         },
       },
@@ -290,7 +290,7 @@ const insertHealthcareProviders = async (provider) => {
     size: 10000,
     query: {
       term: {
-        value: {
+        'value.keyword': {
           value: provider.value,
         },
       },
@@ -307,7 +307,6 @@ const insertHealthcareProviders = async (provider) => {
 };
 
 const getHealthcareCoverages = async () => {
-  logger.info('Insert healthcare coverage');
   const result = await db.search({
     index: 'healthcare-coverage',
     size: 100,
@@ -320,7 +319,7 @@ const insertHealthcareCoverage = async (coverage) => {
     size: 10000,
     query: {
       term: {
-        value: {
+        'value.keyword': {
           value: coverage.value,
         },
       },
