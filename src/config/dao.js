@@ -175,6 +175,7 @@ const insertPayors = async (payor) => {
       return e;
     }
   }
+  return false;
 };
 const getPractitioners = () => {
   const collection = db.collection('practitioners');
@@ -192,6 +193,7 @@ const insertPractitioner = async (practitioner) => {
       return e;
     }
   }
+  return false;
 };
 const getHealthcareProviders = () => {
   const collection = db.collection('healthcareProviders');
@@ -209,6 +211,7 @@ const insertHealthcareProviders = async (provider) => {
       return e;
     }
   }
+  return false;
 };
 const getHealthcareCoverages = () => {
   const collection = db.collection('healthcareCoverage');
@@ -226,6 +229,7 @@ const insertHealthcareCoverage = async (coverage) => {
       return e;
     }
   }
+  return false;
 };
 
 //  GET USERS FROM DB

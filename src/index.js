@@ -3,11 +3,9 @@ const fs = require('fs');
 const path = require('path');
 const config = require('./config/config');
 const winstonInstance = require('./config/winston');
-const app = require('./config/express.js');
+const app = require('./config/express');
 const dao = require('./config/dao');
-const { calcLatestNumDen } = require('./calculators/NumDenCalculator');
 const consumer = require('./consumer/consumer');
-const { createInfoObject } = require('./utilities/infoUtil');
 
 async function healthcareProvidersPayorsGenerator() {
   const patientResults = await dao.findMembers();
