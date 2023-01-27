@@ -37,9 +37,9 @@ const convertQuery = (mongoQuery) => {
 
   if (mongoQuery.measurementType) {
     elasticQuery.query.bool.must.push({
-      match_phrase: {
+      term: {
         measurementType: {
-          query: mongoQuery.measurementType,
+          value: mongoQuery.measurementType,
         },
       },
     });
@@ -54,9 +54,9 @@ const convertQuery = (mongoQuery) => {
           newField = newField.replace('.0', '').replace('.1', '');
         }
         const matcher = {
-          match_phrase: {
+          term: {
             [newField]: {
-              query: expr2[oldField],
+              value: expr2[oldField],
             },
           },
         };
@@ -97,9 +97,9 @@ const searchMembers = async (query) => {
     size: 10000,
     body: {
       query: {
-        match_phrase: {
+        term: {
           memberId: {
-            query: saniQuery,
+            value: saniQuery,
           },
         },
       },
@@ -131,9 +131,9 @@ const findInfo = async (measure) => {
       body: {
         size: 100,
         query: {
-          match_phrase: {
+          term: {
             measureId: {
-              query: measure,
+              value: measure,
             },
           },
         },
@@ -231,9 +231,9 @@ const insertPayors = async (payor) => {
   const query = {
     size: 10000,
     query: {
-      match_phrase: {
+      term: {
         value: {
-          query: payor.value,
+          value: payor.value,
         },
       },
     },
@@ -260,9 +260,9 @@ const insertPractitioner = async (practitioner) => {
   const query = {
     size: 10000,
     query: {
-      match_phrase: {
+      term: {
         value: {
-          query: practitioner.value,
+          value: practitioner.value,
         },
       },
     },
@@ -289,9 +289,9 @@ const insertHealthcareProviders = async (provider) => {
   const query = {
     size: 10000,
     query: {
-      match_phrase: {
+      term: {
         value: {
-          query: provider.value,
+          value: provider.value,
         },
       },
     },
@@ -319,9 +319,9 @@ const insertHealthcareCoverage = async (coverage) => {
   const query = {
     size: 10000,
     query: {
-      match_phrase: {
+      term: {
         value: {
-          query: coverage.value,
+          value: coverage.value,
         },
       },
     },
