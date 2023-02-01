@@ -54,9 +54,9 @@ const convertQuery = (mongoQuery) => {
           newField = newField.replace('.0', '').replace('.1', '');
         }
         const matcher = {
-          term: {
+          match_phrase: {
             [newField]: {
-              value: expr2[oldField],
+              query: expr2[oldField],
             },
           },
         };
