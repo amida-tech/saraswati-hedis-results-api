@@ -1,5 +1,5 @@
 /* eslint-disable no-underscore-dangle */
-const dao = require('../config/dao');
+const dao = require('../config/daoFactory').getDao();
 
 // Access predictions made by time series
 const getPredictions = async (req, res, next) => {

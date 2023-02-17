@@ -4,7 +4,7 @@ const {
   addUsers,
   updateUserByEmail,
   deleteUsersByEmail,
-} = require('../config/dao');
+} = require('../config/daoFactory').getDao();
 
 const decodeJWT = (token) => {
   const {

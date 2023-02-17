@@ -71,7 +71,7 @@ const findPredictions = () => {
 const findInfo = (measure) => {
   const collection = db.collection('hedis_info');
   if (measure) {
-    return collection.find({ _id: new RegExp(`^${measure}`) }).toArray();
+    return collection.find({ measureId: new RegExp(`^${measure}`) }).toArray();
   }
   return collection.find({}).toArray();
 };
@@ -103,8 +103,10 @@ const insertMeasureResults = (results) => {
     const measurementType = resultObject.measure;
     let date;
     if (Object.prototype.toString.call(resultObject.date) === '[object Date]') {
+      // eslint-disable-next-line prefer-destructuring
       date = resultObject.date.toISOString().split('T')[0];
     } else {
+      // eslint-disable-next-line prefer-destructuring
       date = resultObject.date.split('T')[0];
       resultObject.date = new Date(date);
     }
@@ -177,14 +179,17 @@ const insertPayors = async (payor) => {
   }
   return false;
 };
+
 const getPractitioners = () => {
   const collection = db.collection('practitioners');
   return collection.find({}).toArray();
 };
+
 const insertPractitioner = async (practitioner) => {
   const collection = db.collection('practitioners');
   const foundPayors = await collection.find({}).toArray();
-  const filteredPayors = foundPayors.filter((prac) => prac.practitioner === practitioner.practitioner);
+  const filteredPayors = foundPayors
+    .filter((prac) => prac.practitioner === practitioner.practitioner);
   if (filteredPayors.length < 1) {
     try {
       return await collection.insertMany([practitioner]);
@@ -195,10 +200,12 @@ const insertPractitioner = async (practitioner) => {
   }
   return false;
 };
+
 const getHealthcareProviders = () => {
   const collection = db.collection('healthcareProviders');
   return collection.find({}).toArray();
 };
+
 const insertHealthcareProviders = async (provider) => {
   const collection = db.collection('healthcareProviders');
   const foundHCProvider = await collection.find({}).toArray();
@@ -213,14 +220,17 @@ const insertHealthcareProviders = async (provider) => {
   }
   return false;
 };
+
 const getHealthcareCoverages = () => {
   const collection = db.collection('healthcareCoverage');
   return collection.find({}).toArray();
 };
+
 const insertHealthcareCoverage = async (coverage) => {
   const collection = db.collection('healthcareCoverage');
   const foundHCCoverage = await collection.find({}).toArray();
-  const filteredHCCoverage = foundHCCoverage.filter((cover) => cover.coverage === coverage.coverage);
+  const filteredHCCoverage = foundHCCoverage
+    .filter((cover) => cover.coverage === coverage.coverage);
   if (filteredHCCoverage.length < 1) {
     try {
       return await collection.insertMany([coverage]);

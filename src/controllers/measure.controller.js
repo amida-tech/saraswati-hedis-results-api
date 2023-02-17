@@ -1,5 +1,5 @@
 /* eslint-disable no-underscore-dangle */
-const dao = require('../config/dao');
+const dao = require('../config/daoFactory').getDao();
 
 const { calculateTrend, calculateTrendLegacy } = require('../calculators/TrendCalculator');
 const { calculateDailyMeasureResults } = require('../calculators/DailyResultsCalculator');
@@ -20,7 +20,6 @@ const getMeasureResults = async (req, res, next) => {
 const getDailyMeasureResults = async (_req, res, next) => {
   try {
     const patientResults = await dao.findMembers({});
-
     if (patientResults.length === 0) {
       return res.send([]);
     }

@@ -1,11 +1,10 @@
 const { Kafka } = require('kafkajs');
 const config = require('../config/config');
-const paramValidation = require('../config/param-validation');
 const logger = require('../config/winston');
 
 const {
   insertMember, insertMembers,
-} = require('../config/dao');
+} = require('../config/daoFactory').getDao();
 
 const kafka = new Kafka({
   clientId: 'cql-execution',

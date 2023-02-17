@@ -1,6 +1,6 @@
 /* eslint-disable radix */
 /* eslint-disable no-underscore-dangle */
-const dao = require('../config/dao');
+const dao = require('../config/daoFactory').getDao();
 const { queryBuilder } = require('../utilities/filterDrawerUtils');
 
 const getMembers = async (req, res, next) => {
@@ -39,7 +39,7 @@ const paginateMembers = async (req, res, next) => {
 // Get all records with the memberId, sort and get the latest one
 const getMemberInfo = async (req, res, next) => {
   try {
-    let memberResults = await dao.findMembers(req.query);
+    let memberResults = await dao.searchMembers(req.query);
     memberResults = memberResults.sort((a, b) => new Date(b.timeStamp) - new Date(a.timeStamp));
     return res.send(memberResults[0]);
   } catch (e) {

@@ -1,4 +1,4 @@
-const dao = require('../config/dao');
+const dao = require('../config/daoFactory').getDao();
 const { queryBuilder } = require('../utilities/filterDrawerUtils');
 const { calculateDailyMeasureResults } = require('../calculators/DailyResultsCalculator');
 const { createInfoObject } = require('../utilities/infoUtil');

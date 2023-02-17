@@ -37,6 +37,11 @@ const envVarsSchema = Joi.object({
   HEDIS_INFO_RELATIVE_PATH: Joi.string()
     .default('initialize/hedis-info.json')
     .description('Location of data to autoload hedis_info collection'),
+  DB_TYPE: Joi.string()
+    .default('mongo'),
+  DB_USERNAME: Joi.string()
+    .default('saraswati'),
+  DB_PASSWORD: Joi.string(),
 }).unknown();
 
 const { error, value: envVars } = envVarsSchema.validate(process.env);
@@ -70,6 +75,9 @@ const config = {
     schedule: envVars.PROVIDER_PAYORS_SCHEDULE,
   },
   infoLocation: envVars.HEDIS_INFO_RELATIVE_PATH,
+  dbType: envVars.DB_TYPE,
+  dbUsername: envVars.DB_USERNAME,
+  dbPassword: envVars.DB_PASSWORD,
 };
 
 module.exports = config;
