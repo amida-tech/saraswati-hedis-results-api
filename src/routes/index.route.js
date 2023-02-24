@@ -10,7 +10,7 @@ const coverageRoutes = require('./healthcareCoverages.route');
 const practitionerRoutes = require('./practitioners.route');
 const userRoutes = require('./users.route');
 
-const router = express.Router(); // eslint-disable-line new-cap
+const router = express.Router();
 
 router.get('/health-check', (req, res) => res.send('OK'));
 

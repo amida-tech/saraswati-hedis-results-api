@@ -1,4 +1,3 @@
-/* eslint-disable no-underscore-dangle */
 /* eslint-disable import/prefer-default-export */
 const fs = require('fs');
 const process = require('process');
@@ -79,7 +78,8 @@ async function generateMemberReport(memberObj, fileName, folderPath) {
     const policyType = generalWorksheet.getCell('D13');
     policyType.value = coverageObj.type.coding[0].display?.value || undefined;
     const dependents = generalWorksheet.getCell('E13');
-    dependents.value = coverageObj.dependents?.value || coverageObj.beneficiary.reference.value.slice(0, 3);
+    dependents.value = coverageObj.dependents?.value
+      || coverageObj.beneficiary.reference.value.slice(0, 3);
     const relationship = generalWorksheet.getCell('F13');
     relationship.value = coverageObj.relationship.coding[0].code?.value || undefined;
     const planStart = generalWorksheet.getCell('G13');

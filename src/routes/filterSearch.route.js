@@ -1,6 +1,6 @@
 const express = require('express');
 
-const router = express(); // eslint-disable-line new-cap
+const router = express();
 const { filterMembers, getDailyMeasureResults } = require('../controllers/filterSearch.controller');
 
 if (process.env.NODE_ENV !== 'production') {

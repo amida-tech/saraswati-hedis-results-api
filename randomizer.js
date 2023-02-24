@@ -1,5 +1,4 @@
 const logger = require('./src/config/winston');
-/* eslint-disable no-underscore-dangle */
 const starCalculator = require('./src/calculators/StarRatingCalculator');
 const measureResultsDao = require('./src/config/dao');
 

@@ -1,4 +1,3 @@
-/* eslint-disable no-underscore-dangle */
 const dao = require('../config/dao');
 
 // Access predictions made by time series

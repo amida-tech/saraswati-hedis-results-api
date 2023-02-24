@@ -1,4 +1,3 @@
-/* eslint-disable no-underscore-dangle */
 const { v4: uuidv4 } = require('uuid');
 const minimist = require('minimist');
 const fs = require('fs');

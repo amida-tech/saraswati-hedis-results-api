@@ -313,16 +313,16 @@ const getAabPatientData = (claims, qualifyingEpisodes) => {
   const validClaims = claims.filter(
     (claim) => (claim.procedure != null && claim.item != null)
       && claim.item.find((item) => {
-      // eslint-disable-next-line no-restricted-syntax
-        for (const episodeDate of qualifyingEpisodes) {
+        qualifyingEpisodes.forEach((date) => {
           if (item.serviced.value) {
-            return item.serviced.value.startsWith(episodeDate);
+            return item.serviced.value.startsWith(date);
           }
-          if (item.serviced.start.value.startsWith(episodeDate)
-          || item.serviced.end.value.startsWith(episodeDate)) {
+          if (item.serviced.start.value.startsWith(date)
+          || item.serviced.end.value.startsWith(date)) {
             return true;
           }
-        }
+          return false;
+        });
         return false;
       }),
   );

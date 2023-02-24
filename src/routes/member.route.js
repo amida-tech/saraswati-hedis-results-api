@@ -3,7 +3,7 @@ const { validate } = require('express-validation');
 const paramValidation = require('../config/param-validation');
 const memberCtrl = require('../controllers/member.controller');
 
-const router = express.Router(); // eslint-disable-line new-cap
+const router = express.Router();
 
 router.route('/').get(memberCtrl.getMembers);
 

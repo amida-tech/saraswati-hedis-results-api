@@ -1,7 +1,7 @@
 const express = require('express');
 const predictionCtrl = require('../controllers/prediction.controller');
 
-const router = express.Router(); // eslint-disable-line new-cap
+const router = express.Router();
 
 router.route('/').get(predictionCtrl.getPredictions);
 if (process.env.NODE_ENV !== 'production') {

@@ -1,4 +1,3 @@
-/* eslint-disable no-underscore-dangle */
 const dao = require('../config/dao');
 
 const { calculateTrend, calculateTrendLegacy } = require('../calculators/TrendCalculator');

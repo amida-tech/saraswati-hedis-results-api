@@ -16,8 +16,8 @@ const createInfoObject = (infoList) => {
     const info = infoList[i];
     fullInfo[info.measureId] = info.info;
 
-    // eslint-disable-next-line max-len
-    const foundLinkObj = measureLinks.filter((measureLink) => info.measureId.includes(measureLink.measure));
+    const foundLinkObj = measureLinks
+      .filter((measureLink) => info.measureId.includes(measureLink.measure));
     if (foundLinkObj.length !== 0) {
       const { link } = foundLinkObj[0];
       fullInfo[info.measureId] = { ...fullInfo[info.measureId], link };
