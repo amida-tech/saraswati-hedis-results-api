@@ -1,7 +1,7 @@
 const express = require('express');
 const payorCtrl = require('../controllers/payors.controller');
 
-const router = express.Router(); // eslint-disable-line new-cap
+const router = express.Router();
 
 router.route('/').get(payorCtrl.getPayors);
 if (process.env.NODE_ENV !== 'production') {

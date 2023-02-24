@@ -1,5 +1,5 @@
 const {
-  createLogger, format, transports, add,
+  createLogger, transports, add,
 } = require('winston');
 const { configuredFormatter } = require('winston-json-formatter');
 const pjson = require('../../package.json');

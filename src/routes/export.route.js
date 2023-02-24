@@ -3,7 +3,7 @@ const { validate } = require('express-validation');
 const exportCtrl = require('../controllers/export.controller');
 const paramValidation = require('../config/param-validation');
 
-const router = express.Router(); // eslint-disable-line new-cap
+const router = express.Router();
 
 router.route('/generateTest')
   .get(exportCtrl.generateTest);

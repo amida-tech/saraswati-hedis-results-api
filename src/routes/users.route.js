@@ -1,7 +1,7 @@
 const express = require('express');
 const usersCtrl = require('../controllers/users.controller');
 
-const router = express.Router(); // eslint-disable-line new-cap
+const router = express.Router();
 
 router.route('/')
   .get(usersCtrl.getUsers);
