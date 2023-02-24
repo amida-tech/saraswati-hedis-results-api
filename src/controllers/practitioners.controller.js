@@ -1,4 +1,3 @@
-/* eslint-disable no-underscore-dangle */
 const dao = require('../config/dao');
 
 // Get Providers

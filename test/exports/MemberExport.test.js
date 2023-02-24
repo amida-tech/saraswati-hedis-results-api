@@ -1,4 +1,3 @@
-/* eslint-disable no-underscore-dangle */
 /* eslint-disable no-undef */
 const process = require('process');
 const excel = require('exceljs');

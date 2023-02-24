@@ -14,5 +14,6 @@ module.exports = {
   },
   rules: {
     camelcase: 'off',
+    'no-underscore-dangle': ['error', { allow: ['_id', '__root'] }],
   },
 };

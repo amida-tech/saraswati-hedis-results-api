@@ -1,5 +1,4 @@
 /* eslint-disable no-undef */
-/* eslint-disable no-underscore-dangle */
 const fs = require('fs');
 const process = require('process');
 const moment = require('moment');

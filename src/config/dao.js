@@ -1,4 +1,3 @@
-/* eslint-disable no-underscore-dangle */
 const { MongoClient } = require('mongodb');
 const logger = require('winston');
 const mongoSanitize = require('express-mongo-sanitize');

@@ -1,6 +1,5 @@
-/* eslint-disable no-underscore-dangle */
 const dao = require('../config/dao');
-// Get Healthcar Providers
+// Get Healthcare Providers
 const getHealthcareProviders = async (req, res, next) => {
   try {
     const healthcareProviders = await dao.getHealthcareProviders();
