@@ -3,7 +3,6 @@
 const fs = require('fs');
 const process = require('process');
 const moment = require('moment');
-const logger = require('../config/winston');
 
 const { generateTestReport } = require('../exports/test-report');
 const { generateMemberReport, injectTemplate } = require('../exports/member-report');
