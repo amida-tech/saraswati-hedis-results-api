@@ -1,6 +1,6 @@
 [
     {
-        "measureTypes": "composite",
+        "measureType": "composite",
         "info": {
             "title": "Composite Score",
             "displayLabel": "Composite",
@@ -8,7 +8,7 @@
         }
     },
     {
-        "measureTypes": "aab",
+        "measureType": "aab",
         "info": {
             "domainOfCare": "EOC",
             "title": "Avoidance of Antibiotic Treatment in Adults with Acute Bronchitis",
@@ -27,7 +27,7 @@
         }
     },
     {
-        "measureTypes" : "adde", 
+        "measureType" : "adde", 
         "info" : {
             "domainOfCare" : "ECDS", 
             "title" : "Follow-Up Care for Children Prescribed ADHD Medication", 
@@ -47,7 +47,7 @@
         }
     },
     {
-        "measureTypes" : "adde-1", 
+        "measureType" : "adde-1", 
         "info" : {
             "domainOfCare" : "ECDS", 
             "title" : "Follow-Up Care After Initiation of Treatment", 
@@ -65,7 +65,7 @@
         }
     },
     {
-        "measureTypes" : "adde-2", 
+        "measureType" : "adde-2", 
         "info" : {
             "domainOfCare" : "ECDS", 
             "title" : "Follow-Up Care During Continuation of Treatment", 
@@ -82,7 +82,7 @@
         }
     },
     {
-        "measureTypes" : "apme", 
+        "measureType" : "apme", 
         "info" : {
             "domainOfCare" : "ECDS", 
             "title" : "Metabolic Monitoring for Children and Adolescents on Antipsychotics", 
@@ -98,7 +98,7 @@
         }
     },
     {
-        "measureTypes" : "apme-1", 
+        "measureType" : "apme-1", 
         "info" : {
             "domainOfCare" : "ECDS", 
             "title" : "Blood Glucose Monitoring for Children and Adolescents on Antipsychotics", 
@@ -115,7 +115,7 @@
         }
     },
     {
-        "measureTypes" : "apme-2", 
+        "measureType" : "apme-2", 
         "info" : {
             "domainOfCare" : "ECDS", 
             "title" : "Cholesterol Monitoring for Children and Adolescents on Antipsychotics", 
@@ -131,7 +131,7 @@
         }
     },
     {
-        "measureTypes" : "apme-3", 
+        "measureType" : "apme-3", 
         "info" : {
             "domainOfCare" : "ECDS", 
             "title" : "Blood Glucose and Cholesterol Monitoring for Children and Adolescents on Antipsychotics", 
@@ -148,7 +148,7 @@
         }
     },
     {
-        "measureTypes" : "asfe", 
+        "measureType" : "asfe", 
         "info" : {
             "domainOfCare" : "ECDS", 
             "title" : "Unhealthy Alcohol Use Screening and Follow-Up", 
@@ -164,7 +164,7 @@
         }
     },
     {
-        "measureTypes" : "asfe-1", 
+        "measureType" : "asfe-1", 
         "info" : {
             "domainOfCare" : "ECDS", 
             "title" : "Unhealthy Alcohol Use Screening", 
@@ -181,7 +181,7 @@
         }
     },
     {
-        "measureTypes" : "asfe-2", 
+        "measureType" : "asfe-2", 
         "info" : {
             "domainOfCare" : "ECDS", 
             "title" : "Counseling or Other Follow-Up on Positive Screen for Unhealthy Alcohol Use", 
@@ -197,7 +197,7 @@
         }
     },
     {
-        "measureTypes": "aise",
+        "measureType": "aise",
         "info": {
             "domainOfCare": "ECDS",
             "title": "Adult Immunization Status",
@@ -213,7 +213,7 @@
         }
     },
     {
-        "measureTypes": "aise-1",
+        "measureType": "aise-1",
         "info": {
             "domainOfCare": "ECDS",
             "title": "Adult Immunization Status: Influenza",
@@ -230,7 +230,7 @@
         }
     },
     {
-        "measureTypes": "aise-2",
+        "measureType": "aise-2",
         "info": {
             "domainOfCare": "ECDS",
             "title": "Adult Immunization Status: Td/Tdap",
@@ -249,7 +249,7 @@
         }
     },
     {
-        "measureTypes": "aise-3",
+        "measureType": "aise-3",
         "info": {
             "domainOfCare": "ECDS",
             "title": "Adult Immunization Status: Zoster",
@@ -268,7 +268,7 @@
         }
     },
     {
-        "measureTypes": "aise-4",
+        "measureType": "aise-4",
         "info": {
             "domainOfCare": "ECDS",
             "title": "Adult Immunization Status: Pneumococcal",
@@ -285,7 +285,7 @@
         }
     },
     {
-        "measureTypes" : "bcse",
+        "measureType" : "bcse",
         "info" : {
             "domainOfCare" : "ECDS",
             "title" : "Breast Cancer Screening Rate",
@@ -305,7 +305,7 @@
         }
     },
     {
-        "measureTypes" : "ccs",
+        "measureType" : "ccs",
         "info" : {
             "domainOfCare" : "EOF",
             "title" : "Cervical Cancer Screening Rate",
@@ -331,7 +331,7 @@
         }
     },
     {
-        "measureTypes" : "cise",
+        "measureType" : "cise",
         "info" : {
             "domainOfCare" : "ECDS",
             "title" : "Childhood Immunization Status",
@@ -348,7 +348,7 @@
         }
     },
     {
-        "measureTypes" : "cise-1",
+        "measureType" : "cise-1",
         "info" : {
             "domainOfCare" : "ECDS",
             "title" : "Childhood Immunization Status: DTaP",
@@ -367,7 +367,7 @@
         }
     },
     {
-        "measureTypes" : "cise-2",
+        "measureType" : "cise-2",
         "info" : {
             "domainOfCare" : "ECDS",
             "title" : "Childhood Immunization Status: IPV",
@@ -384,7 +384,7 @@
         }
     },
     {
-        "measureTypes" : "cise-3",
+        "measureType" : "cise-3",
         "info" : {
             "domainOfCare" : "ECDS",
             "title" : "Childhood Immunization Status: MMR",
@@ -403,7 +403,7 @@
         }
     },
     {
-        "measureTypes" : "cise-4",
+        "measureType" : "cise-4",
         "info" : {
             "domainOfCare" : "ECDS",
             "title" : "Childhood Immunization Status: HiB",
@@ -422,7 +422,7 @@
         }
     },
     {
-        "measureTypes" : "cise-5",
+        "measureType" : "cise-5",
         "info" : {
             "domainOfCare" : "ECDS",
             "title" : "Childhood Immunization Status: Hepatitus B",
@@ -441,7 +441,7 @@
         }
     },
     {
-        "measureTypes" : "cise-6",
+        "measureType" : "cise-6",
         "info" : {
             "domainOfCare" : "ECDS",
             "title" : "Childhood Immunization Status: VZV",
@@ -460,7 +460,7 @@
         }
     },
     {
-        "measureTypes" : "cise-7",
+        "measureType" : "cise-7",
         "info" : {
             "domainOfCare" : "ECDS",
             "title" : "Childhood Immunization Status: Pneumococcal Conjugate",
@@ -477,7 +477,7 @@
         }
     },
     {
-        "measureTypes" : "cise-8",
+        "measureType" : "cise-8",
         "info" : {
             "domainOfCare" : "ECDS",
             "title" : "Childhood Immunization Status: Hepatitus A",
@@ -496,7 +496,7 @@
         }
     },
     {
-        "measureTypes" : "cise-9",
+        "measureType" : "cise-9",
         "info" : {
             "domainOfCare" : "ECDS",
             "title" : "Childhood Immunization Status: Rotavirus",
@@ -518,7 +518,7 @@
         }
     },
     {
-        "measureTypes" : "cise-10",
+        "measureType" : "cise-10",
         "info" : {
             "domainOfCare" : "ECDS",
             "title" : "Childhood Immunization Status: Influenza",
@@ -535,7 +535,7 @@
         }
     },
     {
-        "measureTypes" : "cise-11",
+        "measureType" : "cise-11",
         "info" : {
             "domainOfCare" : "ECDS",
             "title" : "Childhood Immunization Status: Combination 3",
@@ -552,7 +552,7 @@
         }
     },
     {
-        "measureTypes" : "cise-12",
+        "measureType" : "cise-12",
         "info" : {
             "domainOfCare" : "ECDS",
             "title" : "Childhood Immunization Status: Combination 7",
@@ -569,7 +569,7 @@
         }
     },
     {
-        "measureTypes" : "cise-13",
+        "measureType" : "cise-13",
         "info" : {
             "domainOfCare" : "ECDS",
             "title" : "Childhood Immunization Status: Combination 10",
@@ -586,7 +586,7 @@
         }
     },
     {
-        "measureTypes" : "cole",
+        "measureType" : "cole",
         "info" : {
             "domainOfCare" : "ECDS",
             "title" : "Colorectal Cancer Screening Rate",
@@ -609,7 +609,7 @@
         }
     },
     {
-        "measureTypes" : "cou", 
+        "measureType" : "cou", 
         "info" : {
             "domainOfCare" : "EOC", 
             "title" : "Risk of Continued Opioid Use", 
@@ -628,7 +628,7 @@
         }
     },
     {
-        "measureTypes" : "cou-1", 
+        "measureType" : "cou-1", 
         "info" : {
             "domainOfCare" : "EOC", 
             "title" : "15 or More Days of Opioid Medications in 30 Day Period", 
@@ -642,7 +642,7 @@
         }
     },
     {
-        "measureTypes" : "cou-2", 
+        "measureType" : "cou-2", 
         "info" : {
             "domainOfCare" : "EOC", 
             "title" : "31 or More Days of Opioid Medications in 62 Day Period", 
@@ -656,7 +656,7 @@
         }
     },
     {
-        "measureTypes" : "cwp", 
+        "measureType" : "cwp", 
         "info" : {
             "domainOfCare" : "EOC", 
             "title" : "Appropriate Testing for Children with Pharyngitis", 
@@ -676,7 +676,7 @@
         }
     },
     {
-        "measureTypes" : "dmse", 
+        "measureType" : "dmse", 
         "info" : {
             "domainOfCare" : "ECDS", 
             "title" : "Monitor Depression Symptoms for Adolescents and Adults", 
@@ -692,7 +692,7 @@
         }
     },
     {
-        "measureTypes" : "dmse-1", 
+        "measureType" : "dmse-1", 
         "info" : {
             "domainOfCare" : "ECDS", 
             "title" : "Assessment Period 1: January 1 - April 30", 
@@ -709,7 +709,7 @@
         }
     },
     {
-        "measureTypes" : "dmse-2", 
+        "measureType" : "dmse-2", 
         "info" : {
             "domainOfCare" : "ECDS", 
             "title" : "Assessment Period 2: May 1 - August 31", 
@@ -726,7 +726,7 @@
         }
     },
     {
-        "measureTypes" : "dmse-3", 
+        "measureType" : "dmse-3", 
         "info" : {
             "domainOfCare" : "ECDS", 
             "title" : "Assessment Period 3: September 1 - December 31", 
@@ -742,7 +742,7 @@
         }
     },
     {
-        "measureTypes": "drre",
+        "measureType": "drre",
         "info": {
             "domainOfCare": "ECDS",
             "title": "Depression Remission or Response for Adolescents and Adults",
@@ -764,7 +764,7 @@
         }
     },
     {
-        "measureTypes": "drre-1",
+        "measureType": "drre-1",
         "info": {
             "domainOfCare": "ECDS",
             "title": "Depression Follow-Up for Adolescents and Adults",
@@ -781,7 +781,7 @@
         }
     },
     {
-        "measureTypes": "drre-2",
+        "measureType": "drre-2",
         "info": {
             "domainOfCare": "ECDS",
             "title": "Depression Remission for Adolescents and Adults",
@@ -798,7 +798,7 @@
         }
     },
     {
-        "measureTypes": "drre-3",
+        "measureType": "drre-3",
         "info": {
             "domainOfCare": "ECDS",
             "title": "Depression Response for Adolescents and Adults",
@@ -815,7 +815,7 @@
         }
     },
     {
-        "measureTypes": "dsfe",
+        "measureType": "dsfe",
         "info": {
             "domainOfCare": "ECDS",
             "title": "Depression Screening and Follow-Up for Adolescents and Adults",
@@ -835,7 +835,7 @@
         }
     },
     {
-        "measureTypes": "dsfe-1",
+        "measureType": "dsfe-1",
         "info": {
             "domainOfCare": "ECDS",
             "title": "Depression Screening for Adolescents and Adults",
@@ -852,7 +852,7 @@
         }
     },
     {
-        "measureTypes": "dsfe-2",
+        "measureType": "dsfe-2",
         "info": {
             "domainOfCare": "ECDS",
             "title": "Follow-Up on Positive Depression Screen for Adolescents and Adults",
@@ -869,7 +869,7 @@
         }
     },
     {
-        "measureTypes": "fum",
+        "measureType": "fum",
         "info": {
             "domainOfCare": "EOC",
             "title": "Follow-Up After Emergency Department Visit for Mental Illness",
@@ -885,7 +885,7 @@
         }
     },
     {
-        "measureTypes": "fum-1",
+        "measureType": "fum-1",
         "info": {
             "domainOfCare": "EOC",
             "title": "Follow-Up Within 7 Days of Emergancy Department Visit",
@@ -903,7 +903,7 @@
         }
     },
     {
-        "measureTypes": "fum-2",
+        "measureType": "fum-2",
         "info": {
             "domainOfCare": "EOC",
             "title": "Follow-Up Within 30 Days of Emergancy Department Visit",
@@ -921,7 +921,7 @@
         }
     },
     {
-        "measureTypes": "imae",
+        "measureType": "imae",
         "info": {
             "domainOfCare": "ECDS",
             "title": "Immunizations for Adolescents",
@@ -937,7 +937,7 @@
         }
     },
     {
-        "measureTypes": "imae-1",
+        "measureType": "imae-1",
         "info": {
             "domainOfCare": "ECDS",
             "title": "Meningococcal Serogroups A, C, W, Y",
@@ -956,7 +956,7 @@
         }
     },
     {
-        "measureTypes": "imae-2",
+        "measureType": "imae-2",
         "info": {
             "domainOfCare": "ECDS",
             "title": "Tdap",
@@ -976,7 +976,7 @@
         }
     },
     {
-        "measureTypes": "imae-3",
+        "measureType": "imae-3",
         "info": {
             "domainOfCare": "ECDS",
             "title": "HPV",
@@ -996,7 +996,7 @@
         }
     },
     {
-        "measureTypes": "imae-4",
+        "measureType": "imae-4",
         "info": {
             "domainOfCare": "ECDS",
             "title": "Combination 1: Meningococcal, Tdap",
@@ -1014,7 +1014,7 @@
         }
     },
     {
-        "measureTypes": "imae-5",
+        "measureType": "imae-5",
         "info": {
             "domainOfCare": "ECDS",
             "title": "Combination 2: Meningococcal, Tdap, HPV",
@@ -1031,7 +1031,7 @@
         }
     },
     {
-        "measureTypes" : "pdse", 
+        "measureType" : "pdse", 
         "info" : {
             "domainOfCare" : "ECDS", 
             "title" : "Postpartum Depression Screening and Follow-up", 
@@ -1051,7 +1051,7 @@
         }
     },
     {
-        "measureTypes" : "pdse-1", 
+        "measureType" : "pdse-1", 
         "info" : {
             "domainOfCare" : "ECDS", 
             "title" : "Postpartum Depression Screening", 
@@ -1068,7 +1068,7 @@
         }
     },
     {
-        "measureTypes" : "pdse-2", 
+        "measureType" : "pdse-2", 
         "info" : {
             "domainOfCare" : "ECDS", 
             "title" : "Follow-Up on Positive Postpartum Depression Screen", 
@@ -1093,7 +1093,7 @@
         }
     },
     {
-        "measureTypes" : "pnde", 
+        "measureType" : "pnde", 
         "info" : {
             "domainOfCare" : "ECDS", 
             "title" : "Prenatal Depression Screening and Follow-up", 
@@ -1113,7 +1113,7 @@
         }
     },
     {
-        "measureTypes" : "pnde-1", 
+        "measureType" : "pnde-1", 
         "info" : {
             "domainOfCare" : "ECDS", 
             "title" : "Prenatal Depression Screening", 
@@ -1132,7 +1132,7 @@
         }
     },
     {
-        "measureTypes" : "pnde-2", 
+        "measureType" : "pnde-2", 
         "info" : {
             "domainOfCare" : "ECDS", 
             "title" : "Follow-Up on Positive Prenatal Depression Screen", 
@@ -1156,7 +1156,7 @@
         }
     },
     {
-        "measureTypes" : "prse", 
+        "measureType" : "prse", 
         "info" : {
             "domainOfCare" : "ECDS", 
             "title" : "Prenatal Immunization Status", 
@@ -1172,7 +1172,7 @@
         }
     },
     {
-        "measureTypes" : "prse-1", 
+        "measureType" : "prse-1", 
         "info" : {
             "domainOfCare" : "ECDS", 
             "title" : "Immunization Status: Influenza", 
@@ -1189,7 +1189,7 @@
         }
     },
     {
-        "measureTypes" : "prse-2", 
+        "measureType" : "prse-2", 
         "info" : {
             "domainOfCare" : "ECDS", 
             "title" : "Immunization Status: Tdap", 
@@ -1209,7 +1209,7 @@
         }
     },
     {
-        "measureTypes" : "prse-3", 
+        "measureType" : "prse-3", 
         "info" : {
             "domainOfCare" : "ECDS", 
             "title" : "Immunization Status: Influenza and Tdap", 
@@ -1226,7 +1226,7 @@
         }
     },
     {
-        "measureTypes" : "psa", 
+        "measureType" : "psa", 
         "info" : {
             "domainOfCare" : "EOC", 
             "title" : "Non-Recommended PSA-Based Screening in Older Men", 
@@ -1245,7 +1245,7 @@
         }
     },
     {
-        "measureTypes" : "uop", 
+        "measureType" : "uop", 
         "info" : {
             "domainOfCare" : "EOC", 
             "title" : "Use of Opioids from Multiple Providers", 
@@ -1266,7 +1266,7 @@
         }
     },
     {
-        "measureTypes" : "uop-1", 
+        "measureType" : "uop-1", 
         "info" : {
             "domainOfCare" : "EOC", 
             "title" : "Use of Opioids from Multiple Prescribers", 
@@ -1283,7 +1283,7 @@
         }
     },
     {
-        "measureTypes" : "uop-2", 
+        "measureType" : "uop-2", 
         "info" : {
             "domainOfCare" : "EOC", 
             "title" : "Use of Opioids from Multiple Pharmacies", 
@@ -1300,7 +1300,7 @@
         }
     },
     {
-        "measureTypes" : "uop-3", 
+        "measureType" : "uop-3", 
         "info" : {
             "domainOfCare" : "EOC", 
             "title" : "Use of Opioids from Multiple Prescribers and Pharmacies", 
@@ -1317,7 +1317,7 @@
         }
     },
     {
-        "measureTypes" : "uri", 
+        "measureType" : "uri", 
         "info" : {
             "domainOfCare" : "EOC", 
             "title" : "Appropriate Treatment for Children With Upper Respiratory Infection", 
