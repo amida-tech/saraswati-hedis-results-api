@@ -34,7 +34,7 @@ async function generateData() {
     sortedList.forEach((measure) => {
       const newMeasure = { ...measure };
       if (newMeasure.date.getTime() === latestDate.getTime()) {
-        delete newMeasure._id;
+        delete newMeasure.measureId;
         measureArray.push(newMeasure);
       }
     });

@@ -20,7 +20,7 @@ const collection = {
   find: jest.fn((query) => {
     if (query !== undefined && query.measurement === 'drre') {
       return {
-        toArray: jest.fn(() => [{ _id: '6dccff7c-db25-a27b-d718-7189b766b218-drre-recordCount' }]),
+        toArray: jest.fn(() => [{ measureId: '6dccff7c-db25-a27b-d718-7189b766b218-drre-recordCount' }]),
       };
     }
     return found;

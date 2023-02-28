@@ -71,7 +71,7 @@ const findPredictions = () => {
 const findInfo = (measure) => {
   const collection = db.collection('hedis_info');
   if (measure) {
-    return collection.find({ _id: new RegExp(`^${measure}`) }).toArray();
+    return collection.find({ measureId: new RegExp(`^${measure}`) }).toArray();
   }
   return collection.find({}).toArray();
 };
@@ -82,7 +82,7 @@ const insertMember = async (member) => {
     const countOfRecords = await collection.countDocuments({ memberId: member.memberId });
     const recordId = `${member.memberId}-${member.measurementType}-${countOfRecords}`;
     logger.info(`Upserting new record with Id: ${recordId}`);
-    return collection.replaceOne({ _id: recordId }, member, {
+    return collection.replaceOne({ measureId: recordId }, member, {
       upsert: true,
     });
   } catch (e) {
@@ -98,7 +98,7 @@ const insertMeasureResults = (results) => {
   const collection = db.collection('measure_results');
   for (let i = 0; i < results.length; i += 1) {
     const resultObject = results[i];
-    delete resultObject._id;
+    delete resultObject.measureId;
 
     const measurementType = resultObject.measure;
     let date;
@@ -109,7 +109,7 @@ const insertMeasureResults = (results) => {
       resultObject.date = new Date(date);
     }
 
-    resultObject._id = `${measurementType}-${date}`;
+    resultObject.measureId = `${measurementType}-${date}`;
     if (resultObject.subScores) {
       for (let j = 0; j < resultObject.subScores.length; j += 1) {
         resultObject.subScores[j].date = resultObject.date;
@@ -118,7 +118,7 @@ const insertMeasureResults = (results) => {
 
     try {
       collection.findOneAndReplace(
-        { _id: resultObject._id },
+        { measureId: resultObject.measureId },
         resultObject,
         { upsert: true },
       );
@@ -135,7 +135,7 @@ const insertPredictions = (predictions) => {
   const collection = db.collection('model_predictions');
   const predictionInsert = predictions;
   try {
-    predictionInsert._id = predictionInsert.measure;
+    predictionInsert.measureId = predictionInsert.measure;
     return collection.findOneAndReplace({ measure: predictionInsert.measure }, predictionInsert, {
       upsert: true,
     });

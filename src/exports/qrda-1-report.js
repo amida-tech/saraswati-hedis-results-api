@@ -173,7 +173,7 @@ const qrda1Export = (memberInfo, measureInfo) => {
           /* 2 options: Patient's Medicare HIC number -->
             <id root="2.16.840.1.113883.4.572" extension="HIC_number_goes_here" />
             or Patient's Medicare Beneficiary Identifier (MBI) -->
-      <id root="2.16.840.1.113883.4.927" extension="Medicare_Beneficiary_Identifier_goes_here"/> */
+      <id root="2.16.840.1.113883.4.927" extension="Medicare_BeneficiarymeasureIdentifier_goes_here"/> */
           id: [
             { '@_root': '2.16.840.1.113883.4.572', '@_extension': memberInfo[0].memberId },
             { '@_root': '2.16.840.1.113883.4.927', '@_extension': memberInfo[0].memberId },
