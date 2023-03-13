@@ -1,6 +1,6 @@
 [
   {
-    "_id" : "6dccff7c-db25-a27b-d718-7189b766b218-drre-0",
+    "measureId" : "6dccff7c-db25-a27b-d718-7189b766b218-drre-0",
     "result" : {
         "May 1 of Year Prior to Measurement Period" : "2021-05-01T00:00:00.000+00:00",
         "April 30 of Measurement Period" : "2022-04-30T23:59:59.000+00:00",
@@ -163,7 +163,7 @@
     "measurementType" : "drre"
   },
   {
-    "_id" : "cou-patient-1-cou-0",
+    "measureId" : "cou-patient-1-cou-0",
     "result" : {
         "November 1 of Year Prior to Measurement Period" : "2021-11-01T00:00:00.000+00:00",
         "October 31 of Measurement Period" : "2022-10-31T23:59:59.000+00:00",
@@ -635,7 +635,7 @@
     "measurementType" : "cou"
   },
   {
-    "_id" : "cou-patient-2-cou-0",
+    "measureId" : "cou-patient-2-cou-0",
     "result" : {
         "November 1 of Year Prior to Measurement Period" : "2021-11-01T00:00:00.000+00:00",
         "October 31 of Measurement Period" : "2022-10-31T23:59:59.000+00:00",
@@ -4048,7 +4048,7 @@
     "measurementType" : "cou"
   },
   {
-    "_id" : "cou-patient-2-cou-1",
+    "measureId" : "cou-patient-2-cou-1",
     "result" : {
         "November 1 of Year Prior to Measurement Period" : "2021-11-01T00:00:00.000+00:00",
         "October 31 of Measurement Period" : "2022-10-31T23:59:59.000+00:00",
@@ -7461,7 +7461,7 @@
     "measurementType" : "cou"
   },
   {
-    "_id" : "6dccff7c-db25-a27b-d718-7189b766b218-drre-1",
+    "measureId" : "6dccff7c-db25-a27b-d718-7189b766b218-drre-1",
     "result" : {
         "May 1 of Year Prior to Measurement Period" : "2021-05-01T00:00:00.000+00:00",
         "April 30 of Measurement Period" : "2022-04-30T23:59:59.000+00:00",
@@ -7813,7 +7813,7 @@
     "measurementType" : "drre"
   },
   {
-    "_id" : "6dccff7c-db25-a27b-d718-7189b766b218-drre-2",
+    "measureId" : "6dccff7c-db25-a27b-d718-7189b766b218-drre-2",
     "result" : {
         "May 1 of Year Prior to Measurement Period" : "2021-05-01T00:00:00.000+00:00",
         "April 30 of Measurement Period" : "2022-04-30T23:59:59.000+00:00",
@@ -8165,7 +8165,7 @@
     "measurementType" : "drre"
   },
   {
-    "_id" : "6dccff7c-db25-a27b-d718-7189b766b218-drre-3",
+    "measureId" : "6dccff7c-db25-a27b-d718-7189b766b218-drre-3",
     "result" : {
         "May 1 of Year Prior to Measurement Period" : "2021-05-01T00:00:00.000+00:00",
         "April 30 of Measurement Period" : "2022-04-30T23:59:59.000+00:00",
@@ -8517,7 +8517,7 @@
     "measurementType" : "drre"
   },
   {
-    "_id" : "6dccff7c-db25-a27b-d718-7189b766b218-fum-4",
+    "measureId" : "6dccff7c-db25-a27b-d718-7189b766b218-fum-4",
     "result" : {
         "Member Claims" : [],
         "Mental Illness or Intentional Self-Harm" : [ 
@@ -15456,7 +15456,7 @@
     "measurementType" : "fum"
   },
   {
-    "_id" : "6dccff7c-db25-a27b-d718-7189b766b218-fum-5",
+    "measureId" : "6dccff7c-db25-a27b-d718-7189b766b218-fum-5",
     "result" : {
         "Member Claims" : [],
         "Mental Illness or Intentional Self-Harm" : [ 
@@ -22397,7 +22397,7 @@
     "measurementType" : "fum"
   },
   {
-    "_id" : "numer-EXAMPLE1-FHIR4-fum-0",
+    "measureId" : "numer-EXAMPLE1-FHIR4-fum-0",
     "result" : {
         "Member Claims" : [ 
             {
@@ -30138,7 +30138,7 @@
     "measurementType" : "fum"
   },
   {
-    "_id" : "drre-patient-1-drre-0",
+    "measureId" : "drre-patient-1-drre-0",
     "result" : {
         "May 1 of Year Prior to Measurement Period" : "2021-05-01T00:00:00.000+00:00",
         "April 30 of Measurement Period" : "2022-04-30T23:59:59.000+00:00",

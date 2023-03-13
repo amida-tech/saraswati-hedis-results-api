@@ -1,6 +1,6 @@
 [
     {
-        "measureId": "composite",
+        "measureType": "composite",
         "info": {
             "title": "Composite Score",
             "displayLabel": "Composite",
@@ -8,14 +8,14 @@
         }
     },
     {
-        "measureId": "aab",
+        "measureType": "aab",
         "info": {
             "domainOfCare": "EOC",
             "title": "Avoidance of Antibiotic Treatment in Adults with Acute Bronchitis",
             "displayLabel": "AAB",
             "description": ["AAB assesses the percentage of episodes for members 3 months of age and older with a diagnosis of acute bronchitis/bronchiolitis that did not result in an antibiotic dispensing event. A higher rate indicates appropriate treatment for bronchitis/bronchiolitis (i.e., the percentage of episodes that were not prescribed an antibiotic)."],
             "link": "https://www.ncqa.org/hedis/measures/avoidance-of-antibiotic-treatment-for-acute-bronchitis-bronchiolitis/",
-            "measureType": "process",
+            "phase": "process",
             "weight": 1,
             "hasSubMeasures": false,
             "inverted": true,
@@ -27,7 +27,7 @@
         }
     },
     {
-        "measureId" : "adde", 
+        "measureType" : "adde", 
         "info" : {
             "domainOfCare" : "ECDS", 
             "title" : "Follow-Up Care for Children Prescribed ADHD Medication", 
@@ -38,7 +38,7 @@
                 "Continuation and Maintenance Phase which assesses children between 6 and 12 years of age who had a prescription for ADHD medication and remained on the medication for at least 210 days, and had at least two follow-up visits with a practitioner in the 9 months after the Initiation Phase."
             ],
             "link": "https://www.ncqa.org/hedis/measures/follow-up-care-for-children-prescribed-adhd-medication/",
-            "measureType" : "process", 
+            "phase" : "process", 
             "weight" : 1, 
             "hasSubMeasures" : true,
             "inverted": false,
@@ -47,12 +47,12 @@
         }
     },
     {
-        "measureId" : "adde-1", 
+        "measureType" : "adde-1", 
         "info" : {
             "domainOfCare" : "ECDS", 
             "title" : "Follow-Up Care After Initiation of Treatment", 
             "displayLabel" : "ADD-E: Follow-Up After Initiation", 
-            "measureType" : "process",
+            "phase" : "process",
             "link": "https://www.ncqa.org/hedis/measures/follow-up-care-for-children-prescribed-adhd-medication/", 
             "weight" : 1, 
             "hasSubMeasures" : true,
@@ -65,12 +65,12 @@
         }
     },
     {
-        "measureId" : "adde-2", 
+        "measureType" : "adde-2", 
         "info" : {
             "domainOfCare" : "ECDS", 
             "title" : "Follow-Up Care During Continuation of Treatment", 
             "displayLabel" : "ADD-E: Follow-Up During Continuation", 
-            "measureType" : "process",
+            "phase" : "process",
             "link": "https://www.ncqa.org/hedis/measures/follow-up-care-for-children-prescribed-adhd-medication/", 
             "weight" : 1, 
             "hasSubMeasures" : true,
@@ -82,14 +82,14 @@
         }
     },
     {
-        "measureId" : "apme", 
+        "measureType" : "apme", 
         "info" : {
             "domainOfCare" : "ECDS", 
             "title" : "Metabolic Monitoring for Children and Adolescents on Antipsychotics", 
             "displayLabel" : "APM-E", 
             "description": ["APM-E assesses the percentage of children and adolescents with ongoing antipsychotic medication use who had metabolic testing during the year."], 
             "link": "https://www.ncqa.org/hedis/measures/metabolic-monitoring-for-children-and-adolescents-on-antipsychotics/",
-            "measureType" : "process", 
+            "phase" : "process", 
             "weight" : 1, 
             "hasSubMeasures" : true,
             "inverted": false,
@@ -98,13 +98,13 @@
         }
     },
     {
-        "measureId" : "apme-1", 
+        "measureType" : "apme-1", 
         "info" : {
             "domainOfCare" : "ECDS", 
             "title" : "Blood Glucose Monitoring for Children and Adolescents on Antipsychotics", 
             "displayLabel" : "APM-E: Blood Glucose Monitoring", 
             "link": "https://www.ncqa.org/hedis/measures/metabolic-monitoring-for-children-and-adolescents-on-antipsychotics/",
-            "measureType" : "process", 
+            "phase" : "process", 
             "weight" : 1, 
             "hasSubMeasures" : false,
             "inverted" : false,
@@ -115,13 +115,13 @@
         }
     },
     {
-        "measureId" : "apme-2", 
+        "measureType" : "apme-2", 
         "info" : {
             "domainOfCare" : "ECDS", 
             "title" : "Cholesterol Monitoring for Children and Adolescents on Antipsychotics", 
             "displayLabel" : "APM-E: Cholesterol Monitoring", 
             "link": "https://www.ncqa.org/hedis/measures/metabolic-monitoring-for-children-and-adolescents-on-antipsychotics/",
-            "measureType" : "process", 
+            "phase" : "process", 
             "weight" : 1, 
             "hasSubMeasures" : false,
             "inverted" : false,
@@ -131,13 +131,13 @@
         }
     },
     {
-        "measureId" : "apme-3", 
+        "measureType" : "apme-3", 
         "info" : {
             "domainOfCare" : "ECDS", 
             "title" : "Blood Glucose and Cholesterol Monitoring for Children and Adolescents on Antipsychotics", 
             "displayLabel" : "APM-E: Blood Glucose and Cholesterol Monitoring", 
             "link": "https://www.ncqa.org/hedis/measures/metabolic-monitoring-for-children-and-adolescents-on-antipsychotics/",
-            "measureType" : "process", 
+            "phase" : "process", 
             "weight" : 1, 
             "hasSubMeasures" : false,
             "inverted" : false,
@@ -148,14 +148,14 @@
         }
     },
     {
-        "measureId" : "asfe", 
+        "measureType" : "asfe", 
         "info" : {
             "domainOfCare" : "ECDS", 
             "title" : "Unhealthy Alcohol Use Screening and Follow-Up", 
             "displayLabel" : "ASF-E", 
             "description": ["ASF-E assesses the percentage of members 18 years of age and older who were screened for unhealthy alcohol use using a standardized tool and received appropriate follow-up care if they screened positive. Two rates are reported."], 
             "link": "https://www.ncqa.org/hedis/measures/unhealthy-alcohol-use-screening-and-follow-up/",
-            "measureType" : "process", 
+            "phase" : "process", 
             "weight" : 1, 
             "hasSubMeasures" : true,
             "inverted": false,
@@ -164,13 +164,13 @@
         }
     },
     {
-        "measureId" : "asfe-1", 
+        "measureType" : "asfe-1", 
         "info" : {
             "domainOfCare" : "ECDS", 
             "title" : "Unhealthy Alcohol Use Screening", 
             "displayLabel" : "ASF-E: Unhealthy Alcohol Use Screening", 
             "link": "https://www.ncqa.org/hedis/measures/unhealthy-alcohol-use-screening-and-follow-up/",
-            "measureType" : "process", 
+            "phase" : "process", 
             "weight" : 1, 
             "hasSubMeasures" : false,
             "inverted": false,
@@ -181,13 +181,13 @@
         }
     },
     {
-        "measureId" : "asfe-2", 
+        "measureType" : "asfe-2", 
         "info" : {
             "domainOfCare" : "ECDS", 
             "title" : "Counseling or Other Follow-Up on Positive Screen for Unhealthy Alcohol Use", 
             "displayLabel" : "ASF-E: Follow-Up", 
             "link": "https://www.ncqa.org/hedis/measures/unhealthy-alcohol-use-screening-and-follow-up/",
-            "measureType" : "process", 
+            "phase" : "process", 
             "weight" : 1, 
             "hasSubMeasures" : false,
             "inverted": false,
@@ -197,14 +197,14 @@
         }
     },
     {
-        "measureId": "aise",
+        "measureType": "aise",
         "info": {
             "domainOfCare": "ECDS",
             "title": "Adult Immunization Status",
             "displayLabel": "AIS-E",
             "description": ["AIS-E assesses the percentage of members 19 years of age and older who are up-to-date on recommended routine vaccines for influenza, tetanus and diphtheria (Td) or tetanus, diphtheria and acellular pertussis (Tdap), zoster and pneumococcal."], 
             "link": "https://www.ncqa.org/hedis/measures/adult-immunization-status/",
-            "measureType": "process",
+            "phase": "process",
             "weight": 1,
             "hasSubMeasures": true,
             "inverted": false,
@@ -213,13 +213,13 @@
         }
     },
     {
-        "measureId": "aise-1",
+        "measureType": "aise-1",
         "info": {
             "domainOfCare": "ECDS",
             "title": "Adult Immunization Status: Influenza",
             "displayLabel": "AIS-E: Influenza",
             "link": "https://www.ncqa.org/hedis/measures/adult-immunization-status/",
-            "measureType": "process",
+            "phase": "process",
             "weight": 1,
             "hasSubMeasures": false,
             "inverted": false,
@@ -230,13 +230,13 @@
         }
     },
     {
-        "measureId": "aise-2",
+        "measureType": "aise-2",
         "info": {
             "domainOfCare": "ECDS",
             "title": "Adult Immunization Status: Td/Tdap",
             "displayLabel": "AIS-E: Td/Tdap",
             "link": "https://www.ncqa.org/hedis/measures/adult-immunization-status/",
-            "measureType": "process",
+            "phase": "process",
             "weight": 1,
             "hasSubMeasures": false,
             "inverted": false,
@@ -249,13 +249,13 @@
         }
     },
     {
-        "measureId": "aise-3",
+        "measureType": "aise-3",
         "info": {
             "domainOfCare": "ECDS",
             "title": "Adult Immunization Status: Zoster",
             "displayLabel": "AIS-E: Zoster",
             "link": "https://www.ncqa.org/hedis/measures/adult-immunization-status/",
-            "measureType": "process",
+            "phase": "process",
             "weight": 1,
             "hasSubMeasures": false,
             "inverted": false,
@@ -268,13 +268,13 @@
         }
     },
     {
-        "measureId": "aise-4",
+        "measureType": "aise-4",
         "info": {
             "domainOfCare": "ECDS",
             "title": "Adult Immunization Status: Pneumococcal",
             "displayLabel": "AIS-E: Pneumococcal",
             "link": "https://www.ncqa.org/hedis/measures/adult-immunization-status/",
-            "measureType": "process",
+            "phase": "process",
             "weight": 1,
             "hasSubMeasures": false,
             "inverted": false,
@@ -285,14 +285,14 @@
         }
     },
     {
-        "measureId" : "bcse",
+        "measureType" : "bcse",
         "info" : {
             "domainOfCare" : "ECDS",
             "title" : "Breast Cancer Screening Rate",
             "displayLabel" : "BCS-E",
             "description": ["BCS-E assesses women 50–74 years of age who had at least one mammogram to screen for breast cancer in the past two years."], 
             "link": "https://www.ncqa.org/hedis/measures/breast-cancer-screening/",
-            "measureType" : "process",
+            "phase" : "process",
             "weight" : 1,
             "hasSubMeasures" : false,
             "inverted": false,
@@ -305,7 +305,7 @@
         }
     },
     {
-        "measureId" : "ccs",
+        "measureType" : "ccs",
         "info" : {
             "domainOfCare" : "EOF",
             "title" : "Cervical Cancer Screening Rate",
@@ -317,7 +317,7 @@
                 "Women 30–64 years of age who had cervical cytology/high-risk human papillomavirus (hrHPV) cotesting within the last 5 years."
             ],
             "link": "https://www.ncqa.org/hedis/measures/cervical-cancer-screening/",
-            "measureType" : "process",
+            "phase" : "process",
             "weight" : 1,
             "hasSubMeasures" : false,
             "inverted": false,
@@ -331,14 +331,14 @@
         }
     },
     {
-        "measureId" : "cise",
+        "measureType" : "cise",
         "info" : {
             "domainOfCare" : "ECDS",
             "title" : "Childhood Immunization Status",
             "displayLabel" : "CIS-E",
             "description": ["CIS-E assesses the percentage of children 2 years of age who had a four diphtheria, tetanus and acellular pertussis (DTaP); three polio (IPV); one measles, mumps and rubella (MMR); three haemophilus influenza type B (HiB); three hepatitis B (HepB), one chicken pox (VZV); four pneumococcal conjugate (PCV); one hepatitis A (HepA); two or three rotavirus (RV); and two influenza (flu) vaccines by their second birthday."], 
             "link": "https://www.ncqa.org/hedis/measures/childhood-immunization-status/",
-            "measureType" : "process",
+            "phase" : "process",
             "weight" : 3,
             "hasSubMeasures" : true,
             "inverted": false,
@@ -348,13 +348,13 @@
         }
     },
     {
-        "measureId" : "cise-1",
+        "measureType" : "cise-1",
         "info" : {
             "domainOfCare" : "ECDS",
             "title" : "Childhood Immunization Status: DTaP",
             "displayLabel" : "CIS-E: DTaP",
             "link": "https://www.ncqa.org/hedis/measures/childhood-immunization-status/",
-            "measureType" : "process",
+            "phase" : "process",
             "weight" : 3,
             "hasSubMeasures" : false,
             "inverted": false,
@@ -367,13 +367,13 @@
         }
     },
     {
-        "measureId" : "cise-2",
+        "measureType" : "cise-2",
         "info" : {
             "domainOfCare" : "ECDS",
             "title" : "Childhood Immunization Status: IPV",
             "displayLabel" : "CIS-E: IPV",
             "link": "https://www.ncqa.org/hedis/measures/childhood-immunization-status/",
-            "measureType" : "process",
+            "phase" : "process",
             "weight" : 3,
             "hasSubMeasures" : false,
             "inverted": false,
@@ -384,13 +384,13 @@
         }
     },
     {
-        "measureId" : "cise-3",
+        "measureType" : "cise-3",
         "info" : {
             "domainOfCare" : "ECDS",
             "title" : "Childhood Immunization Status: MMR",
             "displayLabel" : "CIS-E: MMR",
             "link": "https://www.ncqa.org/hedis/measures/childhood-immunization-status/",
-            "measureType" : "process",
+            "phase" : "process",
             "weight" : 3,
             "hasSubMeasures" : false,
             "inverted": false,
@@ -403,13 +403,13 @@
         }
     },
     {
-        "measureId" : "cise-4",
+        "measureType" : "cise-4",
         "info" : {
             "domainOfCare" : "ECDS",
             "title" : "Childhood Immunization Status: HiB",
             "displayLabel" : "CIS-E: HiB",
             "link": "https://www.ncqa.org/hedis/measures/childhood-immunization-status/",
-            "measureType" : "process",
+            "phase" : "process",
             "weight" : 3,
             "hasSubMeasures" : false,
             "inverted": false,
@@ -422,13 +422,13 @@
         }
     },
     {
-        "measureId" : "cise-5",
+        "measureType" : "cise-5",
         "info" : {
             "domainOfCare" : "ECDS",
             "title" : "Childhood Immunization Status: Hepatitus B",
             "displayLabel" : "CIS-E: Hepatitus B",
             "link": "https://www.ncqa.org/hedis/measures/childhood-immunization-status/",
-            "measureType" : "process",
+            "phase" : "process",
             "weight" : 3,
             "hasSubMeasures" : false,
             "inverted": false,
@@ -441,13 +441,13 @@
         }
     },
     {
-        "measureId" : "cise-6",
+        "measureType" : "cise-6",
         "info" : {
             "domainOfCare" : "ECDS",
             "title" : "Childhood Immunization Status: VZV",
             "displayLabel" : "CIS-E: VZV",
             "link": "https://www.ncqa.org/hedis/measures/childhood-immunization-status/",
-            "measureType" : "process",
+            "phase" : "process",
             "weight" : 3,
             "hasSubMeasures" : false,
             "inverted": false,
@@ -460,13 +460,13 @@
         }
     },
     {
-        "measureId" : "cise-7",
+        "measureType" : "cise-7",
         "info" : {
             "domainOfCare" : "ECDS",
             "title" : "Childhood Immunization Status: Pneumococcal Conjugate",
             "displayLabel" : "CIS-E: Pneumococcal Conjugate",
             "link": "https://www.ncqa.org/hedis/measures/childhood-immunization-status/",
-            "measureType" : "process",
+            "phase" : "process",
             "weight" : 3,
             "hasSubMeasures" : false,
             "inverted": false,
@@ -477,13 +477,13 @@
         }
     },
     {
-        "measureId" : "cise-8",
+        "measureType" : "cise-8",
         "info" : {
             "domainOfCare" : "ECDS",
             "title" : "Childhood Immunization Status: Hepatitus A",
             "displayLabel" : "CIS-E: Hepatitus A",
             "link": "https://www.ncqa.org/hedis/measures/childhood-immunization-status/",
-            "measureType" : "process",
+            "phase" : "process",
             "weight" : 3,
             "hasSubMeasures" : false,
             "inverted": false,
@@ -496,13 +496,13 @@
         }
     },
     {
-        "measureId" : "cise-9",
+        "measureType" : "cise-9",
         "info" : {
             "domainOfCare" : "ECDS",
             "title" : "Childhood Immunization Status: Rotavirus",
             "displayLabel" : "CIS-E: Rotavirus",
             "link": "https://www.ncqa.org/hedis/measures/childhood-immunization-status/",
-            "measureType" : "process",
+            "phase" : "process",
             "weight" : 3,
             "hasSubMeasures" : false,
             "inverted": false,
@@ -518,13 +518,13 @@
         }
     },
     {
-        "measureId" : "cise-10",
+        "measureType" : "cise-10",
         "info" : {
             "domainOfCare" : "ECDS",
             "title" : "Childhood Immunization Status: Influenza",
             "displayLabel" : "CIS-E: Influenza",
             "link": "https://www.ncqa.org/hedis/measures/childhood-immunization-status/",
-            "measureType" : "process",
+            "phase" : "process",
             "weight" : 3,
             "hasSubMeasures" : false,
             "inverted": false,
@@ -535,13 +535,13 @@
         }
     },
     {
-        "measureId" : "cise-11",
+        "measureType" : "cise-11",
         "info" : {
             "domainOfCare" : "ECDS",
             "title" : "Childhood Immunization Status: Combination 3",
             "displayLabel" : "CIS-E: Combination 3",
             "link": "https://www.ncqa.org/hedis/measures/childhood-immunization-status/",
-            "measureType" : "process",
+            "phase" : "process",
             "weight" : 3,
             "hasSubMeasures" : false,
             "inverted": false,
@@ -552,13 +552,13 @@
         }
     },
     {
-        "measureId" : "cise-12",
+        "measureType" : "cise-12",
         "info" : {
             "domainOfCare" : "ECDS",
             "title" : "Childhood Immunization Status: Combination 7",
             "displayLabel" : "CIS-E: Combination 7",
             "link": "https://www.ncqa.org/hedis/measures/childhood-immunization-status/",
-            "measureType" : "process",
+            "phase" : "process",
             "weight" : 3,
             "hasSubMeasures" : false,
             "inverted": false,
@@ -569,13 +569,13 @@
         }
     },
     {
-        "measureId" : "cise-13",
+        "measureType" : "cise-13",
         "info" : {
             "domainOfCare" : "ECDS",
             "title" : "Childhood Immunization Status: Combination 10",
             "displayLabel" : "CIS-E: Combination 10",
             "link": "https://www.ncqa.org/hedis/measures/childhood-immunization-status/",
-            "measureType" : "process",
+            "phase" : "process",
             "weight" : 3,
             "hasSubMeasures" : false,
             "inverted": false,
@@ -586,14 +586,14 @@
         }
     },
     {
-        "measureId" : "cole",
+        "measureType" : "cole",
         "info" : {
             "domainOfCare" : "ECDS",
             "title" : "Colorectal Cancer Screening Rate",
             "displayLabel" : "COL-E",
             "description": [ "COL assesses adults 50–75 who had appropriate screening for colorectal cancer with any of the following tests: annual fecal occult blood test, flexible sigmoidoscopy every 5 years, colonoscopy every 10 years, computed tomography colonography every 5 years, stool DNA test every 3 years."], 
             "link": "https://www.ncqa.org/hedis/measures/colorectal-cancer-screening/",
-            "measureType" : "process",
+            "phase" : "process",
             "weight" : 1,
             "hasSubMeasures" : false,
             "inverted": false,
@@ -609,7 +609,7 @@
         }
     },
     {
-        "measureId" : "cou", 
+        "measureType" : "cou", 
         "info" : {
             "domainOfCare" : "EOC", 
             "title" : "Risk of Continued Opioid Use", 
@@ -619,7 +619,7 @@
                 "The percentage of members with at least 15 days of prescription opioids in a 30-day period.", "The percentage of members with at least 31 days of prescription opioids in a 62-day period."
             ],
             "link": "https://www.ncqa.org/hedis/measures/risk-of-continued-opioid-use/",
-            "measureType" : "process", 
+            "phase" : "process", 
             "weight" : 1, 
             "hasSubMeasures" : true,
             "inverted": false,
@@ -628,13 +628,13 @@
         }
     },
     {
-        "measureId" : "cou-1", 
+        "measureType" : "cou-1", 
         "info" : {
             "domainOfCare" : "EOC", 
             "title" : "15 or More Days of Opioid Medications in 30 Day Period", 
             "displayLabel" : "COU: 15 Days Opioid Medications", 
             "link": "https://www.ncqa.org/hedis/measures/risk-of-continued-opioid-use/",
-            "measureType" : "process", 
+            "phase" : "process", 
             "weight" : 1, 
             "hasSubMeasures" : false,
             "inverted": false,
@@ -642,13 +642,13 @@
         }
     },
     {
-        "measureId" : "cou-2", 
+        "measureType" : "cou-2", 
         "info" : {
             "domainOfCare" : "EOC", 
             "title" : "31 or More Days of Opioid Medications in 62 Day Period", 
             "displayLabel" : "COU: 31 Days Opioid Medications", 
             "link": "https://www.ncqa.org/hedis/measures/risk-of-continued-opioid-use/",
-            "measureType" : "process", 
+            "phase" : "process", 
             "weight" : 1, 
             "hasSubMeasures" : false,
             "inverted": false,
@@ -656,14 +656,14 @@
         }
     },
     {
-        "measureId" : "cwp", 
+        "measureType" : "cwp", 
         "info" : {
             "domainOfCare" : "EOC", 
             "title" : "Appropriate Testing for Children with Pharyngitis", 
             "displayLabel" : "CWP", 
             "description": ["CWP assesses the percentage of episodes for members 3 years of age and older with a diagnosis of pharyngitis, dispensed an antibiotic and received a group A streptococcus test for the episode. A higher rate indicates completion of the appropriate testing required to merit antibiotic treatment for pharyngitis."], 
             "link": "https://www.ncqa.org/hedis/measures/appropriate-testing-for-pharyngitis/",
-            "measureType" : "process", 
+            "phase" : "process", 
             "weight" : 1, 
             "hasSubMeasures" : false,
             "inverted": false,
@@ -676,14 +676,14 @@
         }
     },
     {
-        "measureId" : "dmse", 
+        "measureType" : "dmse", 
         "info" : {
             "domainOfCare" : "ECDS", 
             "title" : "Monitor Depression Symptoms for Adolescents and Adults", 
             "displayLabel" : "DMS-E", 
             "description": ["DMS-E assesses the percentage of members 12 years of age and older with a diagnosis of major depression or dysthymia who had an outpatient encounter with a PHQ-9 score present in their record in the same assessment period as the encounter."], 
             "link": "https://www.ncqa.org/hedis/measures/utilization-of-the-phq-9-to-monitor-depression-symptoms-for-adolescents-and-adults/",
-            "measureType" : "process", 
+            "phase" : "process", 
             "weight" : 1, 
             "hasSubMeasures" : true,
             "inverted": false,
@@ -692,13 +692,13 @@
         }
     },
     {
-        "measureId" : "dmse-1", 
+        "measureType" : "dmse-1", 
         "info" : {
             "domainOfCare" : "ECDS", 
             "title" : "Assessment Period 1: January 1 - April 30", 
             "displayLabel" : "DMS-E: Assessment Period 1", 
             "link": "https://www.ncqa.org/hedis/measures/utilization-of-the-phq-9-to-monitor-depression-symptoms-for-adolescents-and-adults/",
-            "measureType" : "process", 
+            "phase" : "process", 
             "weight" : 1, 
             "hasSubMeasures" : false,
             "inverted": false,
@@ -709,13 +709,13 @@
         }
     },
     {
-        "measureId" : "dmse-2", 
+        "measureType" : "dmse-2", 
         "info" : {
             "domainOfCare" : "ECDS", 
             "title" : "Assessment Period 2: May 1 - August 31", 
             "displayLabel" : "DMS-E: Assessment Period 2", 
             "link": "https://www.ncqa.org/hedis/measures/utilization-of-the-phq-9-to-monitor-depression-symptoms-for-adolescents-and-adults/",
-            "measureType" : "process", 
+            "phase" : "process", 
             "weight" : 1, 
             "hasSubMeasures" : false,
             "inverted": false,
@@ -726,12 +726,12 @@
         }
     },
     {
-        "measureId" : "dmse-3", 
+        "measureType" : "dmse-3", 
         "info" : {
             "domainOfCare" : "ECDS", 
             "title" : "Assessment Period 3: September 1 - December 31", 
             "displayLabel" : "DMS-E: Assessment Period 3", 
-            "measureType" : "process", 
+            "phase" : "process", 
             "weight" : 1, 
             "hasSubMeasures" : false,
             "inverted": false,
@@ -742,7 +742,7 @@
         }
     },
     {
-        "measureId": "drre",
+        "measureType": "drre",
         "info": {
             "domainOfCare": "ECDS",
             "title": "Depression Remission or Response for Adolescents and Adults",
@@ -754,7 +754,7 @@
                 "Depression Response: The percentage of members who showed response within 4–8 months after the initial elevated PHQ-9 score."
             ],
             "link": "https://www.ncqa.org/hedis/measures/depression-remission-or-response-for-adolescents-and-adults/",
-            "measureType": "outcome",
+            "phase": "outcome",
             "weight": 1,
             "hasSubMeasures": true,
             "inverted": false,
@@ -764,13 +764,13 @@
         }
     },
     {
-        "measureId": "drre-1",
+        "measureType": "drre-1",
         "info": {
             "domainOfCare": "ECDS",
             "title": "Depression Follow-Up for Adolescents and Adults",
             "displayLabel": "DRR-E: Follow-Up",
             "link": "https://www.ncqa.org/hedis/measures/depression-remission-or-response-for-adolescents-and-adults/",
-            "measureType": "outcome",
+            "phase": "outcome",
             "weight": 1,
             "hasSubMeasures": false,
             "inverted": false,
@@ -781,13 +781,13 @@
         }
     },
     {
-        "measureId": "drre-2",
+        "measureType": "drre-2",
         "info": {
             "domainOfCare": "ECDS",
             "title": "Depression Remission for Adolescents and Adults",
             "displayLabel": "DRR-E: Remission",
             "link": "https://www.ncqa.org/hedis/measures/depression-remission-or-response-for-adolescents-and-adults/",
-            "measureType": "outcome",
+            "phase": "outcome",
             "weight": 1,
             "hasSubMeasures": false,
             "inverted": false,
@@ -798,13 +798,13 @@
         }
     },
     {
-        "measureId": "drre-3",
+        "measureType": "drre-3",
         "info": {
             "domainOfCare": "ECDS",
             "title": "Depression Response for Adolescents and Adults",
             "displayLabel": "DRR-E: Response",
             "link": "https://www.ncqa.org/hedis/measures/depression-remission-or-response-for-adolescents-and-adults/",
-            "measureType": "outcome",
+            "phase": "outcome",
             "weight": 1,
             "hasSubMeasures": false,
             "inverted": false,
@@ -815,7 +815,7 @@
         }
     },
     {
-        "measureId": "dsfe",
+        "measureType": "dsfe",
         "info": {
             "domainOfCare": "ECDS",
             "title": "Depression Screening and Follow-Up for Adolescents and Adults",
@@ -826,7 +826,7 @@
                 "Follow-Up on Positive Screen: The percentage of members who received follow-up care within 30 days of a positive depression screen finding."
             ],
             "link": "https://www.ncqa.org/hedis/measures/depression-screening-and-follow-up-for-adolescents-and-adults/",
-            "measureType": "process",
+            "phase": "process",
             "weight": 1,
             "hasSubMeasures": true,
             "inverted": false,
@@ -835,13 +835,13 @@
         }
     },
     {
-        "measureId": "dsfe-1",
+        "measureType": "dsfe-1",
         "info": {
             "domainOfCare": "ECDS",
             "title": "Depression Screening for Adolescents and Adults",
             "displayLabel": "DSF-E: Depression Screening",
             "link": "https://www.ncqa.org/hedis/measures/depression-screening-and-follow-up-for-adolescents-and-adults/",
-            "measureType": "process",
+            "phase": "process",
             "weight": 1,
             "hasSubMeasures": false,
             "inverted": false,
@@ -852,13 +852,13 @@
         }
     },
     {
-        "measureId": "dsfe-2",
+        "measureType": "dsfe-2",
         "info": {
             "domainOfCare": "ECDS",
             "title": "Follow-Up on Positive Depression Screen for Adolescents and Adults",
             "displayLabel": "DSF-E: Follow-Up on Positive Screen",
             "link": "https://www.ncqa.org/hedis/measures/depression-screening-and-follow-up-for-adolescents-and-adults/",
-            "measureType": "process",
+            "phase": "process",
             "weight": 1,
             "hasSubMeasures": false,
             "inverted": false,
@@ -869,14 +869,14 @@
         }
     },
     {
-        "measureId": "fum",
+        "measureType": "fum",
         "info": {
             "domainOfCare": "EOC",
             "title": "Follow-Up After Emergency Department Visit for Mental Illness",
             "displayLabel": "FUM",
             "description": ["FUM assesses emergency department (ED) visits for adults and children 6 years of age and older with a diagnosis of mental illness or intentional self-harm and who received a follow-up visit for mental illness within 7 and 30 days."], 
             "link": "https://www.ncqa.org/hedis/measures/follow-up-after-emergency-department-visit-for-mental-illness/",
-            "measureType": "process",
+            "phase": "process",
             "weight": 3,
             "hasSubMeasures": true,
             "inverted": false,
@@ -885,13 +885,13 @@
         }
     },
     {
-        "measureId": "fum-1",
+        "measureType": "fum-1",
         "info": {
             "domainOfCare": "EOC",
             "title": "Follow-Up Within 7 Days of Emergancy Department Visit",
             "displayLabel": "FUM: Follow-Up Within 7 Days",
             "link": "https://www.ncqa.org/hedis/measures/follow-up-after-emergency-department-visit-for-mental-illness/",
-            "measureType": "process",
+            "phase": "process",
             "weight": 3,
             "hasSubMeasures": false,
             "inverted": false,
@@ -903,13 +903,13 @@
         }
     },
     {
-        "measureId": "fum-2",
+        "measureType": "fum-2",
         "info": {
             "domainOfCare": "EOC",
             "title": "Follow-Up Within 30 Days of Emergancy Department Visit",
             "displayLabel": "FUM: Follow-Up Within 30 Days",
             "link": "https://www.ncqa.org/hedis/measures/follow-up-after-emergency-department-visit-for-mental-illness/",
-            "measureType": "process",
+            "phase": "process",
             "weight": 3,
             "hasSubMeasures": false,
             "inverted": false,
@@ -921,14 +921,14 @@
         }
     },
     {
-        "measureId": "imae",
+        "measureType": "imae",
         "info": {
             "domainOfCare": "ECDS",
             "title": "Immunizations for Adolescents",
             "displayLabel": "IMA-E",
             "description": ["IMA-E assesses adolescents 13 years of age who had one dose of meningococcal vaccine, one Tdap vaccine and the complete human papillomavirus vaccine series by their 13th birthday."], 
             "link": "https://www.ncqa.org/hedis/measures/immunizations-for-adolescents/",
-            "measureType": "outcome",
+            "phase": "outcome",
             "weight": 3,
             "hasSubMeasures": true,
             "inverted": false,
@@ -937,13 +937,13 @@
         }
     },
     {
-        "measureId": "imae-1",
+        "measureType": "imae-1",
         "info": {
             "domainOfCare": "ECDS",
             "title": "Meningococcal Serogroups A, C, W, Y",
             "displayLabel": "IMA-E: Meningococcal",
             "link": "https://www.ncqa.org/hedis/measures/immunizations-for-adolescents/",
-            "measureType": "outcome",
+            "phase": "outcome",
             "weight": 3,
             "hasSubMeasures": false,
             "inverted": false,
@@ -956,13 +956,13 @@
         }
     },
     {
-        "measureId": "imae-2",
+        "measureType": "imae-2",
         "info": {
             "domainOfCare": "ECDS",
             "title": "Tdap",
             "displayLabel": "IMA-E: Tdap",
             "link": "https://www.ncqa.org/hedis/measures/immunizations-for-adolescents/",
-            "measureType": "outcome",
+            "phase": "outcome",
             "weight": 3,
             "hasSubMeasures": false,
             "inverted": false,
@@ -976,13 +976,13 @@
         }
     },
     {
-        "measureId": "imae-3",
+        "measureType": "imae-3",
         "info": {
             "domainOfCare": "ECDS",
             "title": "HPV",
             "displayLabel": "IMA-E: HPV",
             "link": "https://www.ncqa.org/hedis/measures/immunizations-for-adolescents/",
-            "measureType": "outcome",
+            "phase": "outcome",
             "weight": 3,
             "hasSubMeasures": false,
             "inverted": false,
@@ -996,13 +996,13 @@
         }
     },
     {
-        "measureId": "imae-4",
+        "measureType": "imae-4",
         "info": {
             "domainOfCare": "ECDS",
             "title": "Combination 1: Meningococcal, Tdap",
             "displayLabel": "IMA-E: Combination 1",
             "link": "https://www.ncqa.org/hedis/measures/immunizations-for-adolescents/",
-            "measureType": "outcome",
+            "phase": "outcome",
             "weight": 3,
             "hasSubMeasures": false,
             "inverted": false,
@@ -1014,13 +1014,13 @@
         }
     },
     {
-        "measureId": "imae-5",
+        "measureType": "imae-5",
         "info": {
             "domainOfCare": "ECDS",
             "title": "Combination 2: Meningococcal, Tdap, HPV",
             "displayLabel": "IMA-E: Combination 2",
             "link": "https://www.ncqa.org/hedis/measures/immunizations-for-adolescents/",
-            "measureType": "outcome",
+            "phase": "outcome",
             "weight": 3,
             "hasSubMeasures": false,
             "inverted": false,
@@ -1031,7 +1031,7 @@
         }
     },
     {
-        "measureId" : "pdse", 
+        "measureType" : "pdse", 
         "info" : {
             "domainOfCare" : "ECDS", 
             "title" : "Postpartum Depression Screening and Follow-up", 
@@ -1042,7 +1042,7 @@
                 "Follow-Up on Positive Screen: The percentage of deliveries in which members received follow-up care within 30 days of a positive depression screen finding."
             ],
             "link": "https://www.ncqa.org/hedis/measures/postpartum-depression-screening-and-follow-up/",
-            "measureType" : "process", 
+            "phase" : "process", 
             "weight" : 1, 
             "hasSubMeasures" : true,
             "inverted": false,
@@ -1051,13 +1051,13 @@
         }
     },
     {
-        "measureId" : "pdse-1", 
+        "measureType" : "pdse-1", 
         "info" : {
             "domainOfCare" : "ECDS", 
             "title" : "Postpartum Depression Screening", 
             "displayLabel" : "PDS-E: Depression Screening", 
             "link": "https://www.ncqa.org/hedis/measures/postpartum-depression-screening-and-follow-up/",
-            "measureType" : "process", 
+            "phase" : "process", 
             "weight" : 1, 
             "hasSubMeasures" : false,
             "inverted": false,
@@ -1068,13 +1068,13 @@
         }
     },
     {
-        "measureId" : "pdse-2", 
+        "measureType" : "pdse-2", 
         "info" : {
             "domainOfCare" : "ECDS", 
             "title" : "Follow-Up on Positive Postpartum Depression Screen", 
             "displayLabel" : "PDS-E: Follow-Up on Positive Screen", 
             "link": "https://www.ncqa.org/hedis/measures/postpartum-depression-screening-and-follow-up/",
-            "measureType" : "process", 
+            "phase" : "process", 
             "weight" : 1, 
             "hasSubMeasures" : false,
             "inverted": false,
@@ -1093,7 +1093,7 @@
         }
     },
     {
-        "measureId" : "pnde", 
+        "measureType" : "pnde", 
         "info" : {
             "domainOfCare" : "ECDS", 
             "title" : "Prenatal Depression Screening and Follow-up", 
@@ -1104,7 +1104,7 @@
                 "Follow-Up on Positive Screen: The percentage of deliveries in which members received follow-up care within 30 days of a positive depression screen finding."
             ],
             "link": "https://www.ncqa.org/hedis/measures/prenatal-depression-screening-and-followup/",
-            "measureType" : "process", 
+            "phase" : "process", 
             "weight" : 1, 
             "hasSubMeasures" : true,
             "inverted": false,
@@ -1113,13 +1113,13 @@
         }
     },
     {
-        "measureId" : "pnde-1", 
+        "measureType" : "pnde-1", 
         "info" : {
             "domainOfCare" : "ECDS", 
             "title" : "Prenatal Depression Screening", 
             "displayLabel" : "PND-E: Depression Screening", 
             "link": "https://www.ncqa.org/hedis/measures/prenatal-depression-screening-and-followup/",
-            "measureType" : "process", 
+            "phase" : "process", 
             "weight" : 1, 
             "hasSubMeasures" : false,
             "inverted": false,
@@ -1132,13 +1132,13 @@
         }
     },
     {
-        "measureId" : "pnde-2", 
+        "measureType" : "pnde-2", 
         "info" : {
             "domainOfCare" : "ECDS", 
             "title" : "Follow-Up on Positive Prenatal Depression Screen", 
             "displayLabel" : "PND-E: Follow-Up on Positive Screen", 
             "link": "https://www.ncqa.org/hedis/measures/prenatal-depression-screening-and-followup/",
-            "measureType" : "process", 
+            "phase" : "process", 
             "weight" : 1, 
             "hasSubMeasures" : false,
             "inverted": false,
@@ -1156,14 +1156,14 @@
         }
     },
     {
-        "measureId" : "prse", 
+        "measureType" : "prse", 
         "info" : {
             "domainOfCare" : "ECDS", 
             "title" : "Prenatal Immunization Status", 
             "displayLabel" : "PRS-E", 
             "description": ["PRS-E assesses the percentage of deliveries in the measurement period in which women received influenza and tetanus, diphtheria toxoids and acellular pertussis (Tdap) vaccinations."],
             "link": "https://www.ncqa.org/hedis/measures/prenatal-immunization-status/",
-            "measureType" : "process", 
+            "phase" : "process", 
             "weight" : 1, 
             "hasSubMeasures" : true,
             "inverted": false,
@@ -1172,13 +1172,13 @@
         }
     },
     {
-        "measureId" : "prse-1", 
+        "measureType" : "prse-1", 
         "info" : {
             "domainOfCare" : "ECDS", 
             "title" : "Immunization Status: Influenza", 
             "displayLabel" : "PRS-E: Influenza", 
             "link": "https://www.ncqa.org/hedis/measures/prenatal-immunization-status/",
-            "measureType" : "process", 
+            "phase" : "process", 
             "weight" : 1, 
             "hasSubMeasures" : false,
             "inverted": false,
@@ -1189,13 +1189,13 @@
         }
     },
     {
-        "measureId" : "prse-2", 
+        "measureType" : "prse-2", 
         "info" : {
             "domainOfCare" : "ECDS", 
             "title" : "Immunization Status: Tdap", 
             "displayLabel" : "PRS-E: Tdap", 
             "link": "https://www.ncqa.org/hedis/measures/prenatal-immunization-status/",
-            "measureType" : "process", 
+            "phase" : "process", 
             "weight" : 1, 
             "hasSubMeasures" : false,
             "inverted": false,
@@ -1209,13 +1209,13 @@
         }
     },
     {
-        "measureId" : "prse-3", 
+        "measureType" : "prse-3", 
         "info" : {
             "domainOfCare" : "ECDS", 
             "title" : "Immunization Status: Influenza and Tdap", 
             "displayLabel" : "PRS-E: Combination", 
             "link": "https://www.ncqa.org/hedis/measures/prenatal-immunization-status/",
-            "measureType" : "process", 
+            "phase" : "process", 
             "weight" : 1, 
             "hasSubMeasures" : false,
             "inverted": false,
@@ -1226,14 +1226,14 @@
         }
     },
     {
-        "measureId" : "psa", 
+        "measureType" : "psa", 
         "info" : {
             "domainOfCare" : "EOC", 
             "title" : "Non-Recommended PSA-Based Screening in Older Men", 
             "displayLabel" : "PSA", 
             "description": ["PSA assesses whether men 70 years of age and older were screened unnecessarily for prostate cancer using prostate-specific antigen (PSA)-based screening."], 
             "link": "https://www.ncqa.org/hedis/measures/non-recommended-psa-based-screening-in-older-men/",
-            "measureType" : "process", 
+            "phase" : "process", 
             "weight" : 1, 
             "hasSubMeasures" : false,
             "inverted": false,
@@ -1245,7 +1245,7 @@
         }
     },
     {
-        "measureId" : "uop", 
+        "measureType" : "uop", 
         "info" : {
             "domainOfCare" : "EOC", 
             "title" : "Use of Opioids from Multiple Providers", 
@@ -1257,7 +1257,7 @@
                 "Multiple Prescribers and Multiple Pharmacies: The proportion of members receiving prescriptions for opioids from four or more different prescribers and four or more different pharmacies during the measurement year (i.e., the proportion of members who are numerator compliant for both the Multiple Prescribers and Multiple Pharmacies rates)."
             ],
             "link": "https://www.ncqa.org/hedis/measures/use-of-opioids-from-multiple-providers/",
-            "measureType" : "process", 
+            "phase" : "process", 
             "weight" : 1, 
             "hasSubMeasures" : true,
             "inverted": false,
@@ -1266,13 +1266,13 @@
         }
     },
     {
-        "measureId" : "uop-1", 
+        "measureType" : "uop-1", 
         "info" : {
             "domainOfCare" : "EOC", 
             "title" : "Use of Opioids from Multiple Prescribers", 
             "displayLabel" : "UOP: Multiple Prescribers", 
             "link": "https://www.ncqa.org/hedis/measures/use-of-opioids-from-multiple-providers/",
-            "measureType" : "process", 
+            "phase" : "process", 
             "weight" : 1, 
             "hasSubMeasures" : false,
             "inverted": false,
@@ -1283,13 +1283,13 @@
         }
     },
     {
-        "measureId" : "uop-2", 
+        "measureType" : "uop-2", 
         "info" : {
             "domainOfCare" : "EOC", 
             "title" : "Use of Opioids from Multiple Pharmacies", 
             "displayLabel" : "UOP: Multiple Pharmacies", 
             "link": "https://www.ncqa.org/hedis/measures/use-of-opioids-from-multiple-providers/",
-            "measureType" : "process", 
+            "phase" : "process", 
             "weight" : 1, 
             "hasSubMeasures" : false,
             "inverted": false,
@@ -1300,13 +1300,13 @@
         }
     },
     {
-        "measureId" : "uop-3", 
+        "measureType" : "uop-3", 
         "info" : {
             "domainOfCare" : "EOC", 
             "title" : "Use of Opioids from Multiple Prescribers and Pharmacies", 
             "displayLabel" : "UOP: Multiple Prescribers and Pharmacies", 
             "link": "https://www.ncqa.org/hedis/measures/use-of-opioids-from-multiple-providers/",
-            "measureType" : "process", 
+            "phase" : "process", 
             "weight" : 1, 
             "hasSubMeasures" : false,
             "inverted": false,
@@ -1317,7 +1317,7 @@
         }
     },
     {
-        "measureId" : "uri", 
+        "measureType" : "uri", 
         "info" : {
             "domainOfCare" : "EOC", 
             "title" : "Appropriate Treatment for Children With Upper Respiratory Infection", 
@@ -1327,7 +1327,7 @@
                 "Note: on NCQA website (as of 6/27/2022) - this measure is called Appropriate Treatment for Upper Respiratory Infection (URI)"
             ],
             "link": "https://www.ncqa.org/hedis/measures/appropriate-treatment-for-upper-respiratory-infection/",
-            "measureType" : "process", 
+            "phase" : "process", 
             "weight" : 1, 
             "hasSubMeasures" : false,
             "inverted": true,

@@ -17,7 +17,7 @@ const getPredictionData = async (req, res, next) => {
     const search = await dao.findMeasureResults(req.params);
     const predictionData = search.sort((a, b) => a.date - b.date);
     const compiledData = {
-      _id: req.params.measure,
+      measureId: req.params.measure,
       DATE: {},
       HEDIS0: {},
     };

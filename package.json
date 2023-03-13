@@ -19,6 +19,9 @@
   "jest": {
     "coverageReporters": [
       "cobertura"
+    ],
+    "modulePathIgnorePatterns": [
+      "<rootDir>/build"
     ]
   },
   "author": "",
