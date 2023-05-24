@@ -1,4 +1,8 @@
-const Joi = require('joi');
+/**
+ * express-validation exposes a version of Joi as a hard dependency,
+ * in order to avoid compatibility issues with other versions of Joi.
+ */
+const { Joi } = require('express-validation');
 const dotenv = require('dotenv');
 const util = require('./config-util');
 

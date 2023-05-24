@@ -69,36 +69,24 @@ describe('## db.js', () => {
   });
 
   describe('Test insertMember function', () => {
-    test('Should not throw an error', async (done) => {
-      try {
-        const test = dao.insertMember(drreData);
-        expect(test).toBeTruthy();
-      } finally {
-        done();
-      }
+    test('Should not throw an error', async () => {
+      const test = dao.insertMember(drreData);
+      expect(test).toBeTruthy();
     });
   });
 
   describe('Test insertMembers function', () => {
-    test('Should not throw an error', async (done) => {
-      try {
-        const test = dao.insertMembers(data);
-        expect(test).toBeTruthy();
-      } finally {
-        done();
-      }
+    test('Should not throw an error', async () => {
+      const test = dao.insertMembers(data);
+      expect(test).toBeTruthy();
     });
   });
 
   // TODO: Fix this so it doesn't return a bad promise.
   describe('Test insertMeasureResults function', () => {
-    test('Should not throw an error', async (done) => {
-      try {
-        const test = dao.insertMeasureResults(resultData);
-        expect(test).toBeTruthy();
-      } finally {
-        done();
-      }
+    test('Should not throw an error', async () => {
+      const test = dao.insertMeasureResults(resultData);
+      expect(test).toBeTruthy();
     });
   });
 

@@ -2,7 +2,7 @@
 /* eslint-disable no-undef */
 const process = require('process');
 const excel = require('exceljs');
-const { fs } = require('fs');
+const fs = require('fs');
 const { injectTemplate } = require('../../src/exports/member-report');
 const { mockMemberExportDataObj } = require('../export-test-data/userData');
 
@@ -83,6 +83,11 @@ describe('Member-Report generation tests', () => {
   });
 
   afterAll(async () => {
-    fs.unlink(`${__root}${folderPath}/${testFileName}`);
+    const FS = fs;
+    FS.unlink(`${__root}${folderPath}/${testFileName}`, (err) => {
+      if (err) {
+        throw err;
+      }
+    });
   });
 });

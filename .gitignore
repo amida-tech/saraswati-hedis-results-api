@@ -15,3 +15,4 @@
 /test/export-test-data/test.xlsx
 /reports/member/*
 /reports/logs
+*.log

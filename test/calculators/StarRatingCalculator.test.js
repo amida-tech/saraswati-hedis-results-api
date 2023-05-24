@@ -7,8 +7,8 @@ describe(' StarRatingCalculator test ', () => {
   };
 
   afterAll(() => {
-    delete measureRating.denominator;
-    delete measureRating.numerator;
+    delete measurementRating.denominator;
+    delete measurementRating.numerator;
   });
 
   test('Should return -1 for NA because the denominator is undefined', () => {
