@@ -34,7 +34,7 @@
     "express-mongo-sanitize": "^2.2.0",
     "express-validation": "^4.1.0",
     "express-winston": "^4.2.0",
-    "fast-xml-parser": "^4.2.2",
+    "fast-xml-parser": "^4.2.4",
     "http-status": "^1.6.2",
     "jsonwebtoken": "^9.0.0",
     "kafkajs": "^2.2.4",
