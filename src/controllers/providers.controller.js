@@ -1,4 +1,5 @@
 /* eslint-disable no-underscore-dangle */
+const xss = require('xss');
 const dao = require('../config/dao');
 // Get Healthcar Providers
 const getHealthcareProviders = async (req, res, next) => {
@@ -12,7 +13,7 @@ const getHealthcareProviders = async (req, res, next) => {
 // Add (POST) Providers
 const postHealthcareProvider = async (req, res, next) => {
   try {
-    const jsonObject = req.body;
+    const jsonObject = xss(req.body);
     dao.insertHealthcareProviders(jsonObject);
     return res.send(jsonObject);
   } catch (e) {

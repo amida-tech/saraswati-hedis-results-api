@@ -1,4 +1,5 @@
 /* eslint-disable no-underscore-dangle */
+const xss = require('xss');
 const dao = require('../config/dao');
 
 const { calculateTrend, calculateTrendLegacy } = require('../calculators/TrendCalculator');
@@ -9,7 +10,7 @@ const { generateCsv } = require('../utilities/reportsUtil');
 
 const getMeasureResults = async (req, res, next) => {
   try {
-    const search = await dao.findMeasureResults(req.query);
+    const search = await dao.findMeasureResults(xss(req.query));
     const sortedSearch = search.sort((a, b) => a.date - b.date);
     return res.send(sortedSearch);
   } catch (e) {
@@ -69,10 +70,11 @@ const getInfo = async (_req, res, next) => {
 const exportCsv = async (req, res, next) => {
   try {
     res.set({ 'Content-Disposition': 'attachment; filename=results-export.csv' });
-    const patientResults = await dao.findMembers(req.query);
-    const infoList = await dao.findInfo(req.query.measurementType);
+    const xssMeasurementType = xss(req.query.measurementType);
+    const patientResults = await dao.findMembers(xss(req.query));
+    const infoList = await dao.findInfo(xssMeasurementType);
     const measureInfo = createInfoObject(infoList);
-    const csv = generateCsv(patientResults, measureInfo, req.query.measurementType);
+    const csv = generateCsv(patientResults, measureInfo, xssMeasurementType);
     return res.send(csv);
   } catch (e) {
     return next(e);
@@ -81,7 +83,7 @@ const exportCsv = async (req, res, next) => {
 
 const postMeasureResults = async (req, res, next) => {
   try {
-    const jsonObject = req.body;
+    const jsonObject = xss(req.body);
     dao.insertMeasureResults(jsonObject);
     return res.send(jsonObject);
   } catch (e) {
@@ -91,7 +93,7 @@ const postMeasureResults = async (req, res, next) => {
 
 const postInfo = async (req, res, next) => {
   try {
-    const info = await dao.insertInfo(req.body);
+    const info = await dao.insertInfo(xss(req.body));
     return res.send(info);
   } catch (e) {
     return next(e);
