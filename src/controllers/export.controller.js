@@ -3,6 +3,7 @@
 const fs = require('fs');
 const process = require('process');
 const moment = require('moment');
+const { sanitizePath } = require('sanitize-filepath');
 
 const { generateTestReport } = require('../exports/test-report');
 const { generateMemberReport, injectTemplate } = require('../exports/member-report');
@@ -33,25 +34,25 @@ async function generateMemberById(req, res) {
     if (!fs.existsSync(`${__root}${folderPath}`)) {
       fs.mkdirSync(`${__root}${folderPath}`);
       await injectTemplate(memberResults[0], __root, folderPath, fileName);
-      res.download(`${__root}${folderPath}/${fileName}`);
+      res.download(sanitizePath(`${__root}${folderPath}/${fileName}`));
 
-    // IF FILE DOESN'T EXIST
+      // IF FILE DOESN'T EXIST
     } else if (!fs.existsSync(`${__root}${folderPath}/${fileName}`)) {
-      injectTemplate(memberResults[0], __root, folderPath, fileName);
-      res.download(`${__root}${folderPath}/${fileName}`);
+      await injectTemplate(memberResults[0], __root, folderPath, fileName);
+      res.download(sanitizePath(`${__root}${folderPath}/${fileName}`));
 
-    // IF FILE STRUCTURE ALREADY EXISTS
+      // IF FILE STRUCTURE ALREADY EXISTS
     } else {
       const status = await fs.promises.stat(`${__root}${folderPath}/${fileName}`);
 
       // IF REPORT IS NOT CURRENT
       if (moment(status.ctime).isSameOrBefore(moment().subtract(1, 'd'))) {
         await generateMemberReport(memberResults[0], fileName, folderPath);
-        res.download(`${__root}${folderPath}/${fileName}`);
+        res.download(sanitizePath(`${__root}${folderPath}/${fileName}`));
 
         // IF REPORT IS CURRENT
       } else {
-        res.download(`${__root}${folderPath}/${fileName}`);
+        res.download(sanitizePath(`${__root}${folderPath}/${fileName}`));
       }
     }
   } catch (error) {

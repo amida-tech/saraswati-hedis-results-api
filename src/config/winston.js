@@ -1,7 +1,7 @@
 const {
   createLogger, format, transports, add,
 } = require('winston');
-const { configuredFormatter } = require('winston-json-formatter');
+const { configuredFormatter } = require('@amida-tech/winston-json-formatter');
 const pjson = require('../../package.json');
 const config = require('./config');
 

@@ -2,6 +2,7 @@
 const { v4: uuidv4 } = require('uuid');
 const minimist = require('minimist');
 const fs = require('fs');
+const { sanitizePath } = require('sanitize-filepath');
 const logger = require('./src/config/winston');
 const dao = require('./src/config/dao');
 const { template, coveragePlans, providerOptions } = require('./test-data-settings');
@@ -707,7 +708,7 @@ function outputData(newScoresList, measureList, days) {
   fileTitle += `_${dateFormatter(today)}_${today.getHours()}-${today.getMinutes()}-${today.getSeconds()}.json`;
 
   try {
-    fs.writeFileSync(`${__dirname}/test/generated-data/${fileTitle}`, JSON.stringify(newScoresList, null, 4));
+    fs.writeFileSync(sanitizePath(`${__dirname}/test/generated-data/${fileTitle}`), JSON.stringify(newScoresList, null, 4));
   } catch (writeErr) {
     logger.error(`\x1b[31mError:\x1b[0m Unable to write to directory:${writeErr}.`);
     process.exit();

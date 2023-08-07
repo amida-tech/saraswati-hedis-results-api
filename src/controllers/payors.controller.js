@@ -1,5 +1,3 @@
-/* eslint-disable no-underscore-dangle */
-const xss = require('xss');
 const dao = require('../config/dao');
 
 // Get Providers
@@ -14,7 +12,7 @@ const getPayors = async (req, res, next) => {
 // Add (POST) Payor/Payer
 const postPayor = async (req, res, next) => {
   try {
-    const jsonObject = xss(req.body);
+    const jsonObject = req.body;
     dao.insertPayors(jsonObject);
     return res.send(jsonObject);
   } catch (e) {

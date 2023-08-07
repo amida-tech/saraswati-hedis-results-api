@@ -1,5 +1,3 @@
-/* eslint-disable no-underscore-dangle */
-const xss = require('xss');
 const dao = require('../config/dao');
 
 // Get Providers
@@ -13,7 +11,7 @@ const getPractitioners = async (req, res, next) => {
 };
 const postPractitioner = async (req, res, next) => {
   try {
-    const jsonObject = xss(req.body);
+    const jsonObject = req.body;
     dao.insertPractitioner(jsonObject);
     return res.send(jsonObject);
   } catch (e) {

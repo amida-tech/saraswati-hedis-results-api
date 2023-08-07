@@ -1,5 +1,3 @@
-/* eslint-disable no-underscore-dangle */
-const xss = require('xss');
 const dao = require('../config/dao');
 
 // Access predictions made by time series
@@ -15,10 +13,10 @@ const getPredictions = async (req, res, next) => {
 // Data time series to make predictions with
 const getPredictionData = async (req, res, next) => {
   try {
-    const search = await dao.findMeasureResults(xss(req.params));
+    const search = await dao.findMeasureResults(req.params);
     const predictionData = search.sort((a, b) => a.date - b.date);
     const compiledData = {
-      measureId: xss(req.params.measure),
+      measureId: req.params.measure,
       DATE: {},
       HEDIS0: {},
     };
@@ -35,7 +33,7 @@ const getPredictionData = async (req, res, next) => {
 
 const postPredictions = async (req, res, next) => {
   try {
-    const predictions = await dao.insertPredictions(xss(req.body));
+    const predictions = await dao.insertPredictions(req.body);
     return res.send(predictions);
   } catch (e) {
     return next(e);

@@ -4,16 +4,18 @@ const fs = require('fs');
 const process = require('process');
 const moment = require('moment');
 const excel = require('exceljs');
+const {sanitizePath} = require('sanitize-filepath');
 const logger = require('../config/winston');
 
 async function generateMemberReport(memberObj, fileName, folderPath) {
   const __root = process.cwd();
   const workbook = new excel.Workbook();
   const measure = memberObj.measurementType;
+  const fullPath = sanitizePath(`${__root}${folderPath}/${fileName}`);
 
   try {
     // GET WORKBOOK
-    await workbook.xlsx.readFile(`${__root}${folderPath}/${fileName}`);
+    await workbook.xlsx.readFile(fullPath);
 
     // DEFINING WORKSHEETS
     const generalWorksheet = workbook.getWorksheet('General');
@@ -100,7 +102,7 @@ async function generateMemberReport(memberObj, fileName, folderPath) {
     // LOOP THROUGH EACH MEASURE - NUMERATORS?
     // APPLY COLOR STYLE TO STYLE
 
-    await workbook.xlsx.writeFile(`${__root}${folderPath}/${fileName}`);
+    await workbook.xlsx.writeFile(fullPath);
   } catch (error) {
     logger.error(error);
   }

@@ -27,6 +27,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@amida-tech/winston-json-formatter": "^0.10.2",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
     "exceljs": "^4.3.0",
@@ -42,16 +43,16 @@
     "moment": "^2.29.4",
     "mongodb": "^5.7.0",
     "node-cron": "^3.0.2",
+    "perfect-express-sanitizer": "^1.0.11",
     "pg": "^8.11.1",
     "prom-client": "14",
     "regenerator-runtime": "^0.13.11",
+    "sanitize-filepath": "^0.0.6",
     "sequelize": "^6.32.1",
     "supertest": "^6.3.3",
     "supertest-as-promised": "^4.0.2",
     "swagger-stats": "^0.99.7",
-    "winston": "^3.10.0",
-    "@amida-tech/winston-json-formatter": "^0.10.2",
-    "xss": "^1.0.14"
+    "winston": "^3.10.0"
   },
   "devDependencies": {
     "cross-env": "^7.0.3",
