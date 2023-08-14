@@ -78,7 +78,7 @@ const findInfo = (measure) => {
   const collection = db.collection('hedis_info');
   if (measure) {
     // sanitize query
-    const saniQuery = mongoSanitize.sanitize(query);
+    const saniQuery = mongoSanitize.sanitize(measure);
     return collection.find({ measureId: new RegExp(`^${saniQuery}`) }).toArray();
   }
   return collection.find({}).toArray();
