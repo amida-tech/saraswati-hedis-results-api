@@ -4,6 +4,7 @@ const fs = require('fs');
 const process = require('process');
 const moment = require('moment');
 const { sanitizePath } = require('sanitize-filepath');
+const logger = require('winston');
 
 const { generateTestReport } = require('../exports/test-report');
 const { generateMemberReport, injectTemplate } = require('../exports/member-report');
@@ -59,7 +60,8 @@ async function generateMemberById(req, res) {
     if (error instanceof ReferenceError) {
       // This space left blank intentionally
     } else if (error) {
-      res.send(error);
+      logger.error(error);
+      res.status(500).send({ error: 'Failed exporting member report' });
     } else {
       res.end();
     }

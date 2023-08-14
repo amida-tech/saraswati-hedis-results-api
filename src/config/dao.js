@@ -21,20 +21,24 @@ const initTest = (mockDb) => {
 };
 
 const findMembers = (query) => {
+  // sanitize query
+  const saniQuery = mongoSanitize.sanitize(query);
   const collection = db.collection('measures');
-  return collection.find(query).toArray();
+  return collection.find(saniQuery).toArray();
 };
 
 const paginateMembers = async (query, skip, limit) => {
   if (query === undefined) {
     return [];
   }
+  // sanitize query
+  const saniQuery = mongoSanitize.sanitize(query);
   const collection = db.collection('measures');
   const pipeline = await collection.aggregate([{
     $facet: {
       members: [
         {
-          $match: query,
+          $match: saniQuery,
         },
         { $skip: skip },
         { $limit: limit },
@@ -49,18 +53,20 @@ const paginateMembers = async (query, skip, limit) => {
 const searchMembers = (query) => {
   const collection = db.collection('measures');
   // sanitize query
-  const saniQuery = mongoSanitize.sanitize(query.memberId);
+  const saniQuery = mongoSanitize.sanitize(query);
   return collection.find({ memberId: { $regex: saniQuery, $options: 'i' } }).toArray();
 };
 
 const findMeasureResults = (query) => {
   const collection = db.collection('measure_results');
+  // sanitize query
+  const saniQuery = mongoSanitize.sanitize(query);
   try {
-    return collection.find(query).toArray();
+    return collection.find(saniQuery).toArray();
   } catch (e) {
     logger.error(e);
-    return e;
   }
+  return false;
 };
 
 const findPredictions = () => {
@@ -71,7 +77,9 @@ const findPredictions = () => {
 const findInfo = (measure) => {
   const collection = db.collection('hedis_info');
   if (measure) {
-    return collection.find({ measureId: new RegExp(`^${measure}`) }).toArray();
+    // sanitize query
+    const saniQuery = mongoSanitize.sanitize(query);
+    return collection.find({ measureId: new RegExp(`^${saniQuery}`) }).toArray();
   }
   return collection.find({}).toArray();
 };
@@ -87,8 +95,8 @@ const insertMember = async (member) => {
     });
   } catch (e) {
     logger.error(e);
-    return e;
   }
+  return false;
 };
 
 const insertMembers = (measures) => measures.map((measure) => insertMember(measure));
@@ -124,7 +132,6 @@ const insertMeasureResults = (results) => {
       );
     } catch (e) {
       logger.error(e);
-      return false;
     }
   }
   return true;
@@ -141,8 +148,8 @@ const insertPredictions = (predictions) => {
     });
   } catch (e) {
     logger.error(e);
-    return e;
   }
+  return false;
 };
 
 // create collection for hedis info
@@ -154,8 +161,8 @@ const insertInfo = (info) => {
     });
   } catch (e) {
     logger.error(e);
-    return e;
   }
+  return false;
 };
 
 const getPayors = () => {
@@ -172,7 +179,6 @@ const insertPayors = async (payor) => {
       return await collection.insertMany([payor]);
     } catch (e) {
       logger.error(e);
-      return e;
     }
   }
   return false;
@@ -190,7 +196,6 @@ const insertPractitioner = async (practitioner) => {
       return await collection.insertMany([practitioner]);
     } catch (e) {
       logger.error(e);
-      return e;
     }
   }
   return false;
@@ -208,7 +213,6 @@ const insertHealthcareProviders = async (provider) => {
       return await collection.insertMany([provider]);
     } catch (e) {
       logger.error(e);
-      return e;
     }
   }
   return false;
@@ -226,7 +230,6 @@ const insertHealthcareCoverage = async (coverage) => {
       return await collection.insertMany([coverage]);
     } catch (e) {
       logger.error(e);
-      return e;
     }
   }
   return false;
@@ -236,21 +239,25 @@ const insertHealthcareCoverage = async (coverage) => {
 const getUsers = (query) => {
   try {
     const collection = db.collection('users');
-    return collection.find(query).toArray();
+    // sanitize query
+    const saniQuery = mongoSanitize.sanitize(query);
+    return collection.find(saniQueryuery).toArray();
   } catch (e) {
     logger.error(e);
-    return e;
   }
+  return false;
 };
 
 const getUsersByEmail = (email) => {
   try {
     const collection = db.collection('users');
-    return collection.find({ email }).toArray();
+    // sanitize query
+    const saniQuery = mongoSanitize.sanitize(email);
+    return collection.find({ saniQuery }).toArray();
   } catch (e) {
     logger.error(e);
-    return e;
   }
+  return false;
 };
 
 const addUsers = async (users) => {
@@ -259,8 +266,8 @@ const addUsers = async (users) => {
     return collection.insertOne(users);
   } catch (e) {
     logger.error(e);
-    return e;
   }
+  return false;
 };
 
 const updateUserByEmail = async (member, email) => {
@@ -271,8 +278,8 @@ const updateUserByEmail = async (member, email) => {
     });
   } catch (e) {
     logger.error(e);
-    return e;
   }
+  return false;
 };
 
 const deleteUsersByEmail = async (email) => {
@@ -281,8 +288,8 @@ const deleteUsersByEmail = async (email) => {
     return collection.findOneAndDelete({ email });
   } catch (e) {
     logger.error(e);
-    return e;
   }
+  return false;
 };
 
 module.exports = {

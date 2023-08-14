@@ -1,4 +1,5 @@
 const cors = require('cors');
+const helmet = require('helmet');
 const express = require('express');
 const swStats = require('swagger-stats');
 const expressWinston = require('express-winston');
@@ -13,6 +14,7 @@ app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ extended: true }));
 
 app.use(cors());
+app.use(helmet());
 app.use(pes.clean({ xss: true, noSql: true, sql: true }));
 app.use(swStats.getMiddleware({}));
 

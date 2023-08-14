@@ -36,6 +36,7 @@
     "express-validation": "^4.1.0",
     "express-winston": "^4.2.0",
     "fast-xml-parser": "^4.2.7",
+    "helmet": "^7.0.0",
     "http-status": "^1.6.2",
     "jsonwebtoken": "^9.0.1",
     "kafkajs": "^2.2.4",
