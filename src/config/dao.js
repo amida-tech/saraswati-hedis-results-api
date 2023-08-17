@@ -241,7 +241,7 @@ const getUsers = (query) => {
     const collection = db.collection('users');
     // sanitize query
     const saniQuery = mongoSanitize.sanitize(query);
-    return collection.find(saniQueryuery).toArray();
+    return collection.find(saniQuery).toArray();
   } catch (e) {
     logger.error(e);
   }
