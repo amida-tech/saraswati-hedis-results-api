@@ -1,5 +1,3 @@
-/* eslint-disable radix */
-/* eslint-disable no-underscore-dangle */
 const dao = require('../config/dao');
 const { queryBuilder } = require('../utilities/filterDrawerUtils');
 

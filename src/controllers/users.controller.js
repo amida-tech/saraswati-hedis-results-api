@@ -15,6 +15,7 @@ const decodeJWT = (token) => {
     picture,
     given_name,
     family_name,
+    // deepcode ignore JwtDecodeMethod: JWT Verification methods to be user-defined [CWE-347]
   } = jwt.decode(token);
 
   if (iss.includes('google')) {

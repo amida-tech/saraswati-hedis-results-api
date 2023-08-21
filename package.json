@@ -1,6 +1,6 @@
 {
   "name": "saraswati-hedis-results-api",
-  "version": "1.0.2",
+  "version": "2.0.3",
   "description": "An API that ingests and renders HEDIS data",
   "main": "src/index.js",
   "scripts": {
@@ -25,8 +25,9 @@
     ]
   },
   "author": "",
-  "license": "ISC",
+  "license": "Apache-2.0",
   "dependencies": {
+    "@amida-tech/winston-json-formatter": "^0.10.2",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
     "exceljs": "^4.3.0",
@@ -34,7 +35,8 @@
     "express-mongo-sanitize": "^2.2.0",
     "express-validation": "^4.1.0",
     "express-winston": "^4.2.0",
-    "fast-xml-parser": "^4.2.6",
+    "fast-xml-parser": "^4.2.7",
+    "helmet": "^7.0.0",
     "http-status": "^1.6.2",
     "jsonwebtoken": "^9.0.1",
     "kafkajs": "^2.2.4",
@@ -42,21 +44,22 @@
     "moment": "^2.29.4",
     "mongodb": "^5.7.0",
     "node-cron": "^3.0.2",
+    "perfect-express-sanitizer": "^1.0.11",
     "pg": "^8.11.1",
     "prom-client": "14",
     "regenerator-runtime": "^0.13.11",
+    "sanitize-filepath": "^0.0.6",
     "sequelize": "^6.32.1",
     "supertest": "^6.3.3",
     "supertest-as-promised": "^4.0.2",
     "swagger-stats": "^0.99.7",
-    "winston": "^3.10.0",
-    "winston-json-formatter": "^0.10.0"
+    "winston": "^3.10.0"
   },
   "devDependencies": {
     "cross-env": "^7.0.3",
-    "eslint": "^8.45.0",
+    "eslint": "^8.46.0",
     "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-import": "^2.28.0",
     "jest": "^29.6.2",
     "jest-fetch-mock": "^3.0.3",
     "minimist": "^1.2.8",

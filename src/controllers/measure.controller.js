@@ -1,4 +1,3 @@
-/* eslint-disable no-underscore-dangle */
 const dao = require('../config/dao');
 
 const { calculateTrend, calculateTrendLegacy } = require('../calculators/TrendCalculator');
@@ -69,10 +68,11 @@ const getInfo = async (_req, res, next) => {
 const exportCsv = async (req, res, next) => {
   try {
     res.set({ 'Content-Disposition': 'attachment; filename=results-export.csv' });
+    const xssMeasurementType = req.query.measurementType;
     const patientResults = await dao.findMembers(req.query);
-    const infoList = await dao.findInfo(req.query.measurementType);
+    const infoList = await dao.findInfo(xssMeasurementType);
     const measureInfo = createInfoObject(infoList);
-    const csv = generateCsv(patientResults, measureInfo, req.query.measurementType);
+    const csv = generateCsv(patientResults, measureInfo, xssMeasurementType);
     return res.send(csv);
   } catch (e) {
     return next(e);

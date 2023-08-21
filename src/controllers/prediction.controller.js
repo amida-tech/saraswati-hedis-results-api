@@ -1,4 +1,3 @@
-/* eslint-disable no-underscore-dangle */
 const dao = require('../config/dao');
 
 // Access predictions made by time series
@@ -26,7 +25,7 @@ const getPredictionData = async (req, res, next) => {
       compiledData.DATE[i.toString()] = new Date(result.date).getTime();
       compiledData.HEDIS0[i.toString()] = result.value;
     }
-    return res.send([compiledData]);
+    return res.send(compiledData);
   } catch (e) {
     return next(e);
   }
