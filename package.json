@@ -1,6 +1,6 @@
 {
   "name": "saraswati-hedis-results-api",
-  "version": "1.0.2",
+  "version": "2.0.3",
   "description": "An API that ingests and renders HEDIS data",
   "main": "src/index.js",
   "scripts": {
@@ -25,7 +25,7 @@
     ]
   },
   "author": "",
-  "license": "ISC",
+  "license": "Apache-2.0",
   "dependencies": {
     "@amida-tech/winston-json-formatter": "^0.10.2",
     "cors": "^2.8.5",
