@@ -11,7 +11,7 @@ services:
   database:
     hostname: mongodb
     container_name: mongodb
-    image: mongo:6.0.5
+    image: mongo:6.0.11
     ports:
       - 27017:27017
   api:
@@ -31,5 +31,5 @@ services:
       - "4000:4000"
 networks:
   default:
-    external: false
+    external: true
     name: cp-all-in-one-community_default
