@@ -49,7 +49,7 @@
     "prom-client": "15",
     "regenerator-runtime": "^0.14.0",
     "sanitize-filepath": "^0.0.6",
-    "sequelize": "^6.33.0",
+    "sequelize": "^6.34.0",
     "supertest": "^6.3.3",
     "supertest-as-promised": "^4.0.2",
     "swagger-stats": "^0.99.7",
