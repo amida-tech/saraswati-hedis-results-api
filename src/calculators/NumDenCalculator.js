@@ -88,9 +88,8 @@ function calculateMeasureScore(subScoreArray, measurementType, measureInfo, date
 function calculateSubScore(resultHolder, measurementType, measureInfo, date, index) {
   const numerator = resultHolder.numeratorValues[index];
   const denominator = resultHolder.denominatorValues[index];
-  const percentValue = getComplianceValue(
-    numerator, denominator, measureInfo[measurementType].inverted,
-  );
+  // eslint-disable-next-line max-len
+  const percentValue = getComplianceValue(numerator, denominator, measureInfo[measurementType].inverted);
   return {
     measure: `${measurementType}-${index + 1}`,
     date,
