@@ -34,7 +34,7 @@ const numeratorCheck = (data, index) => (
   (index > 1) ? data[`Numerator ${index}`] && numeratorCheck(data, index - 1) : data[`Numerator ${index}`]
 );
 
-const newScoreTemplate = (measure, date) => {
+const newScoreTemplate = (measure, date, measurementYear) => {
   const id = `${measure}-${uuidv4()}`;
   const coverageChosen = Math.floor(Math.random() * coveragePlans.length);
 
@@ -47,6 +47,7 @@ const newScoreTemplate = (measure, date) => {
   const providerChoices = providerOptions.filter((provider) => provider.measures.includes(measure));
   const data = {
     measurementType: measure,
+    measurementYear,
     memberId: id,
     timeStamp: date.toISOString(),
     coverage: [{
@@ -142,12 +143,14 @@ const deliveryGenerator = (measure) => ({
 });
 
 const measureFunctions = {
-  newSingleDate: (measure, date, compliance) => {
-    const data = newScoreTemplate(measure, date);
+  newSingleDate: (measure, date, compliance, measurementYear) => {
+    const data = newScoreTemplate(measure, date, measurementYear);
     const { gap } = template[measure];
-    const { initialPopDates, exclusionDates, numeratorDates } = dateGenerator(
-      date, gap, compliance,
-    );
+    const {
+      initialPopDates,
+      exclusionDates,
+      numeratorDates,
+    } = dateGenerator(date, gap, compliance);
     data.result = {
       'Initial Population': initialPopDates,
       Exclusions: exclusionDates,
@@ -161,8 +164,9 @@ const measureFunctions = {
     data.result.Numerator = data.result.Denominator;
     return data;
   },
-  newSingleBool: (measure, date, compliance) => { // Single boolean value, nothing interesting.
-    const data = newScoreTemplate(measure, date);
+  // Single boolean value, nothing interesting.
+  newSingleBool: (measure, date, measurementYear, compliance) => {
+    const data = newScoreTemplate(measure, date, measurementYear);
     data.result = {
       'Initial Population': true,
       Exclusions: randomBool(),
@@ -176,8 +180,9 @@ const measureFunctions = {
     data.result.Numerator = randomTruerBool();
     return data;
   },
-  newDoubleBool: (measure, date, compliance) => { // Same init pop, differing denom and numerators.
-    const data = newScoreTemplate(measure, date);
+  // Same init pop, differing denom and numerators.
+  newDoubleBool: (measure, date, compliance, measurementYear) => {
+    const data = newScoreTemplate(measure, date, measurementYear);
     const exclusion = randomBool();
     const numerator1 = randomOf100() < compliance;
     const denominator2 = randomBool();
@@ -206,8 +211,8 @@ const measureFunctions = {
     }
     return data;
   }, // Same init pop and denom, 3rd num depends on prior 2
-  newTripleDependBool: (measure, date, compliance) => {
-    const data = newScoreTemplate(measure, date);
+  newTripleDependBool: (measure, date, compliance, measurementYear) => {
+    const data = newScoreTemplate(measure, date, measurementYear);
     const exclusion = randomBool();
     const numerator1 = randomOf100() < compliance;
     const numerator2 = randomOf100() < compliance;
@@ -240,8 +245,8 @@ const measureFunctions = {
     }
     return data;
   },
-  newDoubleDeliveries: (measure, date) => {
-    const data = newScoreTemplate(measure, date);
+  newDoubleDeliveries: (measure, date, measurementYear) => {
+    const data = newScoreTemplate(measure, date, measurementYear);
     const initialPop1 = [deliveryGenerator()];
     const exclusion = randomBool() ? initialPop1 : [];
     const denominator2 = randomTruerBool() ? initialPop1 : [];
@@ -271,8 +276,8 @@ const measureFunctions = {
     }
     return data;
   },
-  newADDE: (measure, date, compliance) => { // Differing initial populations
-    const data = newScoreTemplate(measure, date);
+  newADDE: (measure, date, measurementYear, compliance) => { // Differing initial populations
+    const data = newScoreTemplate(measure, date, measurementYear);
     const exclusion = randomBool();
     const numerator1 = randomOf100() < compliance;
     const initialPop2 = randomBool();
@@ -302,8 +307,9 @@ const measureFunctions = {
     }
     return data;
   },
-  newAISE: (measure, date, compliance) => { // 4 sub measure, depending on vaccines and age ranges
-    const data = newScoreTemplate(measure, date);
+  // 4 sub measure, depending on vaccines and age ranges
+  newAISE: (measure, date, measurementYear, compliance) => {
+    const data = newScoreTemplate(measure, date, measurementYear);
     const exclusion = randomBool();
     const initialPop3 = randomBool();
     const initialPop4 = initialPop3 ? randomBool() : false;
@@ -353,8 +359,8 @@ const measureFunctions = {
     }
     return data;
   },
-  newCISE: (measure, date, compliance) => { // 13 nums, have fun!
-    const data = newScoreTemplate(measure, date);
+  newCISE: (measure, date, measurementYear, compliance) => { // 13 nums, have fun!
+    const data = newScoreTemplate(measure, date, measurementYear);
     const exclusion = !randomTruerBool();
     data.result = {};
     for (let i = 1; i < 14; i += 1) { // Not as performant but easier to read.
@@ -390,8 +396,9 @@ const measureFunctions = {
     data.result['Numerator 13'] = numerator12 && data.result['Numerator 10'];
     return data;
   },
-  newCOU: (measure, date, compliance) => { // Same init pop, differing denom and numerators.
-    const data = newScoreTemplate(measure, date);
+  // Same init pop, differing denom and numerators.
+  newCOU: (measure, date, measurementYear, compliance) => {
+    const data = newScoreTemplate(measure, date, measurementYear);
     const exclusion = randomBool();
     const numerator1 = randomOf100() < compliance;
     data.result = {
@@ -416,8 +423,9 @@ const measureFunctions = {
     }
     return data;
   },
-  newDMSE: (measure, date, compliance) => { // Checks 3 times a year, then denom is always true
-    const data = newScoreTemplate(measure, date);
+  // Checks 3 times a year, then denom is always true
+  newDMSE: (measure, date, measurementYear, compliance) => {
+    const data = newScoreTemplate(measure, date, measurementYear);
     const exclusion = randomBool();
     const initialPop1 = randomBool();
     const initialPop2 = initialPop1 || randomTruerBool();
@@ -455,8 +463,9 @@ const measureFunctions = {
     }
     return data;
   },
-  newDRRE: (measure, date, compliance) => { // Checks 3 times a year, then denom is always true
-    const data = newScoreTemplate(measure, date);
+  // Checks 3 times a year, then denom is always true
+  newDRRE: (measure, date, measurementYear, compliance) => {
+    const data = newScoreTemplate(measure, date, measurementYear);
     const exclusion = !randomTruerBool();
     const numerator3 = randomOf100() < compliance; // Numerator 2 is dependent on 3.
     const numerator2 = numerator3 ? randomOf100() < compliance : false;
@@ -486,12 +495,14 @@ const measureFunctions = {
     }
     return data;
   },
-  newFUM: (measure, date, compliance) => { // One for 30 day gap, another for 7.
-    const data = newScoreTemplate(measure, date);
+  newFUM: (measure, date, measurementYear, compliance) => { // One for 30 day gap, another for 7.
+    const data = newScoreTemplate(measure, date, measurementYear);
     const { gap } = template[measure];
-    const { initialPopDates, exclusionDates, numeratorDates } = dateGenerator(
-      date, gap, compliance,
-    );
+    const {
+      initialPopDates,
+      exclusionDates,
+      numeratorDates,
+    } = dateGenerator(date, gap, compliance);
     const numerator2Dates = Array.from(numeratorDates);
     if (!randomTruerBool()) {
       numerator2Dates.splice(Math.floor(Math.random(numeratorDates.length) * numeratorDates), 1);
@@ -518,8 +529,8 @@ const measureFunctions = {
     }
     return data;
   },
-  newIMAE: (measure, date, compliance) => { // 4 is based on 1, 2, and 5 on 1, 2, 3
-    const data = newScoreTemplate(measure, date);
+  newIMAE: (measure, date, measurementYear, compliance) => { // 4 is based on 1, 2, and 5 on 1, 2, 3
+    const data = newScoreTemplate(measure, date, measurementYear);
     const exclusion = !randomTruerBool();
     data.result = {};
     for (let i = 1; i < 6; i += 1) { // Not as performant but easier to read.
@@ -551,8 +562,8 @@ const measureFunctions = {
     data.result['Numerator 5'] = numerator4 && data.result['Numerator 3'];
     return data;
   },
-  newPRSE: (measure, date, compliance) => {
-    const data = newScoreTemplate(measure, date);
+  newPRSE: (measure, date, measurementYear, compliance) => {
+    const data = newScoreTemplate(measure, date, measurementYear);
     const initialPop1 = [deliveryGenerator()];
     const exclusion = randomBool() ? initialPop1 : [];
     const numerator1 = randomOf100() < compliance ? initialPop1 : [];
@@ -606,7 +617,7 @@ function isCompliant(score) {
     }
   }
   if (template[measure].subs === 1
-     && score[id].Numerator.length !== score[id].Denominator.length) {
+    && score[id].Numerator.length !== score[id].Denominator.length) {
     return false;
   }
   for (let i = 1; i < template[measure].subs; i += 1) {
@@ -617,7 +628,7 @@ function isCompliant(score) {
   return true;
 }
 
-async function generateData(measureList, days) {
+async function generateData(measureList, days, measurementYear) {
   let currentDay = new Date(new Date().setDate(today.getDate() - days));
   logger.info('\n\x1b[33mInfo:\x1b[0m Starting data generation with settings:');
   logger.info(`\x1b[33mInfo:\x1b[0m Measures will be produced for ${measureList.toString()} will be used.\n`);
@@ -630,8 +641,8 @@ async function generateData(measureList, days) {
     currentDay = new Date(new Date().setDate(today.getDate() - daysLeft));
     logger.info(`TESTING: On day ${daysLeft}, ${currentDay.toISOString()}:`);
     for (let i = 0; i < scoresToUpdate.length; i += 1) {
-      const score = measureFunctions[template[scoresToUpdate[i].measurementType]
-        .updateEntry](scoresToUpdate[i], currentDay);
+      const scoreFunc = measureFunctions[template[scoresToUpdate[i].measurementType].updateEntry];
+      const score = scoreFunc(scoresToUpdate[i], currentDay, measurementYear);
       newScores.push(score);
       if (!isCompliant(score)) {
         if (randomOf100() < template[scoresToUpdate[i].measurementType].updateChance) {
@@ -684,8 +695,13 @@ async function generateData(measureList, days) {
     for (let i = 0; i < measureList.length; i += 1) {
       measure = measureList[i % measureList.length];
       for (let j = 0; j < dayTracker[measure].amount; j += 1) {
-        const score = measureFunctions[template[measure].newEntry](
-          measure, currentDay, dayTracker[measure].complyRate,
+        const currentFunction = measureFunctions[template[measure].newEntry];
+        logger.info(currentFunction.name);
+        const score = currentFunction(
+          measure,
+          currentDay,
+          measurementYear,
+          dayTracker[measure].complyRate,
         );
         newScores.push(score);
         if (!isCompliant(score)) {
@@ -733,7 +749,22 @@ async function insertData(newScoresList) {
 }
 
 async function processData() {
-  let measureList = Object.keys(template);
+  if (!parseArgs.y) {
+    logger.error('\x1b[31mError:\x1b[0m The "year" argument is required. Aborting.');
+    process.exit();
+  } else if (typeof parseArgs.y !== 'number') {
+    logger.error('\x1b[31mError:\x1b[0m The "year" argument must be a number. Aborting.');
+    process.exit();
+  }
+
+  let measureList = Object.entries(template)
+    .filter(([, measureInfo]) => measureInfo.measurementYears.includes(parseArgs.y))
+    .map(([measure]) => measure);
+  if (measureList.length === 0) {
+    logger.error(`\x1b[31mError:\x1b[0m No measures found for year ${parseArgs.y}. Aborting.`);
+    process.exit();
+  }
+
   if (parseArgs.i !== undefined) {
     const includedList = parseArgs.i.split(',');
     const checkedList = includedList.filter((measure) => !measureList.includes(measure));
@@ -755,7 +786,7 @@ async function processData() {
   }
 
   const days = parseArgs.d || 0;
-  const newScoresList = await generateData(measureList, days);
+  const newScoresList = await generateData(measureList, days, parseArgs.y);
   logger.info(`\x1b[33mInfo:\x1b[0m ${newScoresList.length} scores to be inserted. ${scoresToUpdate.length} are non-compliant, and ${scoresUpdated} became compliant.`);
   if (parseArgs.o) {
     outputData(newScoresList, measureList, days);
@@ -765,6 +796,7 @@ async function processData() {
 
 if (parseArgs.h === true) {
   logger.info('\n A script for generated fake HEDIS scores for Saraswati.\n\n Options:');
+  logger.info('   -y, --year: The measurement year to generate data for. Required option.');
   logger.info('   -d, --days: How many days back you want generated. Default is 0, today.');
   logger.info('   -h, --help: Help command. What you\'re reading now...');
   logger.info('   -i, --include: A spaceless, comma-separated list of measures to create. Default is to use all. Valid options are: ');
