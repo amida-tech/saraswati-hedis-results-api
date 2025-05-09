@@ -143,7 +143,7 @@ const deliveryGenerator = (measure) => ({
 });
 
 const measureFunctions = {
-  newSingleDate: (measure, date, compliance, measurementYear) => {
+  newSingleDate: (measure, date, measurementYear, compliance) => {
     const data = newScoreTemplate(measure, date, measurementYear);
     const { gap } = template[measure];
     const {
@@ -181,7 +181,7 @@ const measureFunctions = {
     return data;
   },
   // Same init pop, differing denom and numerators.
-  newDoubleBool: (measure, date, compliance, measurementYear) => {
+  newDoubleBool: (measure, date, measurementYear, compliance) => {
     const data = newScoreTemplate(measure, date, measurementYear);
     const exclusion = randomBool();
     const numerator1 = randomOf100() < compliance;
@@ -211,7 +211,7 @@ const measureFunctions = {
     }
     return data;
   }, // Same init pop and denom, 3rd num depends on prior 2
-  newTripleDependBool: (measure, date, compliance, measurementYear) => {
+  newTripleDependBool: (measure, date, measurementYear, compliance) => {
     const data = newScoreTemplate(measure, date, measurementYear);
     const exclusion = randomBool();
     const numerator1 = randomOf100() < compliance;
