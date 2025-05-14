@@ -31,9 +31,9 @@ const template = {
     newEntry: 'newADDE',
     updateEntry: 'updateADDE',
   },
-  aise: { // Adult Immunization Status
+  aise_2022: { // MY2022 Adult Immunization Status
     subs: 4,
-    measurementYears: [2022, 2025],
+    measurementYears: [2022],
     type: 'bool',
     ranges: [
       { day: 0, popRange: [20, 30], compRange: [10, 20] },
@@ -45,6 +45,21 @@ const template = {
     updateChance: 90,
     newEntry: 'newAISE',
     updateEntry: 'updateAISE',
+  },
+  aise_2025: { // MY2025 Adult Immunization Status
+    subs: 5,
+    measurementYears: [2025],
+    type: 'bool',
+    ranges: [
+      { day: 0, popRange: [20, 30], compRange: [10, 20] },
+      { day: 11, popRange: [5, 13], compRange: [80, 90] },
+      { day: 13, popRange: [35, 53], compRange: [20, 25] },
+      { day: 26, popRange: [115, 130], compRange: [90, 98] },
+      { day: 27, popRange: [255, 280], compRange: [5, 7] },
+    ],
+    updateChance: 90,
+    newEntry: 'newAISE_2025',
+    updateEntry: 'updateAISE_2025',
   },
   apme: { // Metabolic Monitoring for Children and Adolescents on Antipsychotics
     subs: 3,

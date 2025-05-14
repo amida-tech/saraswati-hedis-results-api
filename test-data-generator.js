@@ -35,7 +35,8 @@ const numeratorCheck = (data, index) => (
 );
 
 const newScoreTemplate = (measure, date, measurementYear) => {
-  const id = `${measure}-${uuidv4()}`;
+  const measureName = measure.split('_')[0];
+  const id = `${measureName}-${uuidv4()}`;
   const coverageChosen = Math.floor(Math.random() * coveragePlans.length);
 
   const periodDate = new Date(date.toDateString());
@@ -44,9 +45,10 @@ const newScoreTemplate = (measure, date, measurementYear) => {
   periodDate.setFullYear(date.getFullYear() + 1);
   const periodEnd = dateFormatter(periodDate);
 
-  const providerChoices = providerOptions.filter((provider) => provider.measures.includes(measure));
+  const providerChoices = providerOptions
+    .filter((provider) => provider.measures.includes(measureName));
   const data = {
-    measurementType: measure,
+    measurementType: measureName,
     measurementYear,
     memberId: id,
     timeStamp: date.toISOString(),
@@ -310,7 +312,6 @@ const measureFunctions = {
   // 4 sub measure, depending on vaccines and age ranges
   newAISE: (measure, date, measurementYear, compliance) => {
     const data = newScoreTemplate(measure, date, measurementYear);
-    const exclusion = randomBool();
     const initialPop3 = randomBool();
     const initialPop4 = initialPop3 ? randomBool() : false;
     data.result = {
@@ -318,10 +319,10 @@ const measureFunctions = {
       'Initial Population 2': true,
       'Initial Population 3': initialPop3,
       'Initial Population 4': initialPop4,
-      'Exclusions 1': exclusion,
-      'Exclusions 2': exclusion,
-      'Exclusions 3': exclusion,
-      'Exclusions 4': exclusion,
+      'Exclusions 1': randomBool(),
+      'Exclusions 2': randomBool(),
+      'Exclusions 3': !!initialPop3 && randomBool(),
+      'Exclusions 4': !!initialPop4 && randomBool(),
       'Denominator 1': true,
       'Denominator 2': true,
       'Denominator 3': initialPop3,
@@ -356,6 +357,26 @@ const measureFunctions = {
     }
     if (data.result['Initial Population 4'] && !data.result['Numerator 4']) {
       data.result['Numerator 4'] = randomBool();
+    }
+    return data;
+  },
+  // 5 sub measure, depending on vaccines and age ranges
+  newAISE_2025: (measure, date, measurementYear, compliance) => {
+    const data = measureFunctions.newAISE(measure, date, measurementYear, compliance);
+    const initialPopulation5 = data.result['Initial Population 3'] ? randomBool() : false;
+    data.result = {
+      ...data.result,
+      'Initial Population 5': initialPopulation5,
+      'Exclusions 5': !!initialPopulation5 && randomBool(),
+      'Denominator 5': initialPopulation5,
+      'Numerator 5': initialPopulation5 ? randomOf100() < compliance : false,
+    };
+    return data;
+  },
+  updateAISE_2025: (measure, date) => {
+    const data = measureFunctions.updateAISE(measure, date);
+    if (data.result['Initial Population 5'] && !data.result['Numerator 5']) {
+      data.result['Numerator 5'] = randomBool();
     }
     return data;
   },
