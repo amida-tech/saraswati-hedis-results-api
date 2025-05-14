@@ -53,7 +53,7 @@ const paginateMembers = async (query, skip, limit) => {
 const searchMembers = (query) => {
   const collection = db.collection('measures');
   // sanitize query
-  const saniQuery = mongoSanitize.sanitize(query);
+  const saniQuery = mongoSanitize.sanitize(query.memberId);
   return collection.find({ memberId: { $regex: saniQuery, $options: 'i' } }).toArray();
 };
 
