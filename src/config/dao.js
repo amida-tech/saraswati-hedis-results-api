@@ -79,7 +79,7 @@ const findInfo = (measure) => {
   if (measure) {
     // sanitize query
     const saniQuery = mongoSanitize.sanitize(measure);
-    return collection.find({ measureId: new RegExp(`^${saniQuery}`) }).toArray();
+    return collection.find({ measureType: new RegExp(`^${saniQuery}`) }).toArray();
   }
   return collection.find({}).toArray();
 };
