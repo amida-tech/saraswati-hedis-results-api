@@ -285,6 +285,23 @@
         }
     },
     {
+        "measureType": "aise-5",
+        "info": {
+            "domainOfCare": "ECDS",
+            "title": "Adult Immunization Status: Hepatitis B",
+            "displayLabel": "AIS-E: Hepatitis B",
+            "link": "https://www.ncqa.org/hedis/measures/adult-immunization-status/",
+            "phase": "process",
+            "weight": 1,
+            "hasSubMeasures": false,
+            "inverted": false,
+            "recommendation": [
+                "Corrective Actions, confirm that:",
+                "The required hepatitis B vaccinations must be administered before the members 19th birthday."
+            ]
+        }
+    },
+    {
         "measureType" : "bcse",
         "info" : {
             "domainOfCare" : "ECDS",

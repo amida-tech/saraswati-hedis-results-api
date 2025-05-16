@@ -1,6 +1,7 @@
 const template = {
   aab: { // Avoidance of Antibiotic Treatment for Acute Bronchitis/Bronchiolitis
     subs: 1,
+    measurementYears: [2022],
     type: 'date',
     ranges: [
       { day: 0, popRange: [3, 5], compRange: [60, 80] },
@@ -17,6 +18,7 @@ const template = {
   },
   adde: { // Follow-Up Care for Children Prescribed ADHD Medication
     subs: 2,
+    measurementYears: [2022],
     type: 'bool',
     ranges: [
       { day: 0, popRange: [5, 8], compRange: [10, 80] },
@@ -29,8 +31,9 @@ const template = {
     newEntry: 'newADDE',
     updateEntry: 'updateADDE',
   },
-  aise: { // Adult Immunization Status
+  aise_2022: { // MY2022 Adult Immunization Status
     subs: 4,
+    measurementYears: [2022],
     type: 'bool',
     ranges: [
       { day: 0, popRange: [20, 30], compRange: [10, 20] },
@@ -43,8 +46,24 @@ const template = {
     newEntry: 'newAISE',
     updateEntry: 'updateAISE',
   },
+  aise_2025: { // MY2025 Adult Immunization Status
+    subs: 5,
+    measurementYears: [2025],
+    type: 'bool',
+    ranges: [
+      { day: 0, popRange: [20, 30], compRange: [10, 20] },
+      { day: 11, popRange: [5, 13], compRange: [80, 90] },
+      { day: 13, popRange: [35, 53], compRange: [20, 25] },
+      { day: 26, popRange: [115, 130], compRange: [90, 98] },
+      { day: 27, popRange: [255, 280], compRange: [5, 7] },
+    ],
+    updateChance: 90,
+    newEntry: 'newAISE_2025',
+    updateEntry: 'updateAISE_2025',
+  },
   apme: { // Metabolic Monitoring for Children and Adolescents on Antipsychotics
     subs: 3,
+    measurementYears: [2022],
     type: 'bool',
     ranges: [
       { day: 0, popRange: [20, 30], compRange: [70, 80] },
@@ -59,6 +78,7 @@ const template = {
   },
   asfe: { // Unhealthy Alcohol Use Screening and Follow-Up
     subs: 2,
+    measurementYears: [2022],
     type: 'bool',
     ranges: [
       { day: 0, popRange: [20, 30], compRange: [30, 70] },
@@ -74,6 +94,7 @@ const template = {
   },
   bcse: { // Breast Cancer Screening
     subs: 1,
+    measurementYears: [2022, 2025],
     type: 'bool',
     ranges: [
       { day: 0, popRange: [3, 6], compRange: [5, 10] },
@@ -86,6 +107,7 @@ const template = {
   },
   ccs: { // Cervical Cancer Screening
     subs: 1,
+    measurementYears: [2022],
     type: 'bool',
     ranges: [
       { day: 0, popRange: [10, 15], compRange: [90, 95] },
@@ -98,6 +120,7 @@ const template = {
   },
   cise: { // Childhood Immunization Status
     subs: 13,
+    measurementYears: [2022],
     type: 'bool',
     ranges: [
       { day: 0, popRange: [12, 24], compRange: [30, 45] },
@@ -112,6 +135,7 @@ const template = {
   },
   cole: { // Colorectal Cancer Screening
     subs: 1,
+    measurementYears: [2022],
     type: 'bool',
     ranges: [
       { day: 0, popRange: [3, 6], compRange: [5, 10] },
@@ -124,6 +148,7 @@ const template = {
   },
   cou: { // Risk of Continued Opioid Use
     subs: 2,
+    measurementYears: [2022],
     type: 'bool',
     ranges: [
       { day: 0, popRange: [20, 30], compRange: [70, 90] },
@@ -138,6 +163,7 @@ const template = {
   },
   cwp: { // Appropriate Testing for Pharyngitis
     subs: 1,
+    measurementYears: [2022],
     type: 'date',
     ranges: [
       { day: 0, popRange: [5, 8], compRange: [5, 7] },
@@ -154,6 +180,7 @@ const template = {
   },
   dmse: { // Utilization of the PHQ-9 to Monitor Depression Symptoms for Adolescents and Adults
     subs: 3,
+    measurementYears: [2022],
     type: 'bool',
     ranges: [
       { day: 0, popRange: [20, 30], compRange: [10, 20] },
@@ -167,6 +194,7 @@ const template = {
   },
   drre: { // Depression Remission or Response for Adolescents and Adults
     subs: 3,
+    measurementYears: [2022],
     type: 'bool',
     ranges: [
       { day: 0, popRange: [5, 10], compRange: [15, 25] },
@@ -182,6 +210,7 @@ const template = {
   },
   dsfe: { // Depression Screening and Follow-Up for Adolescents and Adults
     subs: 2,
+    measurementYears: [2022],
     type: 'bool',
     ranges: [
       { day: 0, popRange: [5, 10], compRange: [15, 25] },
@@ -195,6 +224,7 @@ const template = {
   },
   fum: { // Follow-Up After Emergency Department Visit for Mental Illness
     subs: 2,
+    measurementYears: [2022],
     type: 'date',
     ranges: [
       { day: 0, popRange: [5, 10], compRange: [55, 65] },
@@ -208,6 +238,7 @@ const template = {
   },
   imae: { // Immunizations for Adolescents
     subs: 5,
+    measurementYears: [2022],
     type: 'bool',
     ranges: [
       { day: 0, popRange: [5, 10], compRange: [90, 95] },
@@ -228,6 +259,7 @@ const template = {
   },
   pdse: { // Postpartum Depression Screening and Follow-Up
     subs: 2,
+    measurementYears: [2022],
     type: 'object',
     ranges: [
       { day: 0, popRange: [5, 10], compRange: [10, 100] },
@@ -238,6 +270,7 @@ const template = {
   },
   pnde: { // Prenatal Depression Screening and Follow-Up
     subs: 2,
+    measurementYears: [2022],
     type: 'object',
     ranges: [
       { day: 0, popRange: [5, 10], compRange: [5, 7] },
@@ -248,6 +281,7 @@ const template = {
   },
   prse: { // Prenatal Immunization Status
     subs: 3,
+    measurementYears: [2022],
     type: 'object',
     ranges: [
       { day: 0, popRange: [8, 15], compRange: [10, 20] },
@@ -262,6 +296,7 @@ const template = {
   },
   psa: { // Non-Recommended PSA-Based (prostate-specific antigen) Screening in Older Men
     subs: 1,
+    measurementYears: [2022],
     type: 'bool',
     ranges: [
       { day: 0, popRange: [10, 10], compRange: [68, 82] },
@@ -273,6 +308,7 @@ const template = {
   },
   uop: { // Use of Opioids From Multiple Providers
     subs: 3,
+    measurementYears: [2022],
     type: 'bool',
     ranges: [
       { day: 0, popRange: [10, 10], compRange: [0, 5] },
@@ -284,6 +320,7 @@ const template = {
   },
   uri: { // Appropriate Treatment for Upper Respiratory Infection
     subs: 1,
+    measurementYears: [2022],
     type: 'date',
     gap: 31,
     ranges: [
