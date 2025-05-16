@@ -18,7 +18,9 @@ const getMeasureResults = async (req, res, next) => {
 
 const getDailyMeasureResults = async (_req, res, next) => {
   try {
-    const patientResults = await dao.findMembers({});
+    const measurementYear = _req.query.measurementYear ? parseInt(_req.query.measurementYear, 10)
+      : new Date().getFullYear();
+    const patientResults = await dao.findMembers({ measurementYear });
 
     if (patientResults.length === 0) {
       return res.send([]);
@@ -37,13 +39,16 @@ const getDailyMeasureResults = async (_req, res, next) => {
 const getTrends = async (req, res, next) => {
   try {
     const predictions = await dao.findPredictions();
+    const measurementYear = req.query.measurementYear ? parseInt(req.query.measurementYear, 10)
+      : new Date().getFullYear();
+
     if (req.query.legacyResults === 'true') {
       const results = await dao.findMeasureResults({});
 
       const legacyTrendData = calculateTrendLegacy(results, predictions, 7);
       return res.send(legacyTrendData);
     }
-    const memberResults = await dao.findMembers({});
+    const memberResults = await dao.findMembers({ measurementYear });
     const infoList = await dao.findInfo();
     const measureInfo = createInfoObject(infoList);
     const trendData = calculateTrend(memberResults, measureInfo, predictions, 7);
