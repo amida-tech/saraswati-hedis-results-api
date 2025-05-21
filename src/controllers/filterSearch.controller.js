@@ -4,8 +4,8 @@ const { calculateDailyMeasureResults } = require('../calculators/DailyResultsCal
 const { createInfoObject } = require('../utilities/infoUtil');
 
 const filterMembers = async (req, res, next) => {
-  const { submeasure, filters } = req.body;
-  const { searchQuery } = queryBuilder(submeasure, filters);
+  const { submeasure, measurementYear, filters } = req.body;
+  const { searchQuery } = queryBuilder(submeasure, measurementYear, filters);
   try {
     const Members = await dao.findMembers(searchQuery);
     req.FoundMembers = Members;

@@ -1,4 +1,4 @@
-function queryBuilder(submeasure, filters) {
+function queryBuilder(submeasure, measurementYear, filters) {
   const payors = [];
   const healthcareProviders = [];
   const healthcareCoverages = [];
@@ -49,10 +49,12 @@ function queryBuilder(submeasure, filters) {
     $and.push({ $or: healthcarePractitioners });
   }
 
-  let searchQuery = { measurementType: submeasure };
+  let searchQuery = {
+    measurementYear: parseInt(measurementYear, 10),
+  };
 
-  if (submeasure === false) {
-    searchQuery = {};
+  if (submeasure) {
+    searchQuery.measurementType = submeasure;
   }
   if ($and.length > 0) {
     searchQuery = { ...searchQuery, $and };
