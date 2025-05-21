@@ -23,6 +23,7 @@ const measurementQuery = {
 const exportCsv = {
   query: Joi.object({
     measurementType: Joi.string().required(),
+    measurementYear: Joi.number(),
   }),
 };
 
