@@ -16,9 +16,9 @@ const getMeasureResults = async (req, res, next) => {
   }
 };
 
-const getDailyMeasureResults = async (_req, res, next) => {
+const getDailyMeasureResults = async (req, res, next) => {
   try {
-    const measurementYear = _req.query.measurementYear ? parseInt(_req.query.measurementYear, 10)
+    const measurementYear = req.query.measurementYear ? parseInt(req.query.measurementYear, 10)
       : new Date().getFullYear();
     const patientResults = await dao.findMembers({ measurementYear });
 
