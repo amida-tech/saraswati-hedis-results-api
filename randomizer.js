@@ -16,9 +16,11 @@ function randomNumber(var1, var2) {
 async function generateData() {
   return measureResultsDao.findMeasureResults().then((value) => {
     if (value.length === 0) {
-      logger.error('\x1b[31m',
+      logger.error(
+        '\x1b[31m',
         '\nError: No data found.',
-        '\x1b[0m');
+        '\x1b[0m',
+      );
       process.exit();
     }
     const sortedList = value.sort((a, b) => b.date - a.date);
@@ -61,7 +63,8 @@ async function generateData() {
             subScore.date = newDate;
             subScore.denominator = 100;
             subScore.numerator = randomNumber(
-              randomRanges[currentCount % 10], randomRanges[(currentCount + 3) % 10],
+              randomRanges[currentCount % 10],
+              randomRanges[(currentCount + 3) % 10],
             );
             subScore.value = (subScore.numerator / subScore.denominator) * 100;
             subScore.exclusions = Math.floor(Math.random() * 20);

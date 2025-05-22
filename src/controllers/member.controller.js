@@ -13,8 +13,8 @@ const getMembers = async (req, res, next) => {
 const paginateMembers = async (req, res, next) => {
   const { measurementType } = req.query;
   const { filters } = req.body;
-  const page = parseInt(req.query.page);
-  const size = parseInt(req.query.size);
+  const page = parseInt(req.query.page, 10);
+  const size = parseInt(req.query.size, 10);
 
   const { searchQuery } = queryBuilder(measurementType || false, filters);
 

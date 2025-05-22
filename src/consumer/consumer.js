@@ -1,6 +1,5 @@
 const { Kafka } = require('kafkajs');
 const config = require('../config/config');
-const paramValidation = require('../config/param-validation');
 const logger = require('../config/winston');
 
 const {
@@ -28,9 +27,9 @@ async function kafkaRunner() {
   await admin.disconnect();
   await consumer.subscribe({ topic: config.kafkaConfig.queue, fromBeginning: false });
   await consumer.run({
-    eachMessage: async ({ topic, partition, message }) => {
+    eachMessage: async (messageInfo) => {
       logger.info('Kafka message has arrived to HERA');
-      const jsonObject = JSON.parse(message.value.toString());
+      const jsonObject = JSON.parse(messageInfo.message.value.toString());
       logger.info(`Date: ${new Date()}`);
       logger.info(`Member Id: ${jsonObject.memberId}`);
       if (jsonObject !== undefined && Array.isArray(jsonObject)) {
