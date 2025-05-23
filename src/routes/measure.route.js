@@ -31,4 +31,7 @@ router.route('/trends')
 router.route('/exportCsv')
   .get(validate(paramValidation.exportCsv), measureCtrl.exportCsv);
 
+router.route('/compare')
+  .post(validate(paramValidation.compareResults), measureCtrl.compareMembers);
+
 module.exports = router;

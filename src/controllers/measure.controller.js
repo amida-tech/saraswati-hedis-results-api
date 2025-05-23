@@ -2,6 +2,7 @@ const dao = require('../config/dao');
 
 const { calculateTrend, calculateTrendLegacy } = require('../calculators/TrendCalculator');
 const { calculateDailyMeasureResults } = require('../calculators/DailyResultsCalculator');
+const { queryBuilder } = require('../utilities/filterDrawerUtils');
 
 const { createInfoObject } = require('../utilities/infoUtil');
 const { generateCsv } = require('../utilities/reportsUtil');
@@ -107,6 +108,34 @@ const postInfo = async (req, res, next) => {
   }
 };
 
+const compareMembers = async (req, res, next) => {
+  try {
+    const {
+      measurementType, measurementYear, compareFilterOne, compareFilterTwo,
+    } = req.body;
+    const filterQueryOne = queryBuilder(measurementType, measurementYear, compareFilterOne);
+    const filterQueryTwo = queryBuilder(measurementType, measurementYear, compareFilterTwo);
+    const queryOne = dao.findMembers(filterQueryOne.searchQuery);
+    const queryTwo = dao.findMembers(filterQueryTwo.searchQuery);
+    const [patientResultsOne, patientResultsTwo] = await Promise.all(
+      [queryOne, queryTwo],
+    );
+
+    const infoList = await dao.findInfo();
+    const measureInfo = createInfoObject(infoList);
+
+    const dailyMeasureResultsOne = calculateDailyMeasureResults(patientResultsOne, measureInfo);
+    const dailyMeasureResultsTwo = calculateDailyMeasureResults(patientResultsTwo, measureInfo);
+
+    return res.send({
+      dailyMeasureResultsOne,
+      dailyMeasureResultsTwo,
+    });
+  } catch (e) {
+    return next(e);
+  }
+};
+
 module.exports = {
   getMeasureResults,
   getDailyMeasureResults,
@@ -115,4 +144,5 @@ module.exports = {
   exportCsv,
   postMeasureResults,
   postInfo,
+  compareMembers,
 };

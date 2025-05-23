@@ -1,7 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 const { MongoClient } = require('mongodb');
 const logger = require('winston');
-const mongoSanitize = require('express-mongo-sanitize');
 const { mongodb } = require('./config');
 
 const connectionUrl = `mongodb://${mongodb.host}:${mongodb.port}`;
@@ -20,25 +19,21 @@ const initTest = (mockDb) => {
   db = mockDb;
 };
 
-const findMembers = (query) => {
-  // sanitize query
-  const saniQuery = mongoSanitize.sanitize(query);
-  const collection = db.collection('measures');
-  return collection.find(saniQuery).toArray();
+const findMembers = async (query) => {
+  const collection = await db.collection('measures');
+  return collection.find(query).toArray();
 };
 
 const paginateMembers = async (query, skip, limit) => {
   if (query === undefined) {
     return [];
   }
-  // sanitize query
-  const saniQuery = mongoSanitize.sanitize(query);
   const collection = db.collection('measures');
   const pipeline = await collection.aggregate([{
     $facet: {
       members: [
         {
-          $match: saniQuery,
+          $match: query,
         },
         { $skip: skip },
         { $limit: limit },
@@ -52,17 +47,13 @@ const paginateMembers = async (query, skip, limit) => {
 
 const searchMembers = (query) => {
   const collection = db.collection('measures');
-  // sanitize query
-  const saniQuery = mongoSanitize.sanitize(query.memberId);
-  return collection.find({ memberId: { $regex: saniQuery, $options: 'i' } }).toArray();
+  return collection.find({ memberId: { $regex: query, $options: 'i' } }).toArray();
 };
 
 const findMeasureResults = (query) => {
   const collection = db.collection('measure_results');
-  // sanitize query
-  const saniQuery = mongoSanitize.sanitize(query);
   try {
-    return collection.find(saniQuery).toArray();
+    return collection.find(query).toArray();
   } catch (e) {
     logger.error(e);
   }
@@ -77,9 +68,7 @@ const findPredictions = () => {
 const findInfo = (measure) => {
   const collection = db.collection('hedis_info');
   if (measure) {
-    // sanitize query
-    const saniQuery = mongoSanitize.sanitize(measure);
-    return collection.find({ measureType: new RegExp(`^${saniQuery}`) }).toArray();
+    return collection.find({ measureType: new RegExp(`^${measure}`) }).toArray();
   }
   return collection.find({}).toArray();
 };
@@ -243,9 +232,7 @@ const insertHealthcareCoverage = async (coverage) => {
 const getUsers = (query) => {
   try {
     const collection = db.collection('users');
-    // sanitize query
-    const saniQuery = mongoSanitize.sanitize(query);
-    return collection.find(saniQuery).toArray();
+    return collection.find(query).toArray();
   } catch (e) {
     logger.error(e);
   }
@@ -255,9 +242,7 @@ const getUsers = (query) => {
 const getUsersByEmail = (email) => {
   try {
     const collection = db.collection('users');
-    // sanitize query
-    const saniQuery = mongoSanitize.sanitize(email);
-    return collection.find({ saniQuery }).toArray();
+    return collection.find({ email }).toArray();
   } catch (e) {
     logger.error(e);
   }

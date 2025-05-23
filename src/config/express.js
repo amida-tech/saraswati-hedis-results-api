@@ -5,6 +5,7 @@ const swStats = require('swagger-stats');
 const expressWinston = require('express-winston');
 const winstonInstance = require('winston');
 const pes = require('perfect-express-sanitizer');
+const mongoSanitize = require('express-mongo-sanitize');
 const config = require('./config');
 const routes = require('../routes/index.route');
 
@@ -15,7 +16,15 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(cors());
 app.use(helmet());
-app.use(pes.clean({ xss: true, noSql: true, sql: true }));
+// Removed sql: true from the sanitizer options because it was
+// removing `/` from all text in the request body and breaking the filtering
+app.use(pes.clean({ xss: true, noSql: true }));
+// By default, $ and . characters are removed completely in the following places:
+// - req.body
+// - req.params
+// - req.headers
+// - req.query
+app.use(mongoSanitize());
 app.use(swStats.getMiddleware({}));
 
 if (config.env === 'development' || config.env === 'production') {

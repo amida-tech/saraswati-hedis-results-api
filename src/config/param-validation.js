@@ -33,6 +33,25 @@ const memberInfo = {
   }),
 };
 
+const compareResults = {
+  body: Joi.object({
+    measurementYear: Joi.number().required(),
+    measurementType: Joi.string().required(),
+    compareFilterOne: Joi.object({
+      payors: Joi.array().items(Joi.string()),
+      healthcareProviders: Joi.array().items(Joi.string()),
+      healthcareCoverages: Joi.array().items(Joi.string()),
+      healthcarePractitioners: Joi.array().items(Joi.string()),
+    }).required(),
+    compareFilterTwo: Joi.object({
+      payors: Joi.array().items(Joi.string()),
+      healthcareProviders: Joi.array().items(Joi.string()),
+      healthcareCoverages: Joi.array().items(Joi.string()),
+      healthcarePractitioners: Joi.array().items(Joi.string()),
+    }).required(),
+  }),
+};
+
 module.exports = {
   createMeasure: measure,
   createMeasureBulk: {
@@ -41,4 +60,5 @@ module.exports = {
   searchMeasurements: measurementQuery,
   exportCsv,
   memberInfo,
+  compareResults,
 };
