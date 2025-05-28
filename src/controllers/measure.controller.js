@@ -116,6 +116,11 @@ const getFilterCriteria = async (compareOption) => {
       return filterCriteria.map((value) => ({
         value: value.value, display: value.provider,
       }));
+    case 'payors':
+      filterCriteria = await dao.getPayors();
+      return filterCriteria.map((value) => ({
+        value: value.value, display: value.payor,
+      }));
     default:
       break;
   }
@@ -146,6 +151,13 @@ const compareMembers = async (req, res, next) => {
         if (compareOption === 'healthcareProviders') {
           const { providers } = patientResult;
           if (providers.find((provider) => provider.reference === filterOption.value)) {
+            filteredPatients.push(patientResult);
+          }
+        } else if (compareOption === 'payors') {
+          const { coverage } = patientResult;
+          if (coverage
+            .find((coverageOption) => coverageOption.payor
+              .find((payor) => payor.reference.value === filterOption.value))) {
             filteredPatients.push(patientResult);
           }
         }
