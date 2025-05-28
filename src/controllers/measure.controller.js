@@ -121,6 +121,16 @@ const getFilterCriteria = async (compareOption) => {
       return filterCriteria.map((value) => ({
         value: value.value, display: value.payor,
       }));
+    case 'healthcareCoverages':
+      filterCriteria = await dao.getHealthcareCoverages();
+      return filterCriteria.map((value) => ({
+        value: value.value, display: value.coverage,
+      }));
+    case 'healthcarePractitioners':
+      filterCriteria = await dao.getPractitioners();
+      return filterCriteria.map((value) => ({
+        value: value.value, display: value.practitioner,
+      }));
     default:
       break;
   }
@@ -148,7 +158,7 @@ const compareMembers = async (req, res, next) => {
       const filteredPatients = [];
       // Find the patients that have the correct info
       patientResults.forEach((patientResult) => {
-        if (compareOption === 'healthcareProviders') {
+        if (compareOption === 'healthcareProviders' || compareOption === 'healthcarePractitioners') {
           const { providers } = patientResult;
           if (providers.find((provider) => provider.reference === filterOption.value)) {
             filteredPatients.push(patientResult);
@@ -158,6 +168,13 @@ const compareMembers = async (req, res, next) => {
           if (coverage
             .find((coverageOption) => coverageOption.payor
               .find((payor) => payor.reference.value === filterOption.value))) {
+            filteredPatients.push(patientResult);
+          }
+        } else if (compareOption === 'healthcareCoverages') {
+          const { coverage } = patientResult;
+          if (coverage
+            .find((coverageOption) => coverageOption.type.coding
+              .find((coding) => coding.code.value === filterOption.value))) {
             filteredPatients.push(patientResult);
           }
         }
