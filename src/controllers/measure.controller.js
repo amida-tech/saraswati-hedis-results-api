@@ -108,29 +108,57 @@ const postInfo = async (req, res, next) => {
   }
 };
 
+const getFilterCriteria = async (compareOption) => {
+  let filterCriteria = [];
+  switch (compareOption) {
+    case 'healthcareProviders':
+      filterCriteria = await dao.getHealthcareProviders();
+      return filterCriteria.map((value) => ({
+        value: value.value, display: value.provider,
+      }));
+    default:
+      break;
+  }
+  return [];
+};
+
 const compareMembers = async (req, res, next) => {
   try {
     const {
-      measurementType, measurementYear, compareFilterOne, compareFilterTwo,
+      measurementType, measurementYear, compareOption,
     } = req.body;
-    const filterQueryOne = queryBuilder(measurementType, measurementYear, compareFilterOne);
-    const filterQueryTwo = queryBuilder(measurementType, measurementYear, compareFilterTwo);
-    const queryOne = dao.findMembers(filterQueryOne.searchQuery);
-    const queryTwo = dao.findMembers(filterQueryTwo.searchQuery);
-    const [patientResultsOne, patientResultsTwo] = await Promise.all(
-      [queryOne, queryTwo],
-    );
+    // Get patient results based on measurementType and year
+    const patientResults = await dao.findMembers({ measurementType, measurementYear });
 
+    // Get information about the measures
     const infoList = await dao.findInfo();
     const measureInfo = createInfoObject(infoList);
+    // Get a {display, label} list of filter criteria
+    // Options are: payors, healthcareProviders, healthcareCoverages, healthcarePractitioners
+    const filterCriteria = await getFilterCriteria(compareOption);
 
-    const dailyMeasureResultsOne = calculateDailyMeasureResults(patientResultsOne, measureInfo);
-    const dailyMeasureResultsTwo = calculateDailyMeasureResults(patientResultsTwo, measureInfo);
-
-    return res.send({
-      dailyMeasureResultsOne,
-      dailyMeasureResultsTwo,
+    const compiledDailyMeasureResults = [];
+    // For each filter criteria
+    filterCriteria.forEach((filterOption) => {
+      const filteredPatients = [];
+      // Find the patients that have the correct info
+      patientResults.forEach((patientResult) => {
+        if (compareOption === 'healthcareProviders') {
+          const { providers } = patientResult;
+          if (providers.find((provider) => provider.reference === filterOption.value)) {
+            filteredPatients.push(patientResult);
+          }
+        }
+      });
+      // Find the results of the patient set
+      const filteredResults = calculateDailyMeasureResults(filteredPatients, measureInfo);
+      // Add the results to the final list
+      filteredResults
+        .forEach((result) => compiledDailyMeasureResults
+          .push({ comparisonItem: filterOption.display, ...result }));
     });
+
+    return res.send(compiledDailyMeasureResults);
   } catch (e) {
     return next(e);
   }
