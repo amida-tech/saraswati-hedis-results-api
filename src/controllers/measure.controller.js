@@ -143,7 +143,8 @@ const compareMembers = async (req, res, next) => {
     } = req.body;
     let patientResults = [];
     // Get patient results based on measurementType and year
-    if (measurementType === 'composite') {
+    const isComposite = measurementType === 'composite';
+    if (isComposite) {
       patientResults = await dao.findMembers({ measurementYear });
     } else {
       patientResults = await dao.findMembers({ measurementType, measurementYear });
@@ -184,9 +185,10 @@ const compareMembers = async (req, res, next) => {
         }
       });
       // Find the results of the patient set
-      let filteredResults = calculateDailyMeasureResults(filteredPatients, measureInfo, measurementType === 'composite');
+      // eslint-disable-next-line max-len
+      let filteredResults = calculateDailyMeasureResults(filteredPatients, measureInfo, isComposite);
       // Add the results to the final list
-      if (measurementType === 'composite') {
+      if (isComposite) {
         filteredResults = filteredResults.filter((result) => result.measure === 'composite');
       }
       filteredResults
