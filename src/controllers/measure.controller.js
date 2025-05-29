@@ -2,7 +2,6 @@ const dao = require('../config/dao');
 
 const { calculateTrend, calculateTrendLegacy } = require('../calculators/TrendCalculator');
 const { calculateDailyMeasureResults } = require('../calculators/DailyResultsCalculator');
-const { queryBuilder } = require('../utilities/filterDrawerUtils');
 
 const { createInfoObject } = require('../utilities/infoUtil');
 const { generateCsv } = require('../utilities/reportsUtil');
