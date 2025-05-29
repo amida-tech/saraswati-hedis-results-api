@@ -179,7 +179,7 @@ const compareMembers = async (req, res, next) => {
         }
       });
       // Find the results of the patient set
-      const filteredResults = calculateDailyMeasureResults(filteredPatients, measureInfo);
+      const filteredResults = calculateDailyMeasureResults(filteredPatients, measureInfo, false);
       // Add the results to the final list
       filteredResults
         .forEach((result) => compiledDailyMeasureResults

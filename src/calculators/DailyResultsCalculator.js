@@ -3,7 +3,7 @@ const { calcLatestNumDen } = require('./NumDenCalculator');
 const dayMiliseconds = 86400000;
 const eodMiliseconds = 84960000;
 
-const calculateDailyMeasureResults = (patientResults, measureInfo) => {
+const calculateDailyMeasureResults = (patientResults, measureInfo, calculateComposite = true) => {
   const currentDate = new Date();
   currentDate.setHours(0);
   currentDate.setMinutes(0);
@@ -18,7 +18,7 @@ const calculateDailyMeasureResults = (patientResults, measureInfo) => {
   );
   while (filteredResults.length !== 0) {
     dailyMeasureResults = dailyMeasureResults
-      .concat(calcLatestNumDen(filteredResults, measureInfo, newDate));
+      .concat(calcLatestNumDen(filteredResults, measureInfo, newDate, calculateComposite));
     newDate = new Date(newDate.getTime() - dayMiliseconds);
     const compareDateTime = newDate.getTime() + eodMiliseconds;
     filteredResults = filteredResults.filter(
