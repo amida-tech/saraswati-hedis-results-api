@@ -47,7 +47,7 @@ const paginateMembers = async (query, skip, limit) => {
 
 const searchMembers = (query) => {
   const collection = db.collection('measures');
-  return collection.find({ memberId: { $regex: query, $options: 'i' } }).toArray();
+  return collection.find({ memberId: { $regex: query.memberId, $options: 'i' } }).toArray();
 };
 
 const findMeasureResults = (query) => {
