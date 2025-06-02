@@ -9,7 +9,8 @@ const calculateDailyMeasureResults = (patientResults, measureInfo, calculateComp
   currentDate.setMinutes(0);
   currentDate.setSeconds(0);
   currentDate.setMilliseconds(0);
-  let dailyMeasureResults = calcLatestNumDen(patientResults, measureInfo, currentDate);
+  // eslint-disable-next-line max-len
+  let dailyMeasureResults = calcLatestNumDen(patientResults, measureInfo, currentDate, calculateComposite);
 
   // Set the day to 5/5/2022, but compare the times against 5/5/2022 11:59:59 PM
   let newDate = new Date(currentDate.getTime() - dayMiliseconds);
