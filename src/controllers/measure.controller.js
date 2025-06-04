@@ -204,7 +204,7 @@ const compareMembers = async (req, res, next) => {
         });
     });
 
-    return res.send({ results: compiledDailyMeasureResults, info: infoList });
+    return res.send({ results: compiledDailyMeasureResults, info: measureInfo });
   } catch (e) {
     return next(e);
   }
