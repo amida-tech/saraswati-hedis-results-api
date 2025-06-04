@@ -171,8 +171,11 @@ const compareMembers = async (req, res, next) => {
         } else if (compareOption === 'payors') {
           const { coverage } = patientResult;
           if (coverage
-            .find((coverageOption) => coverageOption.payor
-              .find((payor) => payor.reference.value === filterOption.value))) {
+            .find((coverageOption) => {
+              const { payor } = coverageOption;
+              return payor ? payor
+                .find((payorInfo) => payorInfo.reference.value === filterOption.value) : null;
+            })) {
             filteredPatients.push(patientResult);
           }
         } else if (compareOption === 'healthcareCoverages') {
@@ -195,11 +198,13 @@ const compareMembers = async (req, res, next) => {
         .forEach((result) => {
           const newResult = { comparisonItem: filterOption.display, ...result };
           delete newResult.subScores;
-          compiledDailyMeasureResults.push(newResult);
+          if (!Number.isNaN(newResult.value)) {
+            compiledDailyMeasureResults.push(newResult);
+          }
         });
     });
 
-    return res.send(compiledDailyMeasureResults);
+    return res.send({ results: compiledDailyMeasureResults, info: infoList });
   } catch (e) {
     return next(e);
   }
