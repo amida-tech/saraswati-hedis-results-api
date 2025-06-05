@@ -16,9 +16,9 @@ const getMeasureResults = async (req, res, next) => {
   }
 };
 
-const getDailyMeasureResults = async (_req, res, next) => {
+const getDailyMeasureResults = async (req, res, next) => {
   try {
-    const measurementYear = _req.query.measurementYear ? parseInt(_req.query.measurementYear, 10)
+    const measurementYear = req.query.measurementYear ? parseInt(req.query.measurementYear, 10)
       : new Date().getFullYear();
     const patientResults = await dao.findMembers({ measurementYear });
 
@@ -74,7 +74,11 @@ const exportCsv = async (req, res, next) => {
   try {
     res.set({ 'Content-Disposition': 'attachment; filename=results-export.csv' });
     const xssMeasurementType = req.query.measurementType;
-    const patientResults = await dao.findMembers(req.query);
+    const query = {
+      measurementType: xssMeasurementType,
+      measurementYear: parseInt(req.query.measurementYear, 10),
+    };
+    const patientResults = await dao.findMembers(query);
     const infoList = await dao.findInfo(xssMeasurementType);
     const measureInfo = createInfoObject(infoList);
     const csv = generateCsv(patientResults, measureInfo, xssMeasurementType);
@@ -103,6 +107,109 @@ const postInfo = async (req, res, next) => {
   }
 };
 
+const getFilterCriteria = async (compareOption) => {
+  let filterCriteria = [];
+  switch (compareOption) {
+    case 'healthcareProviders':
+      filterCriteria = await dao.getHealthcareProviders();
+      return filterCriteria.map((value) => ({
+        value: value.value, display: value.provider,
+      }));
+    case 'payors':
+      filterCriteria = await dao.getPayors();
+      return filterCriteria.map((value) => ({
+        value: value.value, display: value.payor,
+      }));
+    case 'healthcareCoverages':
+      filterCriteria = await dao.getHealthcareCoverages();
+      return filterCriteria.map((value) => ({
+        value: value.value, display: value.coverage,
+      }));
+    case 'healthcarePractitioners':
+      filterCriteria = await dao.getPractitioners();
+      return filterCriteria.map((value) => ({
+        value: value.value, display: value.practitioner,
+      }));
+    default:
+      break;
+  }
+  return [];
+};
+
+const compareMembers = async (req, res, next) => {
+  try {
+    const {
+      measurementType, measurementYear, compareOption,
+    } = req.body;
+    let patientResults = [];
+    // Get patient results based on measurementType and year
+    const isComposite = measurementType === 'composite';
+    if (isComposite) {
+      patientResults = await dao.findMembers({ measurementYear });
+    } else {
+      patientResults = await dao.findMembers({ measurementType, measurementYear });
+    }
+
+    // Get information about the measures
+    const infoList = await dao.findInfo();
+    const measureInfo = createInfoObject(infoList);
+    // Get a {display, label} list of filter criteria
+    // Options are: payors, healthcareProviders, healthcareCoverages, healthcarePractitioners
+    const filterCriteria = await getFilterCriteria(compareOption);
+
+    const compiledDailyMeasureResults = [];
+    // For each filter criteria
+    filterCriteria.forEach((filterOption) => {
+      const filteredPatients = [];
+      // Find the patients that have the correct info
+      patientResults.forEach((patientResult) => {
+        if (compareOption === 'healthcareProviders' || compareOption === 'healthcarePractitioners') {
+          const { providers } = patientResult;
+          if (providers.find((provider) => provider.reference === filterOption.value)) {
+            filteredPatients.push(patientResult);
+          }
+        } else if (compareOption === 'payors') {
+          const { coverage } = patientResult;
+          if (coverage
+            .find((coverageOption) => {
+              const { payor } = coverageOption;
+              return payor ? payor
+                .find((payorInfo) => payorInfo.reference.value === filterOption.value) : null;
+            })) {
+            filteredPatients.push(patientResult);
+          }
+        } else if (compareOption === 'healthcareCoverages') {
+          const { coverage } = patientResult;
+          if (coverage
+            .find((coverageOption) => coverageOption.type.coding
+              .find((coding) => coding.code.value === filterOption.value))) {
+            filteredPatients.push(patientResult);
+          }
+        }
+      });
+      // Find the results of the patient set
+      // eslint-disable-next-line max-len
+      let filteredResults = calculateDailyMeasureResults(filteredPatients, measureInfo, isComposite);
+      // Add the results to the final list
+      if (isComposite) {
+        filteredResults = filteredResults.filter((result) => result.measure === 'composite');
+      }
+      filteredResults
+        .forEach((result) => {
+          const newResult = { comparisonItem: filterOption.display, ...result };
+          delete newResult.subScores;
+          if (!Number.isNaN(newResult.value)) {
+            compiledDailyMeasureResults.push(newResult);
+          }
+        });
+    });
+
+    return res.send({ results: compiledDailyMeasureResults, info: measureInfo });
+  } catch (e) {
+    return next(e);
+  }
+};
+
 module.exports = {
   getMeasureResults,
   getDailyMeasureResults,
@@ -111,4 +218,5 @@ module.exports = {
   exportCsv,
   postMeasureResults,
   postInfo,
+  compareMembers,
 };

@@ -4,7 +4,7 @@ const fs = require('fs');
 const process = require('process');
 const moment = require('moment');
 const excel = require('exceljs');
-const {sanitizePath} = require('sanitize-filepath');
+const { sanitizePath } = require('sanitize-filepath');
 const logger = require('../config/winston');
 
 async function generateMemberReport(memberObj, fileName, folderPath) {
@@ -81,7 +81,8 @@ async function generateMemberReport(memberObj, fileName, folderPath) {
     const policyType = generalWorksheet.getCell('D13');
     policyType.value = coverageObj.type.coding[0].display?.value || undefined;
     const dependents = generalWorksheet.getCell('E13');
-    dependents.value = coverageObj.dependents?.value || coverageObj.beneficiary.reference.value.slice(0, 3);
+    dependents.value = coverageObj.dependents?.value
+      || coverageObj.beneficiary.reference.value.slice(0, 3);
     const relationship = generalWorksheet.getCell('F13');
     relationship.value = coverageObj.relationship.coding[0].code?.value || undefined;
     const planStart = generalWorksheet.getCell('G13');
@@ -109,8 +110,10 @@ async function generateMemberReport(memberObj, fileName, folderPath) {
 }
 
 async function injectTemplate(results, root, path, name) {
-  await fs.promises.copyFile(`${root}/src/templates/measure.xlsx`,
-    `${root}${path}/${name}`);
+  await fs.promises.copyFile(
+    `${root}/src/templates/measure.xlsx`,
+    `${root}${path}/${name}`,
+  );
   await generateMemberReport(results, name, path);
 }
 

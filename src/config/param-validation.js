@@ -23,12 +23,21 @@ const measurementQuery = {
 const exportCsv = {
   query: Joi.object({
     measurementType: Joi.string().required(),
+    measurementYear: Joi.number(),
   }),
 };
 
 const memberInfo = {
   query: Joi.object({
     memberId: Joi.string().required(),
+  }),
+};
+
+const compareResults = {
+  body: Joi.object({
+    measurementYear: Joi.number().required(),
+    measurementType: Joi.string().required(),
+    compareOption: Joi.string().required(),
   }),
 };
 
@@ -40,4 +49,5 @@ module.exports = {
   searchMeasurements: measurementQuery,
   exportCsv,
   memberInfo,
+  compareResults,
 };

@@ -101,7 +101,7 @@ function calculateSubScore(resultHolder, measurementType, measureInfo, date, ind
   };
 }
 
-const calcLatestNumDen = (resultList, measureInfo, currentDate) => {
+const calcLatestNumDen = (resultList, measureInfo, currentDate, calculateComposite = true) => {
   const resultMap = new Map();
   const measurementTypes = [];
 
@@ -157,6 +157,10 @@ const calcLatestNumDen = (resultList, measureInfo, currentDate) => {
     valueArray.push(
       calculateMeasureScore(subScoreArray, measurementType, measureInfo, currentDate),
     );
+  }
+
+  if (!calculateComposite) {
+    return valueArray;
   }
 
   // calculate the total overall score and star rating
