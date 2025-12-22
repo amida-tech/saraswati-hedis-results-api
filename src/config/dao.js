@@ -9,8 +9,8 @@ let db;
 
 const init = async () => {
   const client = await MongoClient.connect(connectionUrl, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
+    // useNewUrlParser: true, // depreacated
+    // useUnifiedTopology: true, // deprecated
   });
   db = client.db(mongodb.name);
 };
@@ -89,6 +89,12 @@ const insertMember = async (member) => {
 };
 
 const insertMembers = (measures) => measures.map((measure) => insertMember(measure));
+
+const bulkInsertMembers = async (measures) => {
+  const collection = db.collection('measures');
+  await collection.insertMany(measures);
+  return true;
+};
 
 // create collection for results
 const insertMeasureResults = (results) => {
@@ -308,4 +314,5 @@ module.exports = {
   addUsers,
   updateUserByEmail,
   deleteUsersByEmail,
+  bulkInsertMembers,
 };

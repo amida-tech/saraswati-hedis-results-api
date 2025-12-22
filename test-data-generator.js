@@ -5,7 +5,12 @@ const fs = require('fs');
 const { sanitizePath } = require('sanitize-filepath');
 const logger = require('./src/config/winston');
 const dao = require('./src/config/dao');
-const { template, coveragePlans, providerOptions } = require('./test-data-settings');
+const {
+  template,
+  coveragePlans,
+  providerOptions,
+  generatePatientInfo,
+} = require('./test-data-settings');
 
 const parseArgs = minimist(process.argv.slice(2), {
   alias: {
@@ -159,6 +164,7 @@ const measureFunctions = {
       Denominator: initialPopDates,
       Numerator: numeratorDates,
     };
+    data.patientInfo = generatePatientInfo(measure);
     return data;
   },
   updateSingleDate: (measure, date) => { // Copy denominator to numerator
@@ -175,6 +181,7 @@ const measureFunctions = {
       Denominator: true,
       Numerator: randomOf100() < compliance,
     };
+    data.patientInfo = generatePatientInfo(measure);
     return data;
   },
   updateSingleBool: (measure, date) => { // Can only flip numerator.
@@ -198,6 +205,7 @@ const measureFunctions = {
       'Numerator 1': numerator1,
       'Numerator 2': denominator2 && numerator1 ? randomOf100() < compliance : false,
     };
+    data.patientInfo = generatePatientInfo(measure);
     return data;
   },
   updateDoubleBool: (measure, date) => { // Same init pop and denom, differing numerators.
@@ -232,6 +240,7 @@ const measureFunctions = {
       'Numerator 2': numerator2,
       'Numerator 3': numerator1 && numerator2,
     };
+    data.patientInfo = generatePatientInfo(measure);
     return data;
   },
   updateTripleDependBool: (measure, date) => {
@@ -263,6 +272,7 @@ const measureFunctions = {
       'Numerator 1': numerator1,
       'Numerator 2': numerator1 && randomTruerBool() ? numerator1 : [],
     };
+    data.patientInfo = generatePatientInfo(measure);
     return data;
   },
   updateDoubleDeliveries: (measure, date) => {
@@ -294,6 +304,7 @@ const measureFunctions = {
       'Numerator 1': numerator1,
       'Numerator 2': denominator2 && numerator1 ? randomOf100() < compliance : false,
     };
+    data.patientInfo = generatePatientInfo(measure);
     return data;
   },
   updateADDE: (measure, date) => {
@@ -332,6 +343,7 @@ const measureFunctions = {
       'Numerator 3': initialPop3 ? randomOf100() < compliance : false,
       'Numerator 4': initialPop4 ? randomOf100() < compliance : false,
     };
+    data.patientInfo = generatePatientInfo(measure);
     return data;
   },
   updateAISE: (measure, date) => {
@@ -371,6 +383,7 @@ const measureFunctions = {
       'Denominator 5': initialPopulation5,
       'Numerator 5': initialPopulation5 ? randomOf100() < compliance : false,
     };
+    data.patientInfo = generatePatientInfo(measure);
     return data;
   },
   updateAISE_2025: (measure, date) => {
@@ -401,6 +414,7 @@ const measureFunctions = {
     data.result['Numerator 11'] = numerator11;
     data.result['Numerator 12'] = numerator12;
     data.result['Numerator 13'] = numerator12 && data.result['Numerator 10'];
+    data.patientInfo = generatePatientInfo(measure);
     return data;
   },
   updateCISE: (measure, date) => {
@@ -432,6 +446,7 @@ const measureFunctions = {
       'Numerator 1': numerator1,
       'Numerator 2': numerator1 ? randomOf100() < compliance : false,
     };
+    data.patientInfo = generatePatientInfo(measure);
     return data;
   },
   updateCOU: (measure, date) => {
@@ -465,6 +480,7 @@ const measureFunctions = {
       'Numerator 2': initialPop2 ? randomOf100() < compliance : false,
       'Numerator 3': initialPop3 ? randomOf100() < compliance : false,
     };
+    data.patientInfo = generatePatientInfo(measure);
     return data;
   },
   updateDMSE: (measure, date) => { // Checks 3 times a year, then denom is always true
@@ -504,6 +520,7 @@ const measureFunctions = {
       'Numerator 2': numerator2,
       'Numerator 3': numerator3,
     };
+    data.patientInfo = generatePatientInfo(measure);
     return data;
   },
   updateDRRE: (measure, date) => { // Checks 3 times a year, then denom is always true
@@ -538,6 +555,7 @@ const measureFunctions = {
       'Numerator 1': numeratorDates,
       'Numerator 2': numerator2Dates,
     };
+    data.patientInfo = generatePatientInfo(measure);
     return data;
   },
   updateFUM: (measure, date) => { // One for 30 day gap, another for 7.
@@ -569,6 +587,7 @@ const measureFunctions = {
     const numerator4 = data.result['Numerator 1'] && data.result['Numerator 2'];
     data.result['Numerator 4'] = numerator4;
     data.result['Numerator 5'] = numerator4 && data.result['Numerator 3'];
+    data.patientInfo = generatePatientInfo(measure);
     return data;
   },
   updateIMAE: (measure, date) => { // 4 is based on 1, 2, and 5 on 1, 2, 3
@@ -603,6 +622,7 @@ const measureFunctions = {
       'Numerator 2': numerator2,
       'Numerator 3': numerator1.length === numerator2.length ? initialPop1 : [],
     };
+    data.patientInfo = generatePatientInfo(measure);
     return data;
   },
   updatePRSE: (measure, date) => {
@@ -756,17 +776,20 @@ function outputData(newScoresList, measureList, days) {
 
 async function insertData(newScoresList) {
   await dao.init();
-  const insertResults = await dao.insertMembers(newScoresList);
+  const insertResults = await dao.bulkInsertMembers(newScoresList);
   if (!insertResults) {
     logger.error('\x1b[31mError:\x1b[0m Something went wrong during insertion.');
     process.exit();
   }
-  const waitTime = 1000 + newScoresList.length * 3;
-  logger.info(`\x1b[33mInfo:\x1b[0m Results are being inserted into DAO. Please wait ${waitTime} seconds for asynchronous completion...`);
-  setTimeout(() => {
-    logger.info('\x1b[32mSuccess:\x1b[0m Check database for new insertions.');
-    process.exit();
-  }, waitTime);
+  // const waitTime = 1000 + newScoresList.length * 3;
+  // eslint-disable-next-line max-len
+  // logger.info(`\x1b[33mInfo:\x1b[0m Results are being inserted into DAO. Please wait ${waitTime} seconds for asynchronous completion...`);
+  // setTimeout(() => {
+  //   logger.info('\x1b[32mSuccess:\x1b[0m Check database for new insertions.');
+  //   process.exit();
+  // }, waitTime);
+  logger.info('\x1b[32mSuccess:\x1b[0m Check database for new insertions.');
+  process.exit();
 }
 
 async function processData() {

@@ -1,3 +1,33 @@
+const zipCodes = ['10001', '90210', '60601', '33139', '02108', '98101', '75201',
+  '30301', '80202', '19019', '85001', '70112', '55401', '97201', '63101', '48201', '20001', '89101', '37201', '96801',
+];
+
+const raceCodes = ['1002-5', '2028-9', '2054-5', '2076-8', '2106-3', '2131-1'];
+
+const ethnicityCodes = ['2135-2', '2186-5'];
+
+const givenMaleNames = ['James', 'Muhammad', 'Wei', 'Jose', 'Raj', 'Ahmed', 'David', 'Carlos',
+  'Hiroshi', 'Andre', 'Miguel', 'Dmitri', 'Giovanni', 'Kwame', 'Ali', 'Chen', 'Luis', 'Sven', 'Jamal',
+  'Pablo', 'Yuki', 'Hassan', 'Liam', 'Mateo', 'Arjun', 'Ibrahim', 'Nguyen', 'Pierre', 'Kofi', 'Antonio',
+  'Kenji', 'Omar', 'Stefan', 'Rafael', 'Amit', 'Tunde', 'Jin', 'Gabriel', 'Klaus', 'Rashid', 'Diego', 'Mikhail',
+  'Chinonso', 'Youssef', 'Ethan', 'Javier', 'Takeshi', 'Amir', 'Marco', 'Tariq'];
+
+const givenFemaleNames = ['Maria', 'Fatima', 'Ling', 'Sofia', 'Priya', 'Aisha', 'Emma', 'Carmen', 'Yuki',
+  'Gabrielle', 'Lucia', 'Natasha', 'Isabella', 'Amara', 'Layla', 'Mei', 'Ana', 'Ingrid', 'Aaliyah', 'Valentina',
+  'Sakura', 'Zara', 'Olivia', 'Camila', 'Ananya', 'Nour', 'Linh', 'Amelie', 'Ama', 'Rosa', 'Keiko', 'Yasmin',
+  'Elena', 'Daniela', 'Kavya', 'Chioma', 'Jing', 'Isabelle', 'Greta', 'Mariam', 'Alejandra', 'Svetlana',
+  'Ngozi', 'Salma', 'Ava', 'Adriana', 'Haruka', 'Nadia', 'Francesca', 'Amira'];
+
+const surnames = ['Smith', 'Garcia', 'Wang', 'Singh', 'Sato', 'Kim', 'Silva', 'Nguyen',
+  'Ivanov', 'Ali', 'Chen', 'Kumar', 'Lopez', 'Andersson', 'Rossi', 'Kowalski', 'O\'Brien', 'Dubois', 'Patel',
+  'Martinez', 'Yamamoto', 'Hassan', 'Liu', 'Sharma', 'Novak', 'Popescu', 'Fernandez', 'Schmidt', 'Brown', 'Tanaka',
+  'Ahmed', 'Zhang', 'Gupta', 'Rodriguez', 'Johansson', 'Bianchi', 'Nowak', 'Murphy', 'Moreau', 'Desai', 'Hernandez',
+  'Fischer', 'Johnson', 'Suzuki', 'Khan', 'Li', 'Reddy', 'Gonzalez', 'Larsson', 'Romano', 'Lewandowski', 'Kelly',
+  'Bernard', 'Mehta', 'Perez', 'Weber', 'Williams', 'Kobayashi', 'Abdullah', 'Wu', 'Rao', 'Sanchez', 'Nilsson',
+  'Ferrari', 'Wojcik', 'Ryan', 'Leroy', 'Shah', 'Ramirez', 'Becker', 'Davis', 'Ito', 'Ibrahim', 'Huang', 'Joshi',
+  'Torres', 'Eriksson', 'Ricci', 'Kowalczyk', 'O\'Connor', 'Martin', 'Kapoor', 'Cruz', 'Hoffmann', 'Wilson',
+  'Takahashi', 'Mahmoud', 'Zhao', 'Nair', 'Flores', 'Olsson', 'Colombo', 'Kaminski', 'Byrne', 'Petit'];
+
 const template = {
   aab: { // Avoidance of Antibiotic Treatment for Acute Bronchitis/Bronchiolitis
     subs: 1,
@@ -5,11 +35,11 @@ const template = {
     type: 'date',
     ranges: [
       { day: 0, popRange: [3, 5], compRange: [60, 80] },
-      { day: 3, popRange: [7, 8], compRange: [10, 15] },
-      { day: 8, popRange: [15, 18], compRange: [70, 95] },
-      { day: 9, popRange: [5, 15], compRange: [15, 25] },
-      { day: 10, popRange: [12, 17], compRange: [5, 10] },
-      { day: 26, popRange: [46, 57], compRange: [90, 95] },
+      { day: 18, popRange: [7, 8], compRange: [10, 15] },
+      { day: 49, popRange: [15, 18], compRange: [70, 95] },
+      { day: 55, popRange: [5, 15], compRange: [15, 25] },
+      { day: 61, popRange: [12, 17], compRange: [5, 10] },
+      { day: 158, popRange: [46, 57], compRange: [90, 95] },
     ],
     updateChance: 15,
     gap: 31,
@@ -22,10 +52,10 @@ const template = {
     type: 'bool',
     ranges: [
       { day: 0, popRange: [5, 8], compRange: [10, 80] },
-      { day: 5, popRange: [0, 0], compRange: [10, 100] },
-      { day: 11, popRange: [15, 18], compRange: [50, 75] },
-      { day: 19, popRange: [5, 15], compRange: [85, 95] },
-      { day: 25, popRange: [90, 100], compRange: [5, 10] },
+      { day: 30, popRange: [0, 0], compRange: [10, 100] },
+      { day: 67, popRange: [15, 18], compRange: [50, 75] },
+      { day: 116, popRange: [5, 15], compRange: [85, 95] },
+      { day: 152, popRange: [90, 100], compRange: [5, 10] },
     ],
     updateChance: 25,
     newEntry: 'newADDE',
@@ -37,10 +67,10 @@ const template = {
     type: 'bool',
     ranges: [
       { day: 0, popRange: [20, 30], compRange: [10, 20] },
-      { day: 11, popRange: [5, 13], compRange: [80, 90] },
-      { day: 13, popRange: [35, 53], compRange: [20, 25] },
-      { day: 26, popRange: [115, 130], compRange: [90, 98] },
-      { day: 27, popRange: [255, 280], compRange: [5, 7] },
+      { day: 67, popRange: [5, 13], compRange: [80, 90] },
+      { day: 79, popRange: [35, 53], compRange: [20, 25] },
+      { day: 158, popRange: [115, 130], compRange: [90, 98] },
+      { day: 164, popRange: [255, 280], compRange: [5, 7] },
     ],
     updateChance: 90,
     newEntry: 'newAISE',
@@ -52,10 +82,10 @@ const template = {
     type: 'bool',
     ranges: [
       { day: 0, popRange: [20, 30], compRange: [10, 20] },
-      { day: 11, popRange: [5, 13], compRange: [80, 90] },
-      { day: 13, popRange: [35, 53], compRange: [20, 25] },
-      { day: 26, popRange: [115, 130], compRange: [90, 98] },
-      { day: 27, popRange: [255, 280], compRange: [5, 7] },
+      { day: 67, popRange: [5, 13], compRange: [80, 90] },
+      { day: 79, popRange: [35, 53], compRange: [20, 25] },
+      { day: 158, popRange: [115, 130], compRange: [90, 98] },
+      { day: 164, popRange: [255, 280], compRange: [5, 7] },
     ],
     updateChance: 90,
     newEntry: 'newAISE_2025',
@@ -67,10 +97,10 @@ const template = {
     type: 'bool',
     ranges: [
       { day: 0, popRange: [20, 30], compRange: [70, 80] },
-      { day: 6, popRange: [5, 13], compRange: [10, 50] },
-      { day: 33, popRange: [35, 53], compRange: [70, 85] },
-      { day: 35, popRange: [15, 20], compRange: [10, 28] },
-      { day: 50, popRange: [55, 70], compRange: [2, 4] },
+      { day: 37, popRange: [5, 13], compRange: [10, 50] },
+      { day: 201, popRange: [35, 53], compRange: [70, 85] },
+      { day: 213, popRange: [15, 20], compRange: [10, 28] },
+      { day: 304, popRange: [55, 70], compRange: [2, 4] },
     ],
     updateChance: 40,
     newEntry: 'newTripleDependBool',
@@ -82,11 +112,11 @@ const template = {
     type: 'bool',
     ranges: [
       { day: 0, popRange: [20, 30], compRange: [30, 70] },
-      { day: 17, popRange: [5, 13], compRange: [10, 20] },
-      { day: 23, popRange: [5, 8], compRange: [5, 95] },
-      { day: 26, popRange: [15, 20], compRange: [10, 28] },
-      { day: 41, popRange: [85, 120], compRange: [70, 88] },
-      { day: 55, popRange: [15, 50], compRange: [12, 14] },
+      { day: 85, popRange: [5, 13], compRange: [10, 20] },
+      { day: 140, popRange: [5, 8], compRange: [5, 95] },
+      { day: 158, popRange: [15, 20], compRange: [10, 28] },
+      { day: 249, popRange: [85, 120], compRange: [70, 88] },
+      { day: 334, popRange: [15, 50], compRange: [12, 14] },
     ],
     updateChance: 55,
     newEntry: 'newDoubleBool',
@@ -98,8 +128,8 @@ const template = {
     type: 'bool',
     ranges: [
       { day: 0, popRange: [3, 6], compRange: [5, 10] },
-      { day: 19, popRange: [20, 40], compRange: [90, 95] },
-      { day: 37, popRange: [5, 8], compRange: [30, 65] },
+      { day: 115, popRange: [20, 40], compRange: [90, 95] },
+      { day: 225, popRange: [5, 8], compRange: [30, 65] },
     ],
     updateChance: 75,
     newEntry: 'newSingleBool',
@@ -124,10 +154,10 @@ const template = {
     type: 'bool',
     ranges: [
       { day: 0, popRange: [12, 24], compRange: [30, 45] },
-      { day: 5, popRange: [3, 6], compRange: [20, 25] },
-      { day: 15, popRange: [23, 36], compRange: [20, 100] },
-      { day: 16, popRange: [3, 6], compRange: [20, 25] },
-      { day: 45, popRange: [5, 8], compRange: [50, 65] },
+      { day: 30, popRange: [3, 6], compRange: [20, 25] },
+      { day: 91, popRange: [23, 36], compRange: [20, 100] },
+      { day: 97, popRange: [3, 6], compRange: [20, 25] },
+      { day: 274, popRange: [5, 8], compRange: [50, 65] },
     ],
     updateChance: 35,
     newEntry: 'newCISE',
@@ -139,8 +169,8 @@ const template = {
     type: 'bool',
     ranges: [
       { day: 0, popRange: [3, 6], compRange: [5, 10] },
-      { day: 19, popRange: [10, 15], compRange: [60, 75] },
-      { day: 37, popRange: [5, 8], compRange: [30, 65] },
+      { day: 116, popRange: [10, 15], compRange: [60, 75] },
+      { day: 225, popRange: [5, 8], compRange: [30, 65] },
     ],
     updateChance: 35,
     newEntry: 'newSingleBool',
@@ -152,10 +182,10 @@ const template = {
     type: 'bool',
     ranges: [
       { day: 0, popRange: [20, 30], compRange: [70, 90] },
-      { day: 3, popRange: [5, 13], compRange: [10, 35] },
-      { day: 13, popRange: [55, 120], compRange: [80, 95] },
-      { day: 14, popRange: [15, 20], compRange: [14, 28] },
-      { day: 46, popRange: [20, 30], compRange: [10, 90] },
+      { day: 18, popRange: [5, 13], compRange: [10, 35] },
+      { day: 79, popRange: [55, 120], compRange: [80, 95] },
+      { day: 85, popRange: [15, 20], compRange: [14, 28] },
+      { day: 280, popRange: [20, 30], compRange: [10, 90] },
     ],
     updateChance: 10,
     newEntry: 'newCOU',
@@ -167,11 +197,11 @@ const template = {
     type: 'date',
     ranges: [
       { day: 0, popRange: [5, 8], compRange: [5, 7] },
-      { day: 10, popRange: [5, 13], compRange: [40, 75] },
-      { day: 20, popRange: [15, 20], compRange: [80, 95] },
-      { day: 23, popRange: [20, 30], compRange: [95, 10] },
-      { day: 25, popRange: [20, 30], compRange: [20, 30] },
-      { day: 27, popRange: [40, 50], compRange: [0, 5] },
+      { day: 61, popRange: [5, 13], compRange: [40, 75] },
+      { day: 122, popRange: [15, 20], compRange: [80, 95] },
+      { day: 140, popRange: [20, 30], compRange: [95, 10] },
+      { day: 152, popRange: [20, 30], compRange: [20, 30] },
+      { day: 164, popRange: [40, 50], compRange: [0, 5] },
     ],
     updateChance: 10,
     gap: 31,
@@ -184,9 +214,9 @@ const template = {
     type: 'bool',
     ranges: [
       { day: 0, popRange: [20, 30], compRange: [10, 20] },
-      { day: 3, popRange: [5, 13], compRange: [90, 95] },
-      { day: 5, popRange: [10, 20], compRange: [10, 60] },
-      { day: 36, popRange: [25, 35], compRange: [50, 70] },
+      { day: 18, popRange: [5, 13], compRange: [90, 95] },
+      { day: 30, popRange: [10, 20], compRange: [10, 60] },
+      { day: 219, popRange: [25, 35], compRange: [50, 70] },
     ],
     updateChance: 60,
     newEntry: 'newDMSE',
@@ -198,11 +228,11 @@ const template = {
     type: 'bool',
     ranges: [
       { day: 0, popRange: [5, 10], compRange: [15, 25] },
-      { day: 8, popRange: [2, 5], compRange: [60, 80] },
-      { day: 10, popRange: [50, 60], compRange: [5, 10] },
-      { day: 16, popRange: [5, 13], compRange: [10, 60] },
-      { day: 18, popRange: [180, 200], compRange: [90, 95] },
-      { day: 22, popRange: [200, 230], compRange: [0, 5] },
+      { day: 49, popRange: [2, 5], compRange: [60, 80] },
+      { day: 61, popRange: [50, 60], compRange: [5, 10] },
+      { day: 97, popRange: [5, 13], compRange: [10, 60] },
+      { day: 109, popRange: [180, 200], compRange: [90, 95] },
+      { day: 134, popRange: [200, 230], compRange: [0, 5] },
     ],
     updateChance: 30,
     newEntry: 'newDRRE',
@@ -214,9 +244,9 @@ const template = {
     type: 'bool',
     ranges: [
       { day: 0, popRange: [5, 10], compRange: [15, 25] },
-      { day: 1, popRange: [20, 50], compRange: [70, 80] },
-      { day: 3, popRange: [10, 60], compRange: [15, 30] },
-      { day: 32, popRange: [200, 230], compRange: [0, 5] },
+      { day: 6, popRange: [20, 50], compRange: [70, 80] },
+      { day: 18, popRange: [10, 60], compRange: [15, 30] },
+      { day: 195, popRange: [200, 230], compRange: [0, 5] },
     ],
     updateChance: 60,
     newEntry: 'newDoubleBool',
@@ -228,8 +258,8 @@ const template = {
     type: 'date',
     ranges: [
       { day: 0, popRange: [5, 10], compRange: [55, 65] },
-      { day: 30, popRange: [30, 50], compRange: [80, 90] },
-      { day: 35, popRange: [20, 30], compRange: [65, 72] },
+      { day: 183, popRange: [30, 50], compRange: [80, 90] },
+      { day: 213, popRange: [20, 30], compRange: [65, 72] },
     ],
     updateChance: 0,
     gap: 31,
@@ -242,16 +272,16 @@ const template = {
     type: 'bool',
     ranges: [
       { day: 0, popRange: [5, 10], compRange: [90, 95] },
-      { day: 2, popRange: [3, 7], compRange: [10, 20] },
-      { day: 5, popRange: [4, 8], compRange: [40, 60] },
-      { day: 6, popRange: [1, 2], compRange: [5, 10] },
-      { day: 9, popRange: [26, 32], compRange: [15, 80] },
-      { day: 14, popRange: [1, 3], compRange: [25, 40] },
-      { day: 18, popRange: [3, 5], compRange: [25, 80] },
-      { day: 25, popRange: [26, 42], compRange: [15, 18] },
-      { day: 27, popRange: [10, 22], compRange: [85, 90] },
-      { day: 42, popRange: [100, 20], compRange: [5, 10] },
-      { day: 45, popRange: [20, 40], compRange: [85, 90] },
+      { day: 12, popRange: [3, 7], compRange: [10, 20] },
+      { day: 30, popRange: [4, 8], compRange: [40, 60] },
+      { day: 37, popRange: [1, 2], compRange: [5, 10] },
+      { day: 55, popRange: [26, 32], compRange: [15, 80] },
+      { day: 85, popRange: [1, 3], compRange: [25, 40] },
+      { day: 109, popRange: [3, 5], compRange: [25, 80] },
+      { day: 152, popRange: [26, 42], compRange: [15, 18] },
+      { day: 164, popRange: [10, 22], compRange: [85, 90] },
+      { day: 256, popRange: [100, 20], compRange: [5, 10] },
+      { day: 274, popRange: [20, 40], compRange: [85, 90] },
     ],
     updateChance: 35,
     newEntry: 'newIMAE',
@@ -285,10 +315,10 @@ const template = {
     type: 'object',
     ranges: [
       { day: 0, popRange: [8, 15], compRange: [10, 20] },
-      { day: 3, popRange: [2, 3], compRange: [90, 95] },
-      { day: 5, popRange: [2, 3], compRange: [40, 60] },
-      { day: 7, popRange: [3, 4], compRange: [20, 30] },
-      { day: 50, popRange: [15, 25], compRange: [90, 100] },
+      { day: 18, popRange: [2, 3], compRange: [90, 95] },
+      { day: 30, popRange: [2, 3], compRange: [40, 60] },
+      { day: 43, popRange: [3, 4], compRange: [20, 30] },
+      { day: 304, popRange: [15, 25], compRange: [90, 100] },
     ],
     updateChance: 50,
     newEntry: 'newPRSE',
@@ -300,7 +330,7 @@ const template = {
     type: 'bool',
     ranges: [
       { day: 0, popRange: [10, 10], compRange: [68, 82] },
-      { day: 5, popRange: [15, 20], compRange: [0, 5] },
+      { day: 30, popRange: [15, 20], compRange: [0, 5] },
     ],
     updateChance: 5,
     newEntry: 'newSingleBool',
@@ -312,7 +342,7 @@ const template = {
     type: 'bool',
     ranges: [
       { day: 0, popRange: [10, 10], compRange: [0, 5] },
-      { day: 5, popRange: [15, 20], compRange: [80, 92] },
+      { day: 30, popRange: [15, 20], compRange: [80, 92] },
     ],
     updateChance: 5,
     newEntry: 'newTripleDependBool',
@@ -325,9 +355,9 @@ const template = {
     gap: 31,
     ranges: [
       { day: 0, popRange: [2, 5], compRange: [78, 90] },
-      { day: 15, popRange: [2, 3], compRange: [10, 15] },
-      { day: 30, popRange: [4, 5], compRange: [80, 85] },
-      { day: 45, popRange: [10, 15], compRange: [20, 30] },
+      { day: 91, popRange: [2, 3], compRange: [10, 15] },
+      { day: 183, popRange: [4, 5], compRange: [80, 85] },
+      { day: 274, popRange: [10, 15], compRange: [20, 30] },
     ],
     updateChance: 25,
     newEntry: 'newSingleDate',
@@ -399,4 +429,76 @@ const providerOptions = [
   },
 ];
 
-module.exports = { template, coveragePlans, providerOptions };
+const chooseGender = (measure) => {
+  if (['bcse', 'ccs', 'pdse', 'pnde', 'prse'].includes(measure)) {
+    return 'female';
+  }
+  return Math.random() < 0.5 ? 'female' : 'male';
+};
+
+const chooseBirthSex = (gender) => {
+  if (gender === 'male') {
+    return Math.random() < 0.01 ? 'female' : 'male';
+  }
+  if (gender === 'female') {
+    return Math.random() < 0.01 ? 'male' : 'female';
+  }
+  return 'x';
+};
+
+const generateRandomDateFormatted = () => {
+  // Get the timestamps of the start and end dates
+  const startTime = new Date('1940-01-01').getTime();
+  const endTime = new Date().getTime(); // Current date
+
+  // Generate a random timestamp between the start and end times
+  const randomTime = startTime + Math.random() * (endTime - startTime);
+
+  // Create a new Date object from the random timestamp
+  const randomDate = new Date(randomTime);
+
+  // Format the date as "YYYY-MM-DD" using toISOString() and splitting the T
+  const formattedDate = randomDate.toISOString().split('T')[0];
+
+  return formattedDate;
+};
+
+const getRandomValueFromArray = (values) => {
+  const index = Math.floor(Math.random() * values.length);
+  return values[index];
+};
+
+const getRandomGivenName = (gender) => {
+  if (gender === 'male') {
+    return getRandomValueFromArray(givenMaleNames);
+  }
+  if (gender === 'female') {
+    return getRandomValueFromArray(givenFemaleNames);
+  }
+  return getRandomValueFromArray([...givenMaleNames, ...givenFemaleNames]);
+};
+
+const generatePatientInfo = (measure) => {
+  const gender = chooseGender(measure);
+  const patientInfo = {
+    gender,
+    dob: generateRandomDateFormatted(),
+    deceased: false,
+    deceasedDate: null,
+    zip: getRandomValueFromArray(zipCodes),
+    birthSex: chooseBirthSex(gender),
+    active: true,
+    raceCode: getRandomValueFromArray(raceCodes),
+    ethnicityCode: getRandomValueFromArray(ethnicityCodes),
+    given: getRandomGivenName(gender),
+    family: getRandomValueFromArray(surnames),
+  };
+  return patientInfo;
+};
+
+module.exports = {
+  template,
+  coveragePlans,
+  providerOptions,
+  generatePatientInfo,
+};
