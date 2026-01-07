@@ -1,6 +1,23 @@
-const zipCodes = ['10001', '90210', '60601', '33139', '02108', '98101', '75201',
-  '30301', '80202', '19019', '85001', '70112', '55401', '97201', '63101', '48201', '20001', '89101', '37201', '96801',
+// const usZipCodes = ['10001', '90210', '60601', '33139',
+//   '02108', '98101', '75201', '30301',
+//   '80202', '19019', '85001', '70112',
+//   '55401', '97201', '63101', '48201',
+//   '20001', '89101', '37201', '96801',
+// ];
+
+const southCarolinaZipCodes = ['29401', '29550', '29601', '29108',
+  '29730', '29501', '29902', '29526',
+  '29650', '29201', '29577', '29801',
+  '29690', '29016', '29445', '29588',
+  '29634', '29078', '29325', '29582',
 ];
+
+// const northCarolinaZipCodes = ['27401', '27403', '27405', '27407',
+//   '27513', '27514', '27519', '27560',
+//   '27587', '27601', '27603', '27608',
+//   '27610', '28202', '28204', '28208',
+//   '28210', '28215', '28262', '28277',
+// ];
 
 const raceCodes = ['1002-5', '2028-9', '2054-5', '2076-8', '2106-3', '2131-1'];
 
@@ -71,6 +88,10 @@ const template = {
       { day: 79, popRange: [35, 53], compRange: [20, 25] },
       { day: 158, popRange: [115, 130], compRange: [90, 98] },
       { day: 164, popRange: [255, 280], compRange: [5, 7] },
+      { day: 200, popRange: [15, 23], compRange: [40, 50] },
+      { day: 228, popRange: [15, 23], compRange: [30, 40] },
+      { day: 290, popRange: [15, 23], compRange: [80, 85] },
+      { day: 320, popRange: [15, 23], compRange: [30, 90] },
     ],
     updateChance: 90,
     newEntry: 'newAISE',
@@ -128,8 +149,12 @@ const template = {
     type: 'bool',
     ranges: [
       { day: 0, popRange: [3, 6], compRange: [5, 10] },
-      { day: 115, popRange: [20, 40], compRange: [90, 95] },
+      { day: 45, popRange: [10, 20], compRange: [50, 70] },
+      { day: 90, popRange: [10, 20], compRange: [40, 50] },
+      { day: 120, popRange: [20, 40], compRange: [90, 95] },
       { day: 225, popRange: [5, 8], compRange: [30, 65] },
+      { day: 265, popRange: [8, 12], compRange: [50, 65] },
+      { day: 300, popRange: [10, 15], compRange: [20, 35] },
     ],
     updateChance: 75,
     newEntry: 'newSingleBool',
@@ -202,6 +227,10 @@ const template = {
       { day: 140, popRange: [20, 30], compRange: [95, 10] },
       { day: 152, popRange: [20, 30], compRange: [20, 30] },
       { day: 164, popRange: [40, 50], compRange: [0, 5] },
+      { day: 200, popRange: [40, 50], compRange: [40, 50] },
+      { day: 240, popRange: [40, 50], compRange: [10, 50] },
+      { day: 300, popRange: [40, 50], compRange: [70, 85] },
+      { day: 320, popRange: [40, 50], compRange: [10, 85] },
     ],
     updateChance: 10,
     gap: 31,
@@ -272,15 +301,15 @@ const template = {
     type: 'bool',
     ranges: [
       { day: 0, popRange: [5, 10], compRange: [90, 95] },
-      { day: 12, popRange: [3, 7], compRange: [10, 20] },
-      { day: 30, popRange: [4, 8], compRange: [40, 60] },
-      { day: 37, popRange: [1, 2], compRange: [5, 10] },
+      { day: 12, popRange: [13, 17], compRange: [10, 20] },
+      { day: 30, popRange: [14, 18], compRange: [40, 60] },
+      { day: 37, popRange: [11, 12], compRange: [5, 10] },
       { day: 55, popRange: [26, 32], compRange: [15, 80] },
-      { day: 85, popRange: [1, 3], compRange: [25, 40] },
-      { day: 109, popRange: [3, 5], compRange: [25, 80] },
+      { day: 85, popRange: [11, 13], compRange: [25, 40] },
+      { day: 109, popRange: [31, 51], compRange: [25, 80] },
       { day: 152, popRange: [26, 42], compRange: [15, 18] },
       { day: 164, popRange: [10, 22], compRange: [85, 90] },
-      { day: 256, popRange: [100, 20], compRange: [5, 10] },
+      { day: 256, popRange: [10, 20], compRange: [5, 10] },
       { day: 274, popRange: [20, 40], compRange: [85, 90] },
     ],
     updateChance: 35,
@@ -315,9 +344,17 @@ const template = {
     type: 'object',
     ranges: [
       { day: 0, popRange: [8, 15], compRange: [10, 20] },
-      { day: 18, popRange: [2, 3], compRange: [90, 95] },
-      { day: 30, popRange: [2, 3], compRange: [40, 60] },
-      { day: 43, popRange: [3, 4], compRange: [20, 30] },
+      { day: 18, popRange: [10, 12], compRange: [90, 95] },
+      { day: 30, popRange: [10, 12], compRange: [40, 60] },
+      { day: 43, popRange: [10, 12], compRange: [20, 30] },
+      { day: 65, popRange: [10, 12], compRange: [70, 80] },
+      { day: 80, popRange: [10, 12], compRange: [50, 60] },
+      { day: 100, popRange: [10, 12], compRange: [20, 30] },
+      { day: 140, popRange: [10, 12], compRange: [60, 70] },
+      { day: 165, popRange: [10, 12], compRange: [30, 50] },
+      { day: 200, popRange: [10, 12], compRange: [10, 20] },
+      { day: 240, popRange: [10, 12], compRange: [40, 50] },
+      { day: 280, popRange: [10, 12], compRange: [20, 30] },
       { day: 304, popRange: [15, 25], compRange: [90, 100] },
     ],
     updateChance: 50,
@@ -365,10 +402,16 @@ const template = {
   },
 };
 
+// const coveragePlans = [
+//   { code: 'MCPOL', display: 'Managed Care Policy' },
+//   { code: 'HMO', display: 'Health Maintenance Organization Policy' },
+//   { code: 'PPO', display: 'Preferred Provider Organization Policy' },
+// ];
+
 const coveragePlans = [
-  { code: 'MCPOL', display: 'Managed Care Policy' },
-  { code: 'HMO', display: 'Health Maintenance Organization Policy' },
-  { code: 'PPO', display: 'Preferred Provider Organization Policy' },
+  { code: 'MCPOL', display: 'Anthem' },
+  { code: 'HMO', display: 'Cigna' },
+  { code: 'PPO', display: 'BlueCross/BlueShield' },
 ];
 
 const providerOptions = [
@@ -485,7 +528,7 @@ const generatePatientInfo = (measure) => {
     dob: generateRandomDateFormatted(),
     deceased: false,
     deceasedDate: null,
-    zip: getRandomValueFromArray(zipCodes),
+    zip: getRandomValueFromArray(southCarolinaZipCodes),
     birthSex: chooseBirthSex(gender),
     active: true,
     raceCode: getRandomValueFromArray(raceCodes),
