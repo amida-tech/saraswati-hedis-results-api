@@ -1,23 +1,9 @@
-// const usZipCodes = ['10001', '90210', '60601', '33139',
-//   '02108', '98101', '75201', '30301',
-//   '80202', '19019', '85001', '70112',
-//   '55401', '97201', '63101', '48201',
-//   '20001', '89101', '37201', '96801',
-// ];
-
 const southCarolinaZipCodes = ['29401', '29550', '29601', '29108',
   '29730', '29501', '29902', '29526',
   '29650', '29201', '29577', '29801',
   '29690', '29016', '29445', '29588',
   '29634', '29078', '29325', '29582',
 ];
-
-// const northCarolinaZipCodes = ['27401', '27403', '27405', '27407',
-//   '27513', '27514', '27519', '27560',
-//   '27587', '27601', '27603', '27608',
-//   '27610', '28202', '28204', '28208',
-//   '28210', '28215', '28262', '28277',
-// ];
 
 const raceCodes = ['1002-5', '2028-9', '2054-5', '2076-8', '2106-3', '2131-1'];
 
@@ -44,6 +30,36 @@ const surnames = ['Smith', 'Garcia', 'Wang', 'Singh', 'Sato', 'Kim', 'Silva', 'N
   'Ferrari', 'Wojcik', 'Ryan', 'Leroy', 'Shah', 'Ramirez', 'Becker', 'Davis', 'Ito', 'Ibrahim', 'Huang', 'Joshi',
   'Torres', 'Eriksson', 'Ricci', 'Kowalczyk', 'O\'Connor', 'Martin', 'Kapoor', 'Cruz', 'Hoffmann', 'Wilson',
   'Takahashi', 'Mahmoud', 'Zhao', 'Nair', 'Flores', 'Olsson', 'Colombo', 'Kaminski', 'Byrne', 'Petit'];
+
+const mcoOptions = {
+  // Weights based on 2026 National Health Expenditure projections
+  types: [
+    { name: 'Commercial', weight: 31 },
+    { name: 'Medicare', weight: 21 },
+    { name: 'Medicaid', weight: 18 },
+  ],
+  // Market share weights within each specific segment
+  providers: {
+    Commercial: [
+      { name: 'UnitedHealth Group', weight: 14 },
+      { name: 'Elevance Health', weight: 12 },
+      { name: 'CVS Health (Aetna)', weight: 11 },
+      { name: 'Cigna', weight: 10 },
+    ],
+    Medicare: [
+      { name: 'UnitedHealth Group', weight: 28 },
+      { name: 'Humana', weight: 18 },
+      { name: 'CVS Health (Aetna)', weight: 11 },
+      { name: 'Kaiser Permanente', weight: 6 },
+    ],
+    Medicaid: [
+      { name: 'Centene', weight: 17.7 },
+      { name: 'Elevance Health', weight: 10.8 },
+      { name: 'UnitedHealth Group', weight: 8.8 },
+      { name: 'Molina Healthcare', weight: 6.3 },
+    ],
+  },
+};
 
 const template = {
   aab: { // Avoidance of Antibiotic Treatment for Acute Bronchitis/Bronchiolitis
@@ -543,5 +559,6 @@ module.exports = {
   template,
   coveragePlans,
   providerOptions,
+  mcoOptions,
   generatePatientInfo,
 };

@@ -9,6 +9,7 @@ const {
   template,
   coveragePlans,
   providerOptions,
+  mcoOptions,
   generatePatientInfo,
 } = require('./test-data-settings');
 
@@ -20,6 +21,20 @@ const parseArgs = minimist(process.argv.slice(2), {
     o: 'output',
   },
 });
+
+const getWeightedRandom = (options) => {
+  const totalWeight = options.reduce((sum, opt) => sum + opt.weight, 0);
+  const threshold = Math.random() * totalWeight;
+
+  let runningTotal = 0;
+  return options.find((option) => {
+    runningTotal += option.weight;
+    if (runningTotal >= threshold) {
+      return option;
+    }
+    return null;
+  });
+};
 
 const randomOf100 = () => Math.random() * 100;
 const randomBool = () => Math.random() < 0.5;
@@ -38,6 +53,11 @@ const todayOfYear = dayOfYear(today);
 const numeratorCheck = (data, index) => (
   (index > 1) ? data[`Numerator ${index}`] && numeratorCheck(data, index - 1) : data[`Numerator ${index}`]
 );
+
+const getMcoValue = () => {
+  const mcoType = getWeightedRandom(mcoOptions.types);
+  return getWeightedRandom(mcoOptions.providers[mcoType.name]).name;
+};
 
 const newScoreTemplate = (measure, date, measurementYear) => {
   const measureName = measure.split('_')[0];
@@ -87,6 +107,7 @@ const newScoreTemplate = (measure, date, measurementYear) => {
       id: { value: uuidv4() },
     }],
     providers: providerChoices[Math.floor(Math.random() * providerChoices.length)].providers,
+    mco: getMcoValue(),
   };
   return data;
 };
